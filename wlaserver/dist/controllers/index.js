@@ -6,7 +6,7 @@ exports.index = void 0;
  * Home page.
  */
 const index = async (req, res) => {
-    res.render("index", { title: "Express" });
+    res.render("index", { title: "New App" });
 };
 exports.index = index;
 //# sourceMappingURL=index.js.map

@@ -30,6 +30,7 @@ exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const path = __importStar(require("path"));
+const helmet_1 = __importDefault(require("helmet"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 // Routes
 const index_1 = require("./routes/index");
@@ -39,6 +40,9 @@ exports.app = (0, express_1.default)();
 exports.app.set("port", process.env.PORT || 3000);
 exports.app.set("views", path.join(__dirname, "../views"));
 exports.app.set("view engine", "pug");
+exports.app.use((0, helmet_1.default)({
+    referrerPolicy: { policy: "no-referrer" },
+}));
 exports.app.use((0, morgan_1.default)("dev"));
 exports.app.use(express_1.default.static(path.join(__dirname, "../public")));
 exports.app.use("/", index_1.index);
