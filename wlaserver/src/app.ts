@@ -6,7 +6,8 @@ import helmet from "helmet";
 import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler";
 
 // Routes
-import { homeRouter } from "./routes/homeRoute";
+import { api } from "./routes/api";
+
 // Create Express server
 export const app = express();
 
@@ -19,10 +20,10 @@ app.use(
     referrerPolicy: { policy: "no-referrer" },
   })
 );
-app.use(logger("dev"));
+app.use(logger("combined"));
 
 app.use(express.static(path.join(__dirname, "../public")));
-app.use("/", homeRouter);
+app.use('/api', api);
 
 app.use(errorNotFoundHandler);
 app.use(errorHandler);

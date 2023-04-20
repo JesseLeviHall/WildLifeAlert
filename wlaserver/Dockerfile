@@ -4,5 +4,5 @@ COPY package*.json ./
 RUN npm install --no-binaries
 COPY . /app
 USER ec2-user
-CMD ["npm", "start"]
+CMD ["npm", "serve-debug"]
 EXPOSE 3000

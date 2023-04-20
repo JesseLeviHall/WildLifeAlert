@@ -33,7 +33,7 @@ const path = __importStar(require("path"));
 const helmet_1 = __importDefault(require("helmet"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 // Routes
-const index_1 = require("./routes/index");
+const api_1 = require("./routes/api");
 // Create Express server
 exports.app = (0, express_1.default)();
 // Express configuration
@@ -43,9 +43,9 @@ exports.app.set("view engine", "pug");
 exports.app.use((0, helmet_1.default)({
     referrerPolicy: { policy: "no-referrer" },
 }));
-exports.app.use((0, morgan_1.default)("dev"));
+exports.app.use((0, morgan_1.default)("combined"));
 exports.app.use(express_1.default.static(path.join(__dirname, "../public")));
-exports.app.use("/", index_1.index);
+exports.app.use('/api', api_1.api);
 exports.app.use(errorHandler_1.errorNotFoundHandler);
 exports.app.use(errorHandler_1.errorHandler);
 //# sourceMappingURL=app.js.map
