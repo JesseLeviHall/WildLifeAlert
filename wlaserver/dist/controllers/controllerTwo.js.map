@@ -1,1 +1,1 @@
-{"version":3,"file":"controllerTwo.js","sourceRoot":"","sources":["../../src/controllers/controllerTwo.ts"],"names":[],"mappings":";;;AAEA,mBAAmB;AAEZ,MAAM,aAAa,GAAG,KAAK,EAAE,GAAY,EAAE,GAAa,EAAiB,EAAE;IAC9E,GAAG,CAAC,IAAI,CAAC,cAAc,CAAC,CAAC;AAC7B,CAAC,CAAC;AAFW,QAAA,aAAa,iBAExB"}
+{"version":3,"file":"controllerTwo.js","sourceRoot":"","sources":["../../src/controllers/controllerTwo.ts"],"names":[],"mappings":"AAEA,mBAAmB;AAEnB,MAAM,CAAC,MAAM,aAAa,GAAG,KAAK,EAAE,GAAY,EAAE,GAAa,EAAiB,EAAE;IAC9E,GAAG,CAAC,IAAI,CAAC,cAAc,CAAC,CAAC;AAC7B,CAAC,CAAC"}

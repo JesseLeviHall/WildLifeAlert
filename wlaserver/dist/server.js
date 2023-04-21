@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = require("./app");
-const port = app_1.app.get("port");
-const server = app_1.app.listen(port, onListening);
+import { app } from "./app.js";
+const port = app.get("port");
+const server = app.listen(port, onListening);
 server.on("error", onError);
 function onError(error) {
     if (error.syscall !== "listen") {
@@ -28,5 +26,5 @@ function onListening() {
     const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
     console.log(`Listening on ${bind}`);
 }
-exports.default = server;
+export default server;
 //# sourceMappingURL=server.js.map

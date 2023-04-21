@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { homeRouter } from "./homeRoute";
-import { otherRouter } from "./otherRoute";
+import { homeRouter } from "./homeRoute.js";
+import { otherRouter } from "./otherRoute.js";
 
 export const api = Router();
 

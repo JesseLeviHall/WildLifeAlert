@@ -1,7 +1,8 @@
 {
     "name": "express-ts-template",
     "version": "1.2.0",
-    "description": "Simple starter template for ExpressJs and TypeScript based on expressjs/generator and TypeScript-Node-Starter",
+    "type": "module",
+    "description": "Node Express and Typescript Server with Redis connection",
     "main": "server.js",
     "scripts": {
         "start": "npm run serve",
@@ -34,10 +35,10 @@
         "redis": "^4.6.5"
     },
     "devDependencies": {
-        "@types/express": "4.17.17",
+        "@types/express": "^4.17.17",
         "@types/http-errors": "1.8.2",
         "@types/jest": "26.0.24",
-        "@types/morgan": "1.9.4",
+        "@types/morgan": "^1.9.4",
         "@types/node": "14.18.42",
         "@types/supertest": "2.0.12",
         "@typescript-eslint/eslint-plugin": "4.33.0",
@@ -52,6 +53,6 @@
         "supertest": "6.3.3",
         "ts-jest": "26.5.6",
         "ts-node-dev": "^2.0.0",
-        "typescript": "4.9.5"
+        "typescript": "*"
     }
 }

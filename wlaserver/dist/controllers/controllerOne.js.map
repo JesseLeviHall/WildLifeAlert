@@ -1,1 +1,1 @@
-{"version":3,"file":"controllerOne.js","sourceRoot":"","sources":["../../src/controllers/controllerOne.ts"],"names":[],"mappings":";;;AAEA,mBAAmB;AAEZ,MAAM,aAAa,GAAG,KAAK,EAAE,GAAY,EAAE,GAAa,EAAiB,EAAE;IAC9E,GAAG,CAAC,IAAI,CAAC,aAAa,CAAC,CAAC;AAC5B,CAAC,CAAC;AAFW,QAAA,aAAa,iBAExB"}
+{"version":3,"file":"controllerOne.js","sourceRoot":"","sources":["../../src/controllers/controllerOne.ts"],"names":[],"mappings":"AAEA,mBAAmB;AAEnB,MAAM,CAAC,MAAM,aAAa,GAAG,KAAK,EAAE,GAAY,EAAE,GAAa,EAAiB,EAAE;IAC9E,GAAG,CAAC,IAAI,CAAC,aAAa,CAAC,CAAC;AAC5B,CAAC,CAAC"}
