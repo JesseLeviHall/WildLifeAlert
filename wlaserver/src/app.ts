@@ -2,9 +2,12 @@ import express from "express";
 import logger from "morgan";
 import  path from "path";
 import helmet from "helmet";
-import { createClient } from 'redis';
+import * as dotenv from "dotenv";
+import { createClient } from "redis";
 
 import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler.js";
+
+dotenv.config()
 
 // Routes
 import { api } from "./routes/api.js";
@@ -13,8 +16,9 @@ import { api } from "./routes/api.js";
 export const app = express();
 
 // Redis
+const dbpass = process.env.REDIS_PASS;
 const client = createClient({
-    password: 'RaW2XeXJ2nQQCi7VXBtSFxBCDcRBKPEI',
+    password: `${dbpass}`,
     socket: {
         host: 'redis-19415.c289.us-west-1-2.ec2.cloud.redislabs.com',
         port: 19415
