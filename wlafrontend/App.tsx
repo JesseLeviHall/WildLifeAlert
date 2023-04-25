@@ -10,7 +10,7 @@ export default function App() {
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
     		<StackNavigator />
-        </QueryClientProvider>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 }
