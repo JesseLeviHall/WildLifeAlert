@@ -1,8 +1,9 @@
 import React from 'react';
-import { componentOne } from '../components/componentOne';
+import  componentOne  from '../components/componentOne.js';
 import { Text, View } from 'react-native';
 
-type Props = {};
+type Props = {
+};
 
 const AnotherScreen = (props: Props) => {
   return (
@@ -14,3 +15,4 @@ const AnotherScreen = (props: Props) => {
 };
 
 export default AnotherScreen;
+

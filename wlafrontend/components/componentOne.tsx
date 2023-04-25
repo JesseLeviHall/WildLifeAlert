@@ -1,11 +1,12 @@
 import React from 'react'
+import { Text } from 'react-native'
 
 type Props = {}
 
 const componentOne = (props: Props) => {
   return (
-    <div>componentOne</div>
+    <Text>componentOne</Text>
   )
 }
 
-export default componentOne
+export default componentOne;
