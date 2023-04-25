@@ -7,3 +7,5 @@ const componentOne = (props: Props) => {
     <div>componentOne</div>
   )
 }
+
+export default componentOne
