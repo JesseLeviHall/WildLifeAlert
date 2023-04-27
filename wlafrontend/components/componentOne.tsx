@@ -24,6 +24,17 @@ const componentOne = (props: Props) => {
     }
   })
 
+  const newPost = useMutation({
+    mutationKey: 'newpost',
+    mutationFn: async (post: any) => {
+      await wait(1000).then(() => posts.push({
+        id: posts.length + 1,
+        title: post.title,
+      }))
+      return post
+    }
+  })
+
   if(postsQuery.isLoading) return <Text>Loading</Text>
   if(postsQuery.isError) return <Text>{JSON.stringify(postsQuery.error)}</Text>
 
