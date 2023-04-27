@@ -1,5 +1,5 @@
 import React from 'react';
-import  componentOne  from '../components/componentOne.js';
+import  ComponentOne  from '../components/componentOne.js';
 import { Text, View } from 'react-native';
 
 type Props = {
@@ -8,8 +8,8 @@ type Props = {
 const AnotherScreen = (props: Props) => {
   return (
     <View className=' flex-auto align-middle justify-center' >
-      <Text className='text-lg'>Another Screen</Text>
-      <componentOne />
+      <Text className='text-lg'>Generic Map of Anonymous and General locations of Alerts?</Text>
+      <ComponentOne />
     </View>
   );
 };

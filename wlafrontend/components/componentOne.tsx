@@ -7,7 +7,7 @@ import { getPubData } from '../api/index.js';
 type Props = {}
 
 
-const componentOne = (props: Props) => {
+const ComponentOne = (props: Props) => {
   const queryClient = useQueryClient()
 
   const postsQuery = useQuery({
@@ -27,4 +27,4 @@ const componentOne = (props: Props) => {
   )
 }
 
-export default componentOne;
+export default ComponentOne;
