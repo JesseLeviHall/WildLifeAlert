@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text } from 'react-native'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 const posts = {
   1: { id: 1, title: 'First Post', content: 'Hello!' },
@@ -16,6 +16,8 @@ function wait(duration: number): unknown{
 }
 
 const componentOne = (props: Props) => {
+  const queryClient = useQueryClient()
+
   const postsQuery = useQuery({
     queryKey: ['getposts'],
     queryFn: async () => {
@@ -31,7 +33,9 @@ const componentOne = (props: Props) => {
         id: posts.length + 1,
         title: title,
       }))
-      return post
+      onSuccess: () => {
+        queryClient.invalidateQueries('getposts')
+      }
     }
   })
 
