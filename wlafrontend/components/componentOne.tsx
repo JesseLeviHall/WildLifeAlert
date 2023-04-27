@@ -28,7 +28,7 @@ const componentOne = (props: Props) => {
   if(postsQuery.isError) return <Text>{JSON.stringify(postsQuery.error)}</Text>
 
   return (
-    <Text>componentOne</Text>
+    <Text>{postsQuery.data}</Text>
   )
 }
 
