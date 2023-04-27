@@ -26,10 +26,10 @@ const componentOne = (props: Props) => {
 
   const newPost = useMutation({
     mutationKey: 'newpost',
-    mutationFn: async (post: any) => {
+    mutationFn: async (title: string) => {
       await wait(1000).then(() => posts.push({
         id: posts.length + 1,
-        title: post.title,
+        title: title,
       }))
       return post
     }
