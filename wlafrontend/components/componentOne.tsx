@@ -34,7 +34,7 @@ const componentOne = (props: Props) => {
         title: title,
       }))
       onSuccess: () => {
-        queryClient.invalidateQueries('getposts')
+        queryClient.invalidateQueries(['getposts'])
       }
     }
   })
