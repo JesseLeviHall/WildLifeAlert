@@ -1,11 +1,8 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import logger from "morgan";
-import  path from "path";
 import helmet from "helmet";
 import * as dotenv from "dotenv";
 import { createClient } from "redis";
-
-import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler.js";
 
 dotenv.config()
 
@@ -39,20 +36,30 @@ await redisClient.connect();
 
 
 // Express configuration
-app.set("port", process.env.PORT || 3000);
-app.set("views", path.join(new URL("../views", import.meta.url).pathname));
-app.set("view engine", "pug");
 app.use(
   helmet({
     referrerPolicy: { policy: "no-referrer" },
   })
 );
 app.use(logger("combined"));
-
-app.use(express.static(path.join(new URL("../public", import.meta.url).pathname)));
 app.use('/api', api);
 
-app.use(errorNotFoundHandler);
-app.use(errorHandler);
+app.get('/databasetest', (req: Request, res: Response) => {
+    redisClient.get(['homescreencontent'], (error: Error | null, result: string[] | null) => {
+  if (error) {
+    console.error(error);
+    res.status(500).send("Error retrieving data from Redis");
+  } else if (!result) {
+    res.status(404).send("Data not found in Redis");
+  } else {
+    res.send(result[0]);
+  }
+});
+
+});
+
+
+
+
 
 export default app;
