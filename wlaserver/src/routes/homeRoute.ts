@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as controllerOne from "../controllers/controllerOne.js";
+import * as homeScreenContent from "../controllers/homeScreenContent.js";
 
 export const homeRouter = Router();
 
-homeRouter.get("/homescreen", controllerOne.controllerOne);
+homeRouter.get("/homescreen", homeScreenContent.homeScreenContent);

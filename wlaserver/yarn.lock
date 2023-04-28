@@ -827,6 +827,13 @@
   resolved "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
+"@types/redis@^4.0.11":
+  version "4.0.11"
+  resolved "https://registry.npmjs.org/@types/redis/-/redis-4.0.11.tgz"
+  integrity sha512-bI+gth8La8Wg/QCR1+V1fhrL9+LZUSWfcqpOj2Kc80ZQ4ffbdL173vQd5wovmoV9i071FU9oP2g6etLuEwb6Rg==
+  dependencies:
+    redis "*"
+
 "@types/serve-static@*":
   version "1.15.1"
   resolved "https://registry.npmjs.org/@types/serve-static/-/serve-static-1.15.1.tgz"
@@ -4538,7 +4545,7 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-redis@^4.6.5:
+redis@*, redis@^4.6.5:
   version "4.6.5"
   resolved "https://registry.npmjs.org/redis/-/redis-4.6.5.tgz"
   integrity sha512-O0OWA36gDQbswOdUuAhRL6mTZpHFN525HlgZgDaVNgCJIAZR3ya06NTESb0R+TUZ+BFaDpz6NnnVvoMx9meUFg==

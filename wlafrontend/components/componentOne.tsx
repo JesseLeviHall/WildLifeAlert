@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getPubData } from '../api/index.js';
 
-//todo: typescript interface to represent the shape of post objects
+//todo: typescript interface to represent the shape of alert objects
 
 type Props = {}
 
@@ -13,7 +13,8 @@ const ComponentOne = (props: Props) => {
 
   const postsQuery = useQuery({
     queryKey: ['gePubData'],
-    queryFn: getPubData
+    queryFn: getPubData,
+    refetchInterval: 10000
   })
 
   if(postsQuery.isLoading) return <Text>Loading</Text>

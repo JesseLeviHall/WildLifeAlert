@@ -6,3 +6,8 @@ import axios from 'axios';
 export function getPubData() {
 	return axios.get('http://localhost:3000/api/pubdata');
 }
+
+//get alert details for rescuers:
+export function getAlertDetails(id) {
+	return axios.get('http://localhost:3000/api/alertdetails');
+}

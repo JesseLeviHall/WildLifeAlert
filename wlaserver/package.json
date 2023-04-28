@@ -27,6 +27,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@types/redis": "^4.0.11",
         "dotenv": "^16.0.3",
         "express": "^4.16.2",
         "helmet": "^6.1.5",
