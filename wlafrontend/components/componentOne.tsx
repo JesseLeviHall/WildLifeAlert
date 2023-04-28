@@ -3,6 +3,7 @@ import { Text, View } from 'react-native'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getPubData } from '../api/index.js';
 
+//todo: typescript interface to represent the shape of post objects
 
 type Props = {}
 
@@ -19,12 +20,15 @@ const ComponentOne = (props: Props) => {
   if(postsQuery.isError) return <Text>{JSON.stringify(postsQuery.error)}</Text>
 
   return (
-    <View>
-    <Text>{postsQuery.data.map(post => (
-      <Text>{post.title},{post.id}</Text>
-    ))}</Text>
-    </View>
-  )
+  <View>
+    {postsQuery.data?.map((post: any) => (
+      <Text key={post.id}>
+        {post.title}, {post.id}
+      </Text>
+    ))}
+  </View>
+);
+
 }
 
 export default ComponentOne;
