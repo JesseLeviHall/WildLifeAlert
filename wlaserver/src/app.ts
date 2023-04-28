@@ -17,7 +17,7 @@ export const app = express();
 
 // Redis
 const dbpass = process.env.REDIS_PASS;
-const client = createClient({
+export const redisClient = createClient({
     password: `${dbpass}`,
     socket: {
         host: 'redis-19415.c289.us-west-1-2.ec2.cloud.redislabs.com',
@@ -26,16 +26,16 @@ const client = createClient({
 });
 
 // Listen for the "ready" event
-client.on("ready", () => {
+redisClient.on("ready", () => {
     console.log("Connected to Redis server");
 });
 
 // Listen for the "error" event
-client.on("error", (err) => {
+redisClient.on("error", (err) => {
     console.error("Redis error: ", err);
 });
 
-await client.connect();
+await redisClient.connect();
 
 
 // Express configuration
