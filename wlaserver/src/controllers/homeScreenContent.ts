@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { redisClient } from "../app.js";
+//import { redisClient } from "../app.js";
 
 
 //GET /Home Screen.
