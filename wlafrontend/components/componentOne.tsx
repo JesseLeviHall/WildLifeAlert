@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getPubData } from '../api/index.js';
+import { getPubData } from '../api/index';
 
 //todo: typescript interface to represent the shape of alert objects
 

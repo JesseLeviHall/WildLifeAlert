@@ -1,5 +1,5 @@
 import React from 'react';
-import  ComponentOne  from '../components/componentOne.js';
+import ComponentOne from "../components/componentOne"
 import { Text, View } from 'react-native';
 
 type Props = {
