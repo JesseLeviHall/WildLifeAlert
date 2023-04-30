@@ -11,9 +11,7 @@ type RootStackParamList = {
   AnotherScreen: undefined;
 };
 type AppStateStatusTypes = 'active' | 'background' | 'inactive' | undefined;
-
 type HomeScreenNavigationProp = NavigationProp<RootStackParamList, 'Home'>;
-
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
