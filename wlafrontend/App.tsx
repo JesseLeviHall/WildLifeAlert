@@ -40,8 +40,9 @@ function onAppStateChange(status: AppStateStatus) {
 
 
 export default function App() {
-  useOnlineManager();
   useAppState(onAppStateChange);
+  useOnlineManager();
+  
   return (
     <NavigationContainer>
       <PersistQueryClientProvider
