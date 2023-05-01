@@ -9,12 +9,7 @@ import { AppStateStatus, Platform } from 'react-native';
 import { useAppState } from './hooks/useAppState';
 import { useOnlineManager } from './hooks/useOnlineManager';
 
-function onAppStateChange(status: AppStateStatus) {
-  // React Query already supports in web browser refetch on window focus by default
-  if (Platform.OS !== 'web') {
-    focusManager.setFocused(status === 'active');
-  }
-}
+
 
 const queryClient = new QueryClient({
    defaultOptions: {
@@ -33,6 +28,16 @@ const queryClient = new QueryClient({
 const asyncPersist = createAsyncStoragePersister({
   storage: AsyncStorage,
 });
+
+function onAppStateChange(status: AppStateStatus) {
+  if (status === 'active' || status === 'background') {
+    queryClient.resumePausedMutations();
+    if (Platform.OS !== 'web') {
+      focusManager.setFocused(status === 'active');
+    }
+  }
+}
+
 
 export default function App() {
   useOnlineManager();
