@@ -20,7 +20,7 @@ API.interceptors.request.use(async (config) => {
 
 //**************************define the queryFn for the query in the components.
 
-//for the homescreen content:
+//get the homescreen content:
 export const getHomeScreenContent = async () => {
 	try {
 		const homescreencontent = await API.get('/api/homescreen');
@@ -31,7 +31,7 @@ export const getHomeScreenContent = async () => {
 }
 	
 
-//for the public display of rescue data:
+//get the public display of rescue data:
 export const getPubData = async () => {
 	try {
 		const pubdata = await API.get('/api/pubdata');
@@ -54,3 +54,15 @@ export const getAlertDetails = async (id: number) => {
 		console.error(error);
 	}
 } 
+
+
+//update homescreencontent:
+export const updateHomeScreenContent = async (data: any) => {
+	try {
+		const updatedhomescreencontent = await API.put('/api/homescreen', data);
+		return updatedhomescreencontent.data;
+	}
+	catch (error) {
+		console.error(error);
+	}
+}

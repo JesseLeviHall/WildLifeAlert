@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import  bodyParser from 'body-parser'
 import logger from "morgan";
 import helmet from "helmet";
 
@@ -7,6 +8,7 @@ import { api } from "./routes/api.js";
 
 // Create Express server
 export const app = express();
+app.use(bodyParser.json());
 
 // Express configuration
 app.use(
