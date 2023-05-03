@@ -14,6 +14,9 @@ export function AlertByUser(Props: Props) {
   
 
 
-
+react-native-elements
+react-native-paper
+react-native-vector-icons
+NativeBase
   
 */

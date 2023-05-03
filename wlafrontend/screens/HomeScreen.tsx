@@ -1,10 +1,13 @@
 import React, { useLayoutEffect }  from 'react';
-import { Button, View, Text, RefreshControl,SafeAreaView, ScrollView } from 'react-native';
-
+import { Button, Text, View, RefreshControl, SafeAreaView, ScrollView } from 'react-native';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { getHomeScreenContent } from '../api/index';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
+import { Box } from "native-base";
+import  SpinnerComp  from '../components/Spinner';
+import BottomNavHome from '../components/BottomNavHome';
 
 
 type RootStackParamList = {
@@ -33,11 +36,9 @@ const Home = (props: Props) => {
 
   const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
   
-  if (isLoading) {
+  if (isLoading || isRefetchingByUser ) {
     return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+      <SpinnerComp />
     );
   }
 
@@ -55,16 +56,23 @@ const Home = (props: Props) => {
           onRefresh={refetchByUser}
         />
       }>
-      <Text>{data?.Title}</Text>
+        <Animated.View entering={FadeInUp} > 
+        <Box  safeArea>Hello</Box>
+      <Text>{data?.Title}
+       </Text>
+       
       <Text>{data?.Description}</Text>
       <Text>{data?.Message}</Text>
+      </Animated.View>
       <Button
         title='Go To Another Screen'
         onPress={() => navigation.navigate('AnotherScreen')}
       />
+      <View className='position align-bottom'>
+      <BottomNavHome />
+      </View>
     </ScrollView>
     </SafeAreaView>
-   
   );
 };
 

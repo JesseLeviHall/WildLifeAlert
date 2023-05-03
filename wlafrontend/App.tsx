@@ -8,7 +8,8 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { AppStateStatus, Platform } from 'react-native';
 import { useAppState } from './hooks/useAppState';
 import { useOnlineManager } from './hooks/useOnlineManager';
-
+import { NativeBaseProvider } from "native-base";
+import { Provider as PaperProvider } from 'react-native-paper';
 
 
 const queryClient = new QueryClient({
@@ -44,7 +45,7 @@ export default function App() {
   useOnlineManager();
   
   return (
-    <NavigationContainer>
+     <NavigationContainer>
       <PersistQueryClientProvider
       client={queryClient}
       persistOptions={{
@@ -57,9 +58,14 @@ export default function App() {
           .then(() => queryClient.invalidateQueries())
       }
     >
+      <NativeBaseProvider>
+        <PaperProvider>
     		<StackNavigator />
+        </PaperProvider>
+        </NativeBaseProvider>
       </PersistQueryClientProvider>
     </NavigationContainer>
+   
   );
 }
 
