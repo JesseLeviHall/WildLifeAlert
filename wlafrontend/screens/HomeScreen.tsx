@@ -1,8 +1,10 @@
-import React, { useState }  from 'react';
-import { Button, View, Text } from 'react-native';
+import React, { useLayoutEffect }  from 'react';
+import { Button, View, Text, RefreshControl } from 'react-native';
+
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { getHomeScreenContent } from '../api/index';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useRefreshByUser } from '../hooks/useRefreshByUser';
 
 type RootStackParamList = {
   Home: undefined;
@@ -13,13 +15,23 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
+
+
 const Home = (props: Props) => {
+  const noShowHeader = useNavigation();
+  useLayoutEffect(() => {
+		noShowHeader.setOptions({
+			headerShown: false,
+		});
+	});
   
-  const { isLoading, isError, data, error } = useQuery({
+  const { isLoading, refetch, data, error } = useQuery({
     queryKey: ['HomeScreen'],
     queryFn: () => getHomeScreenContent(),
   });
 
+  const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
+  
   if (isLoading) {
     return (
       <View>
@@ -28,7 +40,7 @@ const Home = (props: Props) => {
     );
   }
 
-  if (isError) {
+  if (error) {
     return <Text>{JSON.stringify(error)}</Text>;
   }
 
