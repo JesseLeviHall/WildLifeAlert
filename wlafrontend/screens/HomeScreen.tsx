@@ -1,10 +1,11 @@
 import React, { useLayoutEffect }  from 'react';
-import { Button, View, Text, RefreshControl } from 'react-native';
+import { Button, View, Text, RefreshControl,SafeAreaView, ScrollView } from 'react-native';
 
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { getHomeScreenContent } from '../api/index';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
+
 
 type RootStackParamList = {
   Home: undefined;
@@ -18,9 +19,9 @@ type Props = {
 
 
 const Home = (props: Props) => {
-  const noShowHeader = useNavigation();
+   const navigation = useNavigation<HomeScreenNavigationProp>();
   useLayoutEffect(() => {
-		noShowHeader.setOptions({
+		navigation.setOptions({
 			headerShown: false,
 		});
 	});
@@ -44,10 +45,16 @@ const Home = (props: Props) => {
     return <Text>{JSON.stringify(error)}</Text>;
   }
 
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+ 
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <SafeAreaView className='h-screen'>
+       <ScrollView refreshControl={
+        <RefreshControl
+          refreshing={isRefetchingByUser}
+          onRefresh={refetchByUser}
+        />
+      }>
       <Text>{data?.Title}</Text>
       <Text>{data?.Description}</Text>
       <Text>{data?.Message}</Text>
@@ -55,7 +62,9 @@ const Home = (props: Props) => {
         title='Go To Another Screen'
         onPress={() => navigation.navigate('AnotherScreen')}
       />
-    </View>
+    </ScrollView>
+    </SafeAreaView>
+   
   );
 };
 
