@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home, AnotherScreen, RescuerLogin, RescuerRegister, RescuerPrefs, Resources, About, SendForHelp, AlertsNearby, ColdAlerts, AlertDetails } from './screens/Screen_Index.js';
+import { Home, AnotherScreen, RescuerLogin, RescuerRegister, RescuerPrefs, Resources, About, SendForHelp, AlertsNearby, ColdAlerts, AlertDetails, PublicMap } from './screens/Screen_Index.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +19,7 @@ const StackNavigator =
       <Stack.Screen name="ColdAlerts" component={ColdAlerts} />
       <Stack.Screen name="AlertDetails" component={AlertDetails} />
       <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} />
+      <Stack.Screen name="PublicMap" component={PublicMap} />
     </Stack.Navigator>
   );
 }

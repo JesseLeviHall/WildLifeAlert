@@ -1,47 +1,78 @@
+/*
+
 import * as  React from 'react'
 import { BottomNavigation, Text } from 'react-native-paper';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-type Props = {}
+type RootStackParamList = {
+  Home: undefined;
+  SendForHelp: undefined;
+  About: undefined;
+  RescuerLogin: undefined;
+  Resources: undefined
+};
 
-const MusicRoute = () => <Text>Music</Text>;
+type HomeBottomNavigationProp = NavigationProp<RootStackParamList, 'Home'>;
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+type Props = {
+  navigate(arg0: string): unknown;
+  addListener<T>(arg0: string, arg1: () => void): unknown;
+  navigation: HomeBottomNavigationProp;
+};
 
-const RecentsRoute = () => <Text>Recents</Text>;
+const RescuersRoute = () => <Text>Rescuer Login</Text>;
 
-const NotificationsRoute = () => <Text>Notifications</Text>;
+const PublicMapRoute = () => <Text>Public Map</Text>;
 
+const ResourcesRoute = () => <Text>Resources</Text>;
 
+const AboutRoute = () => <Text>About</Text>;
 
 
 const BottomNavHome = (props: Props) => {
+
+  const navigation = useNavigation<HomeBottomNavigationProp>();
+
   const [index, setIndex] = React.useState(0);
+  
   const [routes] = React.useState([
-    { key: 'music', title: 'Favorites', focusedIcon: 'heart', unfocusedIcon: 'heart-outline'},
-    { key: 'albums', title: 'Albums', focusedIcon: 'album' },
-    { key: 'recents', title: 'Recents', focusedIcon: 'history' },
-    { key: 'notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline' },
-  ]);
+  { key: 'RescuerLogin', title: 'Rescuers', focusedIcon: 'launch', screen: 'RescuerLogin' },
+  { key: 'PublicMap', title: 'Live Map', focusedIcon: 'latitude', screen: 'PublicMap' },
+  { key: 'Resources', title: 'Resources', focusedIcon: 'magnify-expand', screen: 'Resources' },
+  { key: 'About', title: 'About', focusedIcon: 'lightbulb-on', unfocusedIcon: 'lightbulb-on-outline', screen: 'About' },
+]);
 
-  const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    recents: RecentsRoute,
-    notifications: NotificationsRoute,
-  });
-
+  
   return (
     <BottomNavigation
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
-      renderScene={renderScene}
-      
-      activeColor='#6200ee'
+      renderScene={({ route, jumpTo }) => {
+        switch (route.key) {
+          case 'rescuers':
+            return <RescuersRoute />;
+          case 'publicmap':
+            return <PublicMapRoute />;
+          case 'resources':
+            return <ResourcesRoute />;
+          case 'about':
+            return <AboutRoute />;
+          default:
+            return null;
+        }
+      }}
+      activeColor='#6d613b'
       inactiveColor='#000000'
-      barStyle={{ backgroundColor: '#ffffff' }}
+      barStyle={{ backgroundColor: '#e1dedb' }}
       sceneAnimationEnabled={true}
       sceneAnimationType='opacity'
       keyboardHidesNavigationBar={true}
+      onTabPress={(scene: any) => {
+      const route = routes[scene.route.screen as number];
+       if (route) {
+         navigation.navigate(route.screen);
+        }
+      }}
 
     />
   );
@@ -49,3 +80,5 @@ const BottomNavHome = (props: Props) => {
 
 
 export default BottomNavHome
+
+*/

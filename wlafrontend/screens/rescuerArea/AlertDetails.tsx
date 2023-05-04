@@ -3,9 +3,7 @@ import { Text } from 'react-native';
 import { getAlertDetails } from '../../api/index';
 import { useQuery } from '@tanstack/react-query';
 
-type Props = {
-  id: number
-}
+type Props = {}
 
 const AlertDetails = (props: Props) => {
   

@@ -9,3 +9,4 @@ export { default as SendForHelp } from './SendForHelp';
 export { default as AlertsNearby } from './rescuerArea/AlertsNearby';
 export { default as ColdAlerts } from './rescuerArea/ColdAlerts';
 export { default as AlertDetails } from './rescuerArea/AlertDetails';
+export { default as PublicMap } from './PublicMap';

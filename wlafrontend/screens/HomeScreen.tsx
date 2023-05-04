@@ -1,25 +1,26 @@
 import React, { useLayoutEffect }  from 'react';
 import { Button, Text, View, RefreshControl, SafeAreaView, ScrollView } from 'react-native';
-import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { getHomeScreenContent } from '../api/index';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
 import { Box } from "native-base";
 import  SpinnerComp  from '../components/Spinner';
-import BottomNavHome from '../components/BottomNavHome';
+import HomeNavBot from '../components/HomeNavBot';
 
 
 type RootStackParamList = {
   Home: undefined;
-  AnotherScreen: undefined;
+  SendForHelp: undefined;
+  PublicMap: undefined;
+  About: undefined;
+  RescuerLogin: undefined;
+  Resources: undefined
 };
-type HomeScreenNavigationProp = NavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = NavigationProp<RootStackParamList, 'Home' >;
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
-
-
 
 const Home = (props: Props) => {
    const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -46,8 +47,6 @@ const Home = (props: Props) => {
     return <Text>{JSON.stringify(error)}</Text>;
   }
 
- 
-
   return (
     <SafeAreaView className='h-screen'>
        <ScrollView refreshControl={
@@ -56,20 +55,20 @@ const Home = (props: Props) => {
           onRefresh={refetchByUser}
         />
       }>
-        <Animated.View entering={FadeInUp} > 
+        <View> 
         <Box  safeArea>Hello</Box>
       <Text>{data?.Title}
        </Text>
        
       <Text>{data?.Description}</Text>
-      <Text>{data?.Message}</Text>
-      </Animated.View>
+      <Text className='mb-44'>{data?.Message}</Text>
+      </View>
       <Button
-        title='Go To Another Screen'
-        onPress={() => navigation.navigate('AnotherScreen')}
+        title='Post A Rescue Alert'
+        onPress={() => navigation.navigate('SendForHelp')}
       />
-      <View className='position align-bottom'>
-      <BottomNavHome />
+      <View className=' mt-48'>
+      <HomeNavBot navigation={navigation} />
       </View>
     </ScrollView>
     </SafeAreaView>
