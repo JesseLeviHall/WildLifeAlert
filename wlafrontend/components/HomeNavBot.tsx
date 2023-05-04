@@ -1,7 +1,9 @@
 import React from 'react'
 import { Text, View,  } from 'react-native'
+import { TouchableRipple } from 'react-native-paper';
 import { useNavigation, NavigationProp } from '@react-navigation/core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Box, HStack } from 'native-base';
 
 type RootStackParamList = {
   Home: undefined;
@@ -19,18 +21,31 @@ type Props = {
 const HomeNavBot = (props: Props) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   return (
-    <View>
-      <View>
-        <MaterialCommunityIcons name="launch" size={26} onPress={() => navigation.navigate('RescuerLogin')}  />
-        <Text>Rescuers</Text>
-        <MaterialCommunityIcons name="latitude" size={26} onPress={() => navigation.navigate('PublicMap')} />
-        <Text>Live Map</Text>
-        <MaterialCommunityIcons name="magnify-expand" size={26} onPress={() => navigation.navigate('Resources')} />
-        <Text>Resources</Text>
-        <MaterialCommunityIcons name="lightbulb-on" size={26} onPress={() => navigation.navigate('About')} />
-        <Text>About</Text>
-      </View>
-    </View>
+      <HStack space={3} justifyContent="center" bg="primary.500">
+        <TouchableRipple onPress={() => navigation.navigate('RescuerLogin')}><Box p="2" alignItems="center" _text={{
+      fontSize: 'md',
+      fontWeight: 'medium',
+      letterSpacing: 'lg'}}><MaterialCommunityIcons name="launch" size={28} />
+        Rescuers</Box></TouchableRipple>
+
+        <TouchableRipple onPress={() => navigation.navigate('PublicMap')}><Box p="2" alignItems="center" _text={{
+      fontSize: 'md',
+      fontWeight: 'medium',
+      letterSpacing: 'lg'}}><MaterialCommunityIcons name="latitude" size={28} />
+        Live Map</Box></TouchableRipple>
+
+        <TouchableRipple onPress={() => navigation.navigate('Resources')}><Box p="2" alignItems="center" _text={{
+      fontSize: 'md',
+      fontWeight: 'medium',
+      letterSpacing: 'lg'}}><MaterialCommunityIcons name="magnify-expand" size={28}  />
+        Resources</Box></TouchableRipple>
+
+        <TouchableRipple onPress={() => navigation.navigate('About')}><Box p="2" alignItems="center" _text={{
+      fontSize: 'md',
+      fontWeight: 'medium',
+      letterSpacing: 'lg'}}><MaterialCommunityIcons name="lightbulb-on" size={28} />
+       About</Box></TouchableRipple>
+      </HStack>
   )
 }
 
