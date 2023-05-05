@@ -48,30 +48,31 @@ const Home = (props: Props) => {
   }
 
   return (
-    <SafeAreaView className='h-screen'>
+    <View className='h-screen '>
        <ScrollView refreshControl={
         <RefreshControl
           refreshing={isRefetchingByUser}
           onRefresh={refetchByUser}
         />
       }>
-        <View> 
+        <View className='border border-dashed border-red-700'> 
         <Box  safeArea>Hello</Box>
       <Text>{data?.Title}
        </Text>
-       
       <Text>{data?.Description}</Text>
       <Text className='mb-44'>{data?.Message}</Text>
       </View>
-      <Button
+      <View className='border border-dotted border-blue-600'>
+      <Button 
         title='Post A Rescue Alert'
         onPress={() => navigation.navigate('SendForHelp')}
       />
-      <View className=' mt-48'>
-      <HomeNavBot navigation={navigation} />
       </View>
     </ScrollView>
-    </SafeAreaView>
+     <View className='sticky bottom-0'>
+      <HomeNavBot navigation={navigation} />
+      </View>
+    </View>
   );
 };
 
