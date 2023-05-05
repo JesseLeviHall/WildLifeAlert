@@ -11,7 +11,12 @@ module.exports = {
 		'./node_modules/react-native-elements/src/index.d.ts',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			dropShadow: {
+				'md-top': '0 -35px 35px rgba(0, 0, 0, 0.25)',
+			},
+		},
 	},
+	variants: {},
 	plugins: [],
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { TouchableRipple } from 'react-native-paper';
+import { TouchableRipple, Surface } from 'react-native-paper';
 import { useNavigation, NavigationProp } from '@react-navigation/core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Box, HStack } from 'native-base';
@@ -21,16 +21,16 @@ type Props = {
 const HomeNavBot = (props: Props) => {
 	const navigation = useNavigation<HomeScreenNavigationProp>();
 	return (
-    <View className=''>
+    <Surface elevation={4}>
 		<HStack
 			space={3}
 			borderWidth='1'
 			borderColor='coolGray.300'
 			justifyContent='center'
-			bg='primary.300'>
+			bg='#33fff2'>
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#e1dedb'
+				rippleColor='#f8b935'
 				onPress={() => navigation.navigate('RescuerLogin')}>
 				<Box
 					p='2'
@@ -47,7 +47,7 @@ const HomeNavBot = (props: Props) => {
 
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#e1dedb'
+				rippleColor='#f8b935'
 				onPress={() => navigation.navigate('PublicMap')}>
 				<Box
 					p='2'
@@ -64,7 +64,7 @@ const HomeNavBot = (props: Props) => {
 
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#e1dedb'
+				rippleColor='#f8b935'
 				onPress={() => navigation.navigate('Resources')}>
 				<Box
 					p='2'
@@ -81,7 +81,7 @@ const HomeNavBot = (props: Props) => {
 
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#e1dedb'
+				rippleColor='#f8b935'
 				onPress={() => navigation.navigate('About')}>
 				<Box
 					p='2'
@@ -96,7 +96,7 @@ const HomeNavBot = (props: Props) => {
 				</Box>
 			</TouchableRipple>
 		</HStack>
-    </View>
+    </Surface>
 	);
 };
 
