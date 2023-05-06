@@ -5,6 +5,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Box, HStack } from 'native-base';
 
+
 type RootStackParamList = {
 	Home: undefined;
 	PublicMap: undefined;

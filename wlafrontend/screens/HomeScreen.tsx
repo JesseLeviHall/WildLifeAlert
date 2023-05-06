@@ -4,18 +4,17 @@ import {
 	View,
 	RefreshControl,
 	ScrollView,
-	Vibration,
+	TouchableOpacity,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from 'react-native';
-import { Button, Surface } from 'react-native-paper';
+import { Surface } from 'react-native-paper';
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { getHomeScreenContent } from '../api/index';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
 import SpinnerComp from '../components/Spinner';
 import HomeNavBot from '../components/HomeNavBot';
-
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -34,6 +33,17 @@ type Props = {
 
 const Home = (props: Props) => {
 	const navigation = useNavigation<HomeScreenNavigationProp>();
+	const handlePress = async () => {
+		// Delay the navigation using setTimeout
+		await new Promise<void>((resolve) => {
+			setTimeout(() => {
+				resolve();
+			}, 300); // Adjust the delay duration as needed (in milliseconds)
+		});
+
+		navigation.navigate('SendForHelp');
+	};
+
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerShown: false,
@@ -66,14 +76,16 @@ const Home = (props: Props) => {
 						onRefresh={refetchByUser}
 					/>
 				}>
-					<Surface elevation={1}
-						style={{
-							height: 150,
-						 backgroundColor: '#33fff2',
-						}}
-					>
-						<Text className='mt-20 text-center font-black text-[#1c3956] text-5xl'>WildLifeAlert</Text>
-					</Surface>
+				<Surface
+					elevation={1}
+					style={{
+						height: 150,
+						backgroundColor: '#33fff2',
+					}}>
+					<Text className='mt-20 text-center font-black text-[#1c3956] text-5xl'>
+						WildLifeAlert
+					</Text>
+				</Surface>
 				<View className='mt-12 flex flex-col items-center '>
 					<Text className=' text-[#2a527a] mb-2'>{data?.Message}</Text>
 					<Text className='font-bold uppercase text-[#2a527a] text-3xl'>
@@ -86,12 +98,9 @@ const Home = (props: Props) => {
 				<View className='mt-11 flex-1 align-middle justify-center'>
 					<View className='flex flex-col items-center'>
 						<View className='flex-1 align-middle justify-center w-64 h-64 border border-spacing-10 border-[#f8b935] rounded-full flex flex-col items-center bg-[#bad1e8]'>
-							<View className='flex-1 items-center justify-center'>
-								<Button
-									textColor='#2a527a'
-									mode='text'
-									labelStyle={{ fontSize: 20 }}
-									contentStyle={{
+							<TouchableOpacity onPress={handlePress}>
+								<View
+									style={{
 										height: 220,
 										width: 220,
 										borderRadius: 108,
@@ -103,13 +112,12 @@ const Home = (props: Props) => {
 										shadowOffset: { width: 2, height: 2 },
 										shadowColor: '#000',
 										shadowOpacity: 0.25,
-									}}
-									uppercase={true}
-									onPress={() => navigation.navigate('SendForHelp')}
-									onPressIn={() => Vibration.vibrate(50)}>
-									Start Alert
-								</Button>
-							</View>
+									}}>
+									<Text className='text-center uppercase text-2xl font-bold text-[#2a527a]'>
+										Start Alert
+									</Text>
+								</View>
+							</TouchableOpacity>
 						</View>
 					</View>
 				</View>
