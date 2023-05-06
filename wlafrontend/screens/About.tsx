@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Button ,Vibration, } from 'react-native';
+import { View, Text, Button ,Vibration, } from 'react-native';
 import { Motion } from "@legendapp/motion"
 import { MotionLinearGradient } from '@legendapp/motion/linear-gradient-expo';
 import { styled } from 'nativewind';
@@ -20,6 +20,33 @@ const About = (props: Props) => {
 
   return (
     <MotionView className="filter flex-1 items-center justify-center">
+      <Motion.View
+    initial={{ x: -100,
+    scale: 0,
+    opacity: 0.1
+   }}
+    animate={{ x: 0,
+    scale: 1,
+    opacity: 1 }}
+    transition={{
+        default: {
+            type: "spring",
+            damping: 20,
+            stiffness: 300,
+        },
+        x: {
+            type: "spring",
+            damping: 20,
+            stiffness: 1000
+        },
+        opacity: {
+            type: "tween",
+            duration: 2000
+        },
+    }}
+>
+  <Text>Does This slide?</Text>
+</Motion.View>
       <Motion.Pressable>
     <Motion.View
         whileTap={{ y: 30 }}
@@ -32,10 +59,10 @@ const About = (props: Props) => {
     height: 220,
     width: 220,
     borderRadius: 108,
-    backgroundColor: '#F7AB0A',
+    backgroundColor: '#f8b935',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 0,
+    margin: 6,
     padding: 0,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -68,17 +95,6 @@ const About = (props: Props) => {
   }}
       />
 </Motion.Pressable>
-      
-      <Button
-										textColor='#2a527a'
-										mode='text'
-										labelStyle={{ fontSize: 20 }}
-										contentStyle={{}}
-										uppercase={true}
-									
-										onPressIn={() => Vibration.vibrate(50)}>
-										Start Alert
-									</Button>
     </MotionView>
   );
 };

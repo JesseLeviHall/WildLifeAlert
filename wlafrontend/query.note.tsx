@@ -1,9 +1,8 @@
 /* 
 1. Queries are fetches (get)
 2. Mutations are changing some kind of data (post)
+3. Subscriptions are listening to changes (listen)
 
-TODO:
-Set up EventListener that listens to network changes. In the browser TanStack Query handles this automatically, but on mobile we need to set it up ourselves. 
 
 example of enabled query:
 export function AlertByUser(Props: Props) {
@@ -13,10 +12,4 @@ export function AlertByUser(Props: Props) {
   })
   
 
-
-react-native-elements
-react-native-paper
-react-native-vector-icons
-NativeBase
-  
 */
