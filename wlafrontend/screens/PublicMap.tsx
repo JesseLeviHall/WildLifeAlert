@@ -1,17 +1,18 @@
-import React, { useLayoutEffect } from 'react';
+import * as React from 'react';
 import { Text, RefreshControl, View, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from 'react-native';
 import { Motion } from '@legendapp/motion';
 import { useQuery } from '@tanstack/react-query/build/lib';
-import { Appbar, FAB } from 'react-native-paper';
+import { Appbar, FAB, Dialog, Portal, Provider } from 'react-native-paper';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import SpinnerComp from '../components/Spinner';
+import PubMapDialogue from '../components/PubMapInfoComp';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const BOTTOM_APPBAR_HEIGHT = 80;
-const MEDIUM_FAB_HEIGHT = 56;
+const BOTTOM_APPBAR_HEIGHT = 70;
+const MEDIUM_FAB_HEIGHT = 46;
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -24,9 +25,12 @@ type Props = {
 };
 
 const PublicMap = (props: Props) => {
+	const [infoVisible, setInfoVisible] = React.useState(false);
+	const showInfoDialog = () => setInfoVisible(true);
+	const hideDialog = () => setInfoVisible(false);
 	const { bottom } = useSafeAreaInsets();
 	const navigation = useNavigation<HomeScreenNavigationProp>();
-	useLayoutEffect(() => {
+	React.useLayoutEffect(() => {
 		navigation.setOptions({
 			headerShown: false,
 		});
@@ -43,23 +47,30 @@ const PublicMap = (props: Props) => {
 				/>
 				<Appbar.Content title='Live Map' />
 				<Appbar.Action icon='map' onPress={() => {}} />
-				<Appbar.Action icon='more' onPress={() => {}} />
+				<Appbar.Action icon='more' onPress={showInfoDialog} />
 			</Appbar.Header>
-      <Motion.View className='flex-1 align-middle justify-center' initial={{ x: -300, scale: 0, opacity: 0 }}
-					animate={{ x: 0, scale: 1, opacity: 1 }}
-					transition={{
-						x: {
-							type: 'spring',
-							damping: 20,
-							stiffness: 800,
-							mass: 2,
-						},
-						opacity: {
-							type: 'tween',
-							duration: 1000,
-						},
-					}}>
-			<Text className='flex-col align-middle'>Public Map Will Go Here</Text></Motion.View>
+			<Motion.View
+				className='flex-1 align-middle justify-center'
+				initial={{ x: -300, scale: 0, opacity: 0 }}
+				animate={{ x: 0, scale: 1, opacity: 1 }}
+				transition={{
+					x: {
+						type: 'spring',
+						damping: 20,
+						stiffness: 800,
+						mass: 2,
+					},
+					opacity: {
+						type: 'tween',
+						duration: 1000,
+					},
+				}}>
+				<Text className='flex-col align-middle'>Public Map Will Go Here</Text>
+			</Motion.View>
+			<PubMapDialogue
+				infoVisible={infoVisible}
+				setInfoVisible={setInfoVisible}
+			/>
 			<Appbar
 				style={[
 					styles.bottom,
