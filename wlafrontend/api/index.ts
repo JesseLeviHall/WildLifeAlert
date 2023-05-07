@@ -31,7 +31,7 @@ export const getHomeScreenContent = async () => {
 }
 	
 
-//get the public display of rescue data:
+//get the public map data of rescue alerts:
 export const getPubData = async () => {
 	try {
 		const pubdata = await API.get('/api/pubdata');
@@ -61,6 +61,17 @@ export const updateHomeScreenContent = async (data: any) => {
 	try {
 		const updatedhomescreencontent = await API.put('/api/homescreen', data);
 		return updatedhomescreencontent.data;
+	}
+	catch (error) {
+		console.error(error);
+	}
+}
+
+//Get Public Map Info Dialogue content
+export const getPubMapDialogueContent = async () => {
+	try {
+		const pubmapdialoguecontent = await API.get('/api/publicmapscreen');
+		return pubmapdialoguecontent.data;
 	}
 	catch (error) {
 		console.error(error);

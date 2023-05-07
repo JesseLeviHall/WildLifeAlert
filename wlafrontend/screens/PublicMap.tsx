@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from 'react-native';
 import { Motion } from '@legendapp/motion';
 import { useQuery } from '@tanstack/react-query/build/lib';
-import { Appbar, FAB, Dialog, Portal, Provider } from 'react-native-paper';
+import { Appbar, FAB } from 'react-native-paper';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import SpinnerComp from '../components/Spinner';
@@ -27,7 +27,6 @@ type Props = {
 const PublicMap = (props: Props) => {
 	const [infoVisible, setInfoVisible] = React.useState(false);
 	const showInfoDialog = () => setInfoVisible(true);
-	const hideDialog = () => setInfoVisible(false);
 	const { bottom } = useSafeAreaInsets();
 	const navigation = useNavigation<HomeScreenNavigationProp>();
 	React.useLayoutEffect(() => {
@@ -49,6 +48,12 @@ const PublicMap = (props: Props) => {
 				<Appbar.Action icon='map' onPress={() => {}} />
 				<Appbar.Action icon='more' onPress={showInfoDialog} />
 			</Appbar.Header>
+			{infoVisible ? (
+				<PubMapDialogue
+					setInfoVisible={setInfoVisible}
+					infoVisible={infoVisible}
+				/>
+			) : null}
 			<Motion.View
 				className='flex-1 align-middle justify-center'
 				initial={{ x: -300, scale: 0, opacity: 0 }}
@@ -65,12 +70,11 @@ const PublicMap = (props: Props) => {
 						duration: 1000,
 					},
 				}}>
-				<Text className='flex-col align-middle'>Public Map Will Go Here</Text>
+				<Text className='p-4 mx-3 h-full bg-blue-400 flex-col align-middle -mt-px'>
+					Public Map Will Go Here
+				</Text>
 			</Motion.View>
-			<PubMapDialogue
-				infoVisible={infoVisible}
-				setInfoVisible={setInfoVisible}
-			/>
+
 			<Appbar
 				style={[
 					styles.bottom,
