@@ -34,7 +34,7 @@ const PublicMap = (props: Props) => {
 	return (
 		<LinearGradient
 			style={{ height: screenHeight }}
-			colors={['#33fff2', '#4deefc', '#a6cedd']}>
+			colors={['#0DE69A', '#71D1C7', '#99BBE3']}>
 			<Appbar.Header className=''>
 				<Appbar.BackAction
 					onPress={() => {
