@@ -92,21 +92,21 @@ const Home = (props: Props) => {
 						},
 					}}>
 					<View className='mt-12 h-96 flex flex-col items-center'>
-						<View className=' mt-9 max-h-9  flex-1 py-1 px-4 align-middle justify-center  bg-[#33fff2] rounded-xl'>
+						<View className=' mt-9 max-h-9  flex-1 py-1 px-4 align-middle justify-center  bg-[#77CFCA] rounded-xl'>
 							<Text className='font-bold text-lg text-[#24374b]'>
 								{data?.Message}
 							</Text>
 						</View>
-						<Text className='font-black mt-3 mix-blend-color  uppercase text-[#24374b] text-3xl'>
+						<Text className='font-black mt-5 mix-blend-color  uppercase text-[#24374b] text-3xl'>
 							{data?.Title}
 						</Text>
-						<Text className=' mt-1 text-2xl text-center px-4 text-[#24374b] font-light'>
+						<Text className=' text-2xl text-center px-4 text-[#24374b] font-light'>
 							{data?.Description}
 						</Text>
 					</View>
 					<View className='mt-11 flex-1 align-middle justify-center'>
 						<View className='flex flex-col items-center'>
-							<View className='flex-1 align-middle justify-center w-44 h-44 border border-spacing-10 border-[#15ff00] rounded-full flex flex-col items-center bg-[#bad1e8]'>
+							<View className='flex-1 align-middle justify-center w-44 h-44 border border-spacing-10 border-[#15ff00fe] rounded-full flex flex-col items-center bg-[#009DAD]'>
 								<TouchableOpacity onPress={handlePress}>
 									<View style={styles.container}>
 										<Text className='text-[#2a527a] font-bold text-2xl'>
