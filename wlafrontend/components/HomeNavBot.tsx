@@ -37,11 +37,11 @@ const HomeNavBot = (props: Props) => {
 					p='2'
 					alignItems='center'
 					_text={{
-						fontSize: 'md',
+						fontSize: 'sm',
 						fontWeight: 'medium',
 						letterSpacing: 'lg',
 					}}>
-					<MaterialCommunityIcons name='launch' size={28} />
+					<MaterialCommunityIcons name='launch' size={24} />
 					{'Rescuers'}
 				</Box>
 			</TouchableRipple>
@@ -54,11 +54,11 @@ const HomeNavBot = (props: Props) => {
 					p='2'
 					alignItems='center'
 					_text={{
-						fontSize: 'md',
+						fontSize: 'sm',
 						fontWeight: 'medium',
 						letterSpacing: 'lg',
 					}}>
-					<MaterialCommunityIcons name='latitude' size={28} />
+					<MaterialCommunityIcons name='latitude' size={24} />
 					{'Live Map'}
 				</Box>
 			</TouchableRipple>
@@ -71,11 +71,11 @@ const HomeNavBot = (props: Props) => {
 					p='2'
 					alignItems='center'
 					_text={{
-						fontSize: 'md',
+						fontSize: 'sm',
 						fontWeight: 'medium',
 						letterSpacing: 'lg',
 					}}>
-					<MaterialCommunityIcons name='magnify-expand' size={28} />
+					<MaterialCommunityIcons name='magnify-expand' size={24} />
 					{'Resources'}{' '}
 				</Box>
 			</TouchableRipple>
@@ -88,11 +88,11 @@ const HomeNavBot = (props: Props) => {
 					p='2'
 					alignItems='center'
 					_text={{
-						fontSize: 'md',
+						fontSize: 'sm',
 						fontWeight: 'medium',
 						letterSpacing: 'lg',
 					}}>
-					<MaterialCommunityIcons name='lightbulb-on' size={28} />
+					<MaterialCommunityIcons name='lightbulb-on' size={24} />
 					{'About'}{' '}
 				</Box>
 			</TouchableRipple>
