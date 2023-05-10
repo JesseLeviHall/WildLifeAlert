@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query/build/lib';
 import { Appbar, FAB } from 'react-native-paper';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import SpinnerComp from '../components/Spinner';
 import PubMapView from '../components/PubMapView';
 import PubMapDialogue from '../components/PubMapInfoComp';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

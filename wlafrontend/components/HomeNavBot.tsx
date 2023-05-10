@@ -31,7 +31,7 @@ const HomeNavBot = (props: Props) => {
 			bg='#33fff2'>
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#99BBE3'
+				underlayColor='#99BBE3'
 				onPress={() => navigation.navigate('RescuerLogin')}>
 				<Box
 					p='2'
