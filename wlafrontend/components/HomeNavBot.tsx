@@ -31,7 +31,7 @@ const HomeNavBot = (props: Props) => {
 			bg='#33fff2'>
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#f8b935'
+				rippleColor='#99BBE3'
 				onPress={() => navigation.navigate('RescuerLogin')}>
 				<Box
 					p='2'
@@ -48,7 +48,7 @@ const HomeNavBot = (props: Props) => {
 
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#f8b935'
+				rippleColor='#99BBE3'
 				onPress={() => navigation.navigate('PublicMap')}>
 				<Box
 					p='2'
@@ -65,7 +65,7 @@ const HomeNavBot = (props: Props) => {
 
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#f8b935'
+				rippleColor='#99BBE3'
 				onPress={() => navigation.navigate('Resources')}>
 				<Box
 					p='2'
@@ -82,7 +82,7 @@ const HomeNavBot = (props: Props) => {
 
 			<TouchableRipple
 				borderless={true}
-				rippleColor='#f8b935'
+				rippleColor='#99BBE3'
 				onPress={() => navigation.navigate('About')}>
 				<Box
 					p='2'
