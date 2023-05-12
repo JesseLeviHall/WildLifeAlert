@@ -61,7 +61,6 @@ const Home = (props: Props) => {
 	}
 
 	if (error) {
-		console.log(error);
 		return <Text>{JSON.stringify(error)}</Text>;
 	}
 

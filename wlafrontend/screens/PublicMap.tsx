@@ -82,10 +82,10 @@ const PublicMap = (props: Props) => {
 					},
 				]}
 				safeAreaInsets={{ bottom }}>
-				<Appbar.Action icon='archive' onPress={() => {}} />
+				<Appbar.Action icon='refresh' onPress={() => {}} />
 				<Appbar.Action icon='email' onPress={() => {}} />
-				<Appbar.Action icon='label' onPress={() => {}} />
-				<Appbar.Action icon='delete' onPress={() => {}} />
+				<Appbar.Action icon='share' onPress={() => {}} />
+
 				<FAB
 					mode='flat'
 					size='medium'

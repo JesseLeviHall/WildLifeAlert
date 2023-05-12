@@ -34,7 +34,7 @@ export const getHomeScreenContent = async () => {
 //get the public map data of rescue alerts:
 export const getPubData = async () => {
 	try {
-		const pubdata = await API.get('/api/pubdata');
+		const pubdata = await API.get('/api/publicmapgeopos');
 		return pubdata.data;
 	}
 	catch (error) {
