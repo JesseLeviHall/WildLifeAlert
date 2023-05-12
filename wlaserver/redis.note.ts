@@ -227,6 +227,38 @@ XTRIM key MAXLEN count
 XTRIM key MAXLEN ~ count
 
 
+==============This Project=================================
+==============Data Structure===============================
+# Use HSET to store the properties of the alert in a hash
+HSET alerts:animals:1 FullName "John Doe" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Dog" Description "Injured dog" Email "johndoe@email.com" Timestamp 1649827200
+
+# Use GEOADD to add the geospatial data to a sorted set (the key is the same as the hash key)
+"GEOADD alerts:animals -104.9903 39.7392 1"
+alerts:animals:1 is the key for the hash that stores the properties of the alert. The 1 at the end can be replaced with the ID of the alert.
+
+FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email are the fields in the hash, and the values following them are the respective values of these fields.
+
+In the GEOADD command, -104.9903 is the longitude, 39.7392 is the latitude, and 1 is the ID of the alert.
+
+simple add geo command:
+GEOADD pagosa -104.9903 39.7392 "Pagosa, Colorado"
+
+
+SETTING ALERTS:
+1. set hash:
+HSET alerts:animals:2 FullName "Julee Dee" Latitude 39.7392 Longitude -104.9903 Photo "photo_urlforthis" PhoneNumber "5056872733" Animal "bear" Description "Injured Bear this time" Email "juleedee@email.com" Timestamp 1649827200
+
+2. add geo:
+GEOADD alerts:animals -104.9903 39.7392 2
+
+GETTING ALL ALERTS:
+1. get all the alert id's: 
+ZRANGE alerts:animals 0 -1
+2. loop over id's:
+GEOPOS alerts:animals 1 
+
+HSET alerts:animals:1 FullName "John Doe" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Dog" Description "Injured dog" Email "johndoe@email.com" Timestamp 1649827200
+
 
 
 
