@@ -246,7 +246,7 @@ GEOADD pagosa -104.9903 39.7392 "Pagosa, Colorado"
 
 SETTING ALERTS:
 1. set hash:
-HSET alerts:animals:2 FullName "Julee Dee" Latitude 39.7392 Longitude -104.9903 Photo "photo_urlforthis" PhoneNumber "5056872733" Animal "bear" Description "Injured Bear this time" Email "juleedee@email.com" Timestamp 1649827200
+HSET alerts:animals:2 FullName "Julee Dee" Latitude 39.7392 Longitude -104.9903 Photo "photo_urlforthis" PhoneNumber "5056872733" Animal "bear" Description "Injured Bear this time" Email "juleedee@email.com" Timestamp 1683926948
 
 2. add geo:
 GEOADD alerts:animals -104.9903 39.7392 2
@@ -258,7 +258,7 @@ ZRANGE alerts:animals 0 -1
 GEOPOS alerts:animals 1 
 
 other example setting hash:
-HSET alerts:animals:1 FullName "John Doe" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Dog" Description "Injured dog" Email "johndoe@email.com" Timestamp 1649827200
+HSET alerts:animals:1 FullName "John Doe" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Dog" Description "Injured dog" Email "johndoe@email.com" Timestamp 1683926948
 
 
 

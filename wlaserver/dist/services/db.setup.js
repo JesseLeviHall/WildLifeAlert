@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv';
-import { createClient } from 'redis';
+import redis from 'redis';
 dotenv.config();
 const dbpass = process.env.REDIS_PASS;
-export const redisClient = createClient({
+export const redisClient = redis.createClient({
     password: `${dbpass}`,
     socket: {
         host: 'redis-19415.c289.us-west-1-2.ec2.cloud.redislabs.com',
