@@ -9,6 +9,9 @@ export const redisClient = createClient({
         port: 19415,
     },
 });
+redisClient.on("error", function (error) {
+    console.error("Redis error: ", error);
+});
 export const connectToRedis = async () => {
     try {
         await redisClient.connect();

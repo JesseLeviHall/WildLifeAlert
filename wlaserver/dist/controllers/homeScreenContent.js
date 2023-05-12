@@ -1,4 +1,5 @@
 import { redisClient } from '../services/db.setup.js';
+import { promisify } from 'util';
 //GET /Home Screen.
 export const homeScreenContent = async (req, res) => {
     try {
@@ -50,5 +51,42 @@ export const updatePublicMapContent = async (req, res) => {
 };
 /*
 SET publicmapcontent '{"Title":"","Description":"","Message":""}'
-*/ 
+*/
+//GET /Public Map GeoPos.
+export const publicMapGeoPos = async (req, res) => {
+    try {
+        // Get current timestamp
+        const now = Math.floor(Date.now() / 1000);
+        console.log('now:', now);
+        // Promisify Redis commands
+        const zRangeAsync = promisify(redisClient.zRange).bind(redisClient);
+        const hMGetAsync = promisify(redisClient.hmGet).bind(redisClient);
+        console.log('About to fetch alert IDs');
+        // Get all alert IDs
+        const alertIds = await zRangeAsync('alerts:animals', 0, -1);
+        console.log('alertIds:', alertIds);
+        const alerts = [];
+        // For each ID, get the coordinates and timestamp
+        for (const id of alertIds) {
+            console.log(`Fetching details for alert ID: ${id}`);
+            const data = await hMGetAsync(`alerts:animals:${id}`, 'Latitude', 'Longitude', 'Timestamp');
+            const [lat, lon, timestamp] = data;
+            console.log(`Details for alert ID ${id}:`, data);
+            // Check if the alert is from the last 48 hours
+            if (now - timestamp <= 48 * 60 * 60) {
+                alerts.push({
+                    id,
+                    position: [lat, lon]
+                });
+            }
+        }
+        console.log('alerts:', alerts);
+        // Send the alerts as a response
+        res.send(alerts);
+    }
+    catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('An error occurred while fetching alert locations.');
+    }
+};
 //# sourceMappingURL=homeScreenContent.js.map

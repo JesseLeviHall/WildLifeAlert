@@ -257,6 +257,7 @@ ZRANGE alerts:animals 0 -1
 2. loop over id's:
 GEOPOS alerts:animals 1 
 
+other example setting hash:
 HSET alerts:animals:1 FullName "John Doe" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Dog" Description "Injured dog" Email "johndoe@email.com" Timestamp 1649827200
 
 
