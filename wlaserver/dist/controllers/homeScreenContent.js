@@ -56,26 +56,23 @@ export const publicMapGeoPos = async (req, res) => {
     try {
         //timestamp of current moment
         const now = Math.floor(Date.now() / 1000);
-        //get array of alert id's
-        const alertIds = await redisClient.zRange('alerts:animals', 0, -1);
+        //timestamp of 48 hours ago
+        const minus48h = now - 48 * 60 * 60;
+        //get array of alert ids from the last 48 hours
+        const alertIds = await redisClient.zRangeByScore('alerts:animals:timestamps', minus48h.toString(), '+inf');
+        // Reverse the array to get the most recent alerts first
+        alertIds.reverse();
         const alerts = [];
-        //for each alert id, get timestamp and geoposition
+        //for each alert id, get geoposition
         for (const id of alertIds) {
-            const data = await redisClient.hmGet(`alerts:animals:${id}`, [
-                'Latitude',
-                'Longitude',
-                'Timestamp',
-            ]);
-            const [lat, lon, timestamp] = data;
-            //if alert is less than 48 hours old, add to alerts array
-            if (now - Number(timestamp) <= 48 * 60 * 60) {
-                alerts.push({
-                    id,
-                    position: [lat, lon],
-                });
-            }
+            const data = await redisClient.hGetAll(`alerts:animals:${id}`);
+            const { Latitude: lat, Longitude: lon } = data;
+            //add to alerts array
+            alerts.push({
+                id,
+                position: [lat, lon],
+            });
         }
-        //send alerts array to client
         res.send(alerts);
     }
     catch (error) {

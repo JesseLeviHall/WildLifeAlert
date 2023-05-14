@@ -230,19 +230,22 @@ XTRIM key MAXLEN ~ count
 ==============This Project=================================
 ==============Data Structures of Alerts====================
 # Use HSET to store the properties of the alert in a hash
-HSET alerts:animals:1 FullName "John Doe" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Dog" Description "Injured dog" Email "johndoe@email.com" Timestamp 1649827200
+HSET alerts:animals:1 FullName "John Doe" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Deer" Description "Injured on side of road" Email "johndoe@email.com" Timestamp 1684082731
+ZADD alerts:animals:timestamps 1684082731 1
 
 SETTING ALERTS:
 1. set hash and sorted list examples :
-HSET alerts:animals:3 FullName "Julee Dee" Latitude 39.7392 Longitude -104.9903 Photo "photo_urlforthis" PhoneNumber "5056872733" Animal "bear" Description "Injured Bear this time" Email "juleedee@email.com" Timestamp 1683926948
-ZADD alerts:animals:timestamps 1683926948 3
+HSET alerts:animals:2 FullName "Julee Dee" Latitude 35.6870 Longitude -105.9378 Photo "photo_urlforthis" PhoneNumber "5056872733" Animal "bear" Description "Injured Bear this time" Email "juleedee@email.com" Timestamp 1684082980
+ZADD alerts:animals:timestamps 1684082980 2
 
-2. HSET alerts:animals:4 FullName "Tom Tee" Latitude 39.7392 Longitude -104.9903 Photo "photo_url" PhoneNumber "+123456789" Animal "Cat" Description "Stray cat" Email "tomtee@email.com" Timestamp 1683926948
-ZADD alerts:animals:timestamps 1683926948 4
+2. HSET alerts:animals:3 FullName "Tom Tee" Latitude 45.6614 Longitude -110.5600 Photo "photo_url" PhoneNumber "+123456789" Animal "marmot" Description "marmot on side of road needs help" Email "tomtee@email.com" Timestamp 1684083034
+ZADD alerts:animals:timestamps 1684083034 3
 
 
 GETTING ALL ALERTS IN LAST 48 HOURS:
 ZREVRANGEBYSCORE alerts:animals:timestamps +inf [current_timestamp_minus_48h]
+ex: ZREVRANGEBYSCORE alerts:animals:timestamps +inf 1684131200
+This example assumes that 1684131200 is the Unix timestamp that represents the current time minus 48 hours.
 (loop) HGETALL alerts:animals:[id]
 
 
