@@ -56,17 +56,6 @@ export const getAlertDetails = async (id: number) => {
 } 
 
 
-//update homescreencontent:
-export const updateHomeScreenContent = async (data: any) => {
-	try {
-		const updatedhomescreencontent = await API.put('/api/homescreen', data);
-		return updatedhomescreencontent.data;
-	}
-	catch (error) {
-		console.error(error);
-	}
-}
-
 //Get Public Map Info Dialogue content
 export const getPubMapDialogueContent = async () => {
 	try {

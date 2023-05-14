@@ -25,8 +25,7 @@ export default function PubMapView() {
 		return <Text>{JSON.stringify(error)}</Text>;
 	}
 
-	console.log(alerts);
-
+	
 	return (
 		<View style={styles.container}>
 			<MapView
