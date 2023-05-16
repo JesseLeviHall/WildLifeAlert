@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { redisClient } from '../services/db.setup.js';
-import { promisify } from 'util';
+
 
 //GET /Home Screen.
 export const homeScreenContent = async (
