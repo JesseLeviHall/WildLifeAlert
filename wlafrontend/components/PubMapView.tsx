@@ -1,31 +1,27 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, View, Text } from 'react-native';
-import { useQuery } from '@tanstack/react-query/build/lib';
-import { getPubData } from '../api/index';
-import SpinnerComp from '../components/Spinner';
+
 
 interface Alert {
 	id: string;
 	position: string[];
 }
 
-export default function PubMapView() {
-	const {
-		isLoading,
-		data: alerts,
-		error,
-	} = useQuery<Alert[], Error>(['PubMapView'], getPubData);
+interface PubMapViewProps {
+	alerts: Alert[];
+}
 
-	if (isLoading) {
-		return <SpinnerComp />;
-	}
-
-	if (error) {
-		return <Text>{JSON.stringify(error)}</Text>;
-	}
-
+export default function PubMapView({ alerts }: PubMapViewProps) {
 	
+ function Toast(){
+		return (
+			<View className='absolute mt-96 bg-[#bad1e8] opacity-50  p-2 rounded-xl self-center z-50'>
+				<Text className='text-lg font-semibold'>Whew, No Alerts To Show</Text>
+			</View>
+		);
+ }
+
 	return (
 		<View style={styles.container}>
 			<MapView
@@ -46,9 +42,11 @@ export default function PubMapView() {
 					/>
 				))}
 			</MapView>
+				{alerts.length === 0 && <Toast />}
 		</View>
 	);
 }
+
 
 const styles = StyleSheet.create({
 	container: {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, RefreshControl, View, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from 'react-native';
 import { Motion } from '@legendapp/motion';
@@ -8,6 +8,8 @@ import { Appbar, FAB } from 'react-native-paper';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import PubMapView from '../components/PubMapView';
+import SpinnerComp from '../components/Spinner';
+import { getPubData } from '../api/index';
 import PubMapDialogue from '../components/PubMapInfoComp';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -23,17 +25,43 @@ type HomeScreenNavigationProp = NavigationProp<RootStackParamList, 'Home'>;
 type Props = {
 	navigation: HomeScreenNavigationProp;
 };
+interface Alert {
+	id: string;
+	position: string[];
+}
 
 const PublicMap = (props: Props) => {
 	const [infoVisible, setInfoVisible] = React.useState(false);
 	const showInfoDialog = () => setInfoVisible(true);
 	const { bottom } = useSafeAreaInsets();
 	const navigation = useNavigation<HomeScreenNavigationProp>();
+	const pubMapViewRef = React.useRef<{ refresh: () => void } | null>(null);
+
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
 			headerShown: false,
 		});
 	});
+
+	const {
+		refetch,
+		isLoading,
+		data: alerts,
+		error,
+	} = useQuery<Alert[], Error>(['PubMapView'], getPubData);
+
+	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
+
+	if (isLoading || isRefetchingByUser) {
+		return <SpinnerComp />;
+	}
+
+	if (error) {
+		return <Text>{JSON.stringify(error)}</Text>;
+	}
+
+
+
 	return (
 		<LinearGradient
 			style={{ height: screenHeight }}
@@ -46,7 +74,6 @@ const PublicMap = (props: Props) => {
 				/>
 				<Appbar.Content title='Live Map' />
 				<Appbar.Action icon='map' onPress={() => {}} />
-				<Appbar.Action icon='more' onPress={showInfoDialog} />
 			</Appbar.Header>
 			{infoVisible ? (
 				<PubMapDialogue
@@ -70,7 +97,7 @@ const PublicMap = (props: Props) => {
 						duration: 1000,
 					},
 				}}>
-				<PubMapView />
+				<PubMapView  alerts={alerts} />
 			</Motion.View>
 
 			<Appbar
@@ -82,15 +109,16 @@ const PublicMap = (props: Props) => {
 					},
 				]}
 				safeAreaInsets={{ bottom }}>
-				<Appbar.Action icon='refresh' onPress={() => {}} />
+				<Appbar.Action icon='refresh' onPress={() => refetchByUser()} /> 
+
 				<Appbar.Action icon='email' onPress={() => {}} />
 				<Appbar.Action icon='share' onPress={() => {}} />
 
 				<FAB
 					mode='flat'
 					size='medium'
-					icon='plus'
-					onPress={() => {}}
+					icon='information'
+					onPress={showInfoDialog}
 					style={[
 						styles.fab,
 						{ top: (BOTTOM_APPBAR_HEIGHT - MEDIUM_FAB_HEIGHT) / 2 },
