@@ -60,8 +60,6 @@ const PublicMap = (props: Props) => {
 		return <Text>{JSON.stringify(error)}</Text>;
 	}
 
-
-
 	return (
 		<LinearGradient
 			style={{ height: screenHeight }}
@@ -97,7 +95,7 @@ const PublicMap = (props: Props) => {
 						duration: 1000,
 					},
 				}}>
-				<PubMapView  alerts={alerts} />
+				<PubMapView alerts={alerts} />
 			</Motion.View>
 
 			<Appbar
@@ -109,11 +107,10 @@ const PublicMap = (props: Props) => {
 					},
 				]}
 				safeAreaInsets={{ bottom }}>
-				<Appbar.Action icon='refresh' onPress={() => refetchByUser()} /> 
-
-				<Appbar.Action icon='email' onPress={() => {}} />
-				<Appbar.Action icon='share' onPress={() => {}} />
-
+				<Appbar.Action icon='refresh' onPress={() => refetchByUser()} />
+				{
+					//WHEN A LINK TO APP EXISTS<Appbar.Action icon='share' onPress={() => {'share this app'}} />}
+				}
 				<FAB
 					mode='flat'
 					size='medium'

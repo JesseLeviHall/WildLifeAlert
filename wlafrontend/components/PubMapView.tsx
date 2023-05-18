@@ -2,7 +2,6 @@ import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, View, Text } from 'react-native';
 
-
 interface Alert {
 	id: string;
 	position: string[];
@@ -13,14 +12,13 @@ interface PubMapViewProps {
 }
 
 export default function PubMapView({ alerts }: PubMapViewProps) {
-	
- function Toast(){
+	function Toast() {
 		return (
 			<View className='absolute mt-96 bg-[#bad1e8] opacity-50  p-2 rounded-xl self-center z-50'>
 				<Text className='text-lg font-semibold'>Whew, No Alerts To Show</Text>
 			</View>
 		);
- }
+	}
 
 	return (
 		<View style={styles.container}>
@@ -42,11 +40,10 @@ export default function PubMapView({ alerts }: PubMapViewProps) {
 					/>
 				))}
 			</MapView>
-				{alerts.length === 0 && <Toast />}
+			{alerts.length === 0 && <Toast />}
 		</View>
 	);
 }
-
 
 const styles = StyleSheet.create({
 	container: {
