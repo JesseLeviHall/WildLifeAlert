@@ -4,7 +4,7 @@ export const checkOrigin = (req: Request, res: Response, next: NextFunction) => 
   const receivedHeader = req.headers['x-wildlifealert'];
 
   if (!receivedHeader || receivedHeader !== 'acceptableRequest') {
-    res.status(400).send('Invalid Request Header');
+    res.status(400).send('Invalid Request');
   } else {
     next();
   }
