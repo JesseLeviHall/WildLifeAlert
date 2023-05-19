@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // set axios configurations
 //remote server for now: http://54.177.204.144
+//locoal server: http://10.0.10.10:3000
 const API = axios.create({
 	baseURL: 'http://10.0.10.10:3000',
 	timeout: 10000,
@@ -15,6 +16,7 @@ API.interceptors.request.use(async (config) => {
 	if (token) {
 		config.headers.Authorization = `Bearer ${token}`;
 	}
+	config.headers['X-WildlifeAlert'] = 'acceptableRequest';
 	return config;
 });
 
