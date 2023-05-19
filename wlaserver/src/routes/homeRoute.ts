@@ -8,3 +8,4 @@ homeRouter.put("/updatehomecont", homeScreenContent.updateHomeScreenContent);
 homeRouter.get("/publicmapscreen", homeScreenContent.publicMapContent)
 homeRouter.put("/updatepublicmapcont", homeScreenContent.updatePublicMapContent);
 homeRouter.get("/publicmapgeopos", homeScreenContent.publicMapGeoPos)
+homeRouter.post("/postalert", homeScreenContent.newAlert);

@@ -50,6 +50,7 @@ const PublicMap = (props: Props) => {
 		error,
 	} = useQuery<Alert[], Error>(['PubMapView'], getPubData);
 
+	
 	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
 	if (isLoading || isRefetchingByUser) {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { redisClient } from '../services/db.setup.js';
-import { promisify } from 'util';
+
 
 
 //GET /Home Screen.
@@ -101,7 +101,7 @@ export const publicMapGeoPos = async (
 };
 
 
-/*
+
 //POST New Alert
 export const newAlert = async (
     req: Request,
@@ -109,26 +109,38 @@ export const newAlert = async (
 ): Promise<void> => {
     try {
         const { FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email } = req.body;
+        console.log({ FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email });
+
+        // Check if required fields are undefined
+        if(!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {
+            res.status(400).send('Invalid request: Missing required fields');
+            return;
+        }
+
         // Assume 'Photo' is an array of photo URLs
-        const photoUrlsString = JSON.stringify(Photo); // Serialize array to JSON string
+        // If Photo is undefined, use a default photo URL instead
+        const photoUrlsString = JSON.stringify(Photo || ['defaultphoto.png']); 
         const timestamp = Math.floor(Date.now() / 1000);
         const id = await redisClient.incr('alerts:animals:nextid');
         
-        await redisClient.hSet(
+        // Send the HMSET command
+        await redisClient.sendCommand([
+            'HMSET', 
             `alerts:animals:${id}`, 
             'FullName', FullName, 
-            'Latitude', Latitude, 
-            'Longitude', Longitude, 
-            'Photo', photoUrlsString, // Store serialized photo URLs
+            'Latitude', Latitude.toString(), 
+            'Longitude', Longitude.toString(), 
+            'Photo', photoUrlsString, 
             'PhoneNumber', PhoneNumber, 
             'Animal', Animal, 
             'Description', Description, 
             'Email', Email, 
-            'Timestamp', timestamp
-        );
-        
-        await redisClient.zAdd('alerts:animals:timestamps', timestamp, id);
-        
+            'Timestamp', timestamp.toString()
+        ]);
+
+        // Send the ZADD command
+        await redisClient.sendCommand(['ZADD', 'alerts:animals:timestamps', timestamp.toString(), id.toString()]);
+
         res.send('New Alert Created');
     } catch (error) {
         console.error(error);
@@ -136,6 +148,14 @@ export const newAlert = async (
     }
 };
 
-*/
+
+
+
+
+
+
+
+
+
 
 
