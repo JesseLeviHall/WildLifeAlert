@@ -1,5 +1,5 @@
 import React from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Circle } from 'react-native-maps';
 import { StyleSheet, View, Text } from 'react-native';
 
 interface Alert {
@@ -32,6 +32,7 @@ export default function PubMapView({ alerts }: PubMapViewProps) {
 				style={styles.map}>
 				{alerts.map((alert: Alert) => (
 					<Marker
+						pinColor="blue"
 						key={alert.id}
 						coordinate={{
 							latitude: parseFloat(alert.position[0]),

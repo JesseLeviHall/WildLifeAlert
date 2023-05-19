@@ -241,7 +241,6 @@ ZADD alerts:animals:timestamps 1684082980 2
 2. HSET alerts:animals:3 FullName "Tom Tee" Latitude 45.6614 Longitude -110.5600 Photo "photo_url" PhoneNumber "+123456789" Animal "marmot" Description "marmot on side of road needs help" Email "tomtee@email.com" Timestamp 1684083034
 ZADD alerts:animals:timestamps 1684083034 3
 
-
 GETTING ALL ALERTS IN LAST 48 HOURS:
 ZREVRANGEBYSCORE alerts:animals:timestamps +inf [current_timestamp_minus_48h]
 ex: ZREVRANGEBYSCORE alerts:animals:timestamps +inf 1684131200

@@ -80,4 +80,40 @@ export const publicMapGeoPos = async (req, res) => {
         res.status(500).send('An error occurred while fetching alert locations.');
     }
 };
+/*
+//POST New Alert
+export const newAlert = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const { FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email } = req.body;
+        // Assume 'Photo' is an array of photo URLs
+        const photoUrlsString = JSON.stringify(Photo); // Serialize array to JSON string
+        const timestamp = Math.floor(Date.now() / 1000);
+        const id = await redisClient.incr('alerts:animals:nextid');
+        
+        await redisClient.hSet(
+            `alerts:animals:${id}`,
+            'FullName', FullName,
+            'Latitude', Latitude,
+            'Longitude', Longitude,
+            'Photo', photoUrlsString, // Store serialized photo URLs
+            'PhoneNumber', PhoneNumber,
+            'Animal', Animal,
+            'Description', Description,
+            'Email', Email,
+            'Timestamp', timestamp
+        );
+        
+        await redisClient.zAdd('alerts:animals:timestamps', timestamp, id);
+        
+        res.send('New Alert Created');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+*/
 //# sourceMappingURL=homeScreenContent.js.map
