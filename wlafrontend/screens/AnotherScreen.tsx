@@ -8,7 +8,7 @@ type Props = {
 const AnotherScreen = (props: Props) => {
   return (
     <View className=' flex-auto align-middle justify-center' >
-      <Text className='text-lg'>Generic Map of Anonymous and General locations of Alerts?</Text>
+      <Text className='text-lg'>Placeholder for Admin Screen To Come Later</Text>
       <ComponentOne />
     </View>
   );

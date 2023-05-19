@@ -13,7 +13,9 @@ import { useQuery } from '@tanstack/react-query/build/lib';
 import { getHomeScreenContent } from '../api/index';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
+import {  useConnectivity } from '../hooks/useConnectivity';
 import SpinnerComp from '../components/Spinner';
+import OfflineToast from '../components/OfflineToast';
 import HomeNavBot from '../components/HomeNavBot';
 
 type RootStackParamList = {
@@ -30,6 +32,7 @@ type Props = {
 };
 
 const Home = (props: Props) => {
+	const isConnected  =  useConnectivity();
 	const navigation = useNavigation<HomeScreenNavigationProp>();
 
 	const handlePress = async () => {
@@ -49,15 +52,16 @@ const Home = (props: Props) => {
 		});
 	});
 
-	const { isLoading, refetch, data, error } = useQuery({
-		queryKey: ['HomeScreen'],
-		queryFn: () => getHomeScreenContent(),
-	});
+	const { isLoading, refetch, data, error } = useQuery(
+    ['HomeScreen'],
+    () => getHomeScreenContent(),
+    { enabled: isConnected }
+  );
 
 	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
 	if (isLoading || isRefetchingByUser) {
-		return <SpinnerComp />;
+		return <View><SpinnerComp /></View>;
 	}
 
 	if (error) {
@@ -103,6 +107,7 @@ const Home = (props: Props) => {
 							{data?.Description}
 						</Text>
 					</View>
+					{isConnected? null : <OfflineToast />}
 					<View className='mt-11 flex-1 align-middle justify-center'>
 						<View className='flex flex-col items-center'>
 							<View className='flex-1 align-middle justify-center w-44 h-44 border border-spacing-10 border-[#15ff00fe] rounded-full flex flex-col items-center bg-[#009DAD]'>

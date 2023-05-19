@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from 'react-native';
 import { Motion } from '@legendapp/motion';
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { Appbar, FAB } from 'react-native-paper';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
+import {  useConnectivity } from '../hooks/useConnectivity';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import PubMapView from '../components/PubMapView';
 import SpinnerComp from '../components/Spinner';
+import OfflineToast from '../components/OfflineToast';
 import { getPubData } from '../api/index';
 import PubMapDialogue from '../components/PubMapInfoComp';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -35,7 +37,8 @@ const PublicMap = (props: Props) => {
 	const showInfoDialog = () => setInfoVisible(true);
 	const { bottom } = useSafeAreaInsets();
 	const navigation = useNavigation<HomeScreenNavigationProp>();
-	const pubMapViewRef = React.useRef<{ refresh: () => void } | null>(null);
+	const isConnected  =  useConnectivity();
+	
 
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
@@ -48,13 +51,13 @@ const PublicMap = (props: Props) => {
 		isLoading,
 		data: alerts,
 		error,
-	} = useQuery<Alert[], Error>(['PubMapView'], getPubData);
+	} = useQuery<Alert[], Error>(['PubMapView'], () => getPubData(), { enabled: isConnected });
 
 	
 	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
 	if (isLoading || isRefetchingByUser) {
-		return <SpinnerComp />;
+		return <View><SpinnerComp /></View>;
 	}
 
 	if (error) {
@@ -98,7 +101,7 @@ const PublicMap = (props: Props) => {
 				}}>
 				<PubMapView alerts={alerts} />
 			</Motion.View>
-
+				{isConnected? null : <OfflineToast />}
 			<Appbar
 				style={[
 					styles.bottom,
