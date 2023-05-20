@@ -61,11 +61,11 @@ const Home = (props: Props) => {
 	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
 	if (isLoading || isRefetchingByUser) {
-		return <View><SpinnerComp /></View>;
+		return <View className='flex-1 align-middle justify-center'><SpinnerComp /></View>;
 	}
 
 	if (error) {
-		return <Text>{JSON.stringify(error)}</Text>;
+		return <View className='flex-1 align-middle justify-center'><Text>{JSON.stringify(error)}</Text>;</View>
 	}
 
 	return (

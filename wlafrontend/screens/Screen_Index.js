@@ -10,3 +10,8 @@ export { default as AlertsNearby } from './rescuerArea/AlertsNearby';
 export { default as ColdAlerts } from './rescuerArea/ColdAlerts';
 export { default as AlertDetails } from './rescuerArea/AlertDetails';
 export { default as PublicMap } from './PublicMap';
+export { default as AlertDescription } from './createalerts/AlertDescription';
+export { default as SetLocation } from './createalerts/SetLocation';
+export { default as AddPhotos } from './createalerts/AddPhotos';
+export { default as ConfirmPost } from './createalerts/ConfirmPost';
+export { default as NextSteps } from './createalerts/NextSteps';

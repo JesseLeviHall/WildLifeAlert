@@ -6,7 +6,7 @@ import { Motion } from '@legendapp/motion';
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { Appbar, FAB } from 'react-native-paper';
 import { useRefreshByUser } from '../hooks/useRefreshByUser';
-import {  useConnectivity } from '../hooks/useConnectivity';
+import { useConnectivity } from '../hooks/useConnectivity';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import PubMapView from '../components/PubMapView';
 import SpinnerComp from '../components/Spinner';
@@ -57,11 +57,11 @@ const PublicMap = (props: Props) => {
 	const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
 	if (isLoading || isRefetchingByUser) {
-		return <View><SpinnerComp /></View>;
+		return <View className='flex-1 align-middle justify-center'><SpinnerComp /></View>;
 	}
 
 	if (error) {
-		return <Text>{JSON.stringify(error)}</Text>;
+		return <View className='flex-1 align-middle justify-center'><Text>{JSON.stringify(error)}</Text>;</View>
 	}
 
 	return (
@@ -75,7 +75,7 @@ const PublicMap = (props: Props) => {
 					}}
 				/>
 				<Appbar.Content title='Live Map' />
-				<Appbar.Action icon='map' onPress={() => {}} />
+				<Appbar.Action icon='map' onPress={() => {/* TODO: SWITH MAP VIEWS */}} />
 			</Appbar.Header>
 			{infoVisible ? (
 				<PubMapDialogue

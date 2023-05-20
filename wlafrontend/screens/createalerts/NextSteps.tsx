@@ -4,12 +4,12 @@ import React from 'react'
 
 type Props = {}
 
-const SendForHelp = (props: Props) => {
+const NextSteps = (props: Props) => {
   return (
     <View className='flex-1 align-middle justify-center'>
-      <Text>Send For Help Start Screen</Text>
+      <Text>Send For Help Description Screen</Text>
     </View>
   )
 }
 
-export default SendForHelp
+export default NextSteps
