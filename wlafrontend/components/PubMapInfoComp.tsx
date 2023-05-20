@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Button, Dialog, Portal, Provider, Text } from 'react-native-paper';
 import { useQuery } from '@tanstack/react-query/build/lib';
 import { getPubMapDialogueContent } from '../api/index';
