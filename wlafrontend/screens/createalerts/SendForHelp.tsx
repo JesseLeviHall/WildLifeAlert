@@ -34,10 +34,12 @@ React.useLayoutEffect(() => {
 					<AlertStartDialogue visible={visible} setVisible={setVisible} />
 				</View>
 			) : null}
-
+<Text className=' font-extrabold z-10 text-center m-24'>
+            You Might Be Contacted warning should be at the end. 
+          </Text>
 			<View className='flex-1 align-middle justify-center'>
 				<Text>Send For Help 1 Start Screen</Text>
-				<Button onPress={() => navigation.navigate('AlertDescription')}>
+				<Button className='w-24' onPress={() => navigation.navigate('AlertDescription')}>
 					Next
 				</Button>
 			</View>
