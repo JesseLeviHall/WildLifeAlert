@@ -18,7 +18,7 @@ const AlertStartDialogue = ({ visible, setVisible }: Props) => {
 					style={{ marginTop: -300 }}>
 					<Dialog.Title>Safety Notice</Dialog.Title>
 					<Dialog.ScrollArea>
-						<ScrollView contentContainerStyle={{ paddingHorizontal: 24 }}>
+						<ScrollView contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 12 }}>
 							<Text className='block'>
 								Interacting with a wild animal carries risks both for yourself and the animal's well-being. Prior to handling, transporting, or disturbing a wild animal, we strongly advise exercising caution, using sound judgment, and seeking guidance from experts. 
 							</Text>

@@ -24,7 +24,7 @@ const NextSteps = (props: Props) => {
 			style={{ height: screenHeight }}
 			colors={['#0DE69A', '#71D1C7', '#99BBE3']}>
     <View className='flex-1 align-middle justify-center'>
-      <Text>Send For Help 6 Next Steps Screen</Text>
+      <Text>Send For Help 6 Next Steps Screen. Success Toast?</Text>
       <Button onPress={() => navigation.navigate('PublicMap')}>Finish</Button>
     </View>
     </LinearGradient>

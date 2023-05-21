@@ -16,7 +16,9 @@ const AlertDescription = (props: Props) => {
   const navigation = useNavigation<SetLocationProp>();
   React.useLayoutEffect(() => {
 		navigation.setOptions({
-			headerShown: false,
+			title: 'Description',
+			 headerTintColor: '#000000', 
+      headerStyle: { backgroundColor: '#71D1C7' },
 		});
 	});
   return (

@@ -17,7 +17,9 @@ const AddPhotos = (props: Props) => {
   const navigation = useNavigation<ConfirmPostProp>();
   React.useLayoutEffect(() => {
 		navigation.setOptions({
-			headerShown: false,
+			title: 'Add Photos',
+			 headerTintColor: '#000000', 
+      headerStyle: { backgroundColor: '#71D1C7' },
 		});
 	});
   return (

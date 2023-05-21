@@ -15,7 +15,9 @@ const SetLocation = (props: Props) => {
   const navigation = useNavigation<AddPhotosProp>();
   React.useLayoutEffect(() => {
 		navigation.setOptions({
-			headerShown: false,
+			title: 'Set Location',
+			 headerTintColor: '#000000', 
+      headerStyle: { backgroundColor: '#71D1C7' },
 		});
 	});
   return (

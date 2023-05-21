@@ -15,10 +15,12 @@ const screenHeight = Dimensions.get('window').height;
 const ConfirmPost = (props: Props) => {
   const navigation = useNavigation<NextStepsProp>();
   React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  });
+		navigation.setOptions({
+			title: 'Confirm',
+			 headerTintColor: '#000000', 
+      headerStyle: { backgroundColor: '#71D1C7' },
+		});
+	});
   return (
     <LinearGradient
 			style={{ height: screenHeight }}
