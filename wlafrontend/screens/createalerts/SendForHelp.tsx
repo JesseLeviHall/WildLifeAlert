@@ -2,8 +2,7 @@ import * as React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { View, Text, Icon, Button, FormControl, Input, } from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, Text, Button, FormControl, Input } from 'native-base';
 import AlertStartDialogue from '../../components/AlertStartDialogue';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -88,12 +87,11 @@ const SendForHelp = (props: Props) => {
 			updatedErrors.PhoneNumber === ''
 		) {
 			try {
-				await AsyncStorage.setItem('fullName', `${fullName}`);
-				await AsyncStorage.setItem('Email', `${Email}`);
-				await AsyncStorage.setItem('PhoneNumber', `${PhoneNumber}`);
+				await AsyncStorage.setItem('fullName', fullName.fullName);
+				await AsyncStorage.setItem('Email', Email.Email);
+				await AsyncStorage.setItem('PhoneNumber', PhoneNumber.PhoneNumber);
 				console.log('Data saved');
 			} catch (error) {
-				// handle error
 				console.log('Error saving data', error);
 			}
 			return true;
@@ -112,7 +110,7 @@ const SendForHelp = (props: Props) => {
 	};
 
 	return (
-		 <LinearGradient
+		<LinearGradient
 			style={{ height: screenHeight }}
 			colors={['#0DE69A', '#71D1C7', '#99BBE3']}>
 			<View>
@@ -122,10 +120,12 @@ const SendForHelp = (props: Props) => {
 					</View>
 				) : null}
 			</View>
-			 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 				<View className='flex flex-1 items-center p-4 h-full w-full '>
-						<Text className='text-center font-black uppercase text-4xl'>who is posting?</Text>
-					<View className='mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]'>			
+					<Text className='text-center font-black uppercase text-4xl'>
+						who is posting?
+					</Text>
+					<View className='mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]'>
 						<FormControl isRequired className='mb-4'>
 							<FormControl.Label
 								_text={{
@@ -137,8 +137,8 @@ const SendForHelp = (props: Props) => {
 							<Input
 								className=' bg-[#d4e1ea] w-2/3'
 								placeholder='First & Last'
-								variant="filled"
-								autoComplete="name"
+								variant='filled'
+								autoComplete='name'
 								onChangeText={(value) =>
 									setFullName({ ...fullName, fullName: value })
 								}
@@ -164,8 +164,8 @@ const SendForHelp = (props: Props) => {
 								className=' bg-[#d4e1ea]'
 								placeholder='Email Address'
 								keyboardType='email-address'
-								autoComplete="email"
-								variant="filled"
+								autoComplete='email'
+								variant='filled'
 								onChangeText={(value) => setEmail({ ...Email, Email: value })}
 							/>
 							{'Email' in errors ? (
@@ -188,8 +188,8 @@ const SendForHelp = (props: Props) => {
 							<Input
 								className=' bg-[#d4e1ea]'
 								placeholder='Phone Number'
-								variant="filled"
-								autoComplete="tel"
+								variant='filled'
+								autoComplete='tel'
 								keyboardType='phone-pad'
 								onChangeText={(value) =>
 									setPhoneNumber({ ...PhoneNumber, PhoneNumber: value })
@@ -204,11 +204,11 @@ const SendForHelp = (props: Props) => {
 								</FormControl.HelperText>
 							) : null}
 						</FormControl>
-					<Button className=' mt-6 w-24' onPress={onSubmit}>
-						Next
-					</Button>		
+						<Button className=' mt-6 w-24' onPress={onSubmit}>
+							Next
+						</Button>
 					</View>
-			</View>
+				</View>
 			</TouchableWithoutFeedback>
 		</LinearGradient>
 	);

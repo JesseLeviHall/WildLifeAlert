@@ -23,6 +23,7 @@ const AlertStartDialogue = ({ visible, setVisible }: Props) => {
 								Interacting with a wild animal carries risks both for yourself and the animal's well-being. Prior to handling, transporting, or disturbing a wild animal, we strongly advise exercising caution, using sound judgment, and seeking guidance from experts. 
 							</Text>
               <Text className='block mt-4'>For additional information, please refer to our resources screen.</Text>
+							<Text className='block mt-4'>Now, we just need to gather some information to post a helpful alert</Text>
 						</ScrollView>
 					</Dialog.ScrollArea>
 					<Dialog.Actions>
