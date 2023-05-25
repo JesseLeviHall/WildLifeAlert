@@ -83,8 +83,8 @@ export const publicMapGeoPos = async (req, res) => {
 //POST New Alert
 export const newAlert = async (req, res) => {
     try {
-        const { FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email } = req.body;
-        console.log({ FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email });
+        const { FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
+        console.log({ FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email, ShareContact });
         // Check if required fields are undefined
         if (!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {
             res.status(400).send('Invalid request: Missing required fields');
@@ -107,6 +107,7 @@ export const newAlert = async (req, res) => {
             'Animal', Animal,
             'Description', Description,
             'Email', Email,
+            'ShareContact', ShareContact.toString(),
             'Timestamp', timestamp.toString()
         ]);
         // Send the ZADD command
