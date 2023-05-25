@@ -55,7 +55,7 @@ const AlertDescription = (props: Props) => {
     try {
       await AsyncStorage.setItem('Animal', Animal.Animal);
       await AsyncStorage.setItem('Description', Description.Description);
-      console.log('Data saved');
+      console.log('Description saved');
     } catch (error) {
 				
 				console.log('Error saving data', error);
@@ -123,10 +123,11 @@ const onSubmit = async () => {
 								}}>
 								Description
 							</FormControl.Label>
-						 <TextArea h={20} placeholder="Text Area Placeholder" w="100%" maxW="300" 
+						 <TextArea h={20} placeholder="what is the condition of the animal" variant='filled' w="100%" maxW="300" 
              autoCompleteType={
               'text'
              }
+             onChangeText={(text) => setDescription({Description: text}) }
 							/>
 							{'Description' in errors ? (
 								<FormControl.HelperText
