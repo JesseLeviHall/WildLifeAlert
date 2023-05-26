@@ -14,6 +14,9 @@ app.use(helmet({
     referrerPolicy: { policy: "no-referrer" },
 }));
 app.use(logger(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms'));
+app.use('/healthcheck', (req, res) => {
+    res.status(200).send('Im alive!');
+});
 app.use(checkOrigin);
 app.use('/api', api);
 export default app;
