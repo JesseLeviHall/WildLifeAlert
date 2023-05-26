@@ -1,14 +1,29 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-type Props = {}
+import React from "react";
+import { View, Text } from "react-native";
+
+type Props = {
+  message: string; // Here is the new prop
+};
 
 const SuccessToast = (props: Props) => {
   return (
-    <View className='absolute mt-96 bg-[#bad1e8] opacity-50  p-2 rounded-xl self-center z-50'>
-    <Text className='text-lg font-semibold'>Location Saved</Text>
-  </View>
-    
-  )
-}
+    <View style={{ flex: 1, justifyContent: "flex-end" }}>
+      <View
+        style={{
+          backgroundColor: "#bad1e8",
+          opacity: 0.5,
+          padding: 10,
+          borderRadius: 10,
+          alignItems: "center",
+          marginBottom: "1%",
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          {props.message}
+        </Text>
+      </View>
+    </View>
+  );
+};
 
-export default SuccessToast
+export default SuccessToast;
