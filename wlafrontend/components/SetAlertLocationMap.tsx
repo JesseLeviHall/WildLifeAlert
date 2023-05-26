@@ -3,18 +3,22 @@ import MapView, { Marker, MapPressEvent } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { StyleSheet, View, Text, Button, Alert, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SuccessToast from './SuccessToast';
 
 type UserLocation = {
   latitude: number;
   longitude: number;
 };
 type SetAlertLocationMapProps = {
+  onLocationChange: (location: UserLocation | null) => void;
   onLocationSave: (locationIsSaved: boolean, location: UserLocation | null) => void;
 };
 
-export default function SetAlertLocationMap({ onLocationSave }: SetAlertLocationMapProps) {
+
+export default function SetAlertLocationMap({ onLocationChange, onLocationSave }: SetAlertLocationMapProps) {
   const [location, setLocation] = useState<UserLocation | null>(null);
   const [locationExists, setLocationExists] = useState(false);
+  const [locationSaved, setLocationSaved] = useState(false);
 
   useEffect(() => {
     const fetchSavedLocation = async () => {
@@ -26,9 +30,6 @@ export default function SetAlertLocationMap({ onLocationSave }: SetAlertLocation
     fetchSavedLocation();
   }, []);
 
-  useEffect(() => {
-    onLocationSave(locationExists, location);
-}, [locationExists, location]);
 
   const handleGetCurrentLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -46,21 +47,26 @@ export default function SetAlertLocationMap({ onLocationSave }: SetAlertLocation
     }
   };
 
-
   const handleSaveLocation = async () => {
     try {
       await AsyncStorage.setItem('location', JSON.stringify(location));
       console.log('Location saved successfully!', location);
-      onLocationSave(true, location);
+      onLocationSave(true, location); // Only call onLocationSave when saving the location
+      setLocationSaved(true);
+  
+      // Resetting locationSaved state back to false after 2.5 seconds
+      setTimeout(() => {
+        setLocationSaved(false);
+      }, 2500);
     } catch (error: any) {
       Alert.alert('Error', error.message);
     }
-};
+  };
 
   const handleMapPress = (event: MapPressEvent) => {
     setLocation(event.nativeEvent.coordinate);
+    onLocationChange(event.nativeEvent.coordinate);
   };
-  
 
   return (
     <View style={styles.container}>
