@@ -84,7 +84,7 @@ export const publicMapGeoPos = async (req, res) => {
 export const newAlert = async (req, res) => {
     try {
         const { FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
-        console.log({ FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email, ShareContact });
+        console.log({ Photo });
         // Check if required fields are undefined
         if (!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {
             res.status(400).send('Invalid request: Missing required fields');

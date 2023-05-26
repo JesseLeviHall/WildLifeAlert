@@ -138,7 +138,7 @@ const onSubmit = async () => {
 								</FormControl.HelperText>
 							) : null}
 						</FormControl>
-      <Button onPress={onSubmit}>Next</Button>
+      <Button className=' w-24' onPress={onSubmit}>Next</Button>
     </View>
     </View>
     </TouchableWithoutFeedback>
