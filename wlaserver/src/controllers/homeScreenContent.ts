@@ -121,9 +121,6 @@ export const newAlert = async (
             res.status(400).send('Invalid request: Missing required fields');
             return;
         }
-
-        // Assume 'Photo' is an array of photo URLs
-        // If no files are uploaded, use a default photo URL instead
 		const Photos = req.files ? req.files.map((file: File) => file.key) : [];
         const photoUrlsString = JSON.stringify(Photos.length > 0 ? Photos : ['defaultphoto.png']);
         const timestamp = Math.floor(Date.now() / 1000);

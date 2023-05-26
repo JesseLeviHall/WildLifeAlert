@@ -83,16 +83,14 @@ export const publicMapGeoPos = async (req, res) => {
 //POST New Alert
 export const newAlert = async (req, res) => {
     try {
-        const { FullName, Latitude, Longitude, Photo, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
-        console.log({ Photo });
+        const { FullName, Latitude, Longitude, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
         // Check if required fields are undefined
         if (!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {
             res.status(400).send('Invalid request: Missing required fields');
             return;
         }
-        // Assume 'Photo' is an array of photo URLs
-        // If Photo is undefined, use a default photo URL instead
-        const photoUrlsString = JSON.stringify(Photo || ['defaultphoto.png']);
+        const Photos = req.files ? req.files.map((file) => file.key) : [];
+        const photoUrlsString = JSON.stringify(Photos.length > 0 ? Photos : ['defaultphoto.png']);
         const timestamp = Math.floor(Date.now() / 1000);
         const id = await redisClient.incr('alerts:animals:nextid');
         // Send the HMSET command
