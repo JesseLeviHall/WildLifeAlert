@@ -4,6 +4,7 @@ import multerS3 from 'multer-s3';
 import crypto from 'crypto';
 const s3 = new S3Client({ region: 'us-west-1' });
 const storage = multerS3({
+    // @ts-ignore 
     s3: s3,
     bucket: 'user-alert-uploads',
     key: function (req, file, cb) {
@@ -17,7 +18,7 @@ const uploader = multer({
     storage,
     fileFilter: function (req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-            return cb(new Error('Only image files are allowed!'), false);
+            return cb(new Error('Only image files are allowed'), false);
         }
         cb(null, true);
     },

@@ -115,6 +115,7 @@ export const newAlert = async (
 ): Promise<void> => {
     try {
         const { FullName, Latitude, Longitude, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
+		console.log(req.body);
 
         // Check if required fields are undefined
         if(!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {

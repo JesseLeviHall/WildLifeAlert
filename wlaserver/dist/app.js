@@ -9,6 +9,7 @@ import { api } from "./routes/api.js";
 // Create Express server
 export const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // Express configuration
 app.use(helmet({
     referrerPolicy: { policy: "no-referrer" },
