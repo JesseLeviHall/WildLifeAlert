@@ -49,7 +49,6 @@ const AlertDescription = (props: Props) => {
       try {
         await AsyncStorage.setItem("Animal", Animal.Animal);
         await AsyncStorage.setItem("Description", Description.Description);
-        console.log("Description saved");
       } catch (error) {
         console.log("Error saving data", error);
       }

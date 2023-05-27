@@ -90,7 +90,6 @@ const SendForHelp = (props: Props) => {
         await AsyncStorage.setItem("fullName", fullName.fullName);
         await AsyncStorage.setItem("Email", Email.Email);
         await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber);
-        console.log("Contact Info Saved");
       } catch (error) {
         console.log("Error saving data", error);
       }

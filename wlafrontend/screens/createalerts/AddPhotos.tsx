@@ -21,8 +21,6 @@ const screenHeight = Dimensions.get("window").height;
 const AddPhotos = (props: Props) => {
   const [photoBlob, setPhotoBlob] = React.useState<string[]>([]);
 
-  console.log("photoBlob", photoBlob);
-
   const navigation = useNavigation<ConfirmPostProp>();
   React.useLayoutEffect(() => {
     navigation.setOptions({
