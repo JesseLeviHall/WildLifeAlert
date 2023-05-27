@@ -4,7 +4,6 @@ import * as Location from "expo-location";
 import { View, TouchableOpacity, Alert, Platform } from "react-native";
 import { Text, FAB } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { teal600 } from "react-native-paper/lib/typescript/src/styles/themes/v2/colors";
 
 type UserLocation = {
   latitude: number;
