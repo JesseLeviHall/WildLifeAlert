@@ -88,7 +88,7 @@ const SendForHelp = (props: Props) => {
       updatedErrors.PhoneNumber === ""
     ) {
       try {
-        await AsyncStorage.setItem("fullName", fullName.fullName);
+        await AsyncStorage.setItem("FullName", fullName.fullName);
         await AsyncStorage.setItem("Email", Email.Email);
         await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber);
         await AsyncStorage.setItem("ShareContact", isSwitchOn.toString());

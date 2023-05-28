@@ -70,12 +70,41 @@ export const getPubMapDialogueContent = async () => {
 }
 
 //post a new alert
-export const postNewAlert = async (data: any) => {
+interface AlertDetails {
+	photoBlob: string;
+	userDetails: {
+	  FullName: string;
+	  PhoneNumber: string;
+	  Email: string;
+	  ShareContact: string;
+	  Animal: string;
+	  Description: string;
+	  Latitude: string;
+	  Longitude: string;
+	};
+  }
+  export const postNewAlert = async ({ photoBlob, userDetails }: { photoBlob: any, userDetails: Record<string, string> }) => {
 	try {
-		const newalert = await API.post('/api/newalert', data);
-		return newalert.data;
+	  let formData = new FormData();
+	  
+	  // Adding the user details to the form data
+	  Object.keys(userDetails).forEach((key) => {
+		formData.append(key, userDetails[key]);
+	  });
+  
+	  // Adding the photo blob to the form data
+	  formData.append("file", photoBlob);
+  
+	  const newalert = await API.post('/api/postalert', formData, {
+		headers: {
+		  'Content-Type': 'multipart/form-data',
+		},
+	  });
+	  
+	  return newalert.data;
+	} catch (error) {
+	  console.error(error);
 	}
-	catch (error) {
-		console.error(error);
-	}
-}
+  };
+  
+  

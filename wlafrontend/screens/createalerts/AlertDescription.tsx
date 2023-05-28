@@ -123,7 +123,7 @@ const AlertDescription = (props: Props) => {
                 Description
               </FormControl.Label>
               <TextArea
-                h={20}
+                h={40}
                 placeholder="what is the condition of the animal"
                 variant="filled"
                 w="100%"
