@@ -15,6 +15,7 @@ API.interceptors.request.use(async (config) => {
 	const token = await AsyncStorage.getItem('token');
 	if (token) {
 		config.headers.Authorization = `Bearer ${token}`;
+		config.headers['X-WildlifeAlert'] = 'acceptableRequest';
 	}
 	config.headers['X-WildlifeAlert'] = 'acceptableRequest';
 	return config;
@@ -84,27 +85,80 @@ interface AlertDetails {
 	};
   }
   export const postNewAlert = async ({ photoBlob, userDetails }: { photoBlob: any, userDetails: Record<string, string> }) => {
-	try {
-	  let formData = new FormData();
-	  
-	  // Adding the user details to the form data
-	  Object.keys(userDetails).forEach((key) => {
-		formData.append(key, userDetails[key]);
-	  });
+    try {
+        let formData = new FormData();
+
+        // Adding the user details to the form data
+        Object.keys(userDetails).forEach((key) => {
+            formData.append(key, userDetails[key]);
+        });
+
+        // Parse the photoBlob string into an array
+        if (typeof photoBlob === 'string') {
+            photoBlob = JSON.parse(photoBlob);
+        }
+
+        // Adding the photo blobs to the form data
+        if (Array.isArray(photoBlob)) {
+			for (let blob of photoBlob) {
+				const uriParts = blob.split('/');
+				const fileName = uriParts[uriParts.length - 1];
+				const fileType = fileName.split('.')[1];
+
+				// Create a new file object using the URI
+				let file = {
+					uri: blob,
+					type: `image/${fileType}`,
+					name: `${fileName}`,
+				};
+				// @ts-ignore
+				formData.append('images', file);
+			}
+		} else {
+			console.log('photoBlob is not an array:', photoBlob);
+		}
+
+        const newalert = await API({
+			method: 'post',
+			url: '/api/postalert',
+			data: formData,
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		});
+		console.log(newalert.data);
+        return newalert.data;
+		
+    } catch (error) {
+       	// @ts-ignore
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			// @ts-ignore
+			console.log(error.response.data);
+			// @ts-ignore
+			console.log(error.response.status);
+			// @ts-ignore
+			console.log(error.response.headers);
+			// @ts-ignore
+		  } else if (error.request) {
+			// The request was made but no response was received
+			// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+			// http.ClientRequest in node.js
+			// @ts-ignore
+			console.log(error.request);
+		  } else {
+			// Something happened in setting up the request that triggered an Error
+			// @ts-ignore
+			console.log('Error', error.message);
+		  }
+		  // @ts-ignore
+		  console.log(error.config);
+    }
+};
+
+
   
-	  // Adding the photo blob to the form data
-	  formData.append("file", photoBlob);
-  
-	  const newalert = await API.post('/api/postalert', formData, {
-		headers: {
-		  'Content-Type': 'multipart/form-data',
-		},
-	  });
-	  
-	  return newalert.data;
-	} catch (error) {
-	  console.error(error);
-	}
-  };
+
   
   

@@ -4,8 +4,9 @@ import { Dimensions, ScrollView, FlexAlignType, ViewStyle } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useMutation, useQueryClient } from "@tanstack/react-query/build/lib";
+import { useMutation } from "@tanstack/react-query/build/lib";
 import { postNewAlert } from "../../api/index";
+import SpinnerComp from "../../components/Spinner";
 
 type RootStackParamList = {
   NextSteps: undefined;
@@ -137,9 +138,13 @@ const ConfirmPost = (props: Props) => {
               Photos? {userDetails.photoBlob ? "Yes" : "No"}
             </Text>
           </View>
-          <Button className="mt-6 w-24" onPress={handleSendAlert}>
-            Send Alert
-          </Button>
+          {mutation.isLoading ? (
+            <SpinnerComp />
+          ) : (
+            <Button className="mt-6 w-24" onPress={handleSendAlert}>
+              Send Alert
+            </Button>
+          )}
         </ScrollView>
       </View>
     </LinearGradient>
