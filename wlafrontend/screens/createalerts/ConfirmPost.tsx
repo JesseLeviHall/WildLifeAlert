@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { postNewAlert } from "../../api/index";
 import SpinnerComp from "../../components/Spinner";
+import SuccessToast from "../../components/SuccessToast";
 
 type RootStackParamList = {
   NextSteps: undefined;
@@ -18,6 +19,7 @@ type Props = {
 const screenHeight = Dimensions.get("window").height;
 
 const ConfirmPost = (props: Props) => {
+  const [showToast, setShowToast] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState({
     FullName: "",
     PhoneNumber: "",
@@ -68,18 +70,27 @@ const ConfirmPost = (props: Props) => {
 
   const mutation = useMutation(postNewAlert, {
     onSuccess: () => {
-      props.navigation.navigate("NextSteps");
+      // Show the toast when the mutation is successful
+      setShowToast(true);
+
+      // After 2 seconds, hide the toast and navigate to the next screen
+      setTimeout(() => {
+        setShowToast(false);
+        props.navigation.navigate("NextSteps");
+      }, 3000);
     },
     onError: (error) => {
       console.error("Error: ", error);
     },
-    retry: 3,
   });
 
   const handleSendAlert = async () => {
     if (mutation.isLoading || mutation.error) return;
     try {
-      mutation.mutate({ userDetails, photoBlob: userDetails.photoBlob });
+      mutation.mutate({
+        userDetails,
+        photoBlob: userDetails.photoBlob || null,
+      });
     } catch (error) {
       console.error("Error sending alert: ", error);
     }
@@ -120,7 +131,8 @@ const ConfirmPost = (props: Props) => {
               {userDetails.Email}
             </Text>
             <Text className="text-center mt-3  text-lg">
-              Share Contact Info: {userDetails.ShareContact}
+              Share Contact Info:{" "}
+              {userDetails.ShareContact == "true" ? "Yes" : "Incognito"}
             </Text>
             <Text className="text-center mt-3  text-lg">
               Animal: {userDetails.Animal}
@@ -134,9 +146,10 @@ const ConfirmPost = (props: Props) => {
                 ? "Yes"
                 : "No location selected"}
             </Text>
-            <Text className="text-center mt-3  text-lg">
+            <Text className="text-center mt-3 mb-5  text-lg">
               Photos? {userDetails.photoBlob ? "Yes" : "No"}
             </Text>
+            {showToast && <SuccessToast message="Alert Posted!" />}
           </View>
           {mutation.isLoading ? (
             <SpinnerComp />

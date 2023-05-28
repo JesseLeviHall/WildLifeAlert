@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 
 type Props = {
-  message: string; // Here is the new prop
+  message: string;
 };
 
 const SuccessToast = (props: Props) => {

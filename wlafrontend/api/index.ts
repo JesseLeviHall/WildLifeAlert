@@ -72,7 +72,7 @@ export const getPubMapDialogueContent = async () => {
 
 //post a new alert
 interface AlertDetails {
-	photoBlob: string;
+	photoBlob: string | null;
 	userDetails: {
 	  FullName: string;
 	  PhoneNumber: string;
@@ -84,7 +84,7 @@ interface AlertDetails {
 	  Longitude: string;
 	};
   }
-  export const postNewAlert = async ({ photoBlob, userDetails }: { photoBlob: any, userDetails: Record<string, string> }) => {
+  export const postNewAlert = async ({ photoBlob, userDetails }: { photoBlob: string | null, userDetails: Record<string, string> }) => {
     try {
         let formData = new FormData();
 
@@ -115,7 +115,7 @@ interface AlertDetails {
 				formData.append('images', file);
 			}
 		} else {
-			console.log('photoBlob is not an array:', photoBlob);
+			return null
 		}
 
         const newalert = await API({
@@ -126,7 +126,7 @@ interface AlertDetails {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
-		console.log(newalert.data);
+		
         return newalert.data;
 		
     } catch (error) {

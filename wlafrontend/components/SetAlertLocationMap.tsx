@@ -59,7 +59,6 @@ export default function SetAlertLocationMap({
   const handleSaveLocation = async () => {
     try {
       await AsyncStorage.setItem("location", JSON.stringify(location));
-      console.log("location saved", location);
       onLocationSave(true, location); // Only call onLocationSave when saving the location
       setLocationSaved(true);
 
