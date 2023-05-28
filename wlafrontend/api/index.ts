@@ -68,3 +68,14 @@ export const getPubMapDialogueContent = async () => {
 		console.error(error);
 	}
 }
+
+//post a new alert
+export const postNewAlert = async (data: any) => {
+	try {
+		const newalert = await API.post('/api/newalert', data);
+		return newalert.data;
+	}
+	catch (error) {
+		console.error(error);
+	}
+}

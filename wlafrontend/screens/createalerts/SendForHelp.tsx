@@ -2,7 +2,7 @@ import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { View, Text, Button, FormControl, Input } from "native-base";
+import { View, Text, Button, FormControl, Switch, Input } from "native-base";
 import AlertStartDialogue from "../../components/AlertStartDialogue";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -24,6 +24,7 @@ type Errors = {
 const screenHeight = Dimensions.get("window").height;
 
 const SendForHelp = (props: Props) => {
+  const [isSwitchOn, setIsSwitchOn] = React.useState(true);
   const [visible, setVisible] = React.useState(true);
   const [fullName, setFullName] = React.useState<{ fullName: string }>({
     fullName: "",
@@ -90,6 +91,7 @@ const SendForHelp = (props: Props) => {
         await AsyncStorage.setItem("fullName", fullName.fullName);
         await AsyncStorage.setItem("Email", Email.Email);
         await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber);
+        await AsyncStorage.setItem("ShareContact", isSwitchOn.toString());
       } catch (error) {
         console.log("Error saving data", error);
       }
@@ -107,6 +109,9 @@ const SendForHelp = (props: Props) => {
       console.log("Validation Failed");
     }
   };
+
+  //handle switch
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   return (
     <LinearGradient
@@ -126,7 +131,7 @@ const SendForHelp = (props: Props) => {
             who is posting?
           </Text>
           <View className="mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
-            <FormControl isRequired className="mb-4">
+            <FormControl isRequired className="mb-2">
               <FormControl.Label
                 _text={{
                   bold: true,
@@ -155,7 +160,7 @@ const SendForHelp = (props: Props) => {
                 </FormControl.HelperText>
               ) : null}
             </FormControl>
-            <FormControl isRequired className="m-4">
+            <FormControl isRequired className="m-2">
               <FormControl.Label
                 _text={{
                   bold: true,
@@ -212,6 +217,20 @@ const SendForHelp = (props: Props) => {
                 </FormControl.HelperText>
               ) : null}
             </FormControl>
+            <Text className="text-center font-black text-lg">
+              Allow registered rescuers to see this information?
+            </Text>
+            <Text className="text-center font-light mb-2 text-sm">
+              They may need to contact you for more information
+            </Text>
+            <Switch
+              offTrackColor="indigo.100"
+              onTrackColor="indigo.300"
+              onThumbColor="indigo.500"
+              offThumbColor="indigo.50"
+              isChecked={isSwitchOn}
+              onToggle={onToggleSwitch}
+            />
             <Button className=" mt-6 w-24" onPress={onSubmit}>
               Next
             </Button>
