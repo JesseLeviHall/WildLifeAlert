@@ -2,11 +2,11 @@ import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions, ScrollView, FlexAlignType, ViewStyle } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { View, Text, Button } from "native-base";
+import { View, Text, Button, Icon } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { postNewAlert } from "../../api/index";
-import SpinnerComp from "../../components/Spinner";
 import SuccessToast from "../../components/SuccessToast";
 
 type RootStackParamList = {
@@ -20,6 +20,7 @@ const screenHeight = Dimensions.get("window").height;
 
 const ConfirmPost = (props: Props) => {
   const [showToast, setShowToast] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState({
     FullName: "",
     PhoneNumber: "",
@@ -72,10 +73,11 @@ const ConfirmPost = (props: Props) => {
     onSuccess: () => {
       // Show the toast when the mutation is successful
       setShowToast(true);
-
+      setDisabled(true);
       // After 2 seconds, hide the toast and navigate to the next screen
       setTimeout(() => {
         setShowToast(false);
+        setDisabled(false);
         props.navigation.navigate("NextSteps");
       }, 3000);
     },
@@ -151,13 +153,18 @@ const ConfirmPost = (props: Props) => {
             </Text>
             {showToast && <SuccessToast message="Alert Posted!" />}
           </View>
-          {mutation.isLoading ? (
-            <SpinnerComp />
-          ) : (
-            <Button className="mt-6 w-24" onPress={handleSendAlert}>
-              Send Alert
-            </Button>
-          )}
+          <Button
+            leftIcon={
+              <Icon as={Ionicons} name="cloud-upload-outline" size="sm" />
+            }
+            isLoading={mutation.isLoading}
+            isLoadingText="Submitting"
+            isDisabled={disabled}
+            className="mt-6 w-32"
+            onPress={handleSendAlert}
+          >
+            Send Alert
+          </Button>
         </ScrollView>
       </View>
     </LinearGradient>
