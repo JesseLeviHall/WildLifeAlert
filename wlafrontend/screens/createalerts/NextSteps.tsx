@@ -25,7 +25,10 @@ const NextSteps = (props: Props) => {
       colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
     >
       <View className="flex-1 align-middle justify-center">
-        <Text>Send For Help 6 Next Steps Screen. Success Toast?</Text>
+        <Text>
+          Thank you for posting an Alert. Here is what happens now, and what to
+          expect.{" "}
+        </Text>
         <Button onPress={() => navigation.navigate("Resources")}>Finish</Button>
       </View>
     </LinearGradient>

@@ -186,4 +186,41 @@ export const resourcesContent = async (req, res) => {
         "ButtonText": "Visit"
     }
 */
+//POST /About Screen content.
+export const updateAboutContent = async (req, res) => {
+    try {
+        const { Title, Description, Mission, Message } = req.body;
+        //check if required fields are undefined
+        if (!Title || !Description || !Message) {
+            res.status(400).send('Invalid request: Missing required fields');
+            return;
+        }
+        const aboutcontent = JSON.stringify({ Title, Description, Mission, Message });
+        await redisClient.set('aboutcontent', aboutcontent);
+        res.send('About Content Updated');
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+/*
+{
+    "Title": "About WildLifeAlert",
+    "Description": "This is a passion project about helping animals in need.",
+    "Mission": "",
+    "Message": ""
+}
+*/
+//GET /About Screen content.
+export const aboutContent = async (req, res) => {
+    try {
+        const aboutcontent = await redisClient.get('aboutcontent');
+        res.send(aboutcontent);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 //# sourceMappingURL=homeScreenContent.js.map

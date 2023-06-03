@@ -10,4 +10,6 @@ homeRouter.get("/publicmapgeopos", homeScreenContent.publicMapGeoPos);
 homeRouter.post("/postalert", uploadMultiple, homeScreenContent.newAlert);
 homeRouter.post("/postresource", homeScreenContent.updateResourcesContent);
 homeRouter.get("/getresources", homeScreenContent.resourcesContent);
+homeRouter.put("/updateabout", homeScreenContent.updateAboutContent);
+homeRouter.get("/getabout", homeScreenContent.aboutContent);
 //# sourceMappingURL=homeRoute.js.map
