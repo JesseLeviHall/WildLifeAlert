@@ -119,4 +119,73 @@ export const newAlert = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+//POST /Resouce for resources Screen.
+export const updateResourcesContent = async (req, res) => {
+    try {
+        const { Icon, ResourceType, Title, Description, Image, Url, ButtonText } = req.body;
+        //check if required fields are undefined
+        if (!Icon || !ResourceType || !Title || !Description || !Image || !Url || !ButtonText) {
+            res.status(400).send('Invalid request: Missing required fields');
+            return;
+        }
+        const id = await redisClient.incr('resources:nextid');
+        const resourceKey = `resources:${id}`;
+        //send the HMSET command
+        await redisClient.sendCommand([
+            'HMSET',
+            resourceKey,
+            'Icon',
+            Icon,
+            'ResourceType',
+            ResourceType,
+            'Title',
+            Title,
+            'Description',
+            Description,
+            'Image',
+            Image,
+            'Url',
+            Url,
+            'ButtonText',
+            ButtonText,
+        ]);
+        //send the ZADD command
+        await redisClient.sendCommand(['ZADD', 'resources:ids', id.toString(), id.toString()]);
+        res.send('Resource Content Updated');
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+//GET /Resouces Screen.
+export const resourcesContent = async (req, res) => {
+    try {
+        const resourceIds = await redisClient.zRange('resources:ids', 0, -1);
+        let resources = [];
+        for (let id of resourceIds) {
+            let key = 'resources:' + id;
+            let resource = await redisClient.hGetAll(key);
+            resources.push(resource);
+        }
+        res.send(resources);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+/*
+{
+Icon: ‘web’,
+RsourceType: ‘Emergency Resource’,
+Title: “AnimalHelpNow.org”,
+Description: “Locate nearby rescue organizations”,
+Image: “https://ahnow.org/images/weblink_large.png
+“,
+Url: “https://ahnow.org”,
+ButtonText: “Visit”
+}
+
+*/
 //# sourceMappingURL=homeScreenContent.js.map

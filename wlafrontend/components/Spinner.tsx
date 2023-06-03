@@ -1,5 +1,5 @@
 import React from "react";
-import { HStack, Spinner, View } from "native-base";
+import { Spinner, View } from "native-base";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 

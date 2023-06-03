@@ -1,10 +1,11 @@
-import React from "react";
-import { View } from "react-native";
+import * as React from "react";
+import { ScrollView, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Appbar } from "react-native-paper";
 import { Dimensions } from "react-native";
-import { Link, Text, VStack, Image } from "native-base";
+
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import ResourceCard from "../components/ResourceCard";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -36,24 +37,11 @@ const Resources = (props: Props) => {
         />
         <Appbar.Content title="Resources" />
       </Appbar.Header>
-      <VStack space={2} justifyContent="center" alignItems="center" safeAreaTop>
-        <Image
-          width={40}
-          height={20}
-          resizeMode="cover"
-          source={{
-            uri: "https://ahnow.org/images/weblink_small.png",
-          }}
-          alt="animal help now.org"
-        />
-        <Link href="https://ahnow.org" isExternal>
-          <Text>Visit </Text>
-          <Text className=" text-blue-500">AnimalHelpNow.org </Text>
-        </Link>
-        <Text className="mx-16">
-          to locate wildlife rescue organizations near you
-        </Text>
-      </VStack>
+      <ScrollView>
+        <View className="mx-1 my-3">
+          <ResourceCard />
+        </View>
+      </ScrollView>
     </LinearGradient>
   );
 };

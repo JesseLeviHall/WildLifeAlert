@@ -10,3 +10,5 @@ homeRouter.get("/publicmapscreen", homeScreenContent.publicMapContent)
 homeRouter.put("/updatepublicmapcont", homeScreenContent.updatePublicMapContent);
 homeRouter.get("/publicmapgeopos", homeScreenContent.publicMapGeoPos)
 homeRouter.post("/postalert", uploadMultiple, homeScreenContent.newAlert);
+homeRouter.post("/postresource", homeScreenContent.updateResourcesContent);
+homeRouter.get("/getresources", homeScreenContent.resourcesContent);
