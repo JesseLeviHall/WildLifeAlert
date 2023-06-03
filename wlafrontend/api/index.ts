@@ -157,7 +157,16 @@ interface AlertDetails {
     }
 };
 
-
+//get resources for the resources screen
+export const getResources = async () => {
+	try {
+		const resources = await API.get('/api/getresources');
+		return resources.data;
+	}
+	catch (error) {
+		console.error(error);
+	}
+}
   
 
   

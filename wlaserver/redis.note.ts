@@ -249,7 +249,18 @@ This example assumes that 1684131200 is the Unix timestamp that represents the c
 
 
 
+To get the resource id's of all resources: 
+ZRANGE resources:ids 0 -1
 
+To get one resource:
+HGETALL resources:{id}
+
+To update one: 
+HSET resources:{id} field newValue
+
+To delete one:
+DEL resources:{id}
+ZREM resources:ids {id}
 
 
 

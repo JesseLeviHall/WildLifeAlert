@@ -1,9 +1,14 @@
 import * as React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, RefreshControl, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Appbar } from "react-native-paper";
 import { Dimensions } from "react-native";
-
+import { useQuery } from "@tanstack/react-query/build/lib";
+import { getResources } from "../api/index";
+import SpinnerComp from "../components/Spinner";
+import OfflineToast from "../components/OfflineToast";
+import { useConnectivity } from "../hooks/useConnectivity";
+import { useRefreshByUser } from "../hooks/useRefreshByUser";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import ResourceCard from "../components/ResourceCard";
 
@@ -16,6 +21,15 @@ type HomeScreenNavigationProp = NavigationProp<RootStackParamList, "Home">;
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
+type Resource = {
+  Icon: string;
+  ResourceType: string;
+  Title: string;
+  Description: string;
+  Image: string;
+  Url: string;
+  ButtonText: string;
+};
 
 const Resources = (props: Props) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -24,6 +38,32 @@ const Resources = (props: Props) => {
       headerShown: false,
     });
   });
+
+  const isConnected = useConnectivity();
+  const { isLoading, refetch, data, error } = useQuery(
+    ["Resources"],
+    () => getResources(),
+    { enabled: isConnected }
+  );
+
+  const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
+
+  if (isLoading || isRefetchingByUser) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <SpinnerComp />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <Text>{JSON.stringify(error)}</Text>;
+      </View>
+    );
+  }
+
   return (
     <LinearGradient
       style={{ height: screenHeight }}
@@ -37,9 +77,19 @@ const Resources = (props: Props) => {
         />
         <Appbar.Content title="Resources" />
       </Appbar.Header>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetchingByUser}
+            onRefresh={refetchByUser}
+          />
+        }
+      >
         <View className="mx-1 my-3">
-          <ResourceCard />
+          {isConnected ? null : <OfflineToast />}
+          {data?.map((resource: Resource, index: number) => (
+            <ResourceCard key={index} resource={resource} />
+          ))}
         </View>
       </ScrollView>
     </LinearGradient>

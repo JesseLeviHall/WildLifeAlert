@@ -218,19 +218,16 @@ export const resourcesContent = async (
 	}
 };
 
-
 /* 
 {
-Icon: ‘web’,
-RsourceType: ‘Emergency Resource’,
-Title: “AnimalHelpNow.org”,
-Description: “Locate nearby rescue organizations”,
-Image: “https://ahnow.org/images/weblink_large.png
-“,
-Url: “https://ahnow.org”,
-ButtonText: “Visit”
-}
-
+        "Icon": "web",
+        "ResourceType": "Emergency Resource",
+        "Title": "AnimalHelpNow.org",
+        "Description": "Locate nearby rescue organizations",
+        "Image": "https://ahnow.org/images/weblink_large.png",
+        "Url": "https://ahnow.org",
+        "ButtonText": "Visit"
+    }
 */
 
 
