@@ -100,33 +100,31 @@ interface AlertDetails {
 
         // Adding the photo blobs to the form data
         if (Array.isArray(photoBlob)) {
-			for (let blob of photoBlob) {
-				const uriParts = blob.split('/');
-				const fileName = uriParts[uriParts.length - 1];
-				const fileType = fileName.split('.')[1];
+            for (let blob of photoBlob) {
+                const uriParts = blob.split('/');
+                const fileName = uriParts[uriParts.length - 1];
+                const fileType = fileName.split('.')[1];
 
-				// Create a new file object using the URI
-				let file = {
-					uri: blob,
-					type: `image/${fileType}`,
-					name: `${fileName}`,
-				};
-				// @ts-ignore
-				formData.append('images', file);
-			}
-		} else {
-			return null
-		}
+                // Create a new file object using the URI
+                let file = {
+                    uri: blob,
+                    type: `image/${fileType}`,
+                    name: `${fileName}`,
+                };
+                // @ts-ignore
+                formData.append('images', file);
+            }
+        }
 
         const newalert = await API({
-			method: 'post',
-			url: '/api/postalert',
-			data: formData,
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		});
-		
+            method: 'post',
+            url: '/api/postalert',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
         return newalert.data;
 		
     } catch (error) {

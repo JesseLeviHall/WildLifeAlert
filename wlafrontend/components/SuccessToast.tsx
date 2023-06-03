@@ -15,7 +15,7 @@ const SuccessToast = (props: Props) => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setValue((prev) => !prev);
-    }, 120); // Adjust this interval for faster or slower bounces
+    }, 400); // Adjust this interval for faster or slower bounces
     return () => clearInterval(interval);
   }, []);
 

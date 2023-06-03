@@ -41,7 +41,7 @@ const SetLocation = (props: Props) => {
       setShowToast(true);
       const timerId = setTimeout(() => {
         setShowToast(false);
-      }, 2500);
+      }, 1200);
       return () => clearTimeout(timerId);
     }
   }, [savedLocation]);

@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions, ScrollView, FlexAlignType, ViewStyle } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, Icon } from "native-base";
+import { Chip } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query/build/lib";
@@ -79,7 +80,7 @@ const ConfirmPost = (props: Props) => {
         setShowToast(false);
         setDisabled(false);
         props.navigation.navigate("NextSteps");
-      }, 3000);
+      }, 1200);
     },
     onError: (error) => {
       console.error("Error: ", error);
@@ -117,40 +118,53 @@ const ConfirmPost = (props: Props) => {
       style={{ height: screenHeight }}
       colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
     >
-      <Text className="text-center mt-6 font-black uppercase text-3xl">
+      <Text className="text-center mt-24 font-black uppercase text-3xl">
         Review and Submit
       </Text>
       <View className="flex-1 items-center p-4 h-full w-full ">
         <ScrollView contentContainerStyle={contentContainerStyle}>
-          <View className=" w-full px-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
-            <Text className="text-center mt-3  text-lg">
-              {userDetails.FullName}
+          <View className=" w-full px-12 bg-[#99bbe36e] rounded-lg border border-[#293b27fe]">
+            <Text className="text-center mt-3 font-semibold">
+              {userDetails.Animal}
             </Text>
-            <Text className="text-center mt-3  text-lg">
-              {userDetails.PhoneNumber}
+            <Text className="text-center font-light">
+              {userDetails.Description}
             </Text>
-            <Text className="text-center mt-3  text-lg">
-              {userDetails.Email}
-            </Text>
-            <Text className="text-center mt-3  text-lg">
-              Share Contact Info:{" "}
-              {userDetails.ShareContact == "true" ? "Yes" : "Incognito"}
-            </Text>
-            <Text className="text-center mt-3  text-lg">
-              Animal: {userDetails.Animal}
-            </Text>
-            <Text className="text-center mt-3  text-lg">
-              Description: {userDetails.Description}
-            </Text>
-            <Text className="text-center mt-3 text-lg">
-              Location Saved?{" "}
-              {userDetails.Latitude && userDetails.Longitude
-                ? "Yes"
-                : "No location selected"}
-            </Text>
-            <Text className="text-center mt-3 mb-5  text-lg">
-              Photos? {userDetails.photoBlob ? "Yes" : "No"}
-            </Text>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip icon="information">{userDetails.FullName}</Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip icon="phone">{userDetails.PhoneNumber}</Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip icon="email">{userDetails.Email}</Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip
+                icon={userDetails.ShareContact == "true" ? "check" : "close"}
+              >
+                Share Contact Info:{" "}
+                {userDetails.ShareContact == "true" ? "Yes" : "No"}
+              </Chip>
+            </View>
+
+            <View className=" h-8 items-center mt-3 ">
+              <Chip
+                icon={
+                  userDetails.Latitude && userDetails.Longitude
+                    ? "check"
+                    : "close"
+                }
+              >
+                Location Saved
+              </Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 mb-6 ">
+              <Chip icon={userDetails.photoBlob ? "check" : "close"}>
+                Photos? {userDetails.photoBlob ? "Yes" : "No"}
+              </Chip>
+            </View>
+
             {showToast && <SuccessToast message="Alert Posted!" />}
           </View>
           <Button

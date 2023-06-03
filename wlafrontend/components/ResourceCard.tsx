@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Avatar, Button, Card, Text } from "react-native-paper";
 import { Linking } from "react-native";
-import { StyleProp, ViewStyle } from "react-native";
 
 interface LeftContentProps {
   size: number;
   color?: string;
+  icon: string;
 }
 
 type Resource = {
@@ -23,7 +23,7 @@ type ResourceCardProps = {
 };
 
 const LeftContent = (props: LeftContentProps): JSX.Element => (
-  <Avatar.Icon {...props} icon="web" size={30} />
+  <Avatar.Icon {...props} icon={props.icon} size={30} />
 );
 
 const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
@@ -32,11 +32,13 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
       <Card.Title
         title=""
         subtitle={resource.ResourceType}
-        left={LeftContent}
+        left={(props) => <LeftContent {...props} icon={resource.Icon} />}
       />
       <Card.Content>
-        <Text variant="titleLarge">{resource.Title}</Text>
-        <Text className="mb-2" variant="bodyMedium">
+        <Text className=" font-medium mb-1" variant="titleLarge">
+          {resource.Title}
+        </Text>
+        <Text className="mb-2 font-bold" variant="bodyMedium">
           {resource.Description}
         </Text>
       </Card.Content>
