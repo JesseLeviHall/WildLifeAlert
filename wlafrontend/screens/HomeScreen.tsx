@@ -2,9 +2,10 @@ import React, { useLayoutEffect } from "react";
 import {
   Text,
   View,
-  TouchableOpacity,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { Motion } from "@legendapp/motion";
 import { useQuery } from "@tanstack/react-query/build/lib";
@@ -36,24 +37,13 @@ const Home = (props: Props) => {
   const isConnected = useConnectivity();
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  const handlePress = async () => {
-    // Delay the navigation
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 300);
-    });
-
-    navigation.navigate("SendForHelp");
-  };
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   });
 
-  const { isLoading, refetch, data, error } = useQuery(
+  const { isLoading, data, error } = useQuery(
     ["HomeScreen"],
     () => getHomeScreenContent(),
     { enabled: isConnected }
@@ -77,9 +67,22 @@ const Home = (props: Props) => {
 
   return (
     <View style={styles.outer}>
+      <Image
+        style={{
+          height: screenHeight,
+          width: screenWidth,
+          backgroundColor: "transparent",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: -1,
+        }}
+        source={require("../assets/sunbg.png")}
+      />
       <View style={styles.background}>
         <HomeBackG />
       </View>
+
       <Motion.View
         initial={{ x: -300, scale: 0, opacity: 0 }}
         animate={{ x: 0, scale: 1, opacity: 1 }}
@@ -109,19 +112,22 @@ const Home = (props: Props) => {
             {data?.Description}
           </Text>
         </View>
-        {isConnected ? null : <OfflineToast />}
-        <View style={styles.holdingButton}>
-          <View style={styles.yellowcircle}>
-            <TouchableOpacity onPress={handlePress}>
-              <View style={styles.container}>
-                <Text className="text-[#2a527a] font-bold text-2xl">
-                  Start Alert
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
       </Motion.View>
+      {isConnected ? null : <OfflineToast />}
+      <View style={styles.holdingButton}>
+        <View style={styles.yellowcircle}>
+          <TouchableOpacity
+            style={{ zIndex: 1 }}
+            onPress={() => {
+              navigation.navigate("SendForHelp");
+            }}
+          >
+            <View style={styles.container}>
+              <Text style={styles.button}>Start Alert</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
       <View style={styles.nav}>
         <HomeNavBot navigation={navigation} />
       </View>
@@ -133,6 +139,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#15ff00",
@@ -164,12 +171,14 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     right: 0,
+    zIndex: -10,
   },
   outer: {
     flex: 1,
+    zIndex: 1,
   },
   yellowcircle: {
-    marginTop: 200,
+    zIndex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#04b6d1",
@@ -186,9 +195,18 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
   },
   holdingButton: {
-    flex: 1,
+    zIndex: 1,
+    position: "absolute",
+    top: "45%",
+    left: "50%",
+    transform: [{ translateX: -90 }],
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 11,
+  },
+  button: {
+    zIndex: 1,
+    fontSize: 24,
+    color: "#2a527a",
+    fontWeight: "bold",
   },
 });
