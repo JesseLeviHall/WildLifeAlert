@@ -189,13 +189,13 @@ export const resourcesContent = async (req, res) => {
 //POST /About Screen content.
 export const updateAboutContent = async (req, res) => {
     try {
-        const { Title, Description, Mission, Message } = req.body;
+        const { Title, Description, Mission, Message, Action, Link } = req.body;
         //check if required fields are undefined
         if (!Title || !Description || !Message) {
             res.status(400).send('Invalid request: Missing required fields');
             return;
         }
-        const aboutcontent = JSON.stringify({ Title, Description, Mission, Message });
+        const aboutcontent = JSON.stringify({ Title, Description, Mission, Message, Action, Link });
         await redisClient.set('aboutcontent', aboutcontent);
         res.send('About Content Updated');
     }
