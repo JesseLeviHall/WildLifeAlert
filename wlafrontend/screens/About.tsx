@@ -1,25 +1,50 @@
-import * as React from 'react';
-import { View, Text, Button ,Vibration, } from 'react-native';
-import { Motion } from "@legendapp/motion"
-import { MotionLinearGradient } from '@legendapp/motion/linear-gradient-expo';
-import { styled } from 'nativewind';
-
-const MotionView = styled(View);
+import * as React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import AnimatedGradient from "../components/background/GradientAnimated";
 
 type Props = {};
 
 const About = (props: Props) => {
-  const [value, setValue] = React.useState(false);
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setValue((prev) => !prev);
-    }, 1500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <MotionView className="filter flex-1 items-center justify-center">
+    <View style={styles.container}>
+      <View style={styles.background}>
+        <AnimatedGradient />
+      </View>
+      <View style={styles.content}>
+        <Text style={styles.text}>Does This show up? Yes</Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  background: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    top: 0,
+    right: 0,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  text: {
+    fontSize: 30,
+    color: "#000",
+    textAlign: "center",
+  },
+});
+
+export default About;
+
+/* 
+ <MotionView className="filter flex-1 items-center justify-center">
       <Motion.View
     initial={{ x: -100,
     scale: 0,
@@ -96,9 +121,6 @@ const About = (props: Props) => {
       />
 </Motion.Pressable>
     </MotionView>
-  );
-};
 
 
-
-export default About;
+*/

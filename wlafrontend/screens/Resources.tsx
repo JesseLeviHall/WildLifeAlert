@@ -1,8 +1,13 @@
 import * as React from "react";
-import { ScrollView, View, RefreshControl, Text } from "react-native";
+import {
+  ScrollView,
+  View,
+  RefreshControl,
+  Text,
+  Dimensions,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Appbar } from "react-native-paper";
-import { Dimensions } from "react-native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getResources } from "../api/index";
 import SpinnerComp from "../components/Spinner";

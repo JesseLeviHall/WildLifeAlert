@@ -1,17 +1,13 @@
 import * as React from "react";
 import { Dimensions } from "react-native";
 import { MotionLinearGradient } from "@legendapp/motion/linear-gradient-expo";
-import cloud1 from "../../assets/cloud1.PNG";
-import cloud2 from "../../assets/cloud2.PNG";
-import cloud3 from "../../assets/cloud3.PNG";
-import sun from "../../assets/cloud4.PNG";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 type Props = {};
 
-const HomeBackG = (props: Props) => {
+const AnimatedGradient = (props: Props) => {
   const [value, setValue] = React.useState(false);
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -41,4 +37,4 @@ const HomeBackG = (props: Props) => {
   );
 };
 
-export default HomeBackG;
+export default AnimatedGradient;
