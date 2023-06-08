@@ -59,7 +59,7 @@ const SetLocation = (props: Props) => {
   return (
     <LinearGradient
       style={{ flex: 1 }}
-      colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
+      colors={["#6495ED70", "#71D1C74C", "#D5ED5C4C"]}
     >
       <View style={{ flex: 1 }}>
         <SetAlertLocationMap

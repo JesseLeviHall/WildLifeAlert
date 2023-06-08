@@ -72,7 +72,7 @@ const Resources = (props: Props) => {
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
+      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
     >
       <Appbar.Header className="">
         <Appbar.BackAction
@@ -90,7 +90,7 @@ const Resources = (props: Props) => {
           />
         }
       >
-        <View className="mx-1 my-3">
+        <View className="mx-1 my-3 px-2">
           {isConnected ? null : <OfflineToast />}
           {data?.map((resource: Resource, index: number) => (
             <ResourceCard key={index} resource={resource} />

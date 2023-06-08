@@ -2,11 +2,16 @@ import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import AnimatedGradient from "../components/background/GradientAnimated";
 
+import { Motion } from "@legendapp/motion";
+import SvgSun from "../components/background/SunSvg";
+
 type Props = {};
 
 const About = (props: Props) => {
+  const [value, setValue] = React.useState(0);
   return (
     <View style={styles.container}>
+      <SvgSun />
       <View style={styles.background}>
         <AnimatedGradient />
       </View>
@@ -27,6 +32,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     right: 0,
+    zIndex: -10,
   },
   content: {
     flex: 1,

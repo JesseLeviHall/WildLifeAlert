@@ -22,7 +22,7 @@ const NextSteps = (props: Props) => {
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
+      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
     >
       <View className="flex-1 align-middle justify-center">
         <Text>

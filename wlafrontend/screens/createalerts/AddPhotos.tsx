@@ -86,7 +86,7 @@ const AddPhotos = (props: Props) => {
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
+      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
     >
       <View className="flex-1 items-center">
         <View className="mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">

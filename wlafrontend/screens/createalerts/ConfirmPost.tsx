@@ -116,7 +116,7 @@ const ConfirmPost = (props: Props) => {
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
+      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
     >
       <Text className="text-center mt-24 font-black uppercase text-3xl">
         Review and Submit

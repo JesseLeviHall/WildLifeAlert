@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Dimensions, View, Image, StyleSheet } from "react-native";
+import { Dimensions, View, StyleSheet } from "react-native";
 import { MotionLinearGradient } from "@legendapp/motion/linear-gradient-expo";
 import { Motion } from "@legendapp/motion";
+import SvgSun from "./SunSvg";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -11,10 +12,13 @@ type Props = {};
 const HomeBackG = (props: Props) => {
   const [value, setValue] = React.useState(0);
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      setValue((prev) => (prev >= 2 ? 0 : prev + 1));
-    }, 40000);
-    return () => clearInterval(interval);
+    if (value === 1) {
+      setValue(0);
+    }
+    setTimeout(() => {
+      setValue(0);
+    }, 50000);
+    setValue(1);
   }, []);
 
   return (
@@ -22,15 +26,17 @@ const HomeBackG = (props: Props) => {
       <MotionLinearGradient
         animateProps={{
           colors: [
-            value === 1 ? "#05e8c2" : "#170fa8",
-            value === 1 ? "#03ff14" : "#a8660f",
+            // on screen: 1 bot-right low, 2 bot-r high, 3 top-left low, 4 top-left high
+            value === 1 ? "#0f45a8" : "#c6ed02",
+            value === 1 ? "#eb8d13" : "#6495ed",
           ],
           start: { x: value === 1 ? 1 : 0, y: 1 },
           end: { x: 0, y: 0 },
         }}
         transition={{
           type: "timing",
-          duration: 40000,
+          duration: 50000,
+
           easing: "linear",
         }}
         style={{
@@ -42,22 +48,22 @@ const HomeBackG = (props: Props) => {
       ></MotionLinearGradient>
       <Motion.View
         initial={{ y: screenHeight / 4 }}
-        animate={{ y: value === 1 ? -100 : screenHeight / 2 }}
+        animate={{ y: value === 1 ? screenHeight / 2 : -150 }}
         transition={{
           type: "timing",
-          duration: 40000,
+          duration: 50000,
           easing: "linear",
         }}
         style={{
           position: "absolute",
-          width: 100,
-          height: 100,
+          width: 140,
+          height: 140,
           left: screenWidth / 2 - 20,
           borderRadius: 108,
-          borderWidth: 2,
-          borderColor: "#15ff00fe",
         }}
-      ></Motion.View>
+      >
+        <SvgSun />
+      </Motion.View>
     </View>
   );
 };
