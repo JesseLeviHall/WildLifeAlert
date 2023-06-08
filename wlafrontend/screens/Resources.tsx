@@ -91,7 +91,11 @@ const Resources = (props: Props) => {
         }
       >
         <View className="mx-1 my-3 px-2">
-          {isConnected ? null : <OfflineToast />}
+          {isConnected ? null : (
+            <View className="flex-1 align-middle justify-end">
+              <OfflineToast />
+            </View>
+          )}
           {data?.map((resource: Resource, index: number) => (
             <ResourceCard key={index} resource={resource} />
           ))}

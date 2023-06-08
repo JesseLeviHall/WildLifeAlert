@@ -1,21 +1,17 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React from "react";
+import { Text, View } from "react-native";
 
-
-type Props = {}
-
+type Props = {};
 
 const ComponentOne = (props: Props) => {
-  
-
   return (
-  <View>
+    <View>
       <Text>
-       ComponentOne
+        This is Place Holder for a Component to be used later like Terms of
+        Service
       </Text>
-  </View>
-);
-
-}
+    </View>
+  );
+};
 
 export default ComponentOne;

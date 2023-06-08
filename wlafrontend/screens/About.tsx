@@ -1,22 +1,43 @@
 import * as React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import AnimatedGradient from "../components/background/GradientAnimated";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import OfflineToast from "../components/OfflineToast";
+import SkeletonComp from "../components/Skeleton";
+import { useConnectivity } from "../hooks/useConnectivity";
 
-import { Motion } from "@legendapp/motion";
-import SvgSun from "../components/background/SunSvg";
+type RootStackParamList = {
+  AnotherScreen: undefined;
+};
 
-type Props = {};
+type HomeScreenNavigationProp = NavigationProp<
+  RootStackParamList,
+  "AnotherScreen"
+>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
 
 const About = (props: Props) => {
-  const [value, setValue] = React.useState(0);
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const isConnected = useConnectivity();
+
   return (
     <View style={styles.container}>
-      <SvgSun />
       <View style={styles.background}>
         <AnimatedGradient />
       </View>
       <View style={styles.content}>
         <Text style={styles.text}>Does This show up? Yes</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("AnotherScreen")}>
+          <Text>Terms of Use</Text>
+        </TouchableOpacity>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-end">
+            <OfflineToast />
+          </View>
+        )}
       </View>
     </View>
   );

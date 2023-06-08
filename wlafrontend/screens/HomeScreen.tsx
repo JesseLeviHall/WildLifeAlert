@@ -113,7 +113,11 @@ const Home = (props: Props) => {
           </Text>
         </View>
       </Motion.View>
-      {isConnected ? null : <OfflineToast />}
+      {isConnected ? null : (
+        <View className="flex-1 align-middle justify-end">
+          <OfflineToast />
+        </View>
+      )}
       <View style={styles.holdingButton}>
         <View style={styles.yellowcircle}>
           <TouchableOpacity

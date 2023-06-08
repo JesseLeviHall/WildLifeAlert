@@ -99,7 +99,11 @@ const PublicMap = (props: Props) => {
       <View className="flex-1 align-middle justify-center">
         <PubMapView alerts={alerts} />
       </View>
-      {isConnected ? null : <OfflineToast />}
+      {isConnected ? null : (
+        <View className="flex-1 align-middle justify-end">
+          <OfflineToast />
+        </View>
+      )}
       <Appbar
         style={[
           styles.bottom,
