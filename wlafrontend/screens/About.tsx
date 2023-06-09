@@ -36,10 +36,52 @@ type Props = {
 };
 
 const About = (props: Props) => {
-  const [message, setMessage] = React.useState(false);
+  const [message, setMessage] = React.useState(true);
   const [description, setDescription] = React.useState(false);
   const [mission, setMission] = React.useState(false);
   const [action, setAction] = React.useState(false);
+  const [animationKey, setAnimationKey] = React.useState(0);
+
+  //function to handle press on chip and set state to true for the corresponding text, set all others to false
+  const handlePress = (chip: string) => {
+    switch (chip) {
+      case "message":
+        setMessage(true);
+        setDescription(false);
+        setMission(false);
+        setAction(false);
+        setAnimationKey(animationKey + 1);
+        break;
+      case "description":
+        setMessage(false);
+        setDescription(true);
+        setMission(false);
+        setAction(false);
+        setAnimationKey(animationKey + 1);
+        break;
+      case "mission":
+        setMessage(false);
+        setDescription(false);
+        setMission(true);
+        setAction(false);
+        setAnimationKey(animationKey + 1);
+        break;
+      case "action":
+        setMessage(false);
+        setDescription(false);
+        setMission(false);
+        setAction(true);
+        setAnimationKey(animationKey + 1);
+        break;
+      default:
+        setMessage(false);
+        setDescription(false);
+        setMission(false);
+        setAction(false);
+        setAnimationKey(animationKey + 1);
+        break;
+    }
+  };
 
   const navigation = useNavigation<HomeScreenNavigationProp>();
   React.useLayoutEffect(() => {
@@ -93,71 +135,90 @@ const About = (props: Props) => {
         <View style={styles.background}>
           <AnimatedGradient />
         </View>
-        <Motion.View
-          style={styles.content}
-          initial={{ x: -100, scale: 0, opacity: 0.1 }}
-          animate={{ x: 0, scale: 1, opacity: 1 }}
-          transition={{
-            default: {
-              type: "spring",
-              damping: 20,
-              stiffness: 300,
-            },
-            x: {
-              type: "spring",
-              damping: 20,
-              stiffness: 1000,
-            },
-            opacity: {
-              type: "tween",
-              duration: 2000,
-            },
-          }}
-        >
+        <View style={styles.content}>
           <View style={styles.chips}>
             <Chip
-              mode="outlined"
-              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
-              icon="information"
-              onPress={() => setMessage(true)}
+              elevated={true}
+              mode="flat"
+              selected={message}
+              selectedColor="#000626FF"
+              showSelectedOverlay={true}
+              className="h-10 w-32 mt-5 border-2 border-blue-50"
+              icon="message-image"
+              onPress={() => handlePress("message")}
             >
-              Message
+              Ethos
             </Chip>
             <Chip
-              mode="outlined"
-              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
-              icon="information"
-              onPress={() => setDescription(true)}
+              elevated={true}
+              mode="flat"
+              selected={description}
+              selectedColor="#000626FF"
+              showSelectedOverlay={true}
+              className="h-10 w-32 mt-5 border-2 border-blue-50"
+              icon="script-text"
+              onPress={() => handlePress("description")}
             >
               Description
             </Chip>
             <Chip
-              mode="outlined"
-              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
-              icon="information"
-              onPress={() => setMission(true)}
+              elevated={true}
+              mode="flat"
+              selected={mission}
+              selectedColor="#000626FF"
+              showSelectedOverlay={true}
+              className="h-10 w-32 mt-2 border-2 border-blue-50"
+              icon="creation"
+              onPress={() => handlePress("mission")}
             >
               Mission
             </Chip>
             <Chip
-              mode="outlined"
-              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
-              icon="information"
-              onPress={() => setAction(true)}
+              elevated={true}
+              mode="flat"
+              selected={action}
+              showSelectedOverlay={true}
+              selectedColor="#000626FF"
+              className="h-10 w-32 mt-2 border-2 border-blue-50"
+              icon="arm-flex"
+              onPress={() => handlePress("action")}
             >
-              Action
+              Help Out
             </Chip>
           </View>
-          {message ? <Text style={styles.text}>{data?.Message}</Text> : null}
-          {description ? (
-            <Text style={styles.text}>{data?.Description}</Text>
-          ) : null}
-          {mission ? <Text style={styles.text}>{data?.Mission}</Text> : null}
-          {action ? <Text style={styles.text}>{data?.Action}</Text> : null}
+          <Motion.View
+            key={animationKey}
+            initial={{ x: -100, scale: 1, opacity: 0.1 }}
+            animate={{ x: 0, scale: 1, opacity: 1 }}
+            transition={{
+              default: {
+                type: "spring",
+                damping: 30,
+                stiffness: 600,
+              },
+              x: {
+                type: "spring",
+                damping: 30,
+                stiffness: 600,
+              },
+              opacity: {
+                type: "tween",
+                duration: 900,
+              },
+            }}
+            style={styles.textContainer}
+          >
+            {message && <Text style={styles.text}>{data?.Message}</Text>}
+            {description && (
+              <Text style={styles.text}>{data?.Description}</Text>
+            )}
+            {mission && <Text style={styles.text}>{data?.Mission}</Text>}
+            {action && <Text style={styles.text}>{data?.Action}</Text>}
+          </Motion.View>
           <TouchableOpacity
             onPress={() => navigation.navigate("AnotherScreen")}
           >
-            <Text className="text-blue-500 font-semibold">
+            <Text className="text-blue-500 mt-20 font-semibold text-center">
               Terms of Service
             </Text>
           </TouchableOpacity>
@@ -166,7 +227,7 @@ const About = (props: Props) => {
               <OfflineToast />
             </View>
           )}
-        </Motion.View>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -190,11 +251,32 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   text: {
-    fontSize: 30,
+    fontSize: 20,
     color: "#000",
     textAlign: "center",
+    zIndex: 10,
+    padding: 20,
   },
-  chips: {},
+  chips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    width: screenWidth / 1.5,
+    alignSelf: "center",
+    marginTop: 50,
+    zIndex: 10,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    backgroundColor: "rgba(0, 224, 255, 0.3)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight / 2.5,
+  },
 });
 
 export default About;
