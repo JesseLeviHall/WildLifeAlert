@@ -2,10 +2,10 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // set axios configurations
-//remote server for now: http://54.177.204.144
+//remote server for now: https://d1h2airt5kbf3g.cloudfront.net
 //locoal server: http://10.0.10.10:3000
 const API = axios.create({
-	baseURL: 'http://10.0.10.10:3000',
+	baseURL: 'https://d1h2airt5kbf3g.cloudfront.net',
 	timeout: 10000,
 	withCredentials: false,
 });

@@ -10,15 +10,11 @@ const screenWidth = Dimensions.get("window").width;
 type Props = {};
 
 const HomeBackG = (props: Props) => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
   React.useEffect(() => {
-    if (value === 1) {
-      setValue(0);
-    }
     setTimeout(() => {
       setValue(0);
     }, 50000);
-    setValue(1);
   }, []);
 
   return (
