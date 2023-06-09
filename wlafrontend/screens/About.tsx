@@ -7,9 +7,13 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
+import { Appbar, Chip } from "react-native-paper";
 import AnimatedGradient from "../components/background/GradientAnimated";
+import { Motion } from "@legendapp/motion";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../components/OfflineToast";
+import { useQuery } from "@tanstack/react-query/build/lib";
+import { getAboutScreenContent } from "../api/index";
 import SkeletonComp from "../components/Skeleton";
 import { useConnectivity } from "../hooks/useConnectivity";
 
@@ -18,11 +22,13 @@ const screenWidth = Dimensions.get("window").width;
 
 type RootStackParamList = {
   AnotherScreen: undefined;
+  Home: undefined;
 };
 
 type HomeScreenNavigationProp = NavigationProp<
   RootStackParamList,
-  "AnotherScreen"
+  "AnotherScreen",
+  "Home"
 >;
 
 type Props = {
@@ -30,11 +36,51 @@ type Props = {
 };
 
 const About = (props: Props) => {
+  const [message, setMessage] = React.useState(false);
+  const [description, setDescription] = React.useState(false);
+  const [mission, setMission] = React.useState(false);
+  const [action, setAction] = React.useState(false);
+
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  });
+
   const isConnected = useConnectivity();
+  const { isLoading, data, error } = useQuery(
+    ["AboutScreen"],
+    () => getAboutScreenContent(),
+    { enabled: isConnected }
+  );
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <SkeletonComp />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <Text>{JSON.stringify(error)}</Text>;
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
+      <Appbar.Header>
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+        />
+        <Appbar.Content title="About" />
+      </Appbar.Header>
       <ImageBackground
         source={require("../assets/desertbg.png")}
         style={{
@@ -47,19 +93,80 @@ const About = (props: Props) => {
         <View style={styles.background}>
           <AnimatedGradient />
         </View>
-        <View style={styles.content}>
-          <Text style={styles.text}>Does This show up? Yes</Text>
+        <Motion.View
+          style={styles.content}
+          initial={{ x: -100, scale: 0, opacity: 0.1 }}
+          animate={{ x: 0, scale: 1, opacity: 1 }}
+          transition={{
+            default: {
+              type: "spring",
+              damping: 20,
+              stiffness: 300,
+            },
+            x: {
+              type: "spring",
+              damping: 20,
+              stiffness: 1000,
+            },
+            opacity: {
+              type: "tween",
+              duration: 2000,
+            },
+          }}
+        >
+          <View style={styles.chips}>
+            <Chip
+              mode="outlined"
+              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
+              icon="information"
+              onPress={() => setMessage(true)}
+            >
+              Message
+            </Chip>
+            <Chip
+              mode="outlined"
+              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
+              icon="information"
+              onPress={() => setDescription(true)}
+            >
+              Description
+            </Chip>
+            <Chip
+              mode="outlined"
+              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
+              icon="information"
+              onPress={() => setMission(true)}
+            >
+              Mission
+            </Chip>
+            <Chip
+              mode="outlined"
+              className="h-10 w-32 mt-10 bg-transparent border-2 border-blue-50"
+              icon="information"
+              onPress={() => setAction(true)}
+            >
+              Action
+            </Chip>
+          </View>
+          {message ? <Text style={styles.text}>{data?.Message}</Text> : null}
+          {description ? (
+            <Text style={styles.text}>{data?.Description}</Text>
+          ) : null}
+          {mission ? <Text style={styles.text}>{data?.Mission}</Text> : null}
+          {action ? <Text style={styles.text}>{data?.Action}</Text> : null}
           <TouchableOpacity
             onPress={() => navigation.navigate("AnotherScreen")}
           >
-            <Text>Terms of Use</Text>
+            <Text className="text-blue-500 font-semibold">
+              Terms of Service
+            </Text>
           </TouchableOpacity>
           {isConnected ? null : (
             <View className="flex-1 align-middle justify-end">
               <OfflineToast />
             </View>
           )}
-        </View>
+        </Motion.View>
       </ImageBackground>
     </View>
   );
@@ -79,8 +186,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
     zIndex: 10,
   },
   text: {
@@ -88,88 +194,7 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
   },
+  chips: {},
 });
 
 export default About;
-
-/* 
- <MotionView className="filter flex-1 items-center justify-center">
-      <Motion.View
-    initial={{ x: -100,
-    scale: 0,
-    opacity: 0.1
-   }}
-    animate={{ x: 0,
-    scale: 1,
-    opacity: 1 }}
-    transition={{
-        default: {
-            type: "spring",
-            damping: 20,
-            stiffness: 300,
-        },
-        x: {
-            type: "spring",
-            damping: 20,
-            stiffness: 1000
-        },
-        opacity: {
-            type: "tween",
-            duration: 2000
-        },
-    }}
->
-  <Text>Does This slide?</Text>
-</Motion.View>
-      <Motion.Pressable>
-    <Motion.View
-        whileTap={{ y: 30 }}
-        transition={{
-            type: 'spring',
-            damping: 20,
-            stiffness: 300
-        }}
-        style={{
-    height: 220,
-    width: 220,
-    borderRadius: 108,
-    backgroundColor: '#f8b935',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 6,
-    padding: 0,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    shadowColor: '#000',
-  }}
-    />
-    <MotionLinearGradient
-        animateProps={{
-          colors: [
-            value ? '#e8e2ba' : 'blue',
-            value ? '#F7AB0A' : 'yellow',
-          ],
-          start: { x: 0, y: 0 },
-          end: { x: value ? 1 : 0, y: 1 },
-        }}
-        style={{
-    height: 220,
-    width: 220,
-    borderRadius: 108,
-    backgroundColor: '#F7AB0A',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 0,
-    padding: 0,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    shadowColor: '#000',
-  }}
-      />
-</Motion.Pressable>
-    </MotionView>
-
-
-*/

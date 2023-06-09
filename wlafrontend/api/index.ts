@@ -21,8 +21,7 @@ API.interceptors.request.use(async (config) => {
 	return config;
 });
 
-//**************************define the queryFn for the query in the components.
-
+//===================================================
 //get the homescreen content:
 export const getHomeScreenContent = async () => {
 	try {
@@ -33,7 +32,7 @@ export const getHomeScreenContent = async () => {
 	}
 }
 	
-
+//===================================================
 //get the public map data of rescue alerts:
 export const getPubData = async () => {
 	try {
@@ -46,7 +45,7 @@ export const getPubData = async () => {
 }
 
 
-
+//===================================================
 //get alert details for rescuers:
 export const getAlertDetails = async (id: number) => {
 	try {
@@ -58,7 +57,7 @@ export const getAlertDetails = async (id: number) => {
 	}
 } 
 
-
+//===================================================
 //Get Public Map Info Dialogue content
 export const getPubMapDialogueContent = async () => {
 	try {
@@ -70,6 +69,7 @@ export const getPubMapDialogueContent = async () => {
 	}
 }
 
+//===================================================
 //post a new alert
 interface AlertDetails {
 	photoBlob: string | null;
@@ -155,6 +155,8 @@ interface AlertDetails {
     }
 };
 
+
+//===================================================
 //get resources for the resources screen
 export const getResources = async () => {
 	try {
@@ -167,5 +169,15 @@ export const getResources = async () => {
 }
   
 
-  
+//===================================================
+//get the about us content
+export const getAboutScreenContent = async () => {
+	try {
+		const aboutContent = await API.get('/api/getabout');
+		return aboutContent.data;
+	}
+	catch (error) {
+		console.error(error);
+	}
+}
   

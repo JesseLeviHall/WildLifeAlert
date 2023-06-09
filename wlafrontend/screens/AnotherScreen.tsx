@@ -11,9 +11,11 @@ const AnotherScreen = (props: Props) => {
     <View className=" flex-1 align-middle justify-center">
       <Text className="text-lg">Placeholder for</Text>
       <ComponentOne />
-      <View className="flex-1 align-middle justify-end">
-        <OfflineToast />
-      </View>
+      {isConnected ? null : (
+        <View className="flex-1 align-middle justify-end">
+          <OfflineToast />
+        </View>
+      )}
     </View>
   );
 };
