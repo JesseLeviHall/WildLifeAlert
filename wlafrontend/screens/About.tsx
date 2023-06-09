@@ -1,10 +1,20 @@
 import * as React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import AnimatedGradient from "../components/background/GradientAnimated";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../components/OfflineToast";
 import SkeletonComp from "../components/Skeleton";
 import { useConnectivity } from "../hooks/useConnectivity";
+
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 type RootStackParamList = {
   AnotherScreen: undefined;
@@ -25,20 +35,32 @@ const About = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.background}>
-        <AnimatedGradient />
-      </View>
-      <View style={styles.content}>
-        <Text style={styles.text}>Does This show up? Yes</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("AnotherScreen")}>
-          <Text>Terms of Use</Text>
-        </TouchableOpacity>
-        {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
-            <OfflineToast />
-          </View>
-        )}
-      </View>
+      <ImageBackground
+        source={require("../assets/desertbg.png")}
+        style={{
+          height: screenHeight,
+          width: screenWidth,
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <View style={styles.background}>
+          <AnimatedGradient />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.text}>Does This show up? Yes</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("AnotherScreen")}
+          >
+            <Text>Terms of Use</Text>
+          </TouchableOpacity>
+          {isConnected ? null : (
+            <View className="flex-1 align-middle justify-end">
+              <OfflineToast />
+            </View>
+          )}
+        </View>
+      </ImageBackground>
     </View>
   );
 };

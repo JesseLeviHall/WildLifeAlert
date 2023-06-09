@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, ImageBackground } from "react-native";
 import { MotionLinearGradient } from "@legendapp/motion/linear-gradient-expo";
 
 const screenHeight = Dimensions.get("window").height;
@@ -12,19 +12,22 @@ const AnimatedGradient = (props: Props) => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setValue((prev) => !prev);
-    }, 9000);
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
   return (
     <MotionLinearGradient
       animateProps={{
-        colors: [value ? "#6495ed" : "#eb8d13", value ? "#0f45a8" : "#c6ed02"],
+        colors: [
+          value ? "#C6ED0282" : "#0E409C9E",
+          value ? "#EB8705AF" : "#6495ed",
+        ],
         start: { x: 0, y: 0 },
         end: { x: value ? 1 : 0, y: 1 },
       }}
       transition={{
         type: "timing",
-        duration: 9000,
+        duration: 30000,
         easing: "linear",
       }}
       style={{
