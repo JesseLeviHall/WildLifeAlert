@@ -231,7 +231,7 @@ const About = (props: Props) => {
             onPress={() => navigation.navigate("AnotherScreen")}
           >
             <Text className="text-blue-900 mt-20 font-semibold text-center">
-              Terms of Service
+              Privacy Policy & Terms
             </Text>
           </TouchableOpacity>
           {isConnected ? null : (

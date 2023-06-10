@@ -12,4 +12,6 @@ homeRouter.post("/postresource", homeScreenContent.updateResourcesContent);
 homeRouter.get("/getresources", homeScreenContent.resourcesContent);
 homeRouter.put("/updateabout", homeScreenContent.updateAboutContent);
 homeRouter.get("/getabout", homeScreenContent.aboutContent);
+homeRouter.get("/getpolicies", homeScreenContent.privacyPolicyContent);
+homeRouter.put("/updatepolicies", homeScreenContent.updatePrivacyPolicyContent);
 //# sourceMappingURL=homeRoute.js.map

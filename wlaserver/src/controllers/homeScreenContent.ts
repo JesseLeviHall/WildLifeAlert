@@ -275,6 +275,41 @@ export const aboutContent = async (
 }
 
 
+//Get /privacy policy content
+export const privacyPolicyContent = async (
+	req: Request,
+	res: Response
+): Promise<void> => {
+	try {
+		const privacyPolicyContent = await redisClient.get('privacyPolicyContent');
+		res.send(privacyPolicyContent);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Internal Server Error');
+	}
+}
+
+//POST /privacy policy content
+export const updatePrivacyPolicyContent = async (
+	req: Request,
+	res: Response
+): Promise<void> => {
+	try {
+		const { Title, Link, Title2, Link2 } = req.body;
+		//check if required fields are undefined
+		if (!Title || !Link || !Title2 || !Link2 ) {
+			res.status(400).send('Invalid request: Missing required fields');
+			return;
+		}
+		const privacyPolicyContent = JSON.stringify({ Title, Link, Title2, Link2 });
+		await redisClient.set('privacyPolicyContent', privacyPolicyContent);
+		res.send('Privacy Policy Content Updated');
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Internal Server Error');
+	}
+}
+
 
 
 

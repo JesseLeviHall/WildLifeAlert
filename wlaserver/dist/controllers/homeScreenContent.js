@@ -223,4 +223,33 @@ export const aboutContent = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+//Get /privacy policy content
+export const privacyPolicyContent = async (req, res) => {
+    try {
+        const privacyPolicyContent = await redisClient.get('privacyPolicyContent');
+        res.send(privacyPolicyContent);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+//POST /privacy policy content
+export const updatePrivacyPolicyContent = async (req, res) => {
+    try {
+        const { Title, Link, Title2, Link2 } = req.body;
+        //check if required fields are undefined
+        if (!Title || !Link || !Title2 || !Link2) {
+            res.status(400).send('Invalid request: Missing required fields');
+            return;
+        }
+        const privacyPolicyContent = JSON.stringify({ Title, Link, Title2, Link2 });
+        await redisClient.set('privacyPolicyContent', privacyPolicyContent);
+        res.send('Privacy Policy Content Updated');
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 //# sourceMappingURL=homeScreenContent.js.map

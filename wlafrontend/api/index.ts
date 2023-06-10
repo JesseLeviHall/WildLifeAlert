@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //remote server for now: https://d1h2airt5kbf3g.cloudfront.net
 //locoal server: http://10.0.10.10:3000
 const API = axios.create({
-	baseURL: 'https://d1h2airt5kbf3g.cloudfront.net',
+	baseURL: 'http://10.0.10.10:3000',
 	timeout: 10000,
 	withCredentials: false,
 });
@@ -181,3 +181,15 @@ export const getAboutScreenContent = async () => {
 	}
 }
   
+//===================================================
+//get the privacy policy content
+export const getPrivacyPolicyContent = async () => {
+	try {
+		const privacyPolicyContent = await API.get('/api/getpolicies');
+		return privacyPolicyContent.data;
+	}
+	catch (error) {
+		console.error(error);
+	}
+}
+
