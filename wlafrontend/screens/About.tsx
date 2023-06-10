@@ -218,8 +218,9 @@ const About = (props: Props) => {
               <View className="items-center">
                 <Text style={styles.text}>{data?.Action}</Text>
                 <Button
-                  className="my-10 w-40"
-                  mode="contained-tonal"
+                  className="my-6 w-40"
+                  mode="elevated"
+                  buttonColor="#00E0FFFF"
                   onPress={() => Linking.openURL(`${data?.Link}`)}
                 >
                   Contribute
@@ -288,7 +289,6 @@ const styles = StyleSheet.create({
     width: screenWidth - 40,
     alignSelf: "center",
     maxHeight: screenHeight / 2.5,
-    //add a border
     borderWidth: 1,
     borderColor: "#00E0FFFF",
   },
