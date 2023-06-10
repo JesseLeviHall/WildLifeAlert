@@ -2,12 +2,13 @@ import * as React from "react";
 import {
   View,
   Text,
+  Linking,
   StyleSheet,
   Dimensions,
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import { Appbar, Chip } from "react-native-paper";
+import { Appbar, Chip, Button } from "react-native-paper";
 import AnimatedGradient from "../components/background/GradientAnimated";
 import { Motion } from "@legendapp/motion";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -213,12 +214,23 @@ const About = (props: Props) => {
               <Text style={styles.text}>{data?.Description}</Text>
             )}
             {mission && <Text style={styles.text}>{data?.Mission}</Text>}
-            {action && <Text style={styles.text}>{data?.Action}</Text>}
+            {action && (
+              <View className="items-center">
+                <Text style={styles.text}>{data?.Action}</Text>
+                <Button
+                  className="my-10 w-40"
+                  mode="contained-tonal"
+                  onPress={() => Linking.openURL(`${data?.Link}`)}
+                >
+                  Contribute
+                </Button>
+              </View>
+            )}
           </Motion.View>
           <TouchableOpacity
             onPress={() => navigation.navigate("AnotherScreen")}
           >
-            <Text className="text-blue-500 mt-20 font-semibold text-center">
+            <Text className="text-blue-900 mt-20 font-semibold text-center">
               Terms of Service
             </Text>
           </TouchableOpacity>
@@ -276,6 +288,9 @@ const styles = StyleSheet.create({
     width: screenWidth - 40,
     alignSelf: "center",
     maxHeight: screenHeight / 2.5,
+    //add a border
+    borderWidth: 1,
+    borderColor: "#00E0FFFF",
   },
 });
 
