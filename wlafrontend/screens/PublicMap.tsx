@@ -7,7 +7,7 @@ import { Appbar, FAB } from "react-native-paper";
 import { useRefreshByUser } from "../hooks/useRefreshByUser";
 import { useConnectivity } from "../hooks/useConnectivity";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import PubMapView from "../components/PubMapView";
+import PubMapView, { PubMapViewHandle } from "../components/PubMapView";
 import SpinnerComp from "../components/Spinner";
 import OfflineToast from "../components/OfflineToast";
 import { getPubData } from "../api/index";
@@ -37,6 +37,11 @@ const PublicMap = (props: Props) => {
   const { bottom } = useSafeAreaInsets();
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const isConnected = useConnectivity();
+
+  const pubMapViewRef = React.useRef<PubMapViewHandle>(null);
+  const handleMapTypeChange = () => {
+    pubMapViewRef.current?.onMapTypeChange();
+  };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -83,12 +88,7 @@ const PublicMap = (props: Props) => {
           }}
         />
         <Appbar.Content title="Live Map" />
-        <Appbar.Action
-          icon="map"
-          onPress={() => {
-            /* TODO: SWITH MAP VIEWS */
-          }}
-        />
+        <Appbar.Action icon="map" onPress={handleMapTypeChange} />
       </Appbar.Header>
       {infoVisible ? (
         <PubMapDialogue
@@ -97,7 +97,7 @@ const PublicMap = (props: Props) => {
         />
       ) : null}
       <View className="flex-1 align-middle justify-center">
-        <PubMapView alerts={alerts} />
+        <PubMapView ref={pubMapViewRef} alerts={alerts} />
       </View>
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-end">
