@@ -171,14 +171,20 @@ const ConfirmPost = (props: Props) => {
               Location Saved
             </Chip>
           </View>
-          <View className=" h-8 items-center mt-3 ">
+          <View className=" h-8 items-center mt-3 mb-4 ">
             <Chip icon={userDetails.photoBlob.length >= 1 ? "check" : "close"}>
               Photos? {userDetails.photoBlob.length >= 1 ? "Yes" : "No"}
             </Chip>
           </View>
         </ScrollView>
       </View>
-      {showToast && <SuccessToast message="Alert Posted!" />}
+
+      {showToast && (
+        <View className="-mt-16 h-16 rounded-lg">
+          <SuccessToast message="Alert Posted!" />
+        </View>
+      )}
+
       <View className="items-center">
         <Button
           leftIcon={

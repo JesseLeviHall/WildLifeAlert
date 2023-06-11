@@ -112,7 +112,7 @@ export default function SetAlertLocationMap({
           accessibilityLabel="Save Location"
           icon="check"
           customSize={50}
-          label={"Save Location"}
+          label={"Save "}
           className="w-1/2 h-12"
           onPress={handleSaveLocation}
           disabled={!location}
