@@ -87,6 +87,7 @@ export default function SetAlertLocationMap({
             latitudeDelta: 50,
             longitudeDelta: 50,
           }}
+          mapType={"hybrid"}
           onPress={handleMapPress}
         >
           {location && <Marker coordinate={location} />}

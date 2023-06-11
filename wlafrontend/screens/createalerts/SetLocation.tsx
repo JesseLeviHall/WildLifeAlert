@@ -2,7 +2,7 @@ import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { View, Text, Button } from "native-base";
+import { View, Button } from "native-base";
 import SetAlertLocationMap from "../../components/SetAlertLocationMap";
 import SuccessToast from "../../components/SuccessToast";
 
@@ -17,8 +17,6 @@ type UserLocation = {
   latitude: number;
   longitude: number;
 };
-
-const screenHeight = Dimensions.get("window").height;
 
 const SetLocation = (props: Props) => {
   const [location, setLocation] = React.useState<UserLocation | null>(null);

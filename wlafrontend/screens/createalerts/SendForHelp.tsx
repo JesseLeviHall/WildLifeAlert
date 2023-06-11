@@ -223,14 +223,30 @@ const SendForHelp = (props: Props) => {
             <Text className="text-center font-light mb-2 text-sm">
               They may need to contact you for more information
             </Text>
-            <Switch
-              offTrackColor="indigo.100"
-              onTrackColor="indigo.300"
-              onThumbColor="indigo.500"
-              offThumbColor="indigo.50"
-              isChecked={isSwitchOn}
-              onToggle={onToggleSwitch}
-            />
+            <View className="flex-row row-span-1">
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  isSwitchOn ? "opacity-20" : ""
+                }`}
+              >
+                Anonymous
+              </Text>
+              <Switch
+                offTrackColor="indigo.100"
+                onTrackColor="indigo.300"
+                onThumbColor="indigo.500"
+                offThumbColor="indigo.50"
+                isChecked={isSwitchOn}
+                onToggle={onToggleSwitch}
+              />
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  isSwitchOn ? "" : "opacity-20"
+                }`}
+              >
+                Allow Contact
+              </Text>
+            </View>
             <Button className=" mt-6 w-24" onPress={onSubmit}>
               Next
             </Button>

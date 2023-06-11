@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, ScrollView, FlexAlignType, ViewStyle } from "react-native";
+import { Dimensions, ScrollView, ViewStyle } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, Icon } from "native-base";
 import { Chip } from "react-native-paper";
@@ -109,77 +109,82 @@ const ConfirmPost = (props: Props) => {
   });
 
   const contentContainerStyle: ViewStyle = {
-    alignItems: "center" as FlexAlignType,
-    width: "100%",
+    alignItems: "center",
+    alignSelf: "center",
+    marginTop: 14,
+    width: "80%",
+    paddingHorizontal: 4,
+    backgroundColor: "#99bbe36e",
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: "#00E0FFFF",
   };
 
   return (
     <LinearGradient
-      style={{ height: screenHeight }}
+      style={{
+        height: screenHeight,
+      }}
       colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
     >
-      <Text className="text-center mt-24 font-black uppercase text-3xl">
-        Review and Submit
+      <Text className="text-center mt-14 font-black uppercase text-3xl">
+        Review Post
       </Text>
-      <View className="flex-1 items-center p-4 h-full w-full ">
+      <View className="flex-col mt-4 h-3/5">
         <ScrollView contentContainerStyle={contentContainerStyle}>
-          <View className=" w-full px-12 bg-[#99bbe36e] rounded-lg border border-[#293b27fe]">
-            <Text className="text-center mt-3 font-semibold">
-              {userDetails.Animal}
-            </Text>
-            <Text className="text-center font-light">
-              {userDetails.Description}
-            </Text>
-            <View className=" h-8 items-center mt-3 ">
-              <Chip icon="information">{userDetails.FullName}</Chip>
-            </View>
-            <View className=" h-8 items-center mt-3 ">
-              <Chip icon="phone">{userDetails.PhoneNumber}</Chip>
-            </View>
-            <View className=" h-8 items-center mt-3 ">
-              <Chip icon="email">{userDetails.Email}</Chip>
-            </View>
-            <View className=" h-8 items-center mt-3 ">
-              <Chip
-                icon={userDetails.ShareContact == "true" ? "check" : "close"}
-              >
-                Share Contact Info:{" "}
-                {userDetails.ShareContact == "true" ? "Yes" : "No"}
-              </Chip>
-            </View>
-
-            <View className=" h-8 items-center mt-3 ">
-              <Chip
-                icon={
-                  userDetails.Latitude && userDetails.Longitude
-                    ? "check"
-                    : "close"
-                }
-              >
-                Location Saved
-              </Chip>
-            </View>
-            <View className=" h-8 items-center mt-3 mb-6 ">
-              <Chip icon={userDetails.photoBlob ? "check" : "close"}>
-                Photos? {userDetails.photoBlob ? "Yes" : "No"}
-              </Chip>
-            </View>
-
-            {showToast && <SuccessToast message="Alert Posted!" />}
+          <Text className="text-center mt-3 font-bold">
+            {userDetails.Animal}
+          </Text>
+          <Text className="text-center font-light">
+            {userDetails.Description}
+          </Text>
+          <View className=" h-8 items-center mt-3 ">
+            <Chip icon="information">{userDetails.FullName}</Chip>
           </View>
-          <Button
-            leftIcon={
-              <Icon as={Ionicons} name="cloud-upload-outline" size="sm" />
-            }
-            isLoading={mutation.isLoading}
-            isLoadingText="Submitting"
-            isDisabled={disabled}
-            className="mt-6 w-32"
-            onPress={handleSendAlert}
-          >
-            Send Alert
-          </Button>
+          <View className=" h-8 items-center mt-3 ">
+            <Chip icon="phone">{userDetails.PhoneNumber}</Chip>
+          </View>
+          <View className=" h-8 items-center mt-3 ">
+            <Chip icon="email">{userDetails.Email}</Chip>
+          </View>
+          <View className=" h-8 items-center mt-3 ">
+            <Chip icon={userDetails.ShareContact == "true" ? "check" : "close"}>
+              Share Contact Info:{" "}
+              {userDetails.ShareContact == "true" ? "Yes" : "No"}
+            </Chip>
+          </View>
+          <View className=" h-8 items-center mt-3 ">
+            <Chip
+              icon={
+                userDetails.Latitude && userDetails.Longitude
+                  ? "check"
+                  : "close"
+              }
+            >
+              Location Saved
+            </Chip>
+          </View>
+          <View className=" h-8 items-center mt-3 mb-6 ">
+            <Chip icon={userDetails.photoBlob ? "check" : "close"}>
+              Photos? {userDetails.photoBlob ? "Yes" : "No"}
+            </Chip>
+          </View>
         </ScrollView>
+      </View>
+      {showToast && <SuccessToast message="Alert Posted!" />}
+      <View className="items-center">
+        <Button
+          leftIcon={
+            <Icon as={Ionicons} name="cloud-upload-outline" size="sm" />
+          }
+          isLoading={mutation.isLoading}
+          isLoadingText="Submitting"
+          isDisabled={disabled}
+          className="mt-6 w-32"
+          onPress={handleSendAlert}
+        >
+          Send Alert
+        </Button>
       </View>
     </LinearGradient>
   );

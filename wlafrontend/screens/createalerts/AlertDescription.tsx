@@ -1,6 +1,12 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, Keyboard, TouchableWithoutFeedback } from "react-native";
+import {
+  Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, FormControl, Input, TextArea } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -113,34 +119,43 @@ const AlertDescription = (props: Props) => {
                 </FormControl.HelperText>
               ) : null}
             </FormControl>
-            <FormControl isRequired className="mb-4">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
+            <View>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1, width: "80%" }}
               >
-                Description
-              </FormControl.Label>
-              <TextArea
-                h={40}
-                placeholder="what is the condition of the animal"
-                variant="filled"
-                w="100%"
-                maxW="300"
-                autoCompleteType={"text"}
-                onChangeText={(text) => setDescription({ Description: text })}
-              />
-              {"Description" in errors ? (
-                <FormControl.HelperText
-                  _text={{
-                    fontSize: "xs",
-                  }}
-                >
-                  {errors.Description}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
+                <FormControl isRequired className="mb-4">
+                  <FormControl.Label
+                    _text={{
+                      bold: true,
+                      color: "black",
+                    }}
+                  >
+                    Description
+                  </FormControl.Label>
+                  <TextArea
+                    h={40}
+                    placeholder="what is the condition of the animal"
+                    variant="filled"
+                    w="100%"
+                    maxW="300"
+                    autoCompleteType={"text"}
+                    onChangeText={(text) =>
+                      setDescription({ Description: text })
+                    }
+                  />
+                  {"Description" in errors ? (
+                    <FormControl.HelperText
+                      _text={{
+                        fontSize: "xs",
+                      }}
+                    >
+                      {errors.Description}
+                    </FormControl.HelperText>
+                  ) : null}
+                </FormControl>
+              </KeyboardAvoidingView>
+            </View>
             <Button className=" w-24" onPress={onSubmit}>
               Next
             </Button>
