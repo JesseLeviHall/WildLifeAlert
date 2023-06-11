@@ -164,7 +164,7 @@ const ConfirmPost = (props: Props) => {
               Location Saved
             </Chip>
           </View>
-          <View className=" h-8 items-center mt-3 mb-6 ">
+          <View className=" h-8 items-center mt-3 ">
             <Chip icon={userDetails.photoBlob ? "check" : "close"}>
               Photos? {userDetails.photoBlob ? "Yes" : "No"}
             </Chip>

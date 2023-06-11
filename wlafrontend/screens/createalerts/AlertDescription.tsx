@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, FormControl, Input, TextArea } from "native-base";
@@ -83,47 +84,47 @@ const AlertDescription = (props: Props) => {
   });
   return (
     <LinearGradient
-      style={{ height: screenHeight }}
+      style={{ flex: 1 }}
       colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
     >
       <Text className="text-center mt-6 font-black uppercase text-4xl">
         What is happening?
       </Text>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View className="flex-1 items-center p-4 h-full w-full ">
-          <View className=" w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
-            <FormControl isRequired className="mb-4">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
-              >
-                What Animal?
-              </FormControl.Label>
-              <Input
-                className=" bg-[#d4e1ea] w-2/3"
-                placeholder="Example: Porcupine"
-                variant="filled"
-                onChangeText={(value) =>
-                  setAnimal({ ...Animal, Animal: value })
-                }
-              />
-              {"Animal" in errors ? (
-                <FormControl.HelperText
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View className="flex-1 items-center p-4 h-full w-full ">
+            <View className=" w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#00E0FFFF]">
+              <FormControl isRequired className="">
+                <FormControl.Label
                   _text={{
-                    fontSize: "xs",
+                    bold: true,
+                    color: "black",
                   }}
                 >
-                  {errors.Animal}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
-            <View>
-              <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={{ flex: 1, width: "80%" }}
-              >
+                  What Animal?
+                </FormControl.Label>
+                <Input
+                  className=" bg-[#d4e1ea] w-2/3"
+                  placeholder="Example: Porcupine"
+                  variant="filled"
+                  onChangeText={(value) =>
+                    setAnimal({ ...Animal, Animal: value })
+                  }
+                />
+                {"Animal" in errors ? (
+                  <FormControl.HelperText
+                    _text={{
+                      fontSize: "xs",
+                    }}
+                  >
+                    {errors.Animal}
+                  </FormControl.HelperText>
+                ) : null}
+              </FormControl>
+              <View className="h-64">
                 <FormControl isRequired className="mb-4">
                   <FormControl.Label
                     _text={{
@@ -134,11 +135,11 @@ const AlertDescription = (props: Props) => {
                     Description
                   </FormControl.Label>
                   <TextArea
+                    backgroundColor={"#d4e1ea"}
                     h={40}
-                    placeholder="what is the condition of the animal"
+                    placeholder="Condition? Circumstances? On the move?"
                     variant="filled"
-                    w="100%"
-                    maxW="300"
+                    w={250}
                     autoCompleteType={"text"}
                     onChangeText={(text) =>
                       setDescription({ Description: text })
@@ -154,14 +155,14 @@ const AlertDescription = (props: Props) => {
                     </FormControl.HelperText>
                   ) : null}
                 </FormControl>
-              </KeyboardAvoidingView>
+              </View>
+              <Button className=" w-24" onPress={onSubmit}>
+                Next
+              </Button>
             </View>
-            <Button className=" w-24" onPress={onSubmit}>
-              Next
-            </Button>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </ScrollView>
     </LinearGradient>
   );
 };
