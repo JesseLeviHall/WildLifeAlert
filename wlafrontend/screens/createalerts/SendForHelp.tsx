@@ -116,7 +116,7 @@ const SendForHelp = (props: Props) => {
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
+      colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
     >
       <View>
         {visible ? (
@@ -226,7 +226,7 @@ const SendForHelp = (props: Props) => {
             <View className="flex-row row-span-1">
               <Text
                 className={`text-center font-light my-1 mx-2 text-sm ${
-                  isSwitchOn ? "opacity-20" : ""
+                  isSwitchOn ? "opacity-20" : "font-bold"
                 }`}
               >
                 Anonymous
@@ -241,7 +241,7 @@ const SendForHelp = (props: Props) => {
               />
               <Text
                 className={`text-center font-light my-1 mx-2 text-sm ${
-                  isSwitchOn ? "" : "opacity-20"
+                  isSwitchOn ? "font-bold" : "opacity-20"
                 }`}
               >
                 Allow Contact

@@ -4,8 +4,7 @@ import {
   Dimensions,
   Keyboard,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
+  ImageBackground,
   ScrollView,
 } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -85,7 +84,7 @@ const AlertDescription = (props: Props) => {
   return (
     <LinearGradient
       style={{ flex: 1 }}
-      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
+      colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
     >
       <Text className="text-center mt-6 font-black uppercase text-4xl">
         What is happening?

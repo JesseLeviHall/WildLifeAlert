@@ -1,7 +1,11 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions, ScrollView, ViewStyle } from "react-native";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  NavigationProp,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { View, Text, Button, Icon } from "native-base";
 import { Chip } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
@@ -34,41 +38,44 @@ const ConfirmPost = (props: Props) => {
     photoBlob: "",
   });
 
-  React.useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const keys = [
-          "FullName",
-          "PhoneNumber",
-          "Email",
-          "ShareContact",
-          "Animal",
-          "Description",
-          "location",
-          "photoBlob",
-        ];
-        const results = await AsyncStorage.multiGet(keys);
-        const data = Object.fromEntries(results);
-        const locationData = data.location ? JSON.parse(data.location) : {};
-        const dataWithDefaults = {
-          FullName: data.FullName || "",
-          PhoneNumber: data.PhoneNumber || "",
-          Email: data.Email || "",
-          ShareContact: data.ShareContact || "",
-          Animal: data.Animal || "",
-          Description: data.Description || "",
-          Latitude: locationData.latitude || "",
-          Longitude: locationData.longitude || "",
-          photoBlob: data.photoBlob || "",
-        };
-        setUserDetails(dataWithDefaults);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUserData = async () => {
+        try {
+          const keys = [
+            "FullName",
+            "PhoneNumber",
+            "Email",
+            "ShareContact",
+            "Animal",
+            "Description",
+            "location",
+            "photoBlob",
+          ];
+          const results = await AsyncStorage.multiGet(keys);
 
-    fetchUserData();
-  }, []);
+          const data = Object.fromEntries(results);
+          const locationData = data.location ? JSON.parse(data.location) : {};
+          const dataWithDefaults = {
+            FullName: data.FullName || "",
+            PhoneNumber: data.PhoneNumber || "",
+            Email: data.Email || "",
+            ShareContact: data.ShareContact || "",
+            Animal: data.Animal || "",
+            Description: data.Description || "",
+            Latitude: locationData.latitude || "",
+            Longitude: locationData.longitude || "",
+            photoBlob: data.photoBlob ? JSON.parse(data.photoBlob) : [],
+          };
+          setUserDetails(dataWithDefaults);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchUserData();
+    }, [])
+  );
 
   const mutation = useMutation(postNewAlert, {
     onSuccess: () => {
@@ -125,7 +132,7 @@ const ConfirmPost = (props: Props) => {
       style={{
         height: screenHeight,
       }}
-      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
+      colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
     >
       <Text className="text-center mt-14 font-black uppercase text-3xl">
         Review Post
@@ -165,8 +172,8 @@ const ConfirmPost = (props: Props) => {
             </Chip>
           </View>
           <View className=" h-8 items-center mt-3 ">
-            <Chip icon={userDetails.photoBlob ? "check" : "close"}>
-              Photos? {userDetails.photoBlob ? "Yes" : "No"}
+            <Chip icon={userDetails.photoBlob.length >= 1 ? "check" : "close"}>
+              Photos? {userDetails.photoBlob.length >= 1 ? "Yes" : "No"}
             </Chip>
           </View>
         </ScrollView>
@@ -180,7 +187,7 @@ const ConfirmPost = (props: Props) => {
           isLoading={mutation.isLoading}
           isLoadingText="Submitting"
           isDisabled={disabled}
-          className="mt-6 w-32"
+          className="mt-2 w-32"
           onPress={handleSendAlert}
         >
           Send Alert

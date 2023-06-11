@@ -68,7 +68,7 @@ const AddPhotos = (props: Props) => {
           await AsyncStorage.setItem("photoBlob", JSON.stringify(photoArray));
           setPhotoBlob(photoArray);
         } else {
-          alert("Select up to 3 photos.");
+          alert("We can handle up to 3 photos at this time");
         }
       } catch (error) {
         console.log(error);
@@ -86,9 +86,9 @@ const AddPhotos = (props: Props) => {
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
+      colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
     >
-      <View className="flex-1 items-center">
+      <View className="flex-1 mt-12 items-center align-middle">
         <View className="mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
           <Text className="mb-3 font-bold text-2xl text-center">
             Do You Have Photos?
