@@ -35,7 +35,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "clerkPublishableKey": "@env:CLERK_PUBLISHABLE_KEY"
+      "clerkPublishableKey": "process.env.CLERK_PUBLISHABLE_KEY"
     }
   }
 }

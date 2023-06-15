@@ -13,6 +13,9 @@ import { Provider as PaperProvider } from "react-native-paper";
 import Constants from "expo-constants";
 import { ClerkProvider } from "@clerk/clerk-expo";
 
+const { CLERK_PUBLISHABLE_KEY } =
+  Constants.expoConfig?.extra?.clerkPublishableKey;
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -46,9 +49,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <ClerkProvider
-        publishableKey={Constants.manifest?.extra?.clerkPublishableKey}
-      >
+      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
         <PersistQueryClientProvider
           client={queryClient}
           persistOptions={{
