@@ -33,6 +33,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "clerkPublishableKey": "@env:CLERK_PUBLISHABLE_KEY"
     }
   }
 }
