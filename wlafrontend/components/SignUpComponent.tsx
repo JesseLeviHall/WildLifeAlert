@@ -1,6 +1,15 @@
 import * as React from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  Dimensions,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
+
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -9,8 +18,8 @@ export default function SignUpScreen() {
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
+  const [error, setError] = React.useState("");
 
-  // start the sign up process.
   const onSignUpPress = async () => {
     if (!isLoaded) {
       return;
@@ -28,6 +37,7 @@ export default function SignUpScreen() {
       // change the UI to our pending section.
       setPendingVerification(true);
     } catch (err: any) {
+      setError(err.errors[0].message);
       console.error(JSON.stringify(err, null, 2));
     }
   };
@@ -45,15 +55,16 @@ export default function SignUpScreen() {
 
       await setActive({ session: completeSignUp.createdSessionId });
     } catch (err: any) {
+      setError(err.errors[0].message);
       console.error(JSON.stringify(err, null, 2));
     }
   };
 
   return (
-    <View className="flex-1 align-middle justify-center">
+    <View className="flex-1 align-middle justify-center w-24 bg-slate-200">
       {!pendingVerification && (
-        <View className="items-center">
-          <View className="items-center">
+        <View className="items-center bg-neutral-400 ">
+          <View className="items-center bg-white">
             <TextInput
               autoCapitalize="none"
               value={emailAddress}
@@ -62,7 +73,7 @@ export default function SignUpScreen() {
             />
           </View>
 
-          <View className="items-center">
+          <View className="items-center bg-blue-200">
             <TextInput
               value={password}
               placeholder="Password..."
@@ -72,8 +83,10 @@ export default function SignUpScreen() {
             />
           </View>
 
+          {error && <Text style={{ color: "red" }}>{error}</Text>}
+
           <TouchableOpacity onPress={onSignUpPress}>
-            <Text>Sign up</Text>
+            <Text className="bg-red-400 text-2xl">Sign up</Text>
           </TouchableOpacity>
         </View>
       )}

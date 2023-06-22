@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
+import { SignedIn, SignedOut } from "@clerk/clerk-expo";
+import SignInWithOAuth from "../../components/SignInWithOAuth";
 import SignUpComponent from "../../components/SignUpComponent";
+import SignInComponent from "../../components/SignInComponent";
 
 type Props = {};
 
@@ -12,7 +14,7 @@ const RescuerLogin = (Props: Props) => {
         <Text className="text-center">You are Signed in</Text>
       </SignedIn>
       <SignedOut>
-        <SignUpComponent />
+        <SignInWithOAuth />
       </SignedOut>
     </View>
   );

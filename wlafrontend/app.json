@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "wlafrontend",
-    "slug": "wlafrontend",
+    "name": "WildLifeAlert",
+    "slug": "WildLifeAlert",
+    "scheme": "wlawildlifealert",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -35,7 +36,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "clerkPublishableKey": "process.env.CLERK_PUBLISHABLE_KEY"
+      "clerkPublishableKey": "pk_test_ZGlzdGluY3QtbXVkZmlzaC05Ny5jbGVyay5hY2NvdW50cy5kZXYk"
     }
   }
 }
