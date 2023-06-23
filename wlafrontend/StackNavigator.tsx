@@ -20,25 +20,20 @@ import {
   ConfirmPost,
   NextSteps,
 } from "./screens/Screen_Index.js";
-import { useAuth } from "@clerk/clerk-expo";
+import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const { isLoaded, sessionId } = useAuth();
-
-  if (!isLoaded || !sessionId) {
-    return null;
-  }
-
   return (
     <Stack.Navigator>
-      {sessionId ? (
+      <SignedIn>
         <Stack.Group>
           <Stack.Screen name="RescuerWelcome" component={RescuerWelcome} />
           <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} />
         </Stack.Group>
-      ) : (
+      </SignedIn>
+      <SignedOut>
         <Stack.Group>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="SendForHelp" component={SendForHelp} />
@@ -57,7 +52,7 @@ const StackNavigator = () => {
           <Stack.Screen name="ConfirmPost" component={ConfirmPost} />
           <Stack.Screen name="NextSteps" component={NextSteps} />
         </Stack.Group>
-      )}
+      </SignedOut>
     </Stack.Navigator>
   );
 };

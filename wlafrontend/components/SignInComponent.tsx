@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 
+//TODO: Forgot password functionality
+
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
