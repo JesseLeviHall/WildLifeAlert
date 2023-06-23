@@ -3,40 +3,46 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
+import SignUpWithOAuth from "../../components/SignUpWithOAuth";
+import SignUpComponent from "../../components/SignUpComponent";
 
 type RootStackParamList = {
-  RescuerRegisterStepTwo: undefined;
+  RescuerWelcome: undefined;
 };
 
-type RescuerRegisterStepTwoProp = NavigationProp<
-  RootStackParamList,
-  "RescuerRegisterStepTwo"
->;
+type RescuerWelcomeProp = NavigationProp<RootStackParamList, "RescuerWelcome">;
 
 type Props = {
-  navigation: RescuerRegisterStepTwoProp;
+  navigation: RescuerWelcomeProp;
 };
 
-const RescuerRegister = (props: Props) => {
-  const navigation = useNavigation<RescuerRegisterStepTwoProp>();
+const RescuerRegisterStepTwo = (props: Props) => {
+  const navigation = useNavigation<RescuerWelcomeProp>();
   const isConnected = useConnectivity();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Rescuer Details",
+      title: "Authentication",
       headerTintColor: "#000000",
       headerStyle: { backgroundColor: "#71D1C7" },
     });
   });
+
   return (
     <View>
-      <Text>RescuerRegister Step 1</Text>
+      <Text>RescuerRegister Step 2</Text>
+      <View className="mt-2 h-16">
+        <SignUpWithOAuth />
+      </View>
+      <View className="mt-2 h-36">
+        <SignUpComponent />
+      </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("RescuerRegisterStepTwo");
+          navigation.navigate("RescuerWelcome");
         }}
       >
-        <Text>Next</Text>
+        <Text>Submit</Text>
       </TouchableOpacity>
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-end">
@@ -47,4 +53,4 @@ const RescuerRegister = (props: Props) => {
   );
 };
 
-export default RescuerRegister;
+export default RescuerRegisterStepTwo;

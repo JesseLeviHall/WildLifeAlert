@@ -5,6 +5,7 @@ import {
   AnotherScreen,
   RescuerLogin,
   RescuerRegister,
+  RescuerRegisterStepTwo,
   RescuerWelcome,
   RescuerPrefs,
   Resources,
@@ -20,39 +21,34 @@ import {
   ConfirmPost,
   NextSteps,
 } from "./screens/Screen_Index.js";
-import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
-      <SignedIn>
-        <Stack.Group>
-          <Stack.Screen name="RescuerWelcome" component={RescuerWelcome} />
-          <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} />
-        </Stack.Group>
-      </SignedIn>
-      <SignedOut>
-        <Stack.Group>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="SendForHelp" component={SendForHelp} />
-          <Stack.Screen name="Resources" component={Resources} />
-          <Stack.Screen name="About" component={About} />
-          <Stack.Screen name="AnotherScreen" component={AnotherScreen} />
-          <Stack.Screen name="RescuerLogin" component={RescuerLogin} />
-          <Stack.Screen name="RescuerRegister" component={RescuerRegister} />
-          <Stack.Screen name="AlertsNearby" component={AlertsNearby} />
-          <Stack.Screen name="ColdAlerts" component={ColdAlerts} />
-          <Stack.Screen name="AlertDetails" component={AlertDetails} />
-          <Stack.Screen name="PublicMap" component={PublicMap} />
-          <Stack.Screen name="AlertDescription" component={AlertDescription} />
-          <Stack.Screen name="SetLocation" component={SetLocation} />
-          <Stack.Screen name="AddPhotos" component={AddPhotos} />
-          <Stack.Screen name="ConfirmPost" component={ConfirmPost} />
-          <Stack.Screen name="NextSteps" component={NextSteps} />
-        </Stack.Group>
-      </SignedOut>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="SendForHelp" component={SendForHelp} />
+      <Stack.Screen name="Resources" component={Resources} />
+      <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="AnotherScreen" component={AnotherScreen} />
+      <Stack.Screen name="PublicMap" component={PublicMap} />
+      <Stack.Screen name="AlertDescription" component={AlertDescription} />
+      <Stack.Screen name="SetLocation" component={SetLocation} />
+      <Stack.Screen name="AddPhotos" component={AddPhotos} />
+      <Stack.Screen name="ConfirmPost" component={ConfirmPost} />
+      <Stack.Screen name="NextSteps" component={NextSteps} />
+      <Stack.Screen name="RescuerLogin" component={RescuerLogin} />
+      <Stack.Screen name="RescuerRegister" component={RescuerRegister} />
+      <Stack.Screen
+        name="RescuerRegisterStepTwo"
+        component={RescuerRegisterStepTwo}
+      />
+      <Stack.Screen name="RescuerWelcome" component={RescuerWelcome} />
+      <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} />
+      <Stack.Screen name="AlertsNearby" component={AlertsNearby} />
+      <Stack.Screen name="ColdAlerts" component={ColdAlerts} />
+      <Stack.Screen name="AlertDetails" component={AlertDetails} />
     </Stack.Navigator>
   );
 };

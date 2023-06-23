@@ -2,6 +2,7 @@ export { default as Home } from './HomeScreen';
 export { default as AnotherScreen } from './AnotherScreen';
 export { default as RescuerLogin } from './rescuerArea/RescuerLogin';
 export { default as RescuerRegister } from './rescuerArea/RescuerRegister';
+export { default as RescuerRegisterStepTwo } from './rescuerArea/RescuerRegisterStepTwo';
 export { default as RescuerWelcome } from './rescuerArea/RescuerWelcome';
 export { default as RescuerPrefs } from './rescuerArea/RescuerPrefs';
 export { default as Resources } from './Resources';

@@ -5,15 +5,18 @@ import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 
 type RootStackParamList = {
-  Home: undefined;
+  RescuerLogin: undefined;
 };
-type HomeScreenNavigationProp = NavigationProp<RootStackParamList, "Home">;
+type RescuerLoginNavigationProp = NavigationProp<
+  RootStackParamList,
+  "RescuerLogin"
+>;
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: RescuerLoginNavigationProp;
 };
 
 const RescuerWelcome = (props: Props) => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation<RescuerLoginNavigationProp>();
   const isConnected = useConnectivity();
 
   React.useLayoutEffect(() => {
@@ -23,14 +26,14 @@ const RescuerWelcome = (props: Props) => {
   });
 
   return (
-    <View>
+    <View className="mt-24">
       <Text>RescuerWelcome</Text>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Home");
+          navigation.navigate("RescuerLogin");
         }}
       >
-        <Text>RescuerWelcome</Text>
+        <Text>Done</Text>
       </TouchableOpacity>
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-end">
