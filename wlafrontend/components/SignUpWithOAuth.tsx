@@ -6,20 +6,17 @@ import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const SignInWithOAuth = () => {
+const SignUpWithOAuth = () => {
   useWarmUpBrowser();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
   const onPress = React.useCallback(async () => {
     try {
-      const { createdSessionId, signIn, signUp, setActive } =
-        await startOAuthFlow();
+      const { signUp, setActive } = await startOAuthFlow();
 
-      if (createdSessionId) {
-        setActive && setActive({ session: createdSessionId });
-      } else {
-        // Use signIn or signUp for next steps such as MFA
+      if (signUp) {
+        setActive && setActive({ session: signUp.createdSessionId });
       }
     } catch (err) {
       console.error("OAuth error", err);
@@ -28,4 +25,4 @@ const SignInWithOAuth = () => {
 
   return <Button title="Sign Up with Google" onPress={onPress} />;
 };
-export default SignInWithOAuth;
+export default SignUpWithOAuth;

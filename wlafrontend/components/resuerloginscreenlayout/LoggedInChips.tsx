@@ -48,7 +48,7 @@ const LoggedInChips = (props: Props) => {
         Preferences
       </Chip>
       <Chip
-        icon="map-marker"
+        icon="map"
         onPress={() => navigation.navigate("PublicMap")}
         elevated={true}
         mode="flat"

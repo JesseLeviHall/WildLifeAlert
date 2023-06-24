@@ -13,13 +13,10 @@ const SignInWithOAuth = () => {
 
   const onPress = React.useCallback(async () => {
     try {
-      const { createdSessionId, signIn, signUp, setActive } =
-        await startOAuthFlow();
+      const { signIn, setActive } = await startOAuthFlow();
 
-      if (createdSessionId) {
-        setActive && setActive({ session: createdSessionId });
-      } else {
-        // Use signIn or signUp for next steps such as MFA
+      if (signIn) {
+        setActive && setActive({ session: signIn.createdSessionId });
       }
     } catch (err) {
       console.error("OAuth error", err);
