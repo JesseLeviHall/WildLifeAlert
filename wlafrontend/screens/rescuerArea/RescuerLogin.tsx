@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   TouchableOpacity,
   Dimensions,
   ImageBackground,
@@ -37,23 +36,6 @@ type Props = {
   navigation: RescuerRegisterNavigationProp;
 };
 
-const SignOut = () => {
-  const { isLoaded, signOut } = useAuth();
-  if (!isLoaded) {
-    return <SkeletonComp />;
-  }
-  return (
-    <View>
-      <Button
-        title="Sign Out"
-        onPress={() => {
-          signOut();
-        }}
-      />
-    </View>
-  );
-};
-
 const RescuerLogin = (Props: Props) => {
   const navigation = useNavigation<RescuerRegisterNavigationProp>();
   const isConnected = useConnectivity();
@@ -61,7 +43,7 @@ const RescuerLogin = (Props: Props) => {
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded) {
-    return null;
+    return <SkeletonComp />;
   }
 
   React.useLayoutEffect(() => {

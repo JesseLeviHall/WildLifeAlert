@@ -1,12 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  Dimensions,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ImageBackground,
-  ScrollView,
-} from "react-native";
+import { Keyboard, TouchableWithoutFeedback, ScrollView } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, FormControl, Input, TextArea } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -22,7 +16,6 @@ type Errors = {
   Animal: string;
   Description: string;
 };
-const screenHeight = Dimensions.get("window").height;
 
 const AlertDescription = (props: Props) => {
   const [Animal, setAnimal] = React.useState<{ Animal: string }>({
@@ -81,6 +74,7 @@ const AlertDescription = (props: Props) => {
       headerStyle: { backgroundColor: "#71D1C7" },
     });
   });
+
   return (
     <LinearGradient
       style={{ flex: 1 }}

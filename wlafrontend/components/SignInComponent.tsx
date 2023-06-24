@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 
-//TODO: Forgot password functionality
-
 export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
 
