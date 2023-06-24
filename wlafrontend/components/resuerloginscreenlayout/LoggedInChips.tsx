@@ -8,11 +8,14 @@ import { useAuth } from "@clerk/clerk-expo";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
+//TODO add delete account option
+
 type RootStackParamList = {
   RescuerRegister: undefined;
   PublicMap: undefined;
   Home: undefined;
   RescuerPrefs: undefined;
+  ForgotPassword: undefined;
 };
 type RescuerRegisterNavigationProp = NavigationProp<
   RootStackParamList,

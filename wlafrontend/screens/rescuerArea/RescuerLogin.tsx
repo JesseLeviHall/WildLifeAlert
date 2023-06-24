@@ -26,6 +26,7 @@ type RootStackParamList = {
   PublicMap: undefined;
   Home: undefined;
   RescuerPrefs: undefined;
+  ForgotPassword: undefined;
 };
 type RescuerRegisterNavigationProp = NavigationProp<
   RootStackParamList,
@@ -97,6 +98,12 @@ const RescuerLogin = (Props: Props) => {
         <View style={styles.box}>
           <SignInWithOAuth />
           <SignInComponent />
+          <TouchableOpacity
+            className="mb-4"
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
+            <Text className="text-blue-300 text-base">Forgot password?</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             className="mb-4"
             onPress={() => {

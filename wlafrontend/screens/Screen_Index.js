@@ -4,6 +4,7 @@ export { default as RescuerLogin } from './rescuerArea/RescuerLogin';
 export { default as RescuerRegister } from './rescuerArea/RescuerRegister';
 export { default as RescuerRegisterStepTwo } from './rescuerArea/RescuerRegisterStepTwo';
 export { default as RescuerWelcome } from './rescuerArea/RescuerWelcome';
+export { default as ForgotPassword } from './rescuerArea/ForgotPassword';
 export { default as RescuerPrefs } from './rescuerArea/RescuerPrefs';
 export { default as Resources } from './Resources';
 export { default as About } from './About';

@@ -7,6 +7,7 @@ import {
   RescuerRegister,
   RescuerRegisterStepTwo,
   RescuerWelcome,
+  ForgotPassword,
   RescuerPrefs,
   Resources,
   About,
@@ -44,6 +45,7 @@ const StackNavigator = () => {
         name="RescuerRegisterStepTwo"
         component={RescuerRegisterStepTwo}
       />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="RescuerWelcome" component={RescuerWelcome} />
       <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} />
       <Stack.Screen name="AlertsNearby" component={AlertsNearby} />
