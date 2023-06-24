@@ -98,11 +98,14 @@ const RescuerLogin = (Props: Props) => {
           <SignInWithOAuth />
           <SignInComponent />
           <TouchableOpacity
+            className="mb-4"
             onPress={() => {
               navigation.navigate("RescuerRegister");
             }}
           >
-            <Text>Sign up as a rescuer</Text>
+            <Text className="text-blue-300 text-base">
+              New? Sign up as a rescuer!
+            </Text>
           </TouchableOpacity>
         </View>
       </SignedOut>
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 25,
+    paddingHorizontal: 12,
     backgroundColor: "rgba(0, 224, 255, 0.3)",
     borderRadius: 15,
     width: screenWidth - 40,

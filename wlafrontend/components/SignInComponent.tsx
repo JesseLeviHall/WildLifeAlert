@@ -37,8 +37,8 @@ export default function SignInScreen() {
     }
   };
   return (
-    <View className="flex-1 align-middle justify-center bg-slate-200">
-      <View className="items-center bg-neutral-400 ">
+    <View className="flex-1 align-middle justify-center bg-transparent w-full h-auto m-4 px-8 rounded-lg ">
+      <View className="items-center mb-2 justify-center align-middle bg-blue-200 rounded-md h-10">
         <TextInput
           autoCapitalize="none"
           value={emailAddress}
@@ -46,20 +46,23 @@ export default function SignInScreen() {
           onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
         />
       </View>
-
-      <View className="items-center bg-blue-200">
+      <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
         <TextInput
+          autoCapitalize="none"
           value={password}
           placeholder="Password..."
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
       </View>
-
       {error && <Text style={{ color: "red" }}>{error}</Text>}
-
-      <TouchableOpacity onPress={onSignInPress}>
-        <Text className="bg-red-400 text-2xl">Sign in</Text>
+      <TouchableOpacity
+        className="border h-10 border-[#00E0FFFF] rounded-md mt-2 justify-center align-middle "
+        onPress={onSignInPress}
+      >
+        <Text className=" text-blue-300 bg-transparent text-xl text-center">
+          Sign in with Email
+        </Text>
       </TouchableOpacity>
     </View>
   );
