@@ -21,6 +21,7 @@ const screenHeight = Dimensions.get("window").height;
 
 type RootStackParamList = {
   Home: undefined;
+  RescuerLogin: undefined;
 };
 type HomeScreenNavigationProp = NavigationProp<RootStackParamList, "Home">;
 type Props = {
@@ -84,7 +85,7 @@ const PublicMap = (props: Props) => {
       <Appbar.Header className="">
         <Appbar.BackAction
           onPress={() => {
-            navigation.navigate("Home");
+            navigation.goBack();
           }}
         />
         <Appbar.Content title="Live Map" />
