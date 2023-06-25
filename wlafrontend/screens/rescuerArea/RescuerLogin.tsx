@@ -41,7 +41,7 @@ type Props = {
 const RescuerLogin = (Props: Props) => {
   const navigation = useNavigation<RescuerRegisterNavigationProp>();
   const isConnected = useConnectivity();
-  const { userId, sessionId } = useAuth();
+  const { userId, sessionId, getToken } = useAuth();
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded) {
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   <View className="flex-1 align-middle justify-center bg-transparent">
         <SignedIn>
         <Text className="text-center">
-          Hello, {user?.firstName} {userId} your current active session is{" "}
+          Hello, {user?.firstName} {userId} your current active session is
           {sessionId}
         </Text>
       </SignedIn>

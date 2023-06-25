@@ -26,7 +26,7 @@ const HomeNavBot = (props: Props) => {
     <Surface elevation={4} style={styles.container}>
       <HStack
         space={3}
-        borderWidth="1"
+        height={20}
         borderColor="coolGray.300"
         justifyContent="center"
         bg="#33fff2"
@@ -49,7 +49,6 @@ const HomeNavBot = (props: Props) => {
             {"Rescuers"}
           </Box>
         </TouchableRipple>
-
         <TouchableRipple
           borderless={true}
           rippleColor="#99BBE3"
@@ -68,7 +67,6 @@ const HomeNavBot = (props: Props) => {
             {"Live Map"}
           </Box>
         </TouchableRipple>
-
         <TouchableRipple
           borderless={true}
           rippleColor="#99BBE3"
@@ -84,7 +82,7 @@ const HomeNavBot = (props: Props) => {
             }}
           >
             <MaterialCommunityIcons name="magnify-expand" size={24} />
-            {"Resources"}{" "}
+            {"Resources"}
           </Box>
         </TouchableRipple>
 
@@ -103,7 +101,7 @@ const HomeNavBot = (props: Props) => {
             }}
           >
             <MaterialCommunityIcons name="lightbulb-on" size={24} />
-            {"About"}{" "}
+            {"About"}
           </Box>
         </TouchableRipple>
       </HStack>
@@ -113,12 +111,12 @@ const HomeNavBot = (props: Props) => {
 
 export default HomeNavBot;
 
-//create styleshee:
+//create stylesheet:
 const styles = StyleSheet.create({
   container: {
     width: screenWidth,
     position: "absolute",
     bottom: 0,
-    marginTop: 10,
+    marginTop: 8,
   },
 });

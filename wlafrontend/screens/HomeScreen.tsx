@@ -82,7 +82,6 @@ const Home = (props: Props) => {
       <View style={styles.background}>
         <HomeBackG />
       </View>
-
       <Motion.View
         initial={{ x: -300, scale: 0, opacity: 0 }}
         animate={{ x: 0, scale: 1, opacity: 1 }}

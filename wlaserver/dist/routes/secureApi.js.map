@@ -1,0 +1,1 @@
+{"version":3,"file":"secureApi.js","sourceRoot":"","sources":["../../src/routes/secureApi.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,SAAS,CAAC;AACjC,OAAO,EAAE,aAAa,EAAE,MAAM,mBAAmB,CAAC;AAElD,MAAM,CAAC,MAAM,SAAS,GAAG,MAAM,EAAE,CAAC;AAElC,SAAS,CAAC,GAAG,CAAC,GAAG,EAAE,aAAa,CAAC,CAAC"}
