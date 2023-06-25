@@ -23,7 +23,7 @@ const RescuerRegister = (props: Props) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Rescuer Details",
+      title: "Basic Info",
       headerTintColor: "#000000",
       headerStyle: { backgroundColor: "#71D1C7" },
     });

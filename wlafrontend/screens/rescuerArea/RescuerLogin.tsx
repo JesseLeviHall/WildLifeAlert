@@ -3,6 +3,8 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
   Dimensions,
   ImageBackground,
   StyleSheet,
@@ -80,28 +82,30 @@ const RescuerLogin = (Props: Props) => {
           <LoggedInChips navigation={navigation} />
         </View>
       </SignedIn>
-      <SignedOut>
-        <View style={styles.box}>
-          <SignInWithOAuth />
-          <SignInComponent />
-          <TouchableOpacity
-            className="mb-6"
-            onPress={() => navigation.navigate("ForgotPassword")}
-          >
-            <Text className="text-blue-300 text-sm">Forgot password?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="mb-2"
-            onPress={() => {
-              navigation.navigate("RescuerRegister");
-            }}
-          >
-            <Text className="text-blue-200 text-base font-bold">
-              New? Sign Up Here!
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </SignedOut>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <SignedOut>
+          <View style={styles.box}>
+            <SignInWithOAuth />
+            <SignInComponent />
+            <TouchableOpacity
+              className="mb-6"
+              onPress={() => navigation.navigate("ForgotPassword")}
+            >
+              <Text className="text-blue-300 text-sm">Forgot password?</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="mb-2"
+              onPress={() => {
+                navigation.navigate("RescuerRegister");
+              }}
+            >
+              <Text className="text-blue-200 text-base font-bold">
+                New? Sign Up Here!
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </SignedOut>
+      </TouchableWithoutFeedback>
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-end">
           <OfflineToast />
