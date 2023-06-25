@@ -34,8 +34,11 @@ export default function SignInScreen() {
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View className="flex-1 align-middle justify-center bg-transparent w-full h-auto m-4 px-8 rounded-lg ">
-        <View className="items-center mb-2 justify-center align-middle bg-blue-200 rounded-md h-10">
+      <View className="flex-1 align-middle justify-center bg-transparent w-full h-auto px-8 rounded-lg ">
+        <Text className="text-blue-300 text-light text-sm text-center mb-3">
+          or
+        </Text>
+        <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">
           <TextInput
             className="w-full text-center"
             autoCapitalize="none"
@@ -57,12 +60,14 @@ export default function SignInScreen() {
             onChangeText={(password) => setPassword(password)}
           />
         </View>
-        {error && <Text style={{ color: "red" }}>{error}</Text>}
+        {error && (
+          <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
+        )}
         <TouchableOpacity
           className="border h-10 border-[#00E0FFFF] rounded-md mt-2 justify-center align-middle "
           onPress={onSignInPress}
         >
-          <Text className=" text-blue-300 bg-transparent text-xl text-center">
+          <Text className=" text-blue-200 bg-transparent text-xl text-center">
             Sign in with Email
           </Text>
         </TouchableOpacity>

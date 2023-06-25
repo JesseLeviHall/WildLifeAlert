@@ -73,6 +73,10 @@ const RescuerLogin = (Props: Props) => {
       </View>
       <SignedIn>
         <View style={styles.box}>
+          <Text className="text-center">
+            Hello, {user?.firstName}, {user?.primaryEmailAddress?.emailAddress},
+            {userId} your current active session is {sessionId}
+          </Text>
           <LoggedInChips navigation={navigation} />
         </View>
       </SignedIn>
@@ -81,19 +85,19 @@ const RescuerLogin = (Props: Props) => {
           <SignInWithOAuth />
           <SignInComponent />
           <TouchableOpacity
-            className="mb-4"
+            className="mb-6"
             onPress={() => navigation.navigate("ForgotPassword")}
           >
-            <Text className="text-blue-300 text-base">Forgot password?</Text>
+            <Text className="text-blue-300 text-sm">Forgot password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="mb-4"
+            className="mb-2"
             onPress={() => {
               navigation.navigate("RescuerRegister");
             }}
           >
-            <Text className="text-blue-300 text-base">
-              New? Sign up as a rescuer!
+            <Text className="text-blue-200 text-base font-bold">
+              New? Sign Up Here!
             </Text>
           </TouchableOpacity>
         </View>
@@ -146,7 +150,6 @@ const styles = StyleSheet.create({
           Hello, {user?.firstName} {userId} your current active session is{" "}
           {sessionId}
         </Text>
-        <LoggedInChips navigation={navigation} />
       </SignedIn>
       
 

@@ -72,7 +72,6 @@ export default function SignUpScreen() {
               onChangeText={(email) => setEmailAddress(email)}
             />
           </View>
-
           <View className="items-center bg-blue-200">
             <TextInput
               value={password}
@@ -82,9 +81,7 @@ export default function SignUpScreen() {
               onChangeText={(password) => setPassword(password)}
             />
           </View>
-
           {error && <Text style={{ color: "red" }}>{error}</Text>}
-
           <TouchableOpacity onPress={onSignUpPress}>
             <Text className="bg-red-400 text-2xl">Sign up</Text>
           </TouchableOpacity>
