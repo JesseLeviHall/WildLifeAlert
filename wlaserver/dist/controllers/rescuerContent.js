@@ -35,4 +35,15 @@ export const registerRescuer = async (req, res) => {
         console.error(error);
     }
 };
+//GET /Welcome Rescuer Content
+export const welcomeRescuerContent = async (req, res) => {
+    try {
+        /*  const welcomerescuercontent = await redisClient.get('welcomerescuercontent');
+            res.send(welcomerescuercontent); */
+        res.json({ Title: "Welcome Rescuer Content Functional" });
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
 //# sourceMappingURL=rescuerContent.js.map

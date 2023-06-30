@@ -13,10 +13,12 @@ export const clerkAuth = ClerkExpressWithAuth({
     },
 });
 export const clerkRouteHandler = (req, res, next) => {
-    const sessionHeader = req.headers.authorization.split(" ")[1];
-    const authReq = req;
-    authReq.auth.sessionId = sessionHeader;
-    if (!authReq.auth.sessionId) {
+    if (req.headers.authorization && req.headers.authorization != undefined) {
+        const sessionHeader = req.headers.authorization.split(" ")[1];
+        const authReq = req;
+        authReq.auth.sessionId = sessionHeader;
+    }
+    else {
         return res
             .status(401)
             .json({ error: { message: "Unauthenticated", status: 401 } });

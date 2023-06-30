@@ -46,3 +46,17 @@ export const registerRescuer = async (
     console.error(error);
   }
 };
+
+//GET /Welcome Rescuer Content
+export const welcomeRescuerContent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    /*  const welcomerescuercontent = await redisClient.get('welcomerescuercontent');
+        res.send(welcomerescuercontent); */
+    res.json({ Title: "Welcome Rescuer Content Functional" });
+  } catch (error) {
+    console.error(error);
+  }
+};

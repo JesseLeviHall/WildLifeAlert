@@ -4,7 +4,6 @@ import logger from "morgan";
 import helmet from "helmet";
 //middlewares
 import { checkOrigin } from "./middlewares/checkOrigin.js";
-import { clerkAuth, clerkRouteHandler } from "./middlewares/clerkAuth.js";
 // Routes
 import { api } from "./routes/api.js";
 import { secureApi } from "./routes/secureApi.js";
@@ -22,8 +21,6 @@ app.use("/healthcheck", (req, res) => {
 });
 app.use(checkOrigin);
 app.use("/api", api);
-app.use(clerkAuth);
-app.use(clerkRouteHandler);
 app.use("/secure-api", secureApi);
 export default app;
 //# sourceMappingURL=app.js.map
