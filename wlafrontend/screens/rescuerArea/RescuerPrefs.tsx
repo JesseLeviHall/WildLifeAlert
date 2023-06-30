@@ -11,10 +11,19 @@ type Props = {};
 
 const RescuerPrefs = (props: Props) => {
   const isConnected = useConnectivity();
-  const { sessionId } = useAuth();
+  const { sessionId, getToken } = useAuth();
+  const [token, setToken] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    getToken().then((token) => {
+      if (token) {
+        setToken(token);
+      }
+    });
+  }, []);
+
   const { isLoading, data, error } = useQuery(
-    ["rescuerprefs", sessionId],
-    () => (sessionId ? getRescuerPrefs(sessionId) : null),
+    ["rescuerprefs", sessionId, token],
+    () => (sessionId && token ? getRescuerPrefs(sessionId, token) : null),
     {
       enabled: !!sessionId && isConnected,
     }

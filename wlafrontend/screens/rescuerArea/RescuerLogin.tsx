@@ -41,7 +41,7 @@ type Props = {
 const RescuerLogin = (Props: Props) => {
   const navigation = useNavigation<RescuerRegisterNavigationProp>();
   const isConnected = useConnectivity();
-  const { userId, sessionId, getToken } = useAuth();
+  const { userId, sessionId } = useAuth();
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded) {

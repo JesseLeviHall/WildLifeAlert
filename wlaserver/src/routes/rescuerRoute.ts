@@ -14,6 +14,13 @@ rescuerRouter.get(
 );
 
 rescuerRouter.get(
+  "/rescuerprofile",
+  clerkAuth,
+  clerkRouteHandler,
+  resuerContent.rescuerProfile
+);
+
+rescuerRouter.get(
   "/rescuerprefs",
   clerkAuth,
   clerkRouteHandler,

@@ -185,12 +185,12 @@ export const getPrivacyPolicyContent = async () => {
 
 //===================================================
 //get rescuer preferences
-export const getRescuerPrefs = async (sessionId: String) => {
+export const getRescuerPrefs = async (sessionId: String, token: String) => {
   try {
     const rescuerPrefs = await API({
       method: "get",
       url: "/secure-api/rescuerprefs",
-      headers: { Authorization: `Bearer ${sessionId}` },
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
     });
     return rescuerPrefs.data;
   } catch (error: any) {
