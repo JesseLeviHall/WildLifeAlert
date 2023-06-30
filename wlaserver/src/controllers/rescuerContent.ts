@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import clerk from "@clerk/clerk-sdk-node";
+import clerk, {
+  ClerkExpressWithAuth,
+  WithAuthProp,
+} from "@clerk/clerk-sdk-node";
 import { redisClient } from "../services/db.setup.js";
 import * as dotenv from "dotenv";
 
@@ -37,7 +40,7 @@ export const updateRescuerPrefs = async (
 
 //POST /Register new Rescuer
 export const registerRescuer = async (
-  req: Request,
+  req: Request & WithAuthProp<Request>,
   res: Response
 ): Promise<void> => {
   try {
@@ -54,10 +57,11 @@ export const registerRescuer = async (
     if (!FullName || !Phone || !Medical || !Rehab || !Latitude || !Longitude) {
       res.status(400).json({ msg: "Invalid request: Missing required fields" });
     }
-    const session = await clerk.sessions.getSession(
+    /*  const session = await clerk.sessions.getSession(
       req.headers.authorization.split(" ")[1]
     );
-    const UserId = session.userId;
+    const UserId = session.userId; */
+    const UserId = req.auth.userId;
     //Check if the user already exists
     const UserExists = await redisClient.sendCommand([
       "SISMEMBER",
@@ -68,9 +72,8 @@ export const registerRescuer = async (
       res.status(400).json({ msg: "User already exists" });
       return;
     }
-    const creationDate = Math.floor(Date.now() / 1000);
+    const createdAt = Math.floor(Date.now() / 1000);
     const id = await redisClient.incr("rescuer:nextid");
-    //Send the HMSET command
     await redisClient.sendCommand([
       "HMSET",
       `rescuer:${id}`,
@@ -99,7 +102,7 @@ export const registerRescuer = async (
       "Notifications",
       "true",
       "CreationDate",
-      creationDate.toString(),
+      createdAt.toString(),
     ]);
     //Add the UserId to the rescuer:UserIds set
     await redisClient.sendCommand([
@@ -118,11 +121,11 @@ export const registerRescuer = async (
 
 //GET /Rescuer Profile
 export const rescuerProfile = async (
-  req: Request,
+  req: Request & WithAuthProp<Request>,
   res: Response
 ): Promise<void> => {
   try {
-    const UserId = "clerkid";
+    const UserId = req.auth.userId;
     const id = await redisClient.get(UserId);
     if (!id) {
       res.status(404).json({ msg: "User not found" });
