@@ -5,6 +5,7 @@ import {
   AnotherScreen,
   RescuerLogin,
   RescuerRegister,
+  RescuerRegisterStepOne,
   RescuerRegisterStepTwo,
   RescuerWelcome,
   ForgotPassword,
@@ -41,6 +42,10 @@ const StackNavigator = () => {
       <Stack.Screen name="NextSteps" component={NextSteps} />
       <Stack.Screen name="RescuerLogin" component={RescuerLogin} />
       <Stack.Screen name="RescuerRegister" component={RescuerRegister} />
+      <Stack.Screen
+        name="RescuerRegisterStepOne"
+        component={RescuerRegisterStepOne}
+      />
       <Stack.Screen
         name="RescuerRegisterStepTwo"
         component={RescuerRegisterStepTwo}

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import MapView, { Marker, MapPressEvent } from "react-native-maps";
 import * as Location from "expo-location";
-import { View, Alert } from "react-native";
+import { View, Alert, Dimensions } from "react-native";
 import { Text, FAB } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 type UserLocation = {
   latitude: number;
@@ -54,7 +57,7 @@ export default function SetRescuerLocationMap({
       Alert.alert("Error", "Could not get current location");
     }
 
-    setIsLoading(false); // Add this line
+    setIsLoading(false);
   };
 
   const handleSaveLocation = async () => {
@@ -77,8 +80,8 @@ export default function SetRescuerLocationMap({
   };
 
   return (
-    <View className="flex-1">
-      <View className="h-96">
+    <View style={{ width: screenWidth }}>
+      <View className=" h-80">
         <MapView
           className="flex-1"
           initialRegion={{
@@ -94,16 +97,15 @@ export default function SetRescuerLocationMap({
         </MapView>
       </View>
       <View className="flex flex-col justify-center items-center py-4">
-        <Text className="mb-3 font-bold text-2xl text-center">
-          Where Is The Animal?
+        <Text className="mb-2 font-bold text-xl text-center">
+          Please set your location
         </Text>
-        <Text className="mb-3 font-bold text-center">tap the map or</Text>
+        <Text className="mb-2  text-center">Tap the map or</Text>
         <FAB
           accessibilityLabel="Get Current Location"
           icon="crosshairs-gps"
-          customSize={50}
+          className="mb-3 w-7/12"
           label={"Use Current Location"}
-          className="w-1/2 h-12 mb-3"
           onPress={handleGetCurrentLocation}
           loading={isLoading}
         />
@@ -111,9 +113,8 @@ export default function SetRescuerLocationMap({
         <FAB
           accessibilityLabel="Save Location"
           icon="check"
-          customSize={50}
           label={"Save "}
-          className="w-1/2 h-12"
+          className="w-7/12"
           onPress={handleSaveLocation}
           disabled={!location}
         />

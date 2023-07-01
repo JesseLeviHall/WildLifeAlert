@@ -16,10 +16,11 @@ export const clerkRouteHandler = async (req, res, next) => {
     if (req.headers.authorization) {
         try {
             const [, sessionId, sessionToken] = req.headers.authorization.split(" ");
+            const session = await clerk.sessions.verifySession(sessionId, sessionToken);
             const sessionHeader = req.headers.authorization.split(" ")[1];
             const authReq = req;
             authReq.auth.sessionId = sessionHeader;
-            const session = await clerk.sessions.verifySession(sessionId, sessionToken);
+            authReq.auth.userId = session.userId;
             if (!session) {
                 return res
                     .status(401)
@@ -28,9 +29,7 @@ export const clerkRouteHandler = async (req, res, next) => {
         }
         catch (error) {
             console.error(error);
-            return res
-                .status(401)
-                .json({
+            return res.status(401).json({
                 error: { message: "Session could not be verified", status: 401 },
             });
         }

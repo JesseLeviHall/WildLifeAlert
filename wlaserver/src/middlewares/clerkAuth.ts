@@ -36,7 +36,6 @@ export const clerkRouteHandler = async (
       const authReq = req as WithAuthProp<Request>;
       authReq.auth.sessionId = sessionHeader;
       authReq.auth.userId = session.userId;
-      console.log(authReq);
       if (!session) {
         return res
           .status(401)

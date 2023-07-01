@@ -1,4 +1,3 @@
-import clerk from "@clerk/clerk-sdk-node";
 import { redisClient } from "../services/db.setup.js";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -33,8 +32,11 @@ export const registerRescuer = async (req, res) => {
         if (!FullName || !Phone || !Medical || !Rehab || !Latitude || !Longitude) {
             res.status(400).json({ msg: "Invalid request: Missing required fields" });
         }
-        const session = await clerk.sessions.getSession(req.headers.authorization.split(" ")[1]);
-        const UserId = session.userId;
+        /*  const session = await clerk.sessions.getSession(
+          req.headers.authorization.split(" ")[1]
+        );
+        const UserId = session.userId; */
+        const UserId = req.auth.userId;
         //Check if the user already exists
         const UserExists = await redisClient.sendCommand([
             "SISMEMBER",
@@ -45,9 +47,8 @@ export const registerRescuer = async (req, res) => {
             res.status(400).json({ msg: "User already exists" });
             return;
         }
-        const creationDate = Math.floor(Date.now() / 1000);
+        const createdAt = Math.floor(Date.now() / 1000);
         const id = await redisClient.incr("rescuer:nextid");
-        //Send the HMSET command
         await redisClient.sendCommand([
             "HMSET",
             `rescuer:${id}`,
@@ -76,7 +77,7 @@ export const registerRescuer = async (req, res) => {
             "Notifications",
             "true",
             "CreationDate",
-            creationDate.toString(),
+            createdAt.toString(),
         ]);
         //Add the UserId to the rescuer:UserIds set
         await redisClient.sendCommand([
@@ -96,7 +97,7 @@ export const registerRescuer = async (req, res) => {
 //GET /Rescuer Profile
 export const rescuerProfile = async (req, res) => {
     try {
-        const UserId = "clerkid";
+        const UserId = req.auth.userId;
         const id = await redisClient.get(UserId);
         if (!id) {
             res.status(404).json({ msg: "User not found" });
