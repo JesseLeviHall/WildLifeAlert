@@ -42,9 +42,9 @@ export const clerkRouteHandler = async (
           .json({ error: { message: "No Session", status: 401 } });
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error.errors[0].longMessage);
       return res.status(401).json({
-        error: { message: "Session could not be verified", status: 401 },
+        error: { message: error.errors[0].longMessage, status: 401 },
       });
     }
   } else {
