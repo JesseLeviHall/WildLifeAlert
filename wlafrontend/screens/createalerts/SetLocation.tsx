@@ -1,6 +1,5 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Button } from "native-base";
 import SetAlertLocationMap from "../../components/SetAlertLocationMap";

@@ -9,7 +9,8 @@ type UserLocation = {
   latitude: number;
   longitude: number;
 };
-type SetAlertLocationMapProps = {
+
+type SetRescuerLocationMapProps = {
   onLocationChange: (location: UserLocation | null) => void;
   onLocationSave: (
     locationIsSaved: boolean,
@@ -17,10 +18,10 @@ type SetAlertLocationMapProps = {
   ) => void;
 };
 
-export default function SetAlertLocationMap({
+export default function SetRescuerLocationMap({
   onLocationChange,
   onLocationSave,
-}: SetAlertLocationMapProps) {
+}: SetRescuerLocationMapProps) {
   const [location, setLocation] = useState<UserLocation | null>(null);
   const [locationExists, setLocationExists] = useState(false);
   const [locationSaved, setLocationSaved] = useState(false);
@@ -73,7 +74,6 @@ export default function SetAlertLocationMap({
 
   const handleMapPress = (event: MapPressEvent) => {
     setLocation(event.nativeEvent.coordinate);
-    //onLocationChange(event.nativeEvent.coordinate);
   };
 
   return (
