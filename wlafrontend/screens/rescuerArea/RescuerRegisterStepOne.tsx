@@ -7,7 +7,7 @@ import {
   ScrollView,
   ViewStyle,
 } from "react-native";
-import { View, Text, Button, FormControl, Input } from "native-base";
+import { View, Switch, Text, Button, FormControl, Input } from "native-base";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
@@ -44,6 +44,14 @@ const RescuerRegisterStepOne = (props: Props) => {
   }>({
     PhoneNumber: "",
   });
+  const [Medical, setMedical] = React.useState<boolean>(false);
+  const [Rehab, setRehab] = React.useState<boolean>(false);
+  const [Professional, setProfessional] = React.useState<boolean>(false);
+  const [Organization, setOrganization] = React.useState<{
+    Organization: string;
+  }>({
+    Organization: "",
+  });
 
   const [errors, setErrors] = React.useState<Errors>({
     fullName: "",
@@ -65,27 +73,31 @@ const RescuerRegisterStepOne = (props: Props) => {
     }
 
     if (Phone.PhoneNumber === "") {
-      updatedErrors.PhoneNumber = "Please enter your phone number";
-      if (Phone.PhoneNumber === "") {
-        updatedErrors.PhoneNumber = "Phone Number is required";
-      } else if (!phonePattern.test(Phone.PhoneNumber)) {
-        updatedErrors.PhoneNumber =
-          "for phone number, use format: xxx-xxx-xxxx";
-      }
+      updatedErrors.PhoneNumber = "Phone Number is required";
+    } else if (!phonePattern.test(Phone.PhoneNumber)) {
+      updatedErrors.PhoneNumber = "for phone number, use format: xxx-xxx-xxxx";
+    }
 
-      setErrors(updatedErrors);
+    setErrors(updatedErrors);
 
-      if (updatedErrors.fullName === "" && updatedErrors.PhoneNumber === "") {
-        try {
-          await AsyncStorage.setItem("fullName", fullName.fullName);
-          await AsyncStorage.setItem("PhoneNumber", Phone.PhoneNumber);
-        } catch (err) {
-          console.log(err);
+    if (updatedErrors.fullName === "" && updatedErrors.PhoneNumber === "") {
+      try {
+        await AsyncStorage.setItem("FullName", fullName.fullName);
+        await AsyncStorage.setItem("Phone", Phone.PhoneNumber);
+        await AsyncStorage.setItem("Medical", Medical.toString());
+        await AsyncStorage.setItem("Rehab", Rehab.toString());
+        await AsyncStorage.setItem("Professional", Professional.toString());
+        if (Professional) {
+          await AsyncStorage.setItem("Organization", Organization.Organization);
+        } else {
+          await AsyncStorage.setItem("Organization", "");
         }
-        return true;
-      } else {
-        return false;
+      } catch (err) {
+        console.log(err);
       }
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -98,6 +110,17 @@ const RescuerRegisterStepOne = (props: Props) => {
     }
   };
 
+  //handle switches
+  const handleMedical = () => {
+    setMedical(!Medical);
+  };
+  const handleRehab = () => {
+    setRehab(!Rehab);
+  };
+  const handleProfessional = () => {
+    setProfessional(!Professional);
+  };
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: "Basic Info",
@@ -107,23 +130,27 @@ const RescuerRegisterStepOne = (props: Props) => {
   });
 
   const contentContainerStyle: ViewStyle = {
-    flex: 1,
-    justifyContent: "center",
+    marginTop: "10%",
     alignSelf: "center",
     alignItems: "center",
-    width: "60%",
-    height: "60%",
+    width: "80%",
     paddingHorizontal: 2,
   };
 
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#24008CFF", "#0E409C9E", "#EB8705AF"]}
+      colors={["#52B7FFDB", "#0E409C9E", "#EB8705AF"]}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View className="flex-1 align-middle justify-center ">
-          <ScrollView contentContainerStyle={contentContainerStyle}>
+      <View className="flex-1 align-middle justify-center ">
+        <Text className="text-center font-black uppercase mt-4 text-3xl">
+          Basic Information
+        </Text>
+        <Text className="text-center font-light text-sm mb-2">
+          (Never shared anywhere without your permission)
+        </Text>
+        <ScrollView contentContainerStyle={contentContainerStyle}>
+          <View className="flex-1 align-middle justify-center pb-80 items-center w-full">
             <FormControl isRequired className="mb-2">
               <FormControl.Label
                 _text={{
@@ -153,7 +180,7 @@ const RescuerRegisterStepOne = (props: Props) => {
                 </FormControl.HelperText>
               ) : null}
             </FormControl>
-            <FormControl isRequired className="m-4">
+            <FormControl isRequired className="mb-4">
               <FormControl.Label
                 _text={{
                   bold: true,
@@ -183,14 +210,141 @@ const RescuerRegisterStepOne = (props: Props) => {
                 </FormControl.HelperText>
               ) : null}
             </FormControl>
-          </ScrollView>
-          {isConnected ? null : (
-            <View className="flex-1 align-middle justify-end">
-              <OfflineToast />
+            <Text className="text-center font-black text-lg">
+              Are you affiliated with a Wildlife Emergency or Protection
+              Organization?
+            </Text>
+            <Text className="text-center font-light mb-2 text-sm">
+              (You can change these later)
+            </Text>
+            <View className="flex-row row-span-1">
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  Professional ? "opacity-20" : "font-bold"
+                }`}
+              >
+                No
+              </Text>
+              <Switch
+                offTrackColor="indigo.100"
+                onTrackColor="indigo.300"
+                onThumbColor="indigo.500"
+                offThumbColor="indigo.50"
+                isChecked={Professional}
+                onToggle={handleProfessional}
+              />
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  Professional ? "font-bold" : "opacity-20"
+                }`}
+              >
+                Yes
+              </Text>
             </View>
-          )}
-        </View>
-      </TouchableWithoutFeedback>
+            <FormControl className="mb-6">
+              <FormControl.Label
+                _text={{
+                  bold: true,
+                  color: "black",
+                }}
+              >
+                Organization
+              </FormControl.Label>
+              <Input
+                className=" bg-[#d4e1ea]"
+                placeholder="Optional"
+                variant="filled"
+                isDisabled={!Professional}
+                onChangeText={(value) =>
+                  setOrganization({ ...Organization, Organization: value })
+                }
+                onSubmitEditing={Keyboard.dismiss}
+              />
+              {"Organization" in errors ? (
+                <FormControl.HelperText
+                  _text={{
+                    fontSize: "xs",
+                  }}
+                >
+                  {errors.Organization}
+                </FormControl.HelperText>
+              ) : null}
+            </FormControl>
+            <Text className="text-center mb-1 font-black text-lg">
+              Do you have training and experience in animal medical care?
+            </Text>
+            <View className="flex-row row-span-1">
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  Medical ? "opacity-20" : "font-bold"
+                }`}
+              >
+                No
+              </Text>
+              <Switch
+                offTrackColor="indigo.100"
+                onTrackColor="indigo.300"
+                onThumbColor="indigo.500"
+                offThumbColor="indigo.50"
+                isChecked={Medical}
+                onToggle={handleMedical}
+              />
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  Medical ? "font-bold" : "opacity-20"
+                }`}
+              >
+                Yes
+              </Text>
+            </View>
+            <Text className="text-center mt-6 mb-1 font-black text-lg">
+              Do you have training and experience in Wildlife Rehabilitation?
+            </Text>
+            <View className="flex-row row-span-1">
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  Rehab ? "opacity-20" : "font-bold"
+                }`}
+              >
+                No
+              </Text>
+              <Switch
+                offTrackColor="indigo.100"
+                onTrackColor="indigo.300"
+                onThumbColor="indigo.500"
+                offThumbColor="indigo.50"
+                isChecked={Rehab}
+                onToggle={handleRehab}
+              />
+              <Text
+                className={`text-center font-light my-1 mx-2 text-sm ${
+                  Rehab ? "font-bold" : "opacity-20"
+                }`}
+              >
+                Yes
+              </Text>
+            </View>
+            <Button
+              className="m-4 mt-16 border border-cyan-500  items-center w-24"
+              onPress={onSubmit}
+              colorScheme="cyan"
+              _text={{ color: "white" }}
+              //add a border to the button
+              _pressed={{
+                backgroundColor: "cyan.400",
+                _text: { color: "white" },
+              }}
+            >
+              Next
+            </Button>
+          </View>
+        </ScrollView>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-end">
+            <OfflineToast />
+          </View>
+        )}
+      </View>
     </LinearGradient>
   );
 };

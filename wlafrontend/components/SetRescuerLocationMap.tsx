@@ -97,7 +97,7 @@ export default function SetRescuerLocationMap({
         </MapView>
       </View>
       <View className="flex flex-col justify-center items-center py-4">
-        <Text className="mb-2 font-bold text-xl text-center">
+        <Text className="mb-2 font-bold text-2xl text-center">
           Please set your location
         </Text>
         <Text className="mb-2  text-center">Tap the map or</Text>

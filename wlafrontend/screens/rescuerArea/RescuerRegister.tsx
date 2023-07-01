@@ -80,14 +80,16 @@ const RescuerRegister = (props: Props) => {
         </View>
 
         <Button
-          className={`${Location ? "" : "bg-gray-300"} items-center w-24 mt-10`}
+          className={`${
+            Location ? "" : "bg-gray-300"
+          } border border-cyan-500 items-center w-24 mt-10`}
           disabled={!Location}
           onPress={() => navigation.navigate("RescuerRegisterStepOne")}
         >
           Next
         </Button>
         {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
+          <View className="flex-1 align-middle  justify-end">
             <OfflineToast />
           </View>
         )}
