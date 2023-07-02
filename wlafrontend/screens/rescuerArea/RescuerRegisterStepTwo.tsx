@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   View,
   Text,
@@ -7,7 +7,15 @@ import {
   ImageBackground,
   StyleSheet,
 } from "react-native";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  useNavigation,
+  NavigationProp,
+  useFocusEffect,
+} from "@react-navigation/native";
+import { useMutation } from "@tanstack/react-query/build/lib";
+import { useAuth } from "@clerk/clerk-expo";
+import { registerRescuer } from "../../api/index";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
@@ -30,12 +38,72 @@ type Props = {
 const RescuerRegisterStepTwo = (props: Props) => {
   const navigation = useNavigation<RescuerWelcomeProp>();
   const isConnected = useConnectivity();
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
+  const { sessionId, getToken } = useAuth();
+  const [token, setToken] = React.useState("");
+  const [userDetails, setUserDetails] = React.useState({
+    FullName: "",
+    Phone: "",
+    Latitude: "",
+    Longitude: "",
+    Rehab: "",
+    Medical: "",
+    Professional: "",
+    Organization: "",
   });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUserData = async () => {
+        try {
+          const keys = [
+            "FullName",
+            "Phone",
+            "location",
+            "Rehab",
+            "Medical",
+            "Professional",
+            "Organization",
+          ];
+          const results = await AsyncStorage.multiGet(keys);
+
+          const data = Object.fromEntries(results);
+          const locationData = data.location ? JSON.parse(data.location) : {};
+          const dataWithDefaults = {
+            FullName: data.FullName || "",
+            Phone: data.Phone || "",
+            Latitude: locationData.latitude || "",
+            Longitude: locationData.longitude || "",
+            Rehab: data.Rehab || "",
+            Medical: data.Medical || "",
+            Professional: data.Professional || "",
+            Organization: data.Organization || "",
+          };
+          setUserDetails(dataWithDefaults);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fetchUserData();
+    }, [])
+  );
+
+  const mutation = useMutation(registerRescuer, {
+    onSuccess: () => {
+      navigation.navigate("RescuerWelcome");
+    },
+    onError: (error) => {
+      console.log("Error: ", error);
+    },
+  });
+
+  const handleSubmit = async () => {
+    if (mutation.isLoading || mutation.error) return;
+    try {
+      mutation.mutate(userDetails);
+    } catch (error) {
+      console.error("Error signing up: ", error);
+    }
+  };
 
   return (
     <ImageBackground
@@ -56,9 +124,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
         <SignUpComponent />
         <TouchableOpacity
           className="border rounded-md w-full border-[#00E0FFFF] p-3 mb-4"
-          onPress={() => {
-            navigation.navigate("RescuerWelcome");
-          }}
+          onPress={handleSubmit}
         >
           <Text className="text-blue-200 text-center text-base font-bold">
             Complete Registration

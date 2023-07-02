@@ -125,8 +125,7 @@ export const postNewAlert = async ({
   } catch (error) {
     // @ts-ignore
     if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
+      // The request was made and the server responded with a status code out of the range of 2xx
       // @ts-ignore
       console.log(error.response.data);
       // @ts-ignore
@@ -136,8 +135,6 @@ export const postNewAlert = async ({
       // @ts-ignore
     } else if (error.request) {
       // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
       // @ts-ignore
       console.log(error.request);
     } else {
@@ -196,5 +193,31 @@ export const getRescuerPrefs = async (sessionId: String, token: String) => {
   } catch (error: any) {
     console.error(error?.response?.data.error);
     return { error: error.response?.data?.error || "Unknown error" };
+  }
+};
+
+//===================================================
+//Post Register New Rescuer
+interface RescuerDetails {
+  FullName: string;
+  Phone: string;
+  Rehab: string;
+  Professional: string;
+  Medical: string;
+  Organization: string;
+  Latitude: string;
+  Longitude: string;
+}
+export const registerRescuer = async (userDetails: Record<string, string>) => {
+  try {
+    const registerRescuer = await API({
+      method: "post",
+      url: "/secure-api/newrescuer",
+      //headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      data: userDetails,
+    });
+    return registerRescuer.data;
+  } catch (error) {
+    console.error(error);
   }
 };

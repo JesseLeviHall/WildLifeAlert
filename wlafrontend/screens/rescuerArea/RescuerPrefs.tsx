@@ -17,6 +17,7 @@ const RescuerPrefs = (props: Props) => {
     getToken().then((token) => {
       if (token) {
         setToken(token);
+        console.log(sessionId, token);
       }
     });
   }, []);

@@ -27,16 +27,13 @@ export const updateRescuerPrefs = async (req, res) => {
 //POST /Register new Rescuer
 export const registerRescuer = async (req, res) => {
     try {
-        const { FullName, Phone, Medical, Rehab, Organization, Latitude, Longitude, } = req.body;
+        const { FullName, Phone, Medical, Rehab, Organization, Professional, Latitude, Longitude, } = req.body;
         // Check if required fields are undefined
-        if (!FullName || !Phone || !Medical || !Rehab || !Latitude || !Longitude) {
+        if (!FullName || !Phone) {
             res.status(400).json({ msg: "Invalid request: Missing required fields" });
         }
-        /*  const session = await clerk.sessions.getSession(
-          req.headers.authorization.split(" ")[1]
-        );
-        const UserId = session.userId; */
         const UserId = req.auth.userId;
+        console.log(UserId);
         //Check if the user already exists
         const UserExists = await redisClient.sendCommand([
             "SISMEMBER",
@@ -62,6 +59,8 @@ export const registerRescuer = async (req, res) => {
             Medical,
             "Rehab",
             Rehab,
+            "Professional",
+            Professional,
             "Organization",
             Organization,
             "Latitude",
