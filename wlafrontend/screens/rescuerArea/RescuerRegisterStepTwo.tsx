@@ -1,21 +1,12 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-  ImageBackground,
-  StyleSheet,
-} from "react-native";
+import { View, Dimensions, ImageBackground, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   useNavigation,
   NavigationProp,
   useFocusEffect,
 } from "@react-navigation/native";
-import { useMutation } from "@tanstack/react-query/build/lib";
 import { useAuth } from "@clerk/clerk-expo";
-import { registerRescuer } from "../../api/index";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
@@ -38,8 +29,6 @@ type Props = {
 const RescuerRegisterStepTwo = (props: Props) => {
   const navigation = useNavigation<RescuerWelcomeProp>();
   const isConnected = useConnectivity();
-  const { sessionId, getToken } = useAuth();
-  const [token, setToken] = React.useState("");
   const [userDetails, setUserDetails] = React.useState({
     FullName: "",
     Phone: "",
@@ -49,6 +38,14 @@ const RescuerRegisterStepTwo = (props: Props) => {
     Medical: "",
     Professional: "",
     Organization: "",
+  });
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: "Authentication",
+      headerTintColor: "#000000",
+      headerStyle: { backgroundColor: "#71D1C7" },
+    });
   });
 
   useFocusEffect(
@@ -87,24 +84,6 @@ const RescuerRegisterStepTwo = (props: Props) => {
     }, [])
   );
 
-  const mutation = useMutation(registerRescuer, {
-    onSuccess: () => {
-      navigation.navigate("RescuerWelcome");
-    },
-    onError: (error) => {
-      console.log("Error: ", error);
-    },
-  });
-
-  const handleSubmit = async () => {
-    if (mutation.isLoading || mutation.error) return;
-    try {
-      mutation.mutate(userDetails);
-    } catch (error) {
-      console.error("Error signing up: ", error);
-    }
-  };
-
   return (
     <ImageBackground
       source={require("../../assets/resbasecamp.png")}
@@ -121,15 +100,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
       </View>
       <View style={styles.box}>
         <SignUpWithOAuth />
-        <SignUpComponent />
-        <TouchableOpacity
-          className="border rounded-md w-full border-[#00E0FFFF] p-3 mb-4"
-          onPress={handleSubmit}
-        >
-          <Text className="text-blue-200 text-center text-base font-bold">
-            Complete Registration
-          </Text>
-        </TouchableOpacity>
+        <SignUpComponent navigation={navigation} userDetails={userDetails} />
         {isConnected ? null : (
           <View className="flex-1 align-middle justify-end">
             <OfflineToast />
@@ -164,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
-    maxHeight: screenHeight / 2.4,
+    maxHeight: screenHeight / 2.7,
     borderWidth: 1,
     borderColor: "#00E0FFFF",
   },

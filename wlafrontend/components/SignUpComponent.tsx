@@ -7,16 +7,46 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSignUp } from "@clerk/clerk-expo";
+import { useSignUp, useAuth } from "@clerk/clerk-expo";
+import { useMutation } from "@tanstack/react-query/build/lib";
+import { registerRescuer } from "../api/index";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
-export default function SignUpScreen() {
+type RootStackParamList = {
+  RescuerWelcome: undefined;
+};
+type RescuerWelcomeProp = NavigationProp<RootStackParamList, "RescuerWelcome">;
+
+type Props = {
+  navigation: RescuerWelcomeProp;
+  userDetails: Record<string, string>;
+};
+
+export default function SignUpScreen({ userDetails }: Props) {
   const { isLoaded, signUp, setActive } = useSignUp();
-
+  const navigation = useNavigation<RescuerWelcomeProp>();
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
   const [error, setError] = React.useState("");
+  const { getToken } = useAuth();
+
+  const mutation = useMutation(
+    (data: {
+      sessionId: string | null;
+      token: string | null;
+      userDetails: Record<string, string>;
+    }) => registerRescuer(data),
+    {
+      onSuccess: () => {
+        navigation.navigate("RescuerWelcome");
+      },
+      onError: (error) => {
+        console.log("Error: ", error);
+      },
+    }
+  );
 
   const onSignUpPress = async () => {
     if (!isLoaded) {
@@ -45,13 +75,18 @@ export default function SignUpScreen() {
     if (!isLoaded) {
       return;
     }
-
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
-
       await setActive({ session: completeSignUp.createdSessionId });
+      const sessionId = completeSignUp.createdSessionId;
+      const token = await getToken();
+      if (sessionId && token && userDetails) {
+        mutation.mutate({ sessionId, token, userDetails });
+      } else {
+        throw new Error("Session ID, token, or user details is undefined");
+      }
     } catch (err: any) {
       setError(err.errors[0].message);
       console.error(JSON.stringify(err, null, 2));
@@ -83,7 +118,7 @@ export default function SignUpScreen() {
                 autoCapitalize="none"
                 autoComplete="password"
                 value={password}
-                placeholder="Password..."
+                placeholder="Create Password..."
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
               />
@@ -112,9 +147,12 @@ export default function SignUpScreen() {
                 onChangeText={(code) => setCode(code)}
               />
             </View>
-            <TouchableOpacity onPress={onPressVerify}>
+            <TouchableOpacity
+              className="border rounded-md w-full border-[#00E0FFFF] mt-4 p-3 mb-4"
+              onPress={onPressVerify}
+            >
               <Text className=" text-blue-200 bg-transparent text-xl text-center">
-                Verify Email
+                Verify Code
               </Text>
             </TouchableOpacity>
           </View>

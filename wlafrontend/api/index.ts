@@ -198,22 +198,20 @@ export const getRescuerPrefs = async (sessionId: String, token: String) => {
 
 //===================================================
 //Post Register New Rescuer
-interface RescuerDetails {
-  FullName: string;
-  Phone: string;
-  Rehab: string;
-  Professional: string;
-  Medical: string;
-  Organization: string;
-  Latitude: string;
-  Longitude: string;
-}
-export const registerRescuer = async (userDetails: Record<string, string>) => {
+export const registerRescuer = async ({
+  sessionId,
+  token,
+  userDetails,
+}: {
+  sessionId: string | null;
+  token: string | null;
+  userDetails: Record<string, string>;
+}) => {
   try {
     const registerRescuer = await API({
       method: "post",
       url: "/secure-api/newrescuer",
-      //headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
       data: userDetails,
     });
     return registerRescuer.data;
