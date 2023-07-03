@@ -6,7 +6,6 @@ import {
   NavigationProp,
   useFocusEffect,
 } from "@react-navigation/native";
-import { useAuth } from "@clerk/clerk-expo";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
@@ -63,7 +62,10 @@ const RescuerRegisterStepTwo = (props: Props) => {
           ];
           const results = await AsyncStorage.multiGet(keys);
 
-          const data = Object.fromEntries(results);
+          const data: Record<string, string> = {};
+          results.forEach(([key, value]) => {
+            data[key] = value ? value : "";
+          });
           const locationData = data.location ? JSON.parse(data.location) : {};
           const dataWithDefaults = {
             FullName: data.FullName || "",
@@ -99,7 +101,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
         <NightGradAnimated />
       </View>
       <View style={styles.box}>
-        <SignUpWithOAuth />
+        <SignUpWithOAuth navigation={navigation} userDetails={userDetails} />
         <SignUpComponent navigation={navigation} userDetails={userDetails} />
         {isConnected ? null : (
           <View className="flex-1 align-middle justify-end">

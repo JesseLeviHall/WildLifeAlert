@@ -4,20 +4,20 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 
+type Props = {};
+
 WebBrowser.maybeCompleteAuthSession();
 
-const SignInWithOAuth = () => {
+const SignInWithOAuth = (props: Props) => {
   const [error, setError] = React.useState("");
   useWarmUpBrowser();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
   const onPress = React.useCallback(async () => {
-    // Reset the error state
     setError("");
     try {
       const { signIn, setActive } = await startOAuthFlow();
-
       if (signIn) {
         setActive && setActive({ session: signIn.createdSessionId });
       }

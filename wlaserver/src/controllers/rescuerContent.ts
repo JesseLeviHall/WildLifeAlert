@@ -57,6 +57,7 @@ export const registerRescuer = async (
     // Check if required fields are undefined
     if (!FullName || !Phone) {
       res.status(400).json({ msg: "Invalid request: Missing required fields" });
+      return;
     }
 
     const UserId = req.auth.userId;

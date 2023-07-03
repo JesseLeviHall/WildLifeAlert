@@ -10,7 +10,8 @@ import {
 import { useSignUp, useAuth } from "@clerk/clerk-expo";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { registerRescuer } from "../api/index";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type RootStackParamList = {
   RescuerWelcome: undefined;
@@ -22,9 +23,8 @@ type Props = {
   userDetails: Record<string, string>;
 };
 
-export default function SignUpScreen({ userDetails }: Props) {
+export default function SignUpScreen({ userDetails, navigation }: Props) {
   const { isLoaded, signUp, setActive } = useSignUp();
-  const navigation = useNavigation<RescuerWelcomeProp>();
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
@@ -39,7 +39,16 @@ export default function SignUpScreen({ userDetails }: Props) {
       userDetails: Record<string, string>;
     }) => registerRescuer(data),
     {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await AsyncStorage.multiRemove([
+          "FullName",
+          "Phone",
+          "location",
+          "Rehab",
+          "Medical",
+          "Professional",
+          "Organization",
+        ]);
         navigation.navigate("RescuerWelcome");
       },
       onError: (error) => {
@@ -52,7 +61,7 @@ export default function SignUpScreen({ userDetails }: Props) {
     if (!isLoaded) {
       return;
     }
-
+    setError("");
     try {
       await signUp.create({
         emailAddress,
@@ -123,9 +132,6 @@ export default function SignUpScreen({ userDetails }: Props) {
                 onChangeText={(password) => setPassword(password)}
               />
             </View>
-            {error && (
-              <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
-            )}
             <TouchableOpacity
               className="border h-10 border-[#00E0FFFF] rounded-md mt-2 justify-center align-middle "
               onPress={onSignUpPress}
@@ -134,11 +140,17 @@ export default function SignUpScreen({ userDetails }: Props) {
                 Continue with Email
               </Text>
             </TouchableOpacity>
+            {error && (
+              <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
+            )}
           </View>
         )}
         {pendingVerification && (
           <View className="w-full">
             <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">
+              <Text className="text-center font-light text-sm mb-2">
+                Please check your email for a verification code
+              </Text>
               <TextInput
                 className="w-full text-center"
                 autoCapitalize="none"
@@ -155,6 +167,9 @@ export default function SignUpScreen({ userDetails }: Props) {
                 Verify Code
               </Text>
             </TouchableOpacity>
+            {error && (
+              <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
+            )}
           </View>
         )}
       </View>
