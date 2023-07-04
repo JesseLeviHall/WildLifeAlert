@@ -153,3 +153,17 @@ export const welcomeRescuerContent = async (
     console.error(error);
   }
 };
+
+//PUT /Update Welcome Rescuer Content
+export const updateWelcomeRescuerContent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    /*  const updatewelcomerescuercontent = await redisClient.get('updatewelcomerescuercontent');
+        res.send(updatewelcomerescuercontent); */
+    res.json({ Title: "Update Welcome Rescuer Content Functional" });
+  } catch (error) {
+    console.error(error);
+  }
+};
