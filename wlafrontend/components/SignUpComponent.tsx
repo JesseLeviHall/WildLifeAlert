@@ -147,10 +147,10 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
         )}
         {pendingVerification && (
           <View className="w-full">
+            <Text className="text-center font-light text-sm mb-2">
+              Please check your email for a verification code
+            </Text>
             <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">
-              <Text className="text-center font-light text-sm mb-2">
-                Please check your email for a verification code
-              </Text>
               <TextInput
                 className="w-full text-center"
                 autoCapitalize="none"

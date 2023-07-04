@@ -115,7 +115,6 @@ export const welcomeRescuerContent = async (req, res) => {
     try {
         const welcomescreencontent = await redisClient.get("welcomecontent");
         res.send(welcomescreencontent);
-        res.json({ Title: "Welcome Rescuer Content Functional" });
     }
     catch (error) {
         console.error(error);
