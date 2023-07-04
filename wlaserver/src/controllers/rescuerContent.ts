@@ -155,7 +155,7 @@ export const welcomeRescuerContent = async (
 
 //PUT /Update Welcome Rescuer Content
 export const updateWelcomeRescuerContent = async (
-  req: Request,
+  req: Request & WithAuthProp<Request>,
   res: Response
 ): Promise<void> => {
   try {
