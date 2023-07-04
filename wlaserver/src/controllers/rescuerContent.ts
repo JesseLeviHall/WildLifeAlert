@@ -146,8 +146,8 @@ export const welcomeRescuerContent = async (
   res: Response
 ): Promise<void> => {
   try {
-    /*  const welcomerescuercontent = await redisClient.get('welcomerescuercontent');
-        res.send(welcomerescuercontent); */
+    const welcomescreencontent = await redisClient.get("welcomecontent");
+    res.send(welcomescreencontent);
     res.json({ Title: "Welcome Rescuer Content Functional" });
   } catch (error) {
     console.error(error);
@@ -160,10 +160,28 @@ export const updateWelcomeRescuerContent = async (
   res: Response
 ): Promise<void> => {
   try {
-    /*  const updatewelcomerescuercontent = await redisClient.get('updatewelcomerescuercontent');
-        res.send(updatewelcomerescuercontent); */
-    res.json({ Title: "Update Welcome Rescuer Content Functional" });
+    const {
+      Title,
+      ThankYouMessage,
+      DefaultSettingsInfo,
+      MapInstructions,
+      KindnessMessage,
+      ResponsibilityMessage,
+      ClosingMessage,
+    } = req.body;
+    const welcomecontent = JSON.stringify({
+      Title,
+      ThankYouMessage,
+      DefaultSettingsInfo,
+      MapInstructions,
+      KindnessMessage,
+      ResponsibilityMessage,
+      ClosingMessage,
+    });
+    await redisClient.set("welcomecontent", welcomecontent);
+    res.send("welcome content updated");
   } catch (error) {
     console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };

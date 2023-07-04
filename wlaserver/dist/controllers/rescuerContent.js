@@ -113,12 +113,33 @@ export const rescuerProfile = async (req, res) => {
 //GET /Welcome Rescuer Content
 export const welcomeRescuerContent = async (req, res) => {
     try {
-        /*  const welcomerescuercontent = await redisClient.get('welcomerescuercontent');
-            res.send(welcomerescuercontent); */
+        const welcomescreencontent = await redisClient.get("welcomecontent");
+        res.send(welcomescreencontent);
         res.json({ Title: "Welcome Rescuer Content Functional" });
     }
     catch (error) {
         console.error(error);
+    }
+};
+//PUT /Update Welcome Rescuer Content
+export const updateWelcomeRescuerContent = async (req, res) => {
+    try {
+        const { Title, ThankYouMessage, DefaultSettingsInfo, MapInstructions, KindnessMessage, ResponsibilityMessage, ClosingMessage, } = req.body;
+        const welcomecontent = JSON.stringify({
+            Title,
+            ThankYouMessage,
+            DefaultSettingsInfo,
+            MapInstructions,
+            KindnessMessage,
+            ResponsibilityMessage,
+            ClosingMessage,
+        });
+        await redisClient.set("welcomecontent", welcomecontent);
+        res.send("welcome content updated");
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
     }
 };
 //# sourceMappingURL=rescuerContent.js.map

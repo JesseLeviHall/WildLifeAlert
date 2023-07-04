@@ -18,6 +18,11 @@ rescuerRouter.get(
   resuerContent.welcomeRescuerContent
 );
 
+rescuerRouter.put(
+  "/updatewelcomecontent",
+  resuerContent.updateWelcomeRescuerContent
+);
+
 rescuerRouter.get(
   "/rescuerprofile",
   clerkAuth,
