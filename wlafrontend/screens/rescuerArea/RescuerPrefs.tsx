@@ -14,12 +14,14 @@ const RescuerPrefs = (props: Props) => {
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   React.useEffect(() => {
-    getToken().then((token) => {
-      if (token) {
-        setToken(token);
-        console.log(sessionId, token);
+    const fetchToken = async () => {
+      const fetchedToken = await getToken();
+      if (fetchedToken) {
+        setToken(fetchedToken);
+        console.log(sessionId, fetchedToken);
       }
-    });
+    };
+    fetchToken();
   }, []);
 
   const { isLoading, data, error } = useQuery(

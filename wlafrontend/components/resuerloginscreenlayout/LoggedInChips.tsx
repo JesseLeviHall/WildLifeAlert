@@ -16,6 +16,7 @@ type RootStackParamList = {
   Home: undefined;
   RescuerPrefs: undefined;
   ForgotPassword: undefined;
+  RescuerWelcome: undefined;
 };
 type RescuerRegisterNavigationProp = NavigationProp<
   RootStackParamList,
@@ -83,6 +84,19 @@ const LoggedInChips = (props: Props) => {
         className="h-10 w-32 mt-5 border-2 border-blue-50"
       >
         Sign Out
+      </Chip>
+      <Chip
+        icon="home"
+        onPress={() => {
+          navigation.navigate("RescuerWelcome");
+        }}
+        elevated={true}
+        mode="flat"
+        selectedColor="#000626FF"
+        showSelectedOverlay={true}
+        className="h-10 w-32 mt-5 border-2 border-blue-50"
+      >
+        To Welcome
       </Chip>
     </View>
   );

@@ -219,3 +219,22 @@ export const registerRescuer = async ({
     console.error(error);
   }
 };
+
+//===================================================
+//get the welcomecreen content:
+export const getWelcomeScreenContent = async (
+  sessionId: String,
+  token: String
+) => {
+  try {
+    const welcomeContent = await API({
+      method: "get",
+      url: "/secure-api/welcomescreen",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+    });
+    return welcomeContent.data;
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    return { error: error.response?.data?.error || "Unknown error" };
+  }
+};
