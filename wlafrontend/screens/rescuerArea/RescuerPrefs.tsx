@@ -1,5 +1,17 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Dimensions,
+  ImageBackground,
+  StyleSheet,
+} from "react-native";
+import { Button } from "native-base";
+import NightGradAnimated from "../../components/background/NightGradAnimated";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getRescuerPrefs } from "../../api/index";
@@ -7,9 +19,13 @@ import { useConnectivity } from "../../hooks/useConnectivity";
 import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
 
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
+
 type Props = {};
 
 const RescuerPrefs = (props: Props) => {
+  const navigation = useNavigation();
   const isConnected = useConnectivity();
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
@@ -49,15 +65,73 @@ const RescuerPrefs = (props: Props) => {
   }
 
   return (
-    <View>
-      <Text>{data?.Title}</Text>
+    <ImageBackground
+      source={require("../../assets/resbasecamp.png")}
+      style={{
+        height: screenHeight,
+        width: screenWidth,
+        margin: 0,
+        padding: 0,
+        alignItems: "center",
+      }}
+    >
+      <View style={styles.background}>
+        <NightGradAnimated />
+      </View>
+      <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
+        <Text className="font-bold text-lg text-blue-50 text-center">
+          Set Your Preferences
+        </Text>
+      </View>
+      <View style={styles.box}>
+        <Text>{data?.Title}</Text>
+        <Text>Mutation Component</Text>
+        <Text>Mutation Location?</Text>
+        <Text>Mutation Notifications</Text>
+        <Text>Mutation Set Radius</Text>
+        <Text>Delete Account</Text>
+      </View>
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-end">
           <OfflineToast />
         </View>
       )}
-    </View>
+      <Button
+        onPress={navigation.goBack}
+        className="w-24 absolute bottom-32 border self-center border-cyan-500 "
+      >
+        Back
+      </Button>
+    </ImageBackground>
   );
 };
 
 export default RescuerPrefs;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  background: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    top: 0,
+    right: 0,
+    zIndex: -10,
+  },
+  box: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    paddingHorizontal: 12,
+    backgroundColor: "rgba(0, 224, 255, 0.3)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight / 1.8,
+    borderWidth: 1,
+    borderColor: "#00E0FFFF",
+  },
+});

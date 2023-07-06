@@ -105,7 +105,12 @@ const RescuerLogin = (Props: Props) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <Button onPress={navigation.goBack}  className="w-24 absolute bottom-32 border self-center border-cyan-500 ">Back</Button>
+          <Button
+            onPress={navigation.goBack}
+            className="w-24 absolute bottom-32 border self-center border-cyan-500 "
+          >
+            Back
+          </Button>
         </SignedOut>
       </TouchableWithoutFeedback>
       {isConnected ? null : (
@@ -146,17 +151,3 @@ const styles = StyleSheet.create({
     borderColor: "#00E0FFFF",
   },
 });
-
-/* 
-
-
-  <View className="flex-1 align-middle justify-center bg-transparent">
-        <SignedIn>
-        <Text className="text-center">
-          Hello, {user?.firstName} {userId} your current active session is
-          {sessionId}
-        </Text>
-      </SignedIn>
-      
-
-      */
