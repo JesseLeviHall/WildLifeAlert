@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query/build/lib";
 import { getRescuerPrefs } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
+import SkeletonComp from "../../components/Skeleton";
 
 type Props = {};
 
@@ -51,6 +52,7 @@ const RescuerPrefs = (props: Props) => {
   return (
     <View>
       <Text>{data?.Title}</Text>
+      <SkeletonComp />
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-end">
           <OfflineToast />

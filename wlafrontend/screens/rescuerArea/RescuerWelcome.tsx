@@ -5,8 +5,8 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  TouchableOpacity,
 } from "react-native";
+import { Button } from "native-base";
 import AnimatedGradient from "../../components/background/GradientAnimated";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query/build/lib";
@@ -14,7 +14,8 @@ import { getWelcomeScreenContent } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
-import SkeletonComp from "../../components/Skeleton";
+import  SpinnerComp  from "../../components/Spinner";
+import { Motion } from "@legendapp/motion";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -35,6 +36,7 @@ const RescuerWelcome = (props: Props) => {
   const isConnected = useConnectivity();
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
+
   React.useEffect(() => {
     const fetchToken = async () => {
       const fetchedToken = await getToken();
@@ -57,7 +59,7 @@ const RescuerWelcome = (props: Props) => {
   if (isLoading) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <SkeletonComp />
+        <SpinnerComp />
       </View>
     );
   }
@@ -84,22 +86,44 @@ const RescuerWelcome = (props: Props) => {
         <View style={styles.background}>
           <AnimatedGradient />
         </View>
-        <Text>{data?.Title}</Text>
-        <Text>{data?.ThankYouMessage}</Text>
-        <Text>{data?.DefaultSettingsInfo}</Text>
-        <Text>{data?.MapInstructions}</Text>
-        <Text>{data?.KindnessMessage}</Text>
-        <Text>{data?.ResponsibilityMessage}</Text>
-        <Text>{data?.ClosingMessage}</Text>
-        <TouchableOpacity
+        <Motion.View  initial={{ x: -100, scale: 1, opacity: 0.1 }}
+          animate={{ x: 0, scale: 1, opacity: 1 }}
+          transition={{
+            default: {
+              type: "spring",
+              damping: 30,
+              stiffness: 300,
+            },
+            x: {
+              type: "spring",
+              damping: 30,
+              stiffness: 300,
+            },
+            opacity: {
+              type: "tween",
+              duration: 1000,
+            },
+          }}
+          className="mt-24 h-4/6 mx-4 rounded-lg px-4 items-center bg-[#00D1FFD1]"
+        >
+        <Text className="text-center text-2xl font-extrabold px-4 mt-8">{data?.Title}</Text>
+        <Text className="text-center text-sm font-base px-4 mt-3">{data?.ThankYouMessage}</Text>
+        <Text className="text-center text-sm font-base px-4 mt-3" >{data?.DefaultSettingsInfo}</Text>
+        <Text className="text-center text-sm font-base px-4 mt-3">{data?.MapInstructions}</Text>
+        <Text className="text-center text-sm font-base px-4 mt-3">{data?.KindnessMessage}</Text>
+        <Text className="text-center text-sm font-base px-4 mt-3">{data?.ResponsibilityMessage}</Text>
+        <Text className="text-center text-sm font-base px-4 mt-3 mb-6">{data?.ClosingMessage}</Text>
+        </Motion.View>
+         <Button
+            className="w-24 absolute bottom-24 border self-center border-cyan-500 "
           onPress={() => {
             navigation.navigate("RescuerLogin");
           }}
         >
-          <Text>Done</Text>
-        </TouchableOpacity>
+          Done
+        </Button>
         {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
+          <View className="flex-1 align-middle justify-end ">
             <OfflineToast />
           </View>
         )}

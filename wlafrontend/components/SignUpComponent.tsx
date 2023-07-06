@@ -107,7 +107,7 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
       <View className="flex-1 align-middle justify-center bg-transparent w-full  h-auto rounded-lg ">
         {!pendingVerification && (
           <View className="w-full">
-            <Text className="text-blue-300 text-light text-sm text-center mb-3">
+            <Text className="text-blue-300 text-light text-sm text-center mb-6">
               or
             </Text>
             <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">

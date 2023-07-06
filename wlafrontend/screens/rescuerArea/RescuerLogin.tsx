@@ -18,6 +18,7 @@ import SignInWithOAuth from "../../components/SignInWithOAuth";
 import SignInComponent from "../../components/SignInComponent";
 import LoggedInChips from "../../components/resuerloginscreenlayout/LoggedInChips";
 import SkeletonComp from "../../components/Skeleton";
+import { Button } from "native-base";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -104,6 +105,7 @@ const RescuerLogin = (Props: Props) => {
               </Text>
             </TouchableOpacity>
           </View>
+          <Button onPress={navigation.goBack}  className="w-24 absolute bottom-32 border self-center border-cyan-500 ">Back</Button>
         </SignedOut>
       </TouchableWithoutFeedback>
       {isConnected ? null : (

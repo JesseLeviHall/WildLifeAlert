@@ -81,7 +81,6 @@ const RescuerRegisterStepOne = (props: Props) => {
 
     if (updatedErrors.fullName === "" && updatedErrors.PhoneNumber === "") {
       try {
-        console.log(Phone.PhoneNumber.replace(/-/g, ''))
         await AsyncStorage.setItem("FullName", fullName.fullName);
         await AsyncStorage.setItem("Phone", Phone.PhoneNumber.replace(/-/g, ''));
         await AsyncStorage.setItem("Medical", Medical.toString());

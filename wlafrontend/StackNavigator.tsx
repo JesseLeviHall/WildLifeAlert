@@ -51,7 +51,7 @@ const StackNavigator = () => {
         component={RescuerRegisterStepTwo}
       />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      <Stack.Screen name="RescuerWelcome" component={RescuerWelcome} />
+      <Stack.Screen name="RescuerWelcome" component={RescuerWelcome}  options={{ headerShown: false }} />
       <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} />
       <Stack.Screen name="AlertsNearby" component={AlertsNearby} />
       <Stack.Screen name="ColdAlerts" component={ColdAlerts} />

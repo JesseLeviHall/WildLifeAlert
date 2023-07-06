@@ -39,7 +39,7 @@ const RescuerRegister = (props: Props) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Alert Locations",
+      title: "Your Turf",
       headerTintColor: "#000000",
       headerStyle: { backgroundColor: "#71D1C7" },
     });
