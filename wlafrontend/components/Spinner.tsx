@@ -10,7 +10,7 @@ const SpinnerComp = (props: Props) => {
   return (
     <LinearGradient
       style={{ height: screenHeight }}
-      colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
+      colors={["#0E409C9E", "#EB8705AF", "#99BBE3"]}
     >
       <View className="flex-1 align-middle justify-center">
         <Spinner accessibilityLabel="Loading" size="lg" />
@@ -20,3 +20,4 @@ const SpinnerComp = (props: Props) => {
 };
 
 export default SpinnerComp;
+
