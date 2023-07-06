@@ -3,7 +3,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import {
   Dimensions,
   Keyboard,
-  TouchableWithoutFeedback,
   ScrollView,
   ViewStyle,
 } from "react-native";
@@ -59,7 +58,7 @@ const RescuerRegisterStepOne = (props: Props) => {
   });
 
   const validate = async () => {
-    const phonePattern = /^[2-9]{1}[0-9]{2}-[0-9]{3}-[0-9]{4}$/;
+    const phonePattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
 
     let updatedErrors = {
       fullName: "",
@@ -75,15 +74,16 @@ const RescuerRegisterStepOne = (props: Props) => {
     if (Phone.PhoneNumber === "") {
       updatedErrors.PhoneNumber = "Phone Number is required";
     } else if (!phonePattern.test(Phone.PhoneNumber)) {
-      updatedErrors.PhoneNumber = "for phone number, use format: xxx-xxx-xxxx";
+      updatedErrors.PhoneNumber = "use format: xxx-xxx-xxxx";
     }
 
     setErrors(updatedErrors);
 
     if (updatedErrors.fullName === "" && updatedErrors.PhoneNumber === "") {
       try {
+        console.log(Phone.PhoneNumber.replace(/-/g, ''))
         await AsyncStorage.setItem("FullName", fullName.fullName);
-        await AsyncStorage.setItem("Phone", Phone.PhoneNumber);
+        await AsyncStorage.setItem("Phone", Phone.PhoneNumber.replace(/-/g, ''));
         await AsyncStorage.setItem("Medical", Medical.toString());
         await AsyncStorage.setItem("Rehab", Rehab.toString());
         await AsyncStorage.setItem("Professional", Professional.toString());
@@ -194,7 +194,7 @@ const RescuerRegisterStepOne = (props: Props) => {
                 placeholder="Phone Number"
                 variant="filled"
                 autoComplete="tel"
-                keyboardType="phone-pad"
+                keyboardType="numbers-and-punctuation"
                 onChangeText={(value) =>
                   setPhone({ ...Phone, PhoneNumber: value })
                 }

@@ -33,7 +33,7 @@
     "native-base": "^3.4.28",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
     "react-native-dotenv": "^3.4.8",
     "react-native-ionicons": "^4.6.5",
     "react-native-maps": "1.3.2",

@@ -77,7 +77,7 @@ const SendForHelp = (props: Props) => {
     if (PhoneNumber.PhoneNumber === "") {
       updatedErrors.PhoneNumber = "Phone Number is required";
     } else if (!phonePattern.test(PhoneNumber.PhoneNumber)) {
-      updatedErrors.PhoneNumber = "for phone number, use format: xxx-xxx-xxxx";
+      updatedErrors.PhoneNumber = "use format: xxx-xxx-xxxx";
     }
 
     setErrors(updatedErrors);
@@ -90,7 +90,7 @@ const SendForHelp = (props: Props) => {
       try {
         await AsyncStorage.setItem("FullName", fullName.fullName);
         await AsyncStorage.setItem("Email", Email.Email);
-        await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber);
+        await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber.replace(/-/g, ''));
         await AsyncStorage.setItem("ShareContact", isSwitchOn.toString());
       } catch (error) {
         console.log("Error saving data", error);
@@ -198,10 +198,10 @@ const SendForHelp = (props: Props) => {
               </FormControl.Label>
               <Input
                 className=" bg-[#d4e1ea]"
-                placeholder="Phone Number"
+                placeholder="xxx-xxx-xxxx"
                 variant="filled"
                 autoComplete="tel"
-                keyboardType="phone-pad"
+                keyboardType="numbers-and-punctuation"
                 onChangeText={(value) =>
                   setPhoneNumber({ ...PhoneNumber, PhoneNumber: value })
                 }
