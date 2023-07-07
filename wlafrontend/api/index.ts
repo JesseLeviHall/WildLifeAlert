@@ -4,7 +4,7 @@ import axios from "axios";
 //remote server : https://d1h2airt5kbf3g.cloudfront.net
 //locoal server: http://10.0.10.10:3000
 const API = axios.create({
-  baseURL: "https://d1h2airt5kbf3g.cloudfront.net",
+  baseURL: "http://10.0.10.10:3000",
   timeout: 10000,
   withCredentials: false,
 });
@@ -181,22 +181,6 @@ export const getPrivacyPolicyContent = async () => {
 };
 
 //===================================================
-//get rescuer preferences
-export const getRescuerPrefs = async (sessionId: String, token: String) => {
-  try {
-    const rescuerPrefs = await API({
-      method: "get",
-      url: "/secure-api/rescuerprefs",
-      headers: { Authorization: `Bearer ${sessionId} ${token}` },
-    });
-    return rescuerPrefs.data;
-  } catch (error: any) {
-    console.error(error?.response?.data.error);
-    return { error: error.response?.data?.error || "Unknown error" };
-  }
-};
-
-//===================================================
 //Post Register New Rescuer
 export const registerRescuer = async ({
   sessionId,
@@ -236,5 +220,45 @@ export const getWelcomeScreenContent = async (
   } catch (error: any) {
     console.error(error?.response?.data.error);
     return { error: error.response?.data?.error || "Unknown error" };
+  }
+};
+
+//===================================================
+//get rescuer preferences
+export const getRescuerPrefs = async (sessionId: String, token: String) => {
+  try {
+    const rescuerPrefs = await API({
+      method: "get",
+      url: "/secure-api/rescuerprefs",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+    });
+    return rescuerPrefs.data;
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    return { error: error.response?.data?.error || "Unknown error" };
+  }
+};
+
+//===================================================
+//update preference: GeoRadius for notifications
+export const setGeoRadius = async ({
+  sessionId,
+  token,
+  Radius,
+}: {
+  sessionId: String;
+  token: String;
+  Radius: String;
+}) => {
+  try {
+    const setRadius = await API({
+      method: "post",
+      url: "secure-api/rescuerprefradius",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      data: Radius,
+    });
+    return setRadius.data;
+  } catch (error) {
+    console.error(error);
   }
 };

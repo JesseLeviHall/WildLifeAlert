@@ -1,11 +1,6 @@
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  Dimensions,
-  Keyboard,
-  ScrollView,
-  ViewStyle,
-} from "react-native";
+import { Dimensions, Keyboard, ScrollView, ViewStyle } from "react-native";
 import { View, Switch, Text, Button, FormControl, Input } from "native-base";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
@@ -82,7 +77,10 @@ const RescuerRegisterStepOne = (props: Props) => {
     if (updatedErrors.fullName === "" && updatedErrors.PhoneNumber === "") {
       try {
         await AsyncStorage.setItem("FullName", fullName.fullName);
-        await AsyncStorage.setItem("Phone", Phone.PhoneNumber.replace(/-/g, ''));
+        await AsyncStorage.setItem(
+          "Phone",
+          Phone.PhoneNumber.replace(/-/g, "")
+        );
         await AsyncStorage.setItem("Medical", Medical.toString());
         await AsyncStorage.setItem("Rehab", Rehab.toString());
         await AsyncStorage.setItem("Professional", Professional.toString());
@@ -212,9 +210,6 @@ const RescuerRegisterStepOne = (props: Props) => {
             <Text className="text-center font-black text-lg">
               Are you affiliated with a Wildlife Emergency or Protection
               Organization?
-            </Text>
-            <Text className="text-center font-light mb-2 text-sm">
-              (You can change these later)
             </Text>
             <View className="flex-row row-span-1">
               <Text

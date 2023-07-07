@@ -11,12 +11,17 @@ import {
 } from "react-native";
 import { Button } from "native-base";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
+import {
+  SetGeoRadius,
+  SetNotifications,
+  DeleteAccount,
+} from "../../components/rescuerprefmutations/Pref_Comp_index";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getRescuerPrefs } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
-import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
 
 const screenHeight = Dimensions.get("window").height;
@@ -88,7 +93,7 @@ const RescuerPrefs = (props: Props) => {
         <Text>Mutation Component</Text>
         <Text>Mutation Location?</Text>
         <Text>Mutation Notifications</Text>
-        <Text>Mutation Set Radius</Text>
+        <SetGeoRadius />
         <Text>Delete Account</Text>
       </View>
       {isConnected ? null : (
