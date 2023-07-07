@@ -344,3 +344,12 @@ const RescuerRegisterStepOne = (props: Props) => {
 };
 
 export default RescuerRegisterStepOne;
+
+/* 
+when update basic info has been built:
+ <Text className="text-center font-light mb-2 text-sm">
+              (You can change these later)
+            </Text>
+            under organization question
+
+*/

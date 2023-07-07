@@ -1,42 +1,11 @@
 import { Request, Response } from "express";
-import clerk, {
-  ClerkExpressWithAuth,
-  WithAuthProp,
-} from "@clerk/clerk-sdk-node";
+import clerk, { WithAuthProp } from "@clerk/clerk-sdk-node";
 import { redisClient } from "../services/db.setup.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
 
 secretKey: process.env.CLERK_SECRET_KEY;
-
-//GET /Rescuer Preferences
-export const rescuerPrefsContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    /*  const rescuerprefscontent = await redisClient.get('rescuerprefscontent');
-        res.send(rescuerprefscontent); */
-    res.json({ Title: "Rescuer Preferences Functional" });
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-//PUT /Update Rescuer Preferences
-export const updateRescuerPrefs = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    /*  const updaterescuerprefs = await redisClient.get('updaterescuerprefs');
-        res.send(updaterescuerprefs); */
-    res.json({ Title: "Update Rescuer Preferences Functional" });
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 //POST /Register new Rescuer
 export const registerRescuer = async (
@@ -121,25 +90,6 @@ export const registerRescuer = async (
   }
 };
 
-//GET /Rescuer Profile
-export const rescuerProfile = async (
-  req: Request & WithAuthProp<Request>,
-  res: Response
-): Promise<void> => {
-  try {
-    const UserId = req.auth.userId;
-    const id = await redisClient.get(UserId);
-    if (!id) {
-      res.status(404).json({ msg: "User not found" });
-      return;
-    }
-    const rescuerprofile = await redisClient.hGetAll(`rescuer:${id}`);
-    res.send(rescuerprofile);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 //GET /Welcome Rescuer Content
 export const welcomeRescuerContent = async (
   req: Request,
@@ -182,5 +132,74 @@ export const updateWelcomeRescuerContent = async (
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
+  }
+};
+
+//GET /Rescuer Profile
+export const rescuerProfile = async (
+  req: Request & WithAuthProp<Request>,
+  res: Response
+): Promise<void> => {
+  try {
+    const UserId = req.auth.userId;
+    const id = await redisClient.get(UserId);
+    if (!id) {
+      res.status(404).json({ msg: "User not found" });
+      return;
+    }
+    const rescuerprofile = await redisClient.hGetAll(`rescuer:${id}`);
+    res.send(rescuerprofile);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//POST /Update Rescuer Pref: Geo Radius
+export const updateRescuerPrefRadius = async (
+  req: Request & WithAuthProp<Request>,
+  res: Response
+): Promise<void> => {
+  try {
+    const UserId = req.auth.userId;
+    const id = await redisClient.get(UserId);
+    if (!id) {
+      res.status(404).json({ msg: "User not found" });
+      return;
+    }
+    const { Radius } = req.body;
+    await redisClient.sendCommand([
+      "HSET",
+      `rescuer:${id}`,
+      "Radius",
+      Radius.toString(),
+    ]);
+    res.send("Geo Radius Updated");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//POST /Update Rescuer Pref: Notifications
+export const updateRescuerPrefNotifications = async (
+  req: Request & WithAuthProp<Request>,
+  res: Response
+): Promise<void> => {
+  try {
+    const UserId = req.auth.userId;
+    const id = await redisClient.get(UserId);
+    if (!id) {
+      res.status(404).json({ msg: "User not found" });
+      return;
+    }
+    const { Notifications } = req.body;
+    await redisClient.sendCommand([
+      "HSET",
+      `rescuer:${id}`,
+      "Notifications",
+      Notifications.toString(),
+    ]);
+    res.send("Notifications Updated");
+  } catch (error) {
+    console.error(error);
   }
 };

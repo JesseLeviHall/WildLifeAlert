@@ -12,18 +12,17 @@ import {
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { SetNotificationPref } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";
-import OfflineToast from "../../components/OfflineToast";
-import { useConnectivity } from "../../hooks/useConnectivity";
 import SpinnerComp from "../../components/Spinner";
 import SuccessToast from "../../components/SuccessToast";
 
-type Props = {};
+type Props = {
+  notifications: boolean;
+};
 
 const SetNotifications = (props: Props) => {
   const [error, setError] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
   const [Notifications, SetNotifications] = React.useState("");
-  const isConnected = useConnectivity();
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   React.useEffect(() => {
@@ -68,8 +67,14 @@ const SetNotifications = (props: Props) => {
   };
 
   return (
-    <View>
-      <Text>Set Notifications</Text>
+    <View className="h-14">
+      <Text>Notifications are set to:</Text>
+      <Text>{props.notifications.toString()}</Text>
+      {showToast && (
+        <View className="-mt-16 h-16 rounded-lg">
+          <SuccessToast message="Notifications Set" />
+        </View>
+      )}
     </View>
   );
 };

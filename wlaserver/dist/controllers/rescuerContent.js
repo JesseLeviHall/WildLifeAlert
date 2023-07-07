@@ -2,28 +2,6 @@ import { redisClient } from "../services/db.setup.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 secretKey: process.env.CLERK_SECRET_KEY;
-//GET /Rescuer Preferences
-export const rescuerPrefsContent = async (req, res) => {
-    try {
-        /*  const rescuerprefscontent = await redisClient.get('rescuerprefscontent');
-            res.send(rescuerprefscontent); */
-        res.json({ Title: "Rescuer Preferences Functional" });
-    }
-    catch (error) {
-        console.error(error);
-    }
-};
-//PUT /Update Rescuer Preferences
-export const updateRescuerPrefs = async (req, res) => {
-    try {
-        /*  const updaterescuerprefs = await redisClient.get('updaterescuerprefs');
-            res.send(updaterescuerprefs); */
-        res.json({ Title: "Update Rescuer Preferences Functional" });
-    }
-    catch (error) {
-        console.error(error);
-    }
-};
 //POST /Register new Rescuer
 export const registerRescuer = async (req, res) => {
     try {
@@ -94,22 +72,6 @@ export const registerRescuer = async (req, res) => {
         console.error(error);
     }
 };
-//GET /Rescuer Profile
-export const rescuerProfile = async (req, res) => {
-    try {
-        const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
-            res.status(404).json({ msg: "User not found" });
-            return;
-        }
-        const rescuerprofile = await redisClient.hGetAll(`rescuer:${id}`);
-        res.send(rescuerprofile);
-    }
-    catch (error) {
-        console.error(error);
-    }
-};
 //GET /Welcome Rescuer Content
 export const welcomeRescuerContent = async (req, res) => {
     try {
@@ -139,6 +101,36 @@ export const updateWelcomeRescuerContent = async (req, res) => {
     catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
+    }
+};
+//GET /Rescuer Profile
+export const rescuerProfile = async (req, res) => {
+    try {
+        const UserId = req.auth.userId;
+        const id = await redisClient.get(UserId);
+        if (!id) {
+            res.status(404).json({ msg: "User not found" });
+            return;
+        }
+        const rescuerprofile = await redisClient.hGetAll(`rescuer:${id}`);
+        res.send(rescuerprofile);
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
+//PUT /Update Rescuer Pref: Geo Radius
+export const updateRescuerPrefs = async (req, res) => {
+    try {
+        const UserId = req.auth.userId;
+        const id = await redisClient.get(UserId);
+        if (!id) {
+            res.status(404).json({ msg: "User not found" });
+            return;
+        }
+    }
+    catch (error) {
+        console.error(error);
     }
 };
 //# sourceMappingURL=rescuerContent.js.map

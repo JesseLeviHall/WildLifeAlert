@@ -6,6 +6,5 @@ rescuerRouter.post("/newrescuer", clerkAuth, clerkRouteHandler, resuerContent.re
 rescuerRouter.get("/welcomescreen", clerkAuth, clerkRouteHandler, resuerContent.welcomeRescuerContent);
 rescuerRouter.put("/updatewelcomecontent", resuerContent.updateWelcomeRescuerContent);
 rescuerRouter.get("/rescuerprofile", clerkAuth, clerkRouteHandler, resuerContent.rescuerProfile);
-rescuerRouter.get("/rescuerprefs", clerkAuth, clerkRouteHandler, resuerContent.rescuerPrefsContent);
-rescuerRouter.put("/updaterescuerprefs", clerkAuth, clerkRouteHandler, resuerContent.updateRescuerPrefs);
+rescuerRouter.post("/rescuerprefradius", clerkAuth, clerkRouteHandler, resuerContent.updateRescuerPrefs);
 //# sourceMappingURL=rescuerRoute.js.map

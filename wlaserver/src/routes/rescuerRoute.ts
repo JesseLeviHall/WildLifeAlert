@@ -30,16 +30,16 @@ rescuerRouter.get(
   resuerContent.rescuerProfile
 );
 
-rescuerRouter.get(
-  "/rescuerprefs",
+rescuerRouter.post(
+  "/rescuerprefradius",
   clerkAuth,
   clerkRouteHandler,
-  resuerContent.rescuerPrefsContent
+  resuerContent.updateRescuerPrefRadius
 );
 
-rescuerRouter.put(
-  "/updaterescuerprefs",
+rescuerRouter.post(
+  "/rescuerprefnotifications",
   clerkAuth,
   clerkRouteHandler,
-  resuerContent.updateRescuerPrefs
+  resuerContent.updateRescuerPrefNotifications
 );

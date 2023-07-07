@@ -20,7 +20,7 @@ import {
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
 import { useQuery } from "@tanstack/react-query/build/lib";
-import { getRescuerPrefs } from "../../api/index";
+import { getRescuerProfile } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
@@ -40,7 +40,7 @@ const RescuerPrefs = (props: Props) => {
       const fetchedToken = await getToken();
       if (fetchedToken) {
         setToken(fetchedToken);
-        console.log(sessionId, fetchedToken);
+        //console.log(sessionId, fetchedToken);
       }
     };
     fetchToken();
@@ -48,7 +48,7 @@ const RescuerPrefs = (props: Props) => {
 
   const { isLoading, data, error } = useQuery(
     ["rescuerprefs", sessionId, token],
-    () => (sessionId && token ? getRescuerPrefs(sessionId, token) : null),
+    () => (sessionId && token ? getRescuerProfile(sessionId, token) : null),
     {
       enabled: !!sessionId && isConnected,
     }
@@ -90,15 +90,15 @@ const RescuerPrefs = (props: Props) => {
         </Text>
       </View>
       <View style={styles.box}>
-        <Text>{data?.Title}</Text>
+        <Text>{data?.Name}</Text>
         <SetRescuerLocation />
-        <SetNotifications />
-        <SetGeoRadius />
+        <SetNotifications notifications={data?.Notifications} />
+        <SetGeoRadius geoRadius={data?.Radius} />
         <DeleteAccount />
         <Text>Feedback, or Report a problem to email</Text>
       </View>
       {isConnected ? null : (
-        <View className="flex-1 align-middle justify-end">
+        <View className="flex-1 align-middle justify-center">
           <OfflineToast />
         </View>
       )}

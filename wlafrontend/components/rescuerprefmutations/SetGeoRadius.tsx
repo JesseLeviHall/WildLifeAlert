@@ -11,18 +11,18 @@ import {
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { setGeoRadius } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";
-import OfflineToast from "../../components/OfflineToast";
-import { useConnectivity } from "../../hooks/useConnectivity";
+
 import SpinnerComp from "../../components/Spinner";
 import SuccessToast from "../../components/SuccessToast";
 
-type Props = {};
+type Props = {
+  geoRadius: string;
+};
 
 const SetGeoRadius = (props: Props) => {
   const [error, setError] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
   const [Radius, setRadius] = React.useState("");
-  const isConnected = useConnectivity();
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   React.useEffect(() => {
@@ -68,7 +68,13 @@ const SetGeoRadius = (props: Props) => {
 
   return (
     <View>
-      <Text>SetRadius</Text>
+      <Text>Radius is:</Text>
+      <Text>{props.geoRadius}</Text>
+      {showToast && (
+        <View className="-mt-16 h-16 rounded-lg">
+          <SuccessToast message="Radius Set" />
+        </View>
+      )}
     </View>
   );
 };

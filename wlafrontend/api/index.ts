@@ -224,15 +224,15 @@ export const getWelcomeScreenContent = async (
 };
 
 //===================================================
-//get rescuer preferences
-export const getRescuerPrefs = async (sessionId: String, token: String) => {
+//get rescuer profile
+export const getRescuerProfile = async (sessionId: String, token: String) => {
   try {
-    const rescuerPrefs = await API({
+    const rescuerProfile = await API({
       method: "get",
-      url: "/secure-api/rescuerprefs",
+      url: "/secure-api/rescuerprofile",
       headers: { Authorization: `Bearer ${sessionId} ${token}` },
     });
-    return rescuerPrefs.data;
+    return rescuerProfile.data;
   } catch (error: any) {
     console.error(error?.response?.data.error);
     return { error: error.response?.data?.error || "Unknown error" };
@@ -240,7 +240,7 @@ export const getRescuerPrefs = async (sessionId: String, token: String) => {
 };
 
 //===================================================
-//update preference: GeoRadius for notifications
+//update preference: GeoRadius
 export const setGeoRadius = async ({
   sessionId,
   token,
