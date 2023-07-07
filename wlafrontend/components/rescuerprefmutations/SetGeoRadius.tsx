@@ -1,4 +1,4 @@
-//set location as well as radius
+//set radius
 import * as React from "react";
 import {
   Text,

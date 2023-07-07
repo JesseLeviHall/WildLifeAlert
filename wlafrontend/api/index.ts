@@ -262,3 +262,27 @@ export const setGeoRadius = async ({
     console.error(error);
   }
 };
+
+//===================================================
+//update preference: notifications
+export const SetNotificationPref = async ({
+  sessionId,
+  token,
+  Notifications,
+}: {
+  sessionId: String;
+  token: String;
+  Notifications: String;
+}) => {
+  try {
+    const setNotifications = await API({
+      method: "post",
+      url: "secure-api/rescuerprefnotifications",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      data: Notifications,
+    });
+    return setNotifications.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

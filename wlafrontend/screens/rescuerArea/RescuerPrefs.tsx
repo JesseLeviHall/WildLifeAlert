@@ -12,6 +12,7 @@ import {
 import { Button } from "native-base";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import {
+  SetRescuerLocation,
   SetGeoRadius,
   SetNotifications,
   DeleteAccount,
@@ -90,11 +91,11 @@ const RescuerPrefs = (props: Props) => {
       </View>
       <View style={styles.box}>
         <Text>{data?.Title}</Text>
-        <Text>Mutation Component</Text>
-        <Text>Mutation Location?</Text>
-        <Text>Mutation Notifications</Text>
+        <SetRescuerLocation />
+        <SetNotifications />
         <SetGeoRadius />
-        <Text>Delete Account</Text>
+        <DeleteAccount />
+        <Text>Feedback, or Report a problem to email</Text>
       </View>
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-end">
