@@ -40,7 +40,6 @@ const RescuerPrefs = (props: Props) => {
       const fetchedToken = await getToken();
       if (fetchedToken) {
         setToken(fetchedToken);
-        //console.log(sessionId, fetchedToken);
       }
     };
     fetchToken();
@@ -90,8 +89,8 @@ const RescuerPrefs = (props: Props) => {
         </Text>
       </View>
       <View style={styles.box}>
-        <Text>{data?.Name}</Text>
         <SetRescuerLocation />
+        <Text>{data?.FullName},</Text>
         <SetNotifications notifications={data?.Notifications} />
         <SetGeoRadius geoRadius={data?.Radius} />
         <DeleteAccount />

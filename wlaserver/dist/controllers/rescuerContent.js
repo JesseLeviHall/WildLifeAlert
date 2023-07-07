@@ -119,8 +119,8 @@ export const rescuerProfile = async (req, res) => {
         console.error(error);
     }
 };
-//PUT /Update Rescuer Pref: Geo Radius
-export const updateRescuerPrefs = async (req, res) => {
+//POST /Update Rescuer Pref: Geo Radius
+export const updateRescuerPrefRadius = async (req, res) => {
     try {
         const UserId = req.auth.userId;
         const id = await redisClient.get(UserId);
@@ -128,6 +128,36 @@ export const updateRescuerPrefs = async (req, res) => {
             res.status(404).json({ msg: "User not found" });
             return;
         }
+        const { Radius } = req.body;
+        await redisClient.sendCommand([
+            "HSET",
+            `rescuer:${id}`,
+            "Radius",
+            Radius.toString(),
+        ]);
+        res.send("Geo Radius Updated");
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
+//POST /Update Rescuer Pref: Notifications
+export const updateRescuerPrefNotifications = async (req, res) => {
+    try {
+        const UserId = req.auth.userId;
+        const id = await redisClient.get(UserId);
+        if (!id) {
+            res.status(404).json({ msg: "User not found" });
+            return;
+        }
+        const { Notifications } = req.body;
+        await redisClient.sendCommand([
+            "HSET",
+            `rescuer:${id}`,
+            "Notifications",
+            Notifications.toString(),
+        ]);
+        res.send("Notifications Updated");
     }
     catch (error) {
         console.error(error);

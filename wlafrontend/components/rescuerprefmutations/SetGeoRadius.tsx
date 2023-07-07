@@ -30,7 +30,6 @@ const SetGeoRadius = (props: Props) => {
       const fetchedToken = await getToken();
       if (fetchedToken) {
         setToken(fetchedToken);
-        console.log(sessionId, fetchedToken);
       }
     };
     fetchToken();
@@ -68,8 +67,7 @@ const SetGeoRadius = (props: Props) => {
 
   return (
     <View>
-      <Text>Radius is:</Text>
-      <Text>{props.geoRadius}</Text>
+      <Text>Radius is: {props.geoRadius} miles</Text>
       {showToast && (
         <View className="-mt-16 h-16 rounded-lg">
           <SuccessToast message="Radius Set" />

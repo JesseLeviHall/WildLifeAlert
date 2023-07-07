@@ -30,7 +30,6 @@ const SetNotifications = (props: Props) => {
       const fetchedToken = await getToken();
       if (fetchedToken) {
         setToken(fetchedToken);
-        console.log(sessionId, fetchedToken);
       }
     };
     fetchToken();
@@ -69,7 +68,7 @@ const SetNotifications = (props: Props) => {
   return (
     <View className="h-14">
       <Text>Notifications are set to:</Text>
-      <Text>{props.notifications.toString()}</Text>
+      <Text>{props.notifications}</Text>
       {showToast && (
         <View className="-mt-16 h-16 rounded-lg">
           <SuccessToast message="Notifications Set" />
