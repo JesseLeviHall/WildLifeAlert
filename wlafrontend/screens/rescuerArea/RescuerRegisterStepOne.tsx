@@ -323,7 +323,6 @@ const RescuerRegisterStepOne = (props: Props) => {
               onPress={onSubmit}
               colorScheme="cyan"
               _text={{ color: "white" }}
-              //add a border to the button
               _pressed={{
                 backgroundColor: "cyan.400",
                 _text: { color: "white" },

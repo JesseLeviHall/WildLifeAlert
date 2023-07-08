@@ -8,7 +8,7 @@ type Props = {};
 const DeleteAccount = (props: Props) => {
   return (
     <View>
-      <Text>DeleteAccount</Text>
+      <Text>Delete Account?</Text>
     </View>
   );
 };

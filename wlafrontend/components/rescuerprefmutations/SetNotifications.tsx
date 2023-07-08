@@ -61,16 +61,16 @@ const SetNotifications = ({ notificationProp }: Props) => {
   };
 
   return (
-    <View className="h-14">
+    <View className="items-center w-full h-16 justify-center">
       <Checkbox
-        value="orange"
-        colorScheme="orange"
+        value="green"
+        colorScheme="green"
         size="lg"
         icon={<Icon as={<MaterialCommunityIcons name="alarm" />} />}
         isChecked={notifications}
         onChange={handleSubmitNotificationPref}
       >
-        Notifications {notifications ? "On" : "Off"}
+        Notifications:{notifications ? "On" : "Off"}
       </Checkbox>
       {showToast && (
         <View className="-mt-16 h-16 rounded-lg">

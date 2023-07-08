@@ -5,8 +5,12 @@ import {
   Dimensions,
   ImageBackground,
   StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  Linking,
 } from "react-native";
-import { Button } from "native-base";
+import { Button, Divider } from "native-base";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import {
   SetRescuerLocation,
@@ -85,14 +89,25 @@ const RescuerPrefs = (props: Props) => {
           Set Your Preferences
         </Text>
       </View>
-      <View style={styles.box}>
-        <SetRescuerLocation />
-        <Text>{data?.FullName},</Text>
-        <SetNotifications notificationProp={data?.Notifications} />
-        <SetGeoRadius geoRadius={data?.Radius} />
-        <DeleteAccount />
-        <Text>Feedback, or Report a problem to email</Text>
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.box}>
+          <SetRescuerLocation />
+          <Divider my="2" bg="blueGray.900" />
+          <SetNotifications notificationProp={data?.Notifications} />
+          <Divider my="2" bg="blueGray.900" />
+          <SetGeoRadius geoRadiusProp={data?.Radius} />
+          <Divider my="2" bg="blueGray.900" />
+          <DeleteAccount />
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
+            }}
+            className="justify-center align-middle items-center"
+          >
+            <Text>Feedback, or Report a Problem</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
       {isConnected ? null : (
         <View className="flex-1 align-middle justify-center">
           <OfflineToast />
@@ -127,7 +142,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
-    paddingHorizontal: 12,
     backgroundColor: "rgba(0, 224, 255, 0.3)",
     borderRadius: 15,
     width: screenWidth - 40,

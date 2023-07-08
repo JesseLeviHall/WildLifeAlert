@@ -7,7 +7,7 @@ type Props = {};
 const SetResLocation = (props: Props) => {
   return (
     <View>
-      <Text>Set Location</Text>
+      <Text>Update Your Location</Text>
     </View>
   );
 };
