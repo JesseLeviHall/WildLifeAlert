@@ -38,6 +38,7 @@ const RescuerPrefs = (props: Props) => {
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
+
   React.useEffect(() => {
     const fetchToken = async () => {
       const fetchedToken = await getToken();

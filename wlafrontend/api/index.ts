@@ -286,3 +286,24 @@ export const SetNotificationPref = async ({
     console.error(error);
   }
 };
+
+//===================================================
+//delete rescuer account
+export const deleteAccount = async ({
+  sessionId,
+  token,
+}: {
+  sessionId: String;
+  token: String;
+}) => {
+  try {
+    const deleteAccount = await API({
+      method: "delete",
+      url: "secure-api/deleterescuer",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+    });
+    return deleteAccount.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

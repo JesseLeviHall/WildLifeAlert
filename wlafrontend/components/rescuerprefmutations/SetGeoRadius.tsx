@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query/build/lib";
 import { setGeoRadius } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";
 import SuccessToast from "../../components/SuccessToast";
+import { useConnectivity } from "../../hooks/useConnectivity";
 
 type Props = {
   geoRadiusProp: string;
@@ -23,6 +24,8 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
   const [Radius, setRadius] = React.useState(geoRadiusProp);
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
+  const isConnected = useConnectivity();
+
   React.useEffect(() => {
     const fetchToken = async () => {
       const fetchedToken = await getToken();
@@ -64,6 +67,7 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
   };
 
   const handleSubmitGeoPref = async () => {
+    if (!isConnected) return;
     if (mutation.isLoading || mutation.error) return;
     try {
       const isValid = await validate();

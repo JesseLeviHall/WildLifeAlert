@@ -7,6 +7,7 @@ import { SetNotificationPref } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";
 import SuccessToast from "../../components/SuccessToast";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useConnectivity } from "../../hooks/useConnectivity";
 
 type Props = {
   notificationProp: boolean;
@@ -18,6 +19,8 @@ const SetNotifications = ({ notificationProp }: Props) => {
   const [notifications, SetNotifications] = React.useState(notificationProp);
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
+  const isConnected = useConnectivity();
+
   React.useEffect(() => {
     const fetchToken = async () => {
       const fetchedToken = await getToken();
@@ -42,6 +45,7 @@ const SetNotifications = ({ notificationProp }: Props) => {
   });
 
   const handleSubmitNotificationPref = async () => {
+    if (!isConnected) return;
     if (mutation.isLoading || mutation.error) return;
     try {
       setError("");
