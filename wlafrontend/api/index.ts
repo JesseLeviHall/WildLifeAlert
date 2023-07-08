@@ -255,7 +255,7 @@ export const setGeoRadius = async ({
       method: "post",
       url: "secure-api/rescuerprefradius",
       headers: { Authorization: `Bearer ${sessionId} ${token}` },
-      data: Radius,
+      data: { Radius },
     });
     return setRadius.data;
   } catch (error) {
@@ -279,7 +279,7 @@ export const SetNotificationPref = async ({
       method: "post",
       url: "secure-api/rescuerprefnotifications",
       headers: { Authorization: `Bearer ${sessionId} ${token}` },
-      data: Notifications,
+      data: { Notifications },
     });
     return setNotifications.data;
   } catch (error) {

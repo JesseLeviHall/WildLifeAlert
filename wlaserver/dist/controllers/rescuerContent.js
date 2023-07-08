@@ -150,12 +150,12 @@ export const updateRescuerPrefNotifications = async (req, res) => {
             res.status(404).json({ msg: "User not found" });
             return;
         }
-        const { Notifications } = req.body;
+        const Notifications = req.body.Notifications.toString();
         await redisClient.sendCommand([
             "HSET",
             `rescuer:${id}`,
             "Notifications",
-            Notifications.toString(),
+            Notifications,
         ]);
         res.send("Notifications Updated");
     }

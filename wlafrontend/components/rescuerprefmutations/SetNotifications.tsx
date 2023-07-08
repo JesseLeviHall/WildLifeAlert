@@ -1,28 +1,21 @@
 //Set notifications to true or false
-//set radius
 import * as React from "react";
-import {
-  Text,
-  Keyboard,
-  TouchableWithoutFeedback,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, View } from "react-native";
+import { Checkbox, Icon } from "native-base";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { SetNotificationPref } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";
-import SpinnerComp from "../../components/Spinner";
 import SuccessToast from "../../components/SuccessToast";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 type Props = {
-  notifications: boolean;
+  notificationProp: boolean;
 };
 
-const SetNotifications = (props: Props) => {
+const SetNotifications = ({ notificationProp }: Props) => {
   const [error, setError] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
-  const [Notifications, SetNotifications] = React.useState("");
+  const [notifications, SetNotifications] = React.useState(notificationProp);
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   React.useEffect(() => {
@@ -52,9 +45,11 @@ const SetNotifications = (props: Props) => {
     if (mutation.isLoading || mutation.error) return;
     try {
       setError("");
-      Keyboard.dismiss();
+      const newNotificationValue = !notifications; // Flip the current notification state
+      SetNotifications(newNotificationValue); // Set the state to the new value
       const token = await getToken();
-      if (sessionId && token && Notifications) {
+      if (sessionId && token !== null) {
+        const Notifications = newNotificationValue.toString();
         mutation.mutate({ sessionId, token, Notifications });
       } else {
         throw new Error("Session ID, token, or user details is undefined");
@@ -67,8 +62,16 @@ const SetNotifications = (props: Props) => {
 
   return (
     <View className="h-14">
-      <Text>Notifications are set to:</Text>
-      <Text>{props.notifications}</Text>
+      <Checkbox
+        value="orange"
+        colorScheme="orange"
+        size="lg"
+        icon={<Icon as={<MaterialCommunityIcons name="alarm" />} />}
+        isChecked={notifications}
+        onChange={handleSubmitNotificationPref}
+      >
+        Notifications {notifications ? "On" : "Off"}
+      </Checkbox>
       {showToast && (
         <View className="-mt-16 h-16 rounded-lg">
           <SuccessToast message="Notifications Set" />

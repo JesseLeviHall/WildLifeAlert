@@ -2,9 +2,6 @@ import * as React from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Keyboard,
-  TouchableWithoutFeedback,
   Dimensions,
   ImageBackground,
   StyleSheet,
@@ -91,7 +88,7 @@ const RescuerPrefs = (props: Props) => {
       <View style={styles.box}>
         <SetRescuerLocation />
         <Text>{data?.FullName},</Text>
-        <SetNotifications notifications={data?.Notifications} />
+        <SetNotifications notificationProp={data?.Notifications} />
         <SetGeoRadius geoRadius={data?.Radius} />
         <DeleteAccount />
         <Text>Feedback, or Report a problem to email</Text>
