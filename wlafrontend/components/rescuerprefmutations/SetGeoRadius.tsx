@@ -105,7 +105,7 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
         ) : null}
       </FormControl>
       <TouchableOpacity
-        className="border rounded-full px-4 py-2 -m-2 border-cyan-500 "
+        className="border rounded-full px-4 py-2 -mt-2 border-cyan-500 "
         onPress={handleSubmitGeoPref}
       >
         <Text className="text-white font-thin">Save</Text>

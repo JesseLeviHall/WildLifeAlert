@@ -25,6 +25,7 @@ import { getRescuerProfile } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
+import AccountDeleteDialogue from "../../components/rescuerprefmutations/AccountDeleteDialogue";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -34,6 +35,7 @@ type Props = {};
 const RescuerPrefs = (props: Props) => {
   const navigation = useNavigation();
   const isConnected = useConnectivity();
+  const [dialogVisible, setDialogVisible] = React.useState(false);
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   React.useEffect(() => {
@@ -70,6 +72,8 @@ const RescuerPrefs = (props: Props) => {
     );
   }
 
+  const toggleDialogVisible = () => setDialogVisible(!dialogVisible);
+
   return (
     <ImageBackground
       source={require("../../assets/resbasecamp.png")}
@@ -89,22 +93,39 @@ const RescuerPrefs = (props: Props) => {
           Set Your Preferences
         </Text>
       </View>
+      {dialogVisible && (
+        <View
+          style={{
+            position: "absolute",
+            width: screenWidth,
+            height: screenHeight,
+            zIndex: 10,
+          }}
+        >
+          <AccountDeleteDialogue
+            visible={dialogVisible}
+            setVisible={toggleDialogVisible}
+          />
+        </View>
+      )}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.box}>
           <SetRescuerLocation />
-          <Divider my="2" bg="blueGray.900" />
+          <Divider my="2" opacity={30} />
           <SetNotifications notificationProp={data?.Notifications} />
-          <Divider my="2" bg="blueGray.900" />
+          <Divider my="2" opacity={30} />
           <SetGeoRadius geoRadiusProp={data?.Radius} />
-          <Divider my="2" bg="blueGray.900" />
-          <DeleteAccount />
+          <Divider my="2" opacity={30} />
+          <DeleteAccount toggleDialog={toggleDialogVisible} />
           <TouchableOpacity
             onPress={() => {
               Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
             }}
-            className="justify-center align-middle items-center"
+            className="justify-center items-center align-bottom h-10 border border-cyan-500 rounded-xl"
           >
-            <Text>Feedback, or Report a Problem</Text>
+            <Text className="text-base text-center mx-3 text-white font-thin">
+              Feedback, or Report a Problem
+            </Text>
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
