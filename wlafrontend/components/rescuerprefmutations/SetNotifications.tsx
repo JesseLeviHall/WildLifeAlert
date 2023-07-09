@@ -10,13 +10,15 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { useConnectivity } from "../../hooks/useConnectivity";
 
 type Props = {
-  notificationProp: boolean;
+  notificationProp: string;
 };
 
 const SetNotifications = ({ notificationProp }: Props) => {
   const [error, setError] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
-  const [notifications, SetNotifications] = React.useState(notificationProp);
+  const [notifications, SetNotifications] = React.useState(
+    notificationProp === "true"
+  );
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   const isConnected = useConnectivity();

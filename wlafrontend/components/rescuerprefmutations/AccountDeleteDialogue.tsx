@@ -14,14 +14,15 @@ type RootStackParamList = {
 type HomeScreenProp = NavigationProp<RootStackParamList, "HomeScreen">;
 
 type Props = {
+  navigation: HomeScreenProp;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AccountDeleteDialogue = ({ visible, setVisible }: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeScreenProp>();
   const isConnected = useConnectivity();
-  const { sessionId, getToken } = useAuth();
+  const { sessionId, getToken, signOut } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   const [error, setError] = React.useState("");
 
@@ -38,6 +39,8 @@ const AccountDeleteDialogue = ({ visible, setVisible }: Props) => {
   const mutation = useMutation(deleteAccount, {
     onSuccess: () => {
       console.log("Account Deleted");
+      signOut();
+      navigation.navigate("HomeScreen");
     },
     onError: (error) => {
       console.error("Error: ", error);

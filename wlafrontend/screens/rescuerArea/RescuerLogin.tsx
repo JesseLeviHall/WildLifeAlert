@@ -17,8 +17,8 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import SignInWithOAuth from "../../components/SignInWithOAuth";
 import SignInComponent from "../../components/SignInComponent";
 import LoggedInChips from "../../components/resuerloginscreenlayout/LoggedInChips";
-import SkeletonComp from "../../components/Skeleton";
 import { Button } from "native-base";
+import SpinnerComp from "../../components/Spinner";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -45,8 +45,10 @@ const RescuerLogin = (Props: Props) => {
   const { userId, sessionId } = useAuth();
   const { isLoaded, isSignedIn, user } = useUser();
 
+  console.log("User: ", userId);
+
   if (!isLoaded) {
-    return <SkeletonComp />;
+    return <SpinnerComp />;
   }
 
   React.useLayoutEffect(() => {

@@ -1,14 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import SkeletonComp from "../../components/Skeleton";
 import { Chip } from "react-native-paper";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useAuth } from "@clerk/clerk-expo";
+import SpinnerComp from "../../components/Spinner";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
-
-//TODO add delete account option
 
 type RootStackParamList = {
   RescuerRegister: undefined;
@@ -31,7 +29,7 @@ const LoggedInChips = (props: Props) => {
 
   const { isLoaded, signOut } = useAuth();
   if (!isLoaded) {
-    return <SkeletonComp />;
+    return <SpinnerComp />;
   }
 
   return (
