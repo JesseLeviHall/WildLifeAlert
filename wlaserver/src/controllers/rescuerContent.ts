@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import clerk, { WithAuthProp } from "@clerk/clerk-sdk-node";
+import { WithAuthProp } from "@clerk/clerk-sdk-node";
 import { redisClient } from "../services/db.setup.js";
 import * as dotenv from "dotenv";
+import clerk from "@clerk/clerk-sdk-node";
 
 dotenv.config();
-
-secretKey: process.env.CLERK_SECRET_KEY;
 
 //POST /Register new Rescuer
 export const registerRescuer = async (
@@ -87,6 +86,7 @@ export const registerRescuer = async (
     res.send("New Rescuer Created");
   } catch (error) {
     console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
   }
 };
 
@@ -100,6 +100,7 @@ export const welcomeRescuerContent = async (
     res.send(welcomescreencontent);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
   }
 };
 
@@ -151,6 +152,7 @@ export const rescuerProfile = async (
     res.send(rescuerprofile);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
   }
 };
 
@@ -176,6 +178,7 @@ export const updateRescuerPrefRadius = async (
     res.send("Geo Radius Updated");
   } catch (error) {
     console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
   }
 };
 
@@ -201,5 +204,38 @@ export const updateRescuerPrefNotifications = async (
     res.send("Notifications Updated");
   } catch (error) {
     console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
+};
+
+//DELETE /Delete Rescuer
+export const deleteRescuer = async (
+  req: Request & WithAuthProp<Request>,
+  res: Response
+): Promise<void> => {
+  try {
+    const UserId = req.auth.userId;
+    const deletedUser = await clerk.users.deleteUser(UserId);
+    if (!deletedUser) {
+      res.status(500).json({ msg: "Failed to delete user in Clerk" });
+      return;
+    }
+    const id = await redisClient.get(UserId);
+    if (!id) {
+      res.status(404).json({ msg: "User not found" });
+      return;
+    }
+    await redisClient.sendCommand(["DEL", `rescuer:${id}`]);
+    await redisClient.sendCommand(["DEL", UserId]);
+    await redisClient.sendCommand([
+      "SREM",
+      "rescuer:UserIds",
+      UserId,
+      id.toString(),
+    ]);
+    res.send("Rescuer Deleted");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
   }
 };

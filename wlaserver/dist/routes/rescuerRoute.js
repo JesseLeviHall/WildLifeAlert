@@ -8,4 +8,5 @@ rescuerRouter.put("/updatewelcomecontent", resuerContent.updateWelcomeRescuerCon
 rescuerRouter.get("/rescuerprofile", clerkAuth, clerkRouteHandler, resuerContent.rescuerProfile);
 rescuerRouter.post("/rescuerprefradius", clerkAuth, clerkRouteHandler, resuerContent.updateRescuerPrefRadius);
 rescuerRouter.post("/rescuerprefnotifications", clerkAuth, clerkRouteHandler, resuerContent.updateRescuerPrefNotifications);
+rescuerRouter.delete("/deleterescuer", clerkAuth, clerkRouteHandler, resuerContent.deleteRescuer);
 //# sourceMappingURL=rescuerRoute.js.map
