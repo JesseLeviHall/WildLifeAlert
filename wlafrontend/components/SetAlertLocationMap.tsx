@@ -53,7 +53,7 @@ export default function SetAlertLocationMap({
       Alert.alert("Error", "Could not get current location");
     }
 
-    setIsLoading(false); // Add this line
+    setIsLoading(false);
   };
 
   const handleSaveLocation = async () => {

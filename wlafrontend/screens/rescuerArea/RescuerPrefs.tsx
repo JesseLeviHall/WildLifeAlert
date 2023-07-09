@@ -26,6 +26,7 @@ import { useConnectivity } from "../../hooks/useConnectivity";
 import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
 import AccountDeleteDialogue from "../../components/rescuerprefmutations/AccountDeleteDialogue";
+import SetLocationDialogue from "../../components/rescuerprefmutations/SetLocationDialogue ";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -44,6 +45,7 @@ const RescuerPrefs = (props: Props) => {
   const navigation = useNavigation<HomeScreenProp>();
   const isConnected = useConnectivity();
   const [dialogVisible, setDialogVisible] = React.useState(false);
+  const [changeLocation, setChangeLocation] = React.useState(false);
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
 
@@ -82,6 +84,7 @@ const RescuerPrefs = (props: Props) => {
   }
 
   const toggleDialogVisible = () => setDialogVisible(!dialogVisible);
+  const toggleChangeLocation = () => setChangeLocation(!changeLocation);
 
   return (
     <ImageBackground
@@ -102,6 +105,23 @@ const RescuerPrefs = (props: Props) => {
           Set Your Preferences
         </Text>
       </View>
+      {changeLocation && (
+        <View
+          style={{
+            position: "absolute",
+            width: screenWidth,
+            height: screenHeight,
+            zIndex: 10,
+          }}
+        >
+          <SetLocationDialogue
+            visible={changeLocation}
+            setVisible={toggleChangeLocation}
+            LatitudeProp={data?.Latitude}
+            LongitudeProp={data?.Longitude}
+          />
+        </View>
+      )}
       {dialogVisible && (
         <View
           style={{
@@ -120,7 +140,11 @@ const RescuerPrefs = (props: Props) => {
       )}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.box}>
-          <SetRescuerLocation />
+          <SetRescuerLocation
+            isOpen={toggleChangeLocation}
+            LatitudeProp={data?.Latitude}
+            LongitudeProp={data?.Longitude}
+          />
           <Divider my="2" opacity={30} />
           <SetNotifications notificationProp={data?.Notifications} />
           <Divider my="2" opacity={30} />

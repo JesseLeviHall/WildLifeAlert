@@ -3,11 +3,21 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import AccountDeleteDialogue from "./AccountDeleteDialogue";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
-type Props = {};
+type RootStackParamList = {
+  Home: undefined;
+};
+
+type HomeScreenProp = NavigationProp<RootStackParamList, "Home">;
+
+type Props = {
+  navigation: HomeScreenProp;
+};
 
 const DeleteAccount = ({ toggleDialog }: { toggleDialog: () => void }) => {
   const [visible, setVisible] = React.useState(false);
+  const navigation = useNavigation<HomeScreenProp>();
 
   return (
     <View className="justify-center mb-3 items-center align-bottom h-10 ">
@@ -17,7 +27,11 @@ const DeleteAccount = ({ toggleDialog }: { toggleDialog: () => void }) => {
         </Text>
       </TouchableOpacity>
       {visible && (
-        <AccountDeleteDialogue visible={visible} setVisible={setVisible} />
+        <AccountDeleteDialogue
+          navigation={navigation}
+          visible={visible}
+          setVisible={setVisible}
+        />
       )}
     </View>
   );
