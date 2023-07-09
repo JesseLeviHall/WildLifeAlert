@@ -30,10 +30,18 @@ import AccountDeleteDialogue from "../../components/rescuerprefmutations/Account
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-type Props = {};
+type RootStackParamList = {
+  Home: undefined;
+};
+
+type HomeScreenProp = NavigationProp<RootStackParamList, "Home">;
+
+type Props = {
+  navigation: HomeScreenProp;
+};
 
 const RescuerPrefs = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeScreenProp>();
   const isConnected = useConnectivity();
   const [dialogVisible, setDialogVisible] = React.useState(false);
   const { sessionId, getToken } = useAuth();
@@ -104,6 +112,7 @@ const RescuerPrefs = (props: Props) => {
           }}
         >
           <AccountDeleteDialogue
+            navigation={navigation}
             visible={dialogVisible}
             setVisible={toggleDialogVisible}
           />

@@ -8,10 +8,10 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useConnectivity } from "../../hooks/useConnectivity";
 
 type RootStackParamList = {
-  HomeScreen: undefined;
+  Home: undefined;
 };
 
-type HomeScreenProp = NavigationProp<RootStackParamList, "HomeScreen">;
+type HomeScreenProp = NavigationProp<RootStackParamList, "Home">;
 
 type Props = {
   navigation: HomeScreenProp;
@@ -40,7 +40,7 @@ const AccountDeleteDialogue = ({ visible, setVisible }: Props) => {
     onSuccess: () => {
       console.log("Account Deleted");
       signOut();
-      navigation.navigate("HomeScreen");
+      navigation.navigate("Home");
     },
     onError: (error) => {
       console.error("Error: ", error);

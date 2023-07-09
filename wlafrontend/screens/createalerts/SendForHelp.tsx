@@ -90,7 +90,10 @@ const SendForHelp = (props: Props) => {
       try {
         await AsyncStorage.setItem("FullName", fullName.fullName);
         await AsyncStorage.setItem("Email", Email.Email);
-        await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber.replace(/-/g, ''));
+        await AsyncStorage.setItem(
+          "PhoneNumber",
+          PhoneNumber.PhoneNumber.replace(/-/g, "")
+        );
         await AsyncStorage.setItem("ShareContact", isSwitchOn.toString());
       } catch (error) {
         console.log("Error saving data", error);
@@ -174,6 +177,7 @@ const SendForHelp = (props: Props) => {
                 placeholder="Email Address"
                 keyboardType="email-address"
                 autoComplete="email"
+                autoCapitalize="none"
                 variant="filled"
                 onChangeText={(value) => setEmail({ ...Email, Email: value })}
               />

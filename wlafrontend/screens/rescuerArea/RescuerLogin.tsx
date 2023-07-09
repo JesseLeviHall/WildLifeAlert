@@ -73,7 +73,7 @@ const RescuerLogin = (Props: Props) => {
       </View>
       <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
         <Text className="font-bold text-lg text-blue-50 text-center">
-          Rescuer Base Camp
+          Base Camp
         </Text>
       </View>
       <SignedIn>
