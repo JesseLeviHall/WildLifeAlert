@@ -45,8 +45,6 @@ const RescuerLogin = (Props: Props) => {
   const { userId, sessionId } = useAuth();
   const { isLoaded, isSignedIn, user } = useUser();
 
-  console.log("User: ", userId);
-
   if (!isLoaded) {
     return <SpinnerComp />;
   }

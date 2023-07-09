@@ -29,7 +29,6 @@ export const registerRescuer = async (
     }
 
     const UserId = req.auth.userId;
-    console.log(UserId);
     //Check if the user already exists
     const UserExists = await redisClient.sendCommand([
       "SISMEMBER",
