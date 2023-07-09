@@ -61,19 +61,6 @@ export const getPubMapDialogueContent = async () => {
 
 //===================================================
 //post a new alert
-interface AlertDetails {
-  photoBlob: string | null;
-  userDetails: {
-    FullName: string;
-    PhoneNumber: string;
-    Email: string;
-    ShareContact: string;
-    Animal: string;
-    Description: string;
-    Latitude: string;
-    Longitude: string;
-  };
-}
 export const postNewAlert = async ({
   photoBlob,
   userDetails,
@@ -282,6 +269,38 @@ export const SetNotificationPref = async ({
       data: { Notifications },
     });
     return setNotifications.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//===================================================
+//update preference: location
+type LocationType = {
+  latitude: number;
+  longitude: number;
+};
+
+export const SetLocationPref = async ({
+  sessionId,
+  token,
+  location,
+}: {
+  sessionId: string;
+  token: string;
+  location: LocationType;
+}) => {
+  try {
+    const changeLocation = await API({
+      method: "post",
+      url: "secure-api/rescuerpreflocation",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      data: {
+        Latitude: location.latitude,
+        Longitude: location.longitude,
+      },
+    });
+    return changeLocation.data;
   } catch (error) {
     console.error(error);
   }

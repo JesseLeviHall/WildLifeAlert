@@ -44,6 +44,13 @@ rescuerRouter.post(
   resuerContent.updateRescuerPrefNotifications
 );
 
+rescuerRouter.post(
+  "/rescuerpreflocation",
+  clerkAuth,
+  clerkRouteHandler,
+  resuerContent.updateRescuerPrefLocation
+);
+
 rescuerRouter.delete(
   "/deleterescuer",
   clerkAuth,

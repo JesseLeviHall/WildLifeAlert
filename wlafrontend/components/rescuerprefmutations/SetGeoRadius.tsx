@@ -1,7 +1,7 @@
 //set radius
 import * as React from "react";
 import { Text, Keyboard, View, TouchableOpacity } from "react-native";
-import { FormControl, Input, Button } from "native-base";
+import { FormControl, Input } from "native-base";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { setGeoRadius } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";

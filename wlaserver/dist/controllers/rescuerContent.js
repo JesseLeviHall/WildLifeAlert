@@ -167,6 +167,44 @@ export const updateRescuerPrefNotifications = async (req, res) => {
         res.status(500).json({ msg: "Internal Server Error" });
     }
 };
+//POST /Update Rescuer Pref: Location
+export const updateRescuerPrefLocation = async (req, res) => {
+    try {
+        const UserId = req.auth.userId;
+        const id = await redisClient.get(UserId);
+        if (!id) {
+            res.status(404).json({ msg: "User not found" });
+            return;
+        }
+        const { Latitude, Longitude } = req.body;
+        // Check if Latitude and Longitude exist
+        if (!Latitude || !Longitude) {
+            res.status(400).json({ msg: "Invalid input data" });
+            return;
+        }
+        // Check if Latitude and Longitude are within the correct ranges
+        if (Latitude < -90 ||
+            Latitude > 90 ||
+            Longitude < -180 ||
+            Longitude > 180) {
+            res.status(400).json({ msg: "Latitude or Longitude out of range" });
+            return;
+        }
+        await redisClient.sendCommand([
+            "HSET",
+            `rescuer:${id}`,
+            "Latitude",
+            Latitude.toString(),
+            "Longitude",
+            Longitude.toString(),
+        ]);
+        res.send("Location Updated");
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Internal Server Error" });
+    }
+};
 //DELETE /Delete Rescuer
 export const deleteRescuer = async (req, res) => {
     try {
