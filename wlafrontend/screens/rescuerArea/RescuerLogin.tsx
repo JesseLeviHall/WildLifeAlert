@@ -10,13 +10,14 @@ import {
   StyleSheet,
 } from "react-native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
-import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/clerk-expo";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import SignInWithOAuth from "../../components/SignInWithOAuth";
 import SignInComponent from "../../components/SignInComponent";
 import LoggedInChips from "../../components/resuerloginscreenlayout/LoggedInChips";
+import AlertsInYourArea from "../../components/resuerloginscreenlayout/AlertsInYourArea";
 import { Button } from "native-base";
 import SpinnerComp from "../../components/Spinner";
 
@@ -42,8 +43,7 @@ type Props = {
 const RescuerLogin = (Props: Props) => {
   const navigation = useNavigation<RescuerRegisterNavigationProp>();
   const isConnected = useConnectivity();
-  const { userId, sessionId } = useAuth();
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { isLoaded, user } = useUser();
 
   if (!isLoaded) {
     return <SpinnerComp />;
@@ -76,10 +76,15 @@ const RescuerLogin = (Props: Props) => {
       </View>
       <SignedIn>
         <View style={styles.box}>
-          <Text className="text-center">
-            Hello, {user?.firstName}, {user?.primaryEmailAddress?.emailAddress},
-            {userId} your current active session is {sessionId}
+          <Text className="text-center text-blue-200 text-lg font-bold">
+            Hello,{" "}
+            {user?.firstName
+              ? user.firstName
+              : user?.primaryEmailAddress?.emailAddress}
           </Text>
+          <View>
+            <AlertsInYourArea />
+          </View>
           <LoggedInChips navigation={navigation} />
         </View>
       </SignedIn>
@@ -146,7 +151,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
-    maxHeight: screenHeight / 2.4,
+    maxHeight: screenHeight / 1.8,
     borderWidth: 1,
     borderColor: "#00E0FFFF",
   },
