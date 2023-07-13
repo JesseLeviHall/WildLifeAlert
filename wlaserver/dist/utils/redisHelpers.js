@@ -39,7 +39,6 @@ export async function getActiveAlertsInRadius(redis, hours, longitude, latitude,
     if (Array.isArray(alertsInArea)) {
         for (const alertId of alertsInArea) {
             const alertTimestamp = await redis.zScore("alerts:animals:timestamps", String(alertId));
-            console.log(`AlertId: ${alertId}, AlertTimestamp: ${alertTimestamp}, PastTime: ${pastTime}`);
             if (alertTimestamp && Number(alertTimestamp) >= pastTime) {
                 recentAlertsInArea.push(alertId);
             }

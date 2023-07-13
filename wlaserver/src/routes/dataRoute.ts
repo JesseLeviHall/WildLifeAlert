@@ -15,5 +15,5 @@ dataRouter.get(
   "/total-active-alerts",
   clerkAuth,
   clerkRouteHandler,
-  dataContent.getTotalActiveAlerts
+  dataContent.getTotalAlerts
 );

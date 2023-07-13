@@ -46,8 +46,8 @@ export const getActiveAlertsInArea = async (
   }
 };
 
-//get total active alerts
-export const getTotalActiveAlerts = async (
+//get total alerts
+export const getTotalAlerts = async (
   req: Request & WithAuthProp<Request>,
   res: Response
 ): Promise<void> => {
@@ -58,9 +58,7 @@ export const getTotalActiveAlerts = async (
       res.status(404).json({ message: "User not found" });
       return;
     }
-    //const alertCount = await redisClient. (get how many total alerts are active in the database and return it)
-    //res.status(200).json({ alertCount });
-    const alertCount = 3;
+    const alertCount = await redisClient.zCard("alerts:animals:timestamps");
     res.status(200).json({ alertCount });
   } catch (error) {
     console.error(error);

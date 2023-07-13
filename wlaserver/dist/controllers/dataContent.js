@@ -29,8 +29,8 @@ export const getActiveAlertsInArea = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-//get total active alerts
-export const getTotalActiveAlerts = async (req, res) => {
+//get total alerts
+export const getTotalAlerts = async (req, res) => {
     try {
         const UserId = req.auth.userId;
         const id = await redisClient.get(UserId);
@@ -38,9 +38,7 @@ export const getTotalActiveAlerts = async (req, res) => {
             res.status(404).json({ message: "User not found" });
             return;
         }
-        //const alertCount = await redisClient. (get how many total alerts are active in the database and return it)
-        //res.status(200).json({ alertCount });
-        const alertCount = 3;
+        const alertCount = await redisClient.zCard("alerts:animals:timestamps");
         res.status(200).json({ alertCount });
     }
     catch (error) {

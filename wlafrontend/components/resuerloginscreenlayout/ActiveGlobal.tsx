@@ -50,7 +50,7 @@ const ActiveGlobal = (props: Props) => {
     <View className="h-28 w-64 mt-5 bg-[#00C5E021] justify-center items-center rounded-xl">
       <Text className="text-[#A6D4FF] text-5xl">{data?.alertCount}</Text>
       <Text className="text-[#A6D4FF] text-base">Global Alerts</Text>
-      <Text className="text-[#A6D4FF] font-light">Active Now</Text>
+      <Text className="text-[#A6D4FF] font-light">All Time</Text>
     </View>
   );
 };

@@ -62,9 +62,6 @@ export async function getActiveAlertsInRadius(
         "alerts:animals:timestamps",
         String(alertId)
       );
-      console.log(
-        `AlertId: ${alertId}, AlertTimestamp: ${alertTimestamp}, PastTime: ${pastTime}`
-      );
       if (alertTimestamp && Number(alertTimestamp) >= pastTime) {
         recentAlertsInArea.push(alertId);
       }
