@@ -18,6 +18,7 @@ import SignInWithOAuth from "../../components/SignInWithOAuth";
 import SignInComponent from "../../components/SignInComponent";
 import LoggedInChips from "../../components/resuerloginscreenlayout/LoggedInChips";
 import AlertsInYourArea from "../../components/resuerloginscreenlayout/AlertsInYourArea";
+import ActiveGlobal from "../../components/resuerloginscreenlayout/ActiveGlobal";
 import { Button } from "native-base";
 import SpinnerComp from "../../components/Spinner";
 
@@ -69,14 +70,14 @@ const RescuerLogin = (Props: Props) => {
       <View style={styles.background}>
         <NightGradAnimated />
       </View>
-      <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
+      <View className="mt-16 mb-12 h-9 w-48 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
         <Text className="font-bold text-lg text-blue-50 text-center">
           Base Camp
         </Text>
       </View>
       <SignedIn>
         <View style={styles.box}>
-          <Text className="text-center text-blue-200 text-lg font-bold">
+          <Text className="text-center text-blue-100 text-lg mt-2 font-thin">
             Hello,{" "}
             {user?.firstName
               ? user.firstName
@@ -84,6 +85,7 @@ const RescuerLogin = (Props: Props) => {
           </Text>
           <View>
             <AlertsInYourArea />
+            <ActiveGlobal />
           </View>
           <LoggedInChips navigation={navigation} />
         </View>
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
   },
   box: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: 25,
     paddingHorizontal: 12,

@@ -4,6 +4,7 @@ import { Chip } from "react-native-paper";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -35,31 +36,39 @@ const LoggedInChips = (props: Props) => {
   return (
     <View style={styles.chips}>
       <Chip
-        icon="account"
+        icon={() => (
+          <MaterialCommunityIcons name="account" size={18} color="#A6D4FF" />
+        )}
         accessibilityLabel="Navigate to Preferences"
         onPress={() => navigation.navigate("RescuerPrefs")}
         elevated={true}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        className="h-10 w-32 mt-5 bg-[#00C5E021]"
+        textStyle={{ color: "#A6D4FF" }}
+        className="h-12 w-32 mt-5 bg-[#00C5E021]"
       >
         Preferences
       </Chip>
       <Chip
-        icon="map"
+        icon={() => (
+          <MaterialCommunityIcons name="map" size={18} color="#A6D4FF" />
+        )}
         accessibilityLabel="Navigate to Map"
         onPress={() => navigation.navigate("PublicMap")}
         elevated={true}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        className="h-10 w-32 mt-5 bg-[#00C5E021]"
+        textStyle={{ color: "#A6D4FF" }}
+        className="h-12 w-32 mt-5 bg-[#00C5E021]"
       >
         To The Map
       </Chip>
       <Chip
-        icon="home"
+        icon={() => (
+          <MaterialCommunityIcons name="home" size={18} color="#A6D4FF" />
+        )}
         accessibilityLabel="Navigate to Home"
         onPress={() => {
           navigation.navigate("Home");
@@ -68,12 +77,15 @@ const LoggedInChips = (props: Props) => {
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        className="h-10 w-32 mt-5 bg-[#00C5E021]"
+        textStyle={{ color: "#A6D4FF" }}
+        className="h-12 w-32 mt-5 bg-[#00C5E021]"
       >
         To Home
       </Chip>
       <Chip
-        icon="logout"
+        icon={() => (
+          <MaterialCommunityIcons name="logout" size={18} color="#A6D4FF" />
+        )}
         accessibilityLabel="Sign Out"
         onPress={() => {
           signOut();
@@ -82,8 +94,8 @@ const LoggedInChips = (props: Props) => {
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        textStyle={{ color: "#000626FF" }}
-        className="h-10 w-32 mt-5 bg-[#00C5E021]"
+        textStyle={{ color: "#A6D4FF" }}
+        className="h-12 w-32 mt-5 bg-[#00C5E021]"
       >
         Sign Out
       </Chip>
@@ -100,7 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: screenWidth / 1.5,
     alignSelf: "center",
-    marginTop: 50,
+    marginTop: 1,
     zIndex: 10,
   },
 });

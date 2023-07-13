@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query/build/lib";
 import { getAboutScreenContent } from "../api/index";
 import SkeletonComp from "../components/Skeleton";
 import { useConnectivity } from "../hooks/useConnectivity";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -143,9 +144,16 @@ const About = (props: Props) => {
               mode="flat"
               selected={message}
               selectedColor="#000626FF"
+              textStyle={{ color: "white" }}
               showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
-              icon="message-image"
+              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
+              icon={() => (
+                <MaterialCommunityIcons
+                  name="message-text"
+                  size={18}
+                  color="#A6D4FF"
+                />
+              )}
               onPress={() => handlePress("message")}
             >
               Ethos
@@ -155,9 +163,16 @@ const About = (props: Props) => {
               mode="flat"
               selected={description}
               selectedColor="#000626FF"
+              textStyle={{ color: "white" }}
               showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
-              icon="script-text"
+              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
+              icon={() => (
+                <MaterialCommunityIcons
+                  name="script-text"
+                  size={18}
+                  color="#A6D4FF"
+                />
+              )}
               onPress={() => handlePress("description")}
             >
               Description
@@ -167,9 +182,16 @@ const About = (props: Props) => {
               mode="flat"
               selected={mission}
               selectedColor="#000626FF"
+              textStyle={{ color: "white" }}
               showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
-              icon="creation"
+              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
+              icon={() => (
+                <MaterialCommunityIcons
+                  name="creation"
+                  size={18}
+                  color="#A6D4FF"
+                />
+              )}
               onPress={() => handlePress("mission")}
             >
               Mission
@@ -180,8 +202,15 @@ const About = (props: Props) => {
               selected={action}
               showSelectedOverlay={true}
               selectedColor="#000626FF"
-              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
-              icon="arm-flex"
+              textStyle={{ color: "white" }}
+              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
+              icon={() => (
+                <MaterialCommunityIcons
+                  name="arm-flex"
+                  size={18}
+                  color="#A6D4FF"
+                />
+              )}
               onPress={() => handlePress("action")}
             >
               Help Out
@@ -284,7 +313,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
-    backgroundColor: "rgba(0, 224, 255, 0.3)",
+    backgroundColor: "#57C4FF5B",
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
