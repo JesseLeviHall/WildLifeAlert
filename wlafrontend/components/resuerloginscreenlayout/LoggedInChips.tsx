@@ -36,28 +36,31 @@ const LoggedInChips = (props: Props) => {
     <View style={styles.chips}>
       <Chip
         icon="account"
+        accessibilityLabel="Navigate to Preferences"
         onPress={() => navigation.navigate("RescuerPrefs")}
         elevated={true}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        className="h-10 w-32 mt-5 border-2 border-blue-50"
+        className="h-10 w-32 mt-5 bg-[#00C5E021]"
       >
         Preferences
       </Chip>
       <Chip
         icon="map"
+        accessibilityLabel="Navigate to Map"
         onPress={() => navigation.navigate("PublicMap")}
         elevated={true}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        className="h-10 w-32 mt-5 border-2 border-blue-50"
+        className="h-10 w-32 mt-5 bg-[#00C5E021]"
       >
         To The Map
       </Chip>
       <Chip
         icon="home"
+        accessibilityLabel="Navigate to Home"
         onPress={() => {
           navigation.navigate("Home");
         }}
@@ -65,12 +68,13 @@ const LoggedInChips = (props: Props) => {
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        className="h-10 w-32 mt-5 border-2 border-blue-50"
+        className="h-10 w-32 mt-5 bg-[#00C5E021]"
       >
         To Home
       </Chip>
       <Chip
         icon="logout"
+        accessibilityLabel="Sign Out"
         onPress={() => {
           signOut();
         }}
@@ -78,7 +82,8 @@ const LoggedInChips = (props: Props) => {
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
-        className="h-10 w-32 mt-5 border-2 border-blue-50"
+        textStyle={{ color: "#000626FF" }}
+        className="h-10 w-32 mt-5 bg-[#00C5E021]"
       >
         Sign Out
       </Chip>

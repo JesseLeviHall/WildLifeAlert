@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: screenHeight / 4.5,
+    marginTop: screenHeight / 5,
     paddingHorizontal: 15,
     backgroundColor: "rgba(0, 224, 255, 0.3)",
     borderRadius: 15,

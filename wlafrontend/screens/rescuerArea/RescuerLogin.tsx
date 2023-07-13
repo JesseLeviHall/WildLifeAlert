@@ -152,7 +152,5 @@ const styles = StyleSheet.create({
     width: screenWidth - 40,
     alignSelf: "center",
     maxHeight: screenHeight / 1.8,
-    borderWidth: 1,
-    borderColor: "#00E0FFFF",
   },
 });

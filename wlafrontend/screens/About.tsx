@@ -144,7 +144,7 @@ const About = (props: Props) => {
               selected={message}
               selectedColor="#000626FF"
               showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 border-2 border-blue-50"
+              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
               icon="message-image"
               onPress={() => handlePress("message")}
             >
@@ -156,7 +156,7 @@ const About = (props: Props) => {
               selected={description}
               selectedColor="#000626FF"
               showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 border-2 border-blue-50"
+              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
               icon="script-text"
               onPress={() => handlePress("description")}
             >
@@ -168,7 +168,7 @@ const About = (props: Props) => {
               selected={mission}
               selectedColor="#000626FF"
               showSelectedOverlay={true}
-              className="h-10 w-32 mt-2 border-2 border-blue-50"
+              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
               icon="creation"
               onPress={() => handlePress("mission")}
             >
@@ -180,7 +180,7 @@ const About = (props: Props) => {
               selected={action}
               showSelectedOverlay={true}
               selectedColor="#000626FF"
-              className="h-10 w-32 mt-2 border-2 border-blue-50"
+              className="h-10 w-32 mt-5 bg-[#00C5E021] border-2 border-cyan-500"
               icon="arm-flex"
               onPress={() => handlePress("action")}
             >
@@ -218,9 +218,9 @@ const About = (props: Props) => {
               <View className="items-center">
                 <Text style={styles.text}>{data?.Action}</Text>
                 <Button
-                  className="my-6 w-40"
+                  className="my-6 w-40 border-2 border-cyan-500"
                   mode="elevated"
-                  buttonColor="#00E0FFFF"
+                  buttonColor="#00C5E021"
                   onPress={() => Linking.openURL(`${data?.Link}`)}
                 >
                   Contribute
