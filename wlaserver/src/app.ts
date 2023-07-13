@@ -9,6 +9,7 @@ import { checkOrigin } from "./middlewares/checkOrigin.js";
 // Routes
 import { api } from "./routes/api.js";
 import { secureApi } from "./routes/secureApi.js";
+import { dataApi } from "./routes/dataApi.js";
 
 // Create Express server
 export const app = express();
@@ -32,5 +33,6 @@ app.use("/healthcheck", (req: Request, res: Response) => {
 app.use(checkOrigin);
 app.use("/api", api);
 app.use("/secure-api", secureApi);
+app.use("/data", dataApi);
 
 export default app;
