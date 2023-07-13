@@ -32,7 +32,7 @@ const AlertsInYourArea = (props: Props) => {
 
   if (isLoading) {
     return (
-      <View className="h-24 w-64 mt-5 bg-[#00C5E021] items-center justify-center rounded-xl">
+      <View className="h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl">
         <Text className="text-[#A6D4FF] text-lg">Fetching...</Text>
       </View>
     );
@@ -40,17 +40,17 @@ const AlertsInYourArea = (props: Props) => {
 
   if (data?.error) {
     return (
-      <View className="h-24 w-64 mt-5 bg-[#00C5E021] items-center justify-center rounded-xl">
+      <View className="h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl">
         <Text className="text-[#A6D4FF] text-lg">{data?.error.message}</Text>
       </View>
     );
   }
 
   return (
-    <View className="h-24 w-64 mt-5 bg-[#00C5E021] items-center rounded-xl">
-      <Text className="text-[#A6D4FF] mt-1 text-5xl">{data?.alertCount}</Text>
+    <View className=" h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl">
+      <Text className="text-[#A6D4FF]  text-5xl">{data?.alertCount}</Text>
       <Text className="text-[#A6D4FF] text-lg">Active Alerts</Text>
-      <Text className="text-[#A6D4FF] font-light">In Your Area</Text>
+      <Text className="text-[#A6D4FF]  font-light">In Your Area</Text>
     </View>
   );
 };

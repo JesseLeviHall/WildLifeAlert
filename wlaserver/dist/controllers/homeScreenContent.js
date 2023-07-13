@@ -1,4 +1,5 @@
 import { redisClient } from "../services/db.setup.js";
+import { getActiveAlerts } from "../utils/redisHelpers.js";
 //GET /Home Screen.
 export const homeScreenContent = async (req, res) => {
     try {
@@ -54,25 +55,7 @@ SET publicmapcontent '{"Title":"","Description":"","Message":""}'
 //GET /Public Map GeoPos.
 export const publicMapGeoPos = async (req, res) => {
     try {
-        //timestamp of current moment
-        const now = Math.floor(Date.now() / 1000);
-        //timestamp of 48 hours ago
-        const minus48h = now - 48 * 60 * 60;
-        //get array of alert ids from the last 48 hours
-        const alertIds = await redisClient.zRangeByScore("alerts:animals:timestamps", minus48h.toString(), "+inf");
-        // Reverse the array to get the most recent alerts first
-        alertIds.reverse();
-        const alerts = [];
-        //for each alert id, get geoposition
-        for (const id of alertIds) {
-            const data = await redisClient.hGetAll(`alerts:animals:${id}`);
-            const { Latitude: lat, Longitude: lon } = data;
-            //add to alerts array
-            alerts.push({
-                id,
-                position: [lat, lon],
-            });
-        }
+        const alerts = await getActiveAlerts(redisClient, 48);
         res.send(alerts);
     }
     catch (error) {
@@ -131,7 +114,15 @@ export const newAlert = async (req, res) => {
             "ZADD",
             "alerts:animals:timestamps",
             timestamp.toString(),
-            id.toString(),
+            `alerts:animals:${id.toString()}`,
+        ]);
+        // Add the alert to the geospatial index
+        await redisClient.sendCommand([
+            "GEOADD",
+            "alerts:geospatial",
+            Longitude,
+            Latitude,
+            `alerts:animals:${id}`,
         ]);
         res.send("New Alert Created");
     }

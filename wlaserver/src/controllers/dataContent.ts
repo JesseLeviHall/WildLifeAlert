@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { WithAuthProp } from "@clerk/clerk-sdk-node";
 import { redisClient } from "../services/db.setup.js";
+import { getActiveAlertsInRadius } from "../utils/redisHelpers.js";
 import * as dotenv from "dotenv";
 import clerk from "@clerk/clerk-sdk-node";
 
@@ -18,9 +19,26 @@ export const getActiveAlertsInArea = async (
       res.status(404).json({ message: "User not found" });
       return;
     }
-    //const alertCount = await redisClient. (get how many alerts are in the users pref area of their location and return it)
-    //res.send(alertCount);
-    const alertCount = 3;
+    const rescuer = await redisClient.hGetAll(`rescuer:${id}`);
+    const radius = Number(rescuer.Radius);
+    const longitude = Number(rescuer.Longitude);
+    const latitude = Number(rescuer.Latitude);
+
+    if (isNaN(radius) || isNaN(longitude) || isNaN(latitude)) {
+      const alertCount = 0;
+      res.status(200).json({ alertCount });
+      return;
+    }
+
+    const alerts = await getActiveAlertsInRadius(
+      redisClient,
+      48,
+      longitude,
+      latitude,
+      radius
+    );
+    const alertCount = alerts.length;
+
     res.status(200).json({ alertCount });
   } catch (error) {
     console.error(error);
@@ -40,8 +58,8 @@ export const getTotalActiveAlerts = async (
       res.status(404).json({ message: "User not found" });
       return;
     }
-    //const alertCount = await redisClient. (get how many alerts are in the users pref area of their location and return it)
-    //res.send(alertCount);
+    //const alertCount = await redisClient. (get how many total alerts are active in the database and return it)
+    //res.status(200).json({ alertCount });
     const alertCount = 3;
     res.status(200).json({ alertCount });
   } catch (error) {
