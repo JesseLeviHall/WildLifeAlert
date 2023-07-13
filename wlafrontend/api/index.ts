@@ -4,7 +4,7 @@ import axios from "axios";
 //remote server : https://d1h2airt5kbf3g.cloudfront.net
 //locoal server: http://10.0.10.10:3000
 const API = axios.create({
-  baseURL: "https://d1h2airt5kbf3g.cloudfront.net",
+  baseURL: "http://10.0.10.10:3000",
   timeout: 10000,
   withCredentials: false,
 });
@@ -324,5 +324,27 @@ export const deleteAccount = async ({
     return deleteAccount.data;
   } catch (error) {
     console.error(error);
+  }
+};
+
+//===================================================
+//get the alerts in the rescuers area
+export const getActiveInArea = async ({
+  sessionId,
+  token,
+}: {
+  sessionId: String;
+  token: String;
+}) => {
+  try {
+    const activeInArea = await API({
+      method: "get",
+      url: "data/active-alert-area",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+    });
+    return activeInArea.data;
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    return { error: error.message || "Unknown error" };
   }
 };

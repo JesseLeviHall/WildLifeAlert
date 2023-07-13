@@ -6,16 +6,17 @@ export const getActiveAlertsInArea = async (req, res) => {
         const UserId = req.auth.userId;
         const id = await redisClient.get(UserId);
         if (!id) {
-            res.status(404).json({ msg: "User not found" });
+            res.status(404).json({ message: "User not found" });
             return;
         }
         //const alertCount = await redisClient. (get how many alerts are in the users pref area of their location and return it)
         //res.send(alertCount);
-        res.status(200).json({ msg: "Success" });
+        const alertCount = 3;
+        res.status(200).json({ alertCount });
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ msg: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 };
 //# sourceMappingURL=dataContent.js.map
