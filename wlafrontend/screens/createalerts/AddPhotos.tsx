@@ -43,27 +43,39 @@ const AddPhotos = (props: Props) => {
     }
     // Clear previous selection
     await AsyncStorage.removeItem("photoBlob");
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-      allowsMultipleSelection: true,
-    });
+    let result;
+    try {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+        allowsMultipleSelection: true,
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed. Sorry we can't use RAW or video files at this time");
+      return;
+    }
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
       try {
         let photoArray: string[] = [];
 
         for (let asset of result.assets) {
-          const manipResult = await ImageManipulator.manipulateAsync(
-            asset.uri,
-            [{ resize: { width: 500 } }],
-            { compress: 0.5, format: ImageManipulator.SaveFormat.PNG }
-          );
-
-          photoArray.push(manipResult.uri);
+          try {
+            const manipResult = await ImageManipulator.manipulateAsync(
+              asset.uri,
+              [{ resize: { width: 500 } }],
+              { compress: 0.5, format: ImageManipulator.SaveFormat.PNG }
+            );
+            photoArray.push(manipResult.uri);
+          } catch (error) {
+            alert(
+              "Failed, make sure you are not uploading a RAW or video file"
+            );
+            return;
+          }
         }
 
-        // Only save new photos if there are 3 or less in total
         if (photoArray.length <= 3) {
           await AsyncStorage.setItem("photoBlob", JSON.stringify(photoArray));
           setPhotoBlob(photoArray);
