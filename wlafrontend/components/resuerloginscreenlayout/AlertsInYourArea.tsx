@@ -41,7 +41,7 @@ const AlertsInYourArea = (props: Props) => {
   if (data?.error) {
     return (
       <View className="h-24 w-64 mt-5 bg-[#00C5E021] items-center justify-center rounded-xl">
-        <Text className="text-[#A6D4FF] text-lg">{data?.error.msg}</Text>
+        <Text className="text-[#A6D4FF] text-lg">{data?.error.message}</Text>
       </View>
     );
   }

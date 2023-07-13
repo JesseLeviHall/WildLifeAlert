@@ -328,7 +328,7 @@ export const deleteAccount = async ({
 };
 
 //===================================================
-//get the alerts in the rescuers area
+//get the alerts in the rescuer's radius
 export const getActiveInArea = async ({
   sessionId,
   token,
@@ -339,10 +339,32 @@ export const getActiveInArea = async ({
   try {
     const activeInArea = await API({
       method: "get",
-      url: "data/active-alert-area",
+      url: "data/active-alert-radius",
       headers: { Authorization: `Bearer ${sessionId} ${token}` },
     });
     return activeInArea.data;
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    return { error: error.message || "Unknown error" };
+  }
+};
+
+//===================================================
+//get the total active alerts
+export const getTotalAlerts = async ({
+  sessionId,
+  token,
+}: {
+  sessionId: String;
+  token: String;
+}) => {
+  try {
+    const totalAlerts = await API({
+      method: "get",
+      url: "data/total-active-alerts",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+    });
+    return totalAlerts.data;
   } catch (error: any) {
     console.error(error?.response?.data.error);
     return { error: error.message || "Unknown error" };
