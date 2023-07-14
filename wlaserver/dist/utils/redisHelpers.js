@@ -1,3 +1,4 @@
+//change this function to set alerts to the entire alert object
 export async function getActiveAlerts(redis, hours) {
     //timestamp of current moment
     const now = Math.floor(Date.now() / 1000);
@@ -18,6 +19,7 @@ export async function getActiveAlerts(redis, hours) {
             position: [lat, lon],
         });
     }
+    console.log(alerts);
     return alerts;
 }
 export async function getActiveAlertsInRadius(redis, hours, longitude, latitude, radius) {

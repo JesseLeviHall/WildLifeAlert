@@ -2,6 +2,8 @@ import React, { useImperativeHandle, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
 
+//modify this component to extract locations for the map, and display them as markers.  If the user is logged in, allow tap on marker to show details of the alert.
+
 interface Alert {
   id: string;
   position: string[];

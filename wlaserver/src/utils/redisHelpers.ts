@@ -1,6 +1,7 @@
 // utils/redisHelpers.ts
 import { redisClient } from "../services/db.setup.js";
 
+//change this function to set alerts to the entire alert object
 export async function getActiveAlerts(
   redis: typeof redisClient,
   hours: number
@@ -28,6 +29,7 @@ export async function getActiveAlerts(
       position: [lat, lon],
     });
   }
+  console.log(alerts);
   return alerts;
 }
 
