@@ -9,17 +9,14 @@ export async function getActiveAlerts(redis, hours) {
     // Reverse the array to get the most recent alerts first
     alertIds.reverse();
     const alerts = [];
-    //for each alert id, get geoposition
+    //get alert data for each id
     for (const id of alertIds) {
-        const data = await redis.hGetAll(`alerts:animals:${id}`);
-        const { Latitude: lat, Longitude: lon } = data;
-        //add to alerts array
+        const data = await redis.hGetAll(id);
         alerts.push({
             id,
-            position: [lat, lon],
+            ...data,
         });
     }
-    console.log(alerts);
     return alerts;
 }
 export async function getActiveAlertsInRadius(redis, hours, longitude, latitude, radius) {

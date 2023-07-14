@@ -17,11 +17,12 @@ export const getActiveAlertsInArea = async (req, res) => {
         const latitude = Number(rescuer.Latitude);
         if (isNaN(radius) || isNaN(longitude) || isNaN(latitude)) {
             const alertCount = 0;
-            res.status(200).json({ alertCount });
+            res.status(200).json({ alertCount, message: "radius not set" });
             return;
         }
         const alerts = await getActiveAlertsInRadius(redisClient, 48, longitude, latitude, radius);
         const alertCount = alerts.length;
+        //LATER CHANGE TO RETURN ALERTS FOR DETAILS SCREEN
         res.status(200).json({ alertCount });
     }
     catch (error) {

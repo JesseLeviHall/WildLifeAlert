@@ -26,7 +26,7 @@ export const getActiveAlertsInArea = async (
 
     if (isNaN(radius) || isNaN(longitude) || isNaN(latitude)) {
       const alertCount = 0;
-      res.status(200).json({ alertCount });
+      res.status(200).json({ alertCount, message: "radius not set" });
       return;
     }
 
@@ -38,7 +38,7 @@ export const getActiveAlertsInArea = async (
       radius
     );
     const alertCount = alerts.length;
-
+    //LATER CHANGE TO RETURN ALERTS FOR DETAILS SCREEN
     res.status(200).json({ alertCount });
   } catch (error) {
     console.error(error);

@@ -90,7 +90,7 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
   return (
     <View className="items-center w-full h-36 justify-center">
       <Text className=" text-lg mb-1 font-semibold">
-        Alert Radius: {Radius} miles
+        Alert Radius: {Radius} kilometers
       </Text>
       <FormControl className="w-1/2">
         <Input
