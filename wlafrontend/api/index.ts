@@ -27,22 +27,32 @@ export const getHomeScreenContent = async () => {
 };
 
 //===================================================
-//get the public map data of rescue alerts:
+//get the public map data of alerts:
+interface Alert {
+  id: string;
+  FullName: string;
+  Latitude: string;
+  Longitude: string;
+  Photo: string;
+  PhoneNumber: string;
+  Animal: string;
+  Description: string;
+  Email: string;
+  ShareContact: string;
+  Timestamp: string;
+}
 export const getPubData = async () => {
   try {
     const pubdata = await API.get("/api/publicmapgeopos");
-    return pubdata.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
 
-//===================================================
-//get alert details for rescuers:
-export const getAlertDetails = async (id: number) => {
-  try {
-    const alertdetails = await API.get(`/api/alertdetails/${id}`);
-    return alertdetails.data;
+    const transformedData = pubdata.data.map((alert: Alert) => ({
+      ...alert,
+      Latitude: parseFloat(alert.Latitude),
+      Longitude: parseFloat(alert.Longitude),
+      ShareContact: alert.ShareContact.toLowerCase() === "true",
+    }));
+
+    return transformedData;
   } catch (error) {
     console.error(error);
   }
@@ -193,10 +203,7 @@ export const registerRescuer = async ({
 
 //===================================================
 //get the welcomecreen content:
-export const getWelcomeScreenContent = async (
-  sessionId: String,
-  token: String
-) => {
+export const getWelcomeScreenContent = async (sessionId: String, token: String) => {
   try {
     const welcomeContent = await API({
       method: "get",
@@ -308,13 +315,7 @@ export const SetLocationPref = async ({
 
 //===================================================
 //delete rescuer account
-export const deleteAccount = async ({
-  sessionId,
-  token,
-}: {
-  sessionId: String;
-  token: String;
-}) => {
+export const deleteAccount = async ({ sessionId, token }: { sessionId: String; token: String }) => {
   try {
     const deleteAccount = await API({
       method: "delete",
@@ -329,13 +330,7 @@ export const deleteAccount = async ({
 
 //===================================================
 //get the alerts in the rescuer's radius
-export const getActiveInArea = async ({
-  sessionId,
-  token,
-}: {
-  sessionId: String;
-  token: String;
-}) => {
+export const getActiveInArea = async ({ sessionId, token }: { sessionId: String; token: String }) => {
   try {
     const activeInArea = await API({
       method: "get",
@@ -351,13 +346,7 @@ export const getActiveInArea = async ({
 
 //===================================================
 //get the total active alerts
-export const getTotalAlerts = async ({
-  sessionId,
-  token,
-}: {
-  sessionId: String;
-  token: String;
-}) => {
+export const getTotalAlerts = async ({ sessionId, token }: { sessionId: String; token: String }) => {
   try {
     const totalAlerts = await API({
       method: "get",

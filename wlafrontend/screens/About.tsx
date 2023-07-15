@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  Linking,
-  StyleSheet,
-  Dimensions,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Linking, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from "react-native";
 import { Appbar, Chip, Button } from "react-native-paper";
 import AnimatedGradient from "../components/background/GradientAnimated";
 import { Motion } from "@legendapp/motion";
@@ -27,11 +19,7 @@ type RootStackParamList = {
   Home: undefined;
 };
 
-type HomeScreenNavigationProp = NavigationProp<
-  RootStackParamList,
-  "AnotherScreen",
-  "Home"
->;
+type HomeScreenNavigationProp = NavigationProp<RootStackParamList, "AnotherScreen", "Home">;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
@@ -93,11 +81,7 @@ const About = (props: Props) => {
   });
 
   const isConnected = useConnectivity();
-  const { isLoading, data, error } = useQuery(
-    ["AboutScreen"],
-    () => getAboutScreenContent(),
-    { enabled: isConnected }
-  );
+  const { isLoading, data, error } = useQuery(["AboutScreen"], () => getAboutScreenContent(), { enabled: isConnected });
 
   if (isLoading) {
     return (
@@ -108,9 +92,10 @@ const About = (props: Props) => {
   }
 
   if (error) {
+    const err = error as any;
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{JSON.stringify(error)}</Text>;
+        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
       </View>
     );
   }
@@ -147,13 +132,7 @@ const About = (props: Props) => {
               textStyle={{ color: "white" }}
               showSelectedOverlay={true}
               className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => (
-                <MaterialCommunityIcons
-                  name="message-text"
-                  size={18}
-                  color="#A6D4FF"
-                />
-              )}
+              icon={() => <MaterialCommunityIcons name="message-text" size={18} color="#A6D4FF" />}
               onPress={() => handlePress("message")}
             >
               Ethos
@@ -166,13 +145,7 @@ const About = (props: Props) => {
               textStyle={{ color: "white" }}
               showSelectedOverlay={true}
               className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => (
-                <MaterialCommunityIcons
-                  name="script-text"
-                  size={18}
-                  color="#A6D4FF"
-                />
-              )}
+              icon={() => <MaterialCommunityIcons name="script-text" size={18} color="#A6D4FF" />}
               onPress={() => handlePress("description")}
             >
               Description
@@ -185,13 +158,7 @@ const About = (props: Props) => {
               textStyle={{ color: "white" }}
               showSelectedOverlay={true}
               className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => (
-                <MaterialCommunityIcons
-                  name="creation"
-                  size={18}
-                  color="#A6D4FF"
-                />
-              )}
+              icon={() => <MaterialCommunityIcons name="creation" size={18} color="#A6D4FF" />}
               onPress={() => handlePress("mission")}
             >
               Mission
@@ -204,13 +171,7 @@ const About = (props: Props) => {
               selectedColor="#000626FF"
               textStyle={{ color: "white" }}
               className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => (
-                <MaterialCommunityIcons
-                  name="arm-flex"
-                  size={18}
-                  color="#A6D4FF"
-                />
-              )}
+              icon={() => <MaterialCommunityIcons name="arm-flex" size={18} color="#A6D4FF" />}
               onPress={() => handlePress("action")}
             >
               Help Out
@@ -239,9 +200,7 @@ const About = (props: Props) => {
             style={styles.textContainer}
           >
             {message && <Text style={styles.text}>{data?.Message}</Text>}
-            {description && (
-              <Text style={styles.text}>{data?.Description}</Text>
-            )}
+            {description && <Text style={styles.text}>{data?.Description}</Text>}
             {mission && <Text style={styles.text}>{data?.Mission}</Text>}
             {action && (
               <View className="items-center">
@@ -257,12 +216,8 @@ const About = (props: Props) => {
               </View>
             )}
           </Motion.View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("AnotherScreen")}
-          >
-            <Text className="text-blue-900 mt-20 font-semibold text-center">
-              Privacy Policy & Terms
-            </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("AnotherScreen")}>
+            <Text className="text-blue-900 mt-20 font-semibold text-center">Privacy Policy & Terms</Text>
           </TouchableOpacity>
           {isConnected ? null : (
             <View className="flex-1 align-middle justify-end">

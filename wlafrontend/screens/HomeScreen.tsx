@@ -1,12 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Image } from "react-native";
 import { Motion } from "@legendapp/motion";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getHomeScreenContent } from "../api/index";
@@ -43,11 +36,7 @@ const Home = (props: Props) => {
     });
   });
 
-  const { isLoading, data, error } = useQuery(
-    ["HomeScreen"],
-    () => getHomeScreenContent(),
-    { enabled: isConnected }
-  );
+  const { isLoading, data, error } = useQuery(["HomeScreen"], () => getHomeScreenContent(), { enabled: isConnected });
 
   if (isLoading) {
     return (
@@ -58,9 +47,10 @@ const Home = (props: Props) => {
   }
 
   if (error) {
+    const err = error as any;
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{JSON.stringify(error)}</Text>;
+        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
       </View>
     );
   }
@@ -100,16 +90,10 @@ const Home = (props: Props) => {
       >
         <View className="mt-12 h-96 flex flex-col items-center">
           <View className=" mt-9 max-h-9  flex-1 py-1 px-4 align-middle justify-center  bg-[#77CFCA] rounded-xl">
-            <Text className="font-bold text-lg text-[#24374b]">
-              {data?.Message}
-            </Text>
+            <Text className="font-bold text-lg text-[#24374b]">{data?.Message}</Text>
           </View>
-          <Text className="font-black mt-5 mix-blend-color  uppercase text-[#24374b] text-3xl">
-            {data?.Title}
-          </Text>
-          <Text className=" text-2xl text-center px-4 text-[#24374b] font-light">
-            {data?.Description}
-          </Text>
+          <Text className="font-black mt-5 mix-blend-color  uppercase text-[#24374b] text-3xl">{data?.Title}</Text>
+          <Text className=" text-2xl text-center px-4 text-[#24374b] font-light">{data?.Description}</Text>
         </View>
       </Motion.View>
       {isConnected ? null : (

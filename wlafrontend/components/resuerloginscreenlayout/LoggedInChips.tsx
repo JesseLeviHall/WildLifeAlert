@@ -16,10 +16,7 @@ type RootStackParamList = {
   RescuerPrefs: undefined;
   ForgotPassword: undefined;
 };
-type RescuerRegisterNavigationProp = NavigationProp<
-  RootStackParamList,
-  "RescuerRegister"
->;
+type RescuerRegisterNavigationProp = NavigationProp<RootStackParamList, "RescuerRegister">;
 
 type Props = {
   navigation: RescuerRegisterNavigationProp;
@@ -36,12 +33,10 @@ const LoggedInChips = (props: Props) => {
   return (
     <View style={styles.chips}>
       <Chip
-        icon={() => (
-          <MaterialCommunityIcons name="account" size={18} color="#A6D4FF" />
-        )}
+        icon={() => <MaterialCommunityIcons name="account" size={18} color="#A6D4FF" />}
         accessibilityLabel="Navigate to Preferences"
         onPress={() => navigation.navigate("RescuerPrefs")}
-        elevated={true}
+        elevated={false}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
@@ -51,12 +46,10 @@ const LoggedInChips = (props: Props) => {
         Preferences
       </Chip>
       <Chip
-        icon={() => (
-          <MaterialCommunityIcons name="map" size={18} color="#A6D4FF" />
-        )}
+        icon={() => <MaterialCommunityIcons name="map" size={18} color="#A6D4FF" />}
         accessibilityLabel="Navigate to Map"
         onPress={() => navigation.navigate("PublicMap")}
-        elevated={true}
+        elevated={false}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
@@ -66,14 +59,12 @@ const LoggedInChips = (props: Props) => {
         To The Map
       </Chip>
       <Chip
-        icon={() => (
-          <MaterialCommunityIcons name="home" size={18} color="#A6D4FF" />
-        )}
+        icon={() => <MaterialCommunityIcons name="home" size={18} color="#A6D4FF" />}
         accessibilityLabel="Navigate to Home"
         onPress={() => {
           navigation.navigate("Home");
         }}
-        elevated={true}
+        elevated={false}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}
@@ -83,14 +74,12 @@ const LoggedInChips = (props: Props) => {
         To Home
       </Chip>
       <Chip
-        icon={() => (
-          <MaterialCommunityIcons name="logout" size={18} color="#A6D4FF" />
-        )}
+        icon={() => <MaterialCommunityIcons name="logout" size={18} color="#A6D4FF" />}
         accessibilityLabel="Sign Out"
         onPress={() => {
           signOut();
         }}
-        elevated={true}
+        elevated={false}
         mode="flat"
         selectedColor="#000626FF"
         showSelectedOverlay={true}

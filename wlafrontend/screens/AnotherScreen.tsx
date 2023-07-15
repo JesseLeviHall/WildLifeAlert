@@ -1,13 +1,6 @@
 import React from "react";
 import { getPrivacyPolicyContent } from "../api/index";
-import {
-  Text,
-  View,
-  Linking,
-  StyleSheet,
-  Dimensions,
-  ImageBackground,
-} from "react-native";
+import { Text, View, Linking, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import { Button } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { useConnectivity } from "../hooks/useConnectivity";
@@ -33,11 +26,9 @@ const AnotherScreen = (props: Props) => {
     });
   });
 
-  const { isLoading, data, error } = useQuery(
-    ["privacyPolicy"],
-    () => getPrivacyPolicyContent(),
-    { enabled: isConnected }
-  );
+  const { isLoading, data, error } = useQuery(["privacyPolicy"], () => getPrivacyPolicyContent(), {
+    enabled: isConnected,
+  });
 
   if (isLoading) {
     return (
@@ -48,9 +39,10 @@ const AnotherScreen = (props: Props) => {
   }
 
   if (error) {
+    const err = error as any;
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{JSON.stringify(error)}</Text>;
+        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
       </View>
     );
   }

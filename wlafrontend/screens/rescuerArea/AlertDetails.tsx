@@ -1,21 +1,14 @@
-import React from 'react'
-import { Text } from 'react-native';
-import { getAlertDetails } from '../../api/index';
-import { useQuery } from '@tanstack/react-query';
+import React from "react";
+import { Text } from "react-native";
+import { useQuery } from "@tanstack/react-query";
 
-type Props = {}
+type Props = {};
 
 const AlertDetails = (props: Props) => {
-  
+  return <Text>AlertDetails</Text>;
+};
 
-  
-
-  return (
-    <Text>AlertDetails</Text>
-  )
-}
-
-export default AlertDetails
+export default AlertDetails;
 
 /* const AlertDetailsQuery = useQuery({
     queryKey: ['AlertDetails', id],

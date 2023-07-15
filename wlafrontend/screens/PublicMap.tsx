@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Text, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions } from "react-native";
+import { Text, StyleSheet, View, Dimensions } from "react-native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { Appbar, FAB } from "react-native-paper";
 import { useRefreshByUser } from "../hooks/useRefreshByUser";
@@ -16,7 +15,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const BOTTOM_APPBAR_HEIGHT = 70;
 const MEDIUM_FAB_HEIGHT = 46;
-
 const screenHeight = Dimensions.get("window").height;
 
 type RootStackParamList = {
@@ -29,7 +27,16 @@ type Props = {
 };
 interface Alert {
   id: string;
-  position: string[];
+  FullName: string;
+  Latitude: number;
+  Longitude: number;
+  Photo: string;
+  PhoneNumber: string;
+  Animal: string;
+  Description: string;
+  Email: string;
+  ShareContact: boolean;
+  Timestamp: string;
 }
 
 const PublicMap = (props: Props) => {
@@ -70,18 +77,16 @@ const PublicMap = (props: Props) => {
   }
 
   if (error) {
+    const err = error as any;
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{JSON.stringify(error)}</Text>;
+        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
       </View>
     );
   }
 
   return (
-    <LinearGradient
-      style={{ height: screenHeight }}
-      colors={["#0DE69A", "#71D1C7", "#99BBE3"]}
-    >
+    <LinearGradient style={{ height: screenHeight }} colors={["#0DE69A", "#71D1C7", "#99BBE3"]}>
       <Appbar.Header className="">
         <Appbar.BackAction
           onPress={() => {
@@ -91,12 +96,7 @@ const PublicMap = (props: Props) => {
         <Appbar.Content title="Live Map" />
         <Appbar.Action icon="map" onPress={handleMapTypeChange} />
       </Appbar.Header>
-      {infoVisible ? (
-        <PubMapDialogue
-          setInfoVisible={setInfoVisible}
-          infoVisible={infoVisible}
-        />
-      ) : null}
+      {infoVisible ? <PubMapDialogue setInfoVisible={setInfoVisible} infoVisible={infoVisible} /> : null}
       <View className="flex-1 align-middle justify-center">
         <PubMapView ref={pubMapViewRef} alerts={alerts} />
       </View>
@@ -117,17 +117,14 @@ const PublicMap = (props: Props) => {
       >
         <Appbar.Action icon="refresh" onPress={() => refetchByUser()} />
         {
-          //WHEN A LINK TO APP EXISTS<Appbar.Action icon='share' onPress={() => {'share this app'}} />}
+          //WHEN I GET A LINK TO THE APP ADD <Appbar.Action icon='share' onPress={() => {'share this app'}} />}
         }
         <FAB
           mode="flat"
           size="medium"
           icon="information"
           onPress={showInfoDialog}
-          style={[
-            styles.fab,
-            { top: (BOTTOM_APPBAR_HEIGHT - MEDIUM_FAB_HEIGHT) / 2 },
-          ]}
+          style={[styles.fab, { top: (BOTTOM_APPBAR_HEIGHT - MEDIUM_FAB_HEIGHT) / 2 }]}
         />
       </Appbar>
     </LinearGradient>

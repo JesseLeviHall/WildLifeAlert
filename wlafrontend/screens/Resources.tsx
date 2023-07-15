@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  ScrollView,
-  View,
-  RefreshControl,
-  Text,
-  Dimensions,
-} from "react-native";
+import { ScrollView, View, RefreshControl, Text, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Appbar } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";
@@ -45,11 +39,7 @@ const Resources = (props: Props) => {
   });
 
   const isConnected = useConnectivity();
-  const { isLoading, refetch, data, error } = useQuery(
-    ["Resources"],
-    () => getResources(),
-    { enabled: isConnected }
-  );
+  const { isLoading, refetch, data, error } = useQuery(["Resources"], () => getResources(), { enabled: isConnected });
 
   const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
@@ -62,18 +52,16 @@ const Resources = (props: Props) => {
   }
 
   if (error) {
+    const err = error as any;
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{JSON.stringify(error)}</Text>;
+        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
       </View>
     );
   }
 
   return (
-    <LinearGradient
-      style={{ height: screenHeight }}
-      colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}
-    >
+    <LinearGradient style={{ height: screenHeight }} colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}>
       <Appbar.Header className="">
         <Appbar.BackAction
           onPress={() => {
@@ -82,14 +70,7 @@ const Resources = (props: Props) => {
         />
         <Appbar.Content title="Resources" />
       </Appbar.Header>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefetchingByUser}
-            onRefresh={refetchByUser}
-          />
-        }
-      >
+      <ScrollView refreshControl={<RefreshControl refreshing={isRefetchingByUser} onRefresh={refetchByUser} />}>
         <View className="mx-1 my-3 px-2">
           {isConnected ? null : (
             <View className="flex-1 align-middle justify-end">
