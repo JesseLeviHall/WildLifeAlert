@@ -76,17 +76,9 @@ const AlertDescription = (props: Props) => {
   });
 
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
-    >
-      <Text className="text-center mt-6 font-black uppercase text-4xl">
-        What is happening?
-      </Text>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flexGrow: 1 }}
-      >
+    <LinearGradient style={{ flex: 1 }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
+      <Text className="text-center mt-6 font-black uppercase text-4xl">What is happening?</Text>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flexGrow: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View className="flex-1 items-center p-4 h-full w-full ">
             <View className=" w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#00E0FFFF]">
@@ -100,12 +92,11 @@ const AlertDescription = (props: Props) => {
                   What Animal?
                 </FormControl.Label>
                 <Input
+                  maxLength={100}
                   className=" bg-[#d4e1ea] w-2/3"
                   placeholder="Example: Porcupine"
                   variant="filled"
-                  onChangeText={(value) =>
-                    setAnimal({ ...Animal, Animal: value })
-                  }
+                  onChangeText={(value) => setAnimal({ ...Animal, Animal: value })}
                 />
                 {"Animal" in errors ? (
                   <FormControl.HelperText
@@ -128,15 +119,14 @@ const AlertDescription = (props: Props) => {
                     Description
                   </FormControl.Label>
                   <TextArea
+                    maxLength={2000}
                     backgroundColor={"#d4e1ea"}
                     h={40}
                     placeholder="Condition? Circumstances? On the move?"
                     variant="filled"
                     w={250}
                     autoCompleteType={"text"}
-                    onChangeText={(text) =>
-                      setDescription({ Description: text })
-                    }
+                    onChangeText={(text) => setDescription({ Description: text })}
                   />
                   {"Description" in errors ? (
                     <FormControl.HelperText

@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Text,
-  Keyboard,
-  TouchableWithoutFeedback,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, Keyboard, TouchableWithoutFeedback, TextInput, TouchableOpacity, View } from "react-native";
 import { useSignUp, useAuth } from "@clerk/clerk-expo";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { registerRescuer } from "../api/index";
@@ -33,11 +26,8 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
   const { getToken } = useAuth();
 
   const mutation = useMutation(
-    (data: {
-      sessionId: string | null;
-      token: string | null;
-      userDetails: Record<string, string>;
-    }) => registerRescuer(data),
+    (data: { sessionId: string | null; token: string | null; userDetails: Record<string, string> }) =>
+      registerRescuer(data),
     {
       onSuccess: async () => {
         await AsyncStorage.multiRemove([
@@ -107,11 +97,10 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
       <View className="flex-1 align-middle justify-center bg-transparent w-full  h-auto rounded-lg ">
         {!pendingVerification && (
           <View className="w-full">
-            <Text className="text-blue-300 text-light text-sm text-center mb-6">
-              or
-            </Text>
+            <Text className="text-blue-300 text-light text-sm text-center mb-6">or</Text>
             <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">
               <TextInput
+                maxLength={100}
                 className="w-full text-center"
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -123,6 +112,7 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
             </View>
             <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">
               <TextInput
+                maxLength={100}
                 className="w-full text-center"
                 autoCapitalize="none"
                 autoComplete="password"
@@ -136,20 +126,14 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
               className="border h-10 border-[#00E0FFFF] rounded-md mt-2 justify-center align-middle "
               onPress={onSignUpPress}
             >
-              <Text className=" text-blue-200 bg-transparent text-xl text-center">
-                Continue with Email
-              </Text>
+              <Text className=" text-blue-200 bg-transparent text-xl text-center">Continue with Email</Text>
             </TouchableOpacity>
-            {error && (
-              <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
-            )}
+            {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
           </View>
         )}
         {pendingVerification && (
           <View className="w-full">
-            <Text className="text-center font-light text-sm mb-2">
-              Please check your email for a verification code
-            </Text>
+            <Text className="text-center font-light text-sm mb-2">Please check your email for a verification code</Text>
             <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">
               <TextInput
                 className="w-full text-center"
@@ -163,13 +147,9 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
               className="border rounded-md w-full border-[#00E0FFFF] mt-4 p-3 mb-4"
               onPress={onPressVerify}
             >
-              <Text className=" text-blue-200 bg-transparent text-xl text-center">
-                Verify Code
-              </Text>
+              <Text className=" text-blue-200 bg-transparent text-xl text-center">Verify Code</Text>
             </TouchableOpacity>
-            {error && (
-              <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
-            )}
+            {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
           </View>
         )}
       </View>

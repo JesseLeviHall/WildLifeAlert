@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Text,
-  Keyboard,
-  TouchableWithoutFeedback,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, Keyboard, TouchableWithoutFeedback, TextInput, TouchableOpacity, View } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 
 export default function SignInScreen() {
@@ -35,11 +28,10 @@ export default function SignInScreen() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className="flex-1 align-middle justify-center bg-transparent w-full h-auto px-8 rounded-lg ">
-        <Text className="text-blue-300 text-light text-sm text-center mb-3">
-          or
-        </Text>
+        <Text className="text-blue-300 text-light text-sm text-center mb-3">or</Text>
         <View className="items-center mb-1 justify-center align-middle bg-blue-200 rounded-md h-10">
           <TextInput
+            maxLength={100}
             className="w-full text-center"
             autoCapitalize="none"
             keyboardType="email-address"
@@ -51,6 +43,7 @@ export default function SignInScreen() {
         </View>
         <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
           <TextInput
+            maxLength={100}
             className="w-full text-center"
             autoCapitalize="none"
             autoComplete="password"
@@ -60,16 +53,12 @@ export default function SignInScreen() {
             onChangeText={(password) => setPassword(password)}
           />
         </View>
-        {error && (
-          <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
-        )}
+        {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
         <TouchableOpacity
           className="border h-10 border-[#00E0FFFF] rounded-md mt-2 justify-center align-middle "
           onPress={onSignInPress}
         >
-          <Text className=" text-blue-200 bg-transparent text-xl text-center">
-            Sign in with Email
-          </Text>
+          <Text className=" text-blue-200 bg-transparent text-xl text-center">Sign in with Email</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>

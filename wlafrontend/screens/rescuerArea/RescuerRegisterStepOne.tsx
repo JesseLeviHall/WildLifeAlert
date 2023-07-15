@@ -13,10 +13,7 @@ type RootStackParamList = {
   RescuerRegisterStepTwo: undefined;
 };
 
-type RescuerRegisterStepOneProp = NavigationProp<
-  RootStackParamList,
-  "RescuerRegisterStepTwo"
->;
+type RescuerRegisterStepOneProp = NavigationProp<RootStackParamList, "RescuerRegisterStepTwo">;
 
 type Props = {
   navigation: RescuerRegisterStepOneProp;
@@ -77,10 +74,7 @@ const RescuerRegisterStepOne = (props: Props) => {
     if (updatedErrors.fullName === "" && updatedErrors.PhoneNumber === "") {
       try {
         await AsyncStorage.setItem("FullName", fullName.fullName);
-        await AsyncStorage.setItem(
-          "Phone",
-          Phone.PhoneNumber.replace(/-/g, "")
-        );
+        await AsyncStorage.setItem("Phone", Phone.PhoneNumber.replace(/-/g, ""));
         await AsyncStorage.setItem("Medical", Medical.toString());
         await AsyncStorage.setItem("Rehab", Rehab.toString());
         await AsyncStorage.setItem("Professional", Professional.toString());
@@ -135,17 +129,10 @@ const RescuerRegisterStepOne = (props: Props) => {
   };
 
   return (
-    <LinearGradient
-      style={{ height: screenHeight }}
-      colors={["#52B7FFDB", "#0E409C9E", "#EB8705AF"]}
-    >
+    <LinearGradient style={{ height: screenHeight }} colors={["#52B7FFDB", "#0E409C9E", "#EB8705AF"]}>
       <View className="flex-1 align-middle justify-center ">
-        <Text className="text-center font-black uppercase mt-4 text-3xl">
-          Basic Information
-        </Text>
-        <Text className="text-center font-light text-sm mb-2">
-          (Never shared anywhere without your permission)
-        </Text>
+        <Text className="text-center font-black uppercase mt-4 text-3xl">Basic Information</Text>
+        <Text className="text-center font-light text-sm mb-2">(Never shared anywhere without your permission)</Text>
         <ScrollView contentContainerStyle={contentContainerStyle}>
           <View className="flex-1 align-middle justify-center pb-80 items-center w-full">
             <FormControl isRequired className="mb-2">
@@ -158,13 +145,12 @@ const RescuerRegisterStepOne = (props: Props) => {
                 Full Name
               </FormControl.Label>
               <Input
+                maxLength={100}
                 className=" bg-[#d4e1ea] w-2/3"
                 placeholder="First & Last"
                 variant="filled"
                 autoComplete="name"
-                onChangeText={(value) =>
-                  setFullName({ ...fullName, fullName: value })
-                }
+                onChangeText={(value) => setFullName({ ...fullName, fullName: value })}
                 onSubmitEditing={Keyboard.dismiss}
               />
               {"fullName" in errors ? (
@@ -187,14 +173,13 @@ const RescuerRegisterStepOne = (props: Props) => {
                 Phone
               </FormControl.Label>
               <Input
+                maxLength={20}
                 className=" bg-[#d4e1ea]"
                 placeholder="Phone Number"
                 variant="filled"
                 autoComplete="tel"
                 keyboardType="numbers-and-punctuation"
-                onChangeText={(value) =>
-                  setPhone({ ...Phone, PhoneNumber: value })
-                }
+                onChangeText={(value) => setPhone({ ...Phone, PhoneNumber: value })}
                 onSubmitEditing={Keyboard.dismiss}
               />
               {"PhoneNumber" in errors ? (
@@ -208,15 +193,10 @@ const RescuerRegisterStepOne = (props: Props) => {
               ) : null}
             </FormControl>
             <Text className="text-center font-black text-lg">
-              Are you affiliated with a Wildlife Emergency or Protection
-              Organization?
+              Are you affiliated with a Wildlife Emergency or Protection Organization?
             </Text>
             <View className="flex-row row-span-1">
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  Professional ? "opacity-20" : "font-bold"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${Professional ? "opacity-20" : "font-bold"}`}>
                 No
               </Text>
               <Switch
@@ -227,11 +207,7 @@ const RescuerRegisterStepOne = (props: Props) => {
                 isChecked={Professional}
                 onToggle={handleProfessional}
               />
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  Professional ? "font-bold" : "opacity-20"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${Professional ? "font-bold" : "opacity-20"}`}>
                 Yes
               </Text>
             </View>
@@ -245,13 +221,12 @@ const RescuerRegisterStepOne = (props: Props) => {
                 Organization
               </FormControl.Label>
               <Input
+                maxLength={100}
                 className=" bg-[#d4e1ea]"
                 placeholder="Optional"
                 variant="filled"
                 isDisabled={!Professional}
-                onChangeText={(value) =>
-                  setOrganization({ ...Organization, Organization: value })
-                }
+                onChangeText={(value) => setOrganization({ ...Organization, Organization: value })}
                 onSubmitEditing={Keyboard.dismiss}
               />
               {"Organization" in errors ? (
@@ -268,11 +243,7 @@ const RescuerRegisterStepOne = (props: Props) => {
               Do you have training and experience in animal medical care?
             </Text>
             <View className="flex-row row-span-1">
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  Medical ? "opacity-20" : "font-bold"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${Medical ? "opacity-20" : "font-bold"}`}>
                 No
               </Text>
               <Switch
@@ -283,11 +254,7 @@ const RescuerRegisterStepOne = (props: Props) => {
                 isChecked={Medical}
                 onToggle={handleMedical}
               />
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  Medical ? "font-bold" : "opacity-20"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${Medical ? "font-bold" : "opacity-20"}`}>
                 Yes
               </Text>
             </View>
@@ -295,11 +262,7 @@ const RescuerRegisterStepOne = (props: Props) => {
               Do you have training and experience in Wildlife Rehabilitation?
             </Text>
             <View className="flex-row row-span-1">
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  Rehab ? "opacity-20" : "font-bold"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${Rehab ? "opacity-20" : "font-bold"}`}>
                 No
               </Text>
               <Switch
@@ -310,11 +273,7 @@ const RescuerRegisterStepOne = (props: Props) => {
                 isChecked={Rehab}
                 onToggle={handleRehab}
               />
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  Rehab ? "font-bold" : "opacity-20"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${Rehab ? "font-bold" : "opacity-20"}`}>
                 Yes
               </Text>
             </View>

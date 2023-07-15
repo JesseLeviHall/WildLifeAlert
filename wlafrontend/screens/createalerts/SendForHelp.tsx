@@ -9,10 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 type RootStackParamList = {
   AlertDescription: undefined;
 };
-type AlertDescriptionProp = NavigationProp<
-  RootStackParamList,
-  "AlertDescription"
->;
+type AlertDescriptionProp = NavigationProp<RootStackParamList, "AlertDescription">;
 type Props = {
   navigation: AlertDescriptionProp;
 };
@@ -82,18 +79,11 @@ const SendForHelp = (props: Props) => {
 
     setErrors(updatedErrors);
 
-    if (
-      updatedErrors.fullName === "" &&
-      updatedErrors.Email === "" &&
-      updatedErrors.PhoneNumber === ""
-    ) {
+    if (updatedErrors.fullName === "" && updatedErrors.Email === "" && updatedErrors.PhoneNumber === "") {
       try {
         await AsyncStorage.setItem("FullName", fullName.fullName);
         await AsyncStorage.setItem("Email", Email.Email);
-        await AsyncStorage.setItem(
-          "PhoneNumber",
-          PhoneNumber.PhoneNumber.replace(/-/g, "")
-        );
+        await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber.replace(/-/g, ""));
         await AsyncStorage.setItem("ShareContact", isSwitchOn.toString());
       } catch (error) {
         console.log("Error saving data", error);
@@ -117,10 +107,7 @@ const SendForHelp = (props: Props) => {
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   return (
-    <LinearGradient
-      style={{ height: screenHeight }}
-      colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
-    >
+    <LinearGradient style={{ height: screenHeight }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
       <View>
         {visible ? (
           <View className="h-full">
@@ -130,9 +117,7 @@ const SendForHelp = (props: Props) => {
       </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View className="flex flex-1 items-center p-4 h-full w-full ">
-          <Text className="text-center font-black uppercase text-4xl">
-            who is posting?
-          </Text>
+          <Text className="text-center font-black uppercase text-4xl">who is posting?</Text>
           <View className="mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
             <FormControl isRequired className="mb-2">
               <FormControl.Label
@@ -144,13 +129,12 @@ const SendForHelp = (props: Props) => {
                 Full Name
               </FormControl.Label>
               <Input
+                maxLength={100}
                 className=" bg-[#d4e1ea] w-2/3"
                 placeholder="First & Last"
                 variant="filled"
                 autoComplete="name"
-                onChangeText={(value) =>
-                  setFullName({ ...fullName, fullName: value })
-                }
+                onChangeText={(value) => setFullName({ ...fullName, fullName: value })}
                 onSubmitEditing={Keyboard.dismiss}
               />
               {"fullName" in errors ? (
@@ -173,6 +157,7 @@ const SendForHelp = (props: Props) => {
                 Email
               </FormControl.Label>
               <Input
+                maxLength={100}
                 className=" bg-[#d4e1ea]"
                 placeholder="Email Address"
                 keyboardType="email-address"
@@ -201,14 +186,13 @@ const SendForHelp = (props: Props) => {
                 Phone
               </FormControl.Label>
               <Input
+                maxLength={20}
                 className=" bg-[#d4e1ea]"
                 placeholder="xxx-xxx-xxxx"
                 variant="filled"
                 autoComplete="tel"
                 keyboardType="numbers-and-punctuation"
-                onChangeText={(value) =>
-                  setPhoneNumber({ ...PhoneNumber, PhoneNumber: value })
-                }
+                onChangeText={(value) => setPhoneNumber({ ...PhoneNumber, PhoneNumber: value })}
                 onSubmitEditing={Keyboard.dismiss}
               />
               {"PhoneNumber" in errors ? (
@@ -221,18 +205,12 @@ const SendForHelp = (props: Props) => {
                 </FormControl.HelperText>
               ) : null}
             </FormControl>
-            <Text className="text-center font-black text-lg">
-              Allow registered rescuers to see this information?
-            </Text>
+            <Text className="text-center font-black text-lg">Allow registered rescuers to see this information?</Text>
             <Text className="text-center font-light mb-2 text-sm">
               They may need to contact you for more information
             </Text>
             <View className="flex-row row-span-1">
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  isSwitchOn ? "opacity-20" : "font-bold"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${isSwitchOn ? "opacity-20" : "font-bold"}`}>
                 Anonymous
               </Text>
               <Switch
@@ -243,11 +221,7 @@ const SendForHelp = (props: Props) => {
                 isChecked={isSwitchOn}
                 onToggle={onToggleSwitch}
               />
-              <Text
-                className={`text-center font-light my-1 mx-2 text-sm ${
-                  isSwitchOn ? "font-bold" : "opacity-20"
-                }`}
-              >
+              <Text className={`text-center font-light my-1 mx-2 text-sm ${isSwitchOn ? "font-bold" : "opacity-20"}`}>
                 Allow Contact
               </Text>
             </View>
