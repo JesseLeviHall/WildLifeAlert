@@ -49,8 +49,8 @@ const AlertsInYourArea = (props: Props) => {
   return (
     <View className=" h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl">
       <Text className="text-[#A6D4FF]  text-5xl">{data?.alertCount}</Text>
-      <Text className="text-[#A6D4FF] text-lg">Active Alerts</Text>
-      <Text className="text-[#A6D4FF]  font-light">Your Area In Previous 48 Hours</Text>
+      <Text className="text-[#A6D4FF] text-lg">Recent Alerts</Text>
+      <Text className="text-[#A6D4FF]  font-light">Last 48 Hours in your radius</Text>
     </View>
   );
 };

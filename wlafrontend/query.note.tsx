@@ -5,9 +5,9 @@
 
 
 example of enabled query:
-export function AlertByUser(Props: Props) {
+export function AlertById(Props: Props) {
   const userQuery = useQuery({
-    queryKey: ['user', alertQuery?.data?.id], //query formed after getting data from alertQuery
+    queryKey: ['alert', alertQuery?.data?.id], //query formed after getting data from alertQuery
     anabled: alertQuery?.data?.id != null //only enabled if alertQuery has data. 
   })
   

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, StyleSheet, View, Dimensions } from "react-native";
+import { Text, StyleSheet, View, Dimensions, Share } from "react-native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { Appbar, FAB } from "react-native-paper";
 import { useRefreshByUser } from "../hooks/useRefreshByUser";
@@ -57,6 +57,16 @@ const PublicMap = (props: Props) => {
     });
   });
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "Download WildLifeAlert from this link: <dynamic link>",
+      });
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
   const {
     refetch,
     isLoading,
@@ -96,7 +106,11 @@ const PublicMap = (props: Props) => {
         <Appbar.Content title="Live Map" />
         <Appbar.Action icon="map" onPress={handleMapTypeChange} />
       </Appbar.Header>
-      {infoVisible ? <PubMapDialogue setInfoVisible={setInfoVisible} infoVisible={infoVisible} /> : null}
+      {infoVisible ? (
+        <View style={{ height: screenHeight }}>
+          <PubMapDialogue setInfoVisible={setInfoVisible} infoVisible={infoVisible} />
+        </View>
+      ) : null}
       <View className="flex-1 align-middle justify-center">
         <PubMapView ref={pubMapViewRef} alerts={alerts} />
       </View>
@@ -116,9 +130,7 @@ const PublicMap = (props: Props) => {
         safeAreaInsets={{ bottom }}
       >
         <Appbar.Action icon="refresh" onPress={() => refetchByUser()} />
-        {
-          //WHEN I GET A LINK TO THE APP ADD <Appbar.Action icon='share' onPress={() => {'share this app'}} />}
-        }
+        <Appbar.Action icon="share" onPress={onShare} />
         <FAB
           mode="flat"
           size="medium"

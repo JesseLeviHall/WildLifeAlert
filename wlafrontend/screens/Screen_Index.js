@@ -10,7 +10,6 @@ export { default as RescuerPrefs } from './rescuerArea/RescuerPrefs';
 export { default as Resources } from './Resources';
 export { default as About } from './About';
 export { default as SendForHelp } from './createalerts/SendForHelp';
-export { default as AlertsNearby } from './rescuerArea/AlertsNearby';
 export { default as ColdAlerts } from './rescuerArea/ColdAlerts';
 export { default as AlertDetails } from './rescuerArea/AlertDetails';
 export { default as PublicMap } from './PublicMap';

@@ -7,7 +7,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../components/OfflineToast";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getAboutScreenContent } from "../api/index";
-import SkeletonComp from "../components/Skeleton";
+import SpinnerComp from "../components/Spinner";
 import { useConnectivity } from "../hooks/useConnectivity";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -86,7 +86,7 @@ const About = (props: Props) => {
   if (isLoading) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <SkeletonComp />
+        <SpinnerComp />
       </View>
     );
   }

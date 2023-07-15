@@ -3,9 +3,13 @@ import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View, Text, Modal, Pressable, Linking } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import SuccessToast from "./SuccessToast";
-
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useUser } from "@clerk/clerk-expo";
 
+type RootStackParamList = {
+  AlertDetails: { alertId: string };
+};
+type AlertDetailsNavigationProp = NavigationProp<RootStackParamList, "AlertDetails">;
 interface AlertInterface {
   id: string;
   FullName: string;
@@ -33,6 +37,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
   const [selectedAlert, setSelectedAlert] = useState<AlertInterface | null>(null);
   const [showToast, setShowToast] = React.useState(false);
   const [mapType, setMapType] = useState<"standard" | "satellite" | "hybrid" | "terrain">("hybrid");
+  const navigation = useNavigation<AlertDetailsNavigationProp>();
 
   const onMapTypeChange = () => {
     setMapType((prevMapType) => {
@@ -128,7 +133,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
             <View style={styles.modalView}>
               {selectedAlert.ShareContact && (
                 <View>
-                  <Text style={styles.modalText}>Posted by</Text>
+                  <Text style={styles.titleText}>Posted By</Text>
                   <Text style={styles.modalName}>{selectedAlert.FullName}</Text>
                   <View style={styles.contactOptions}>
                     <Pressable
@@ -155,6 +160,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
                   </View>
                 </View>
               )}
+              {selectedAlert.ShareContact === false && <Text style={styles.titleText}>Anonymous Post:</Text>}
               <Text style={styles.modalText}>Animal: {selectedAlert.Animal}</Text>
               <Text style={styles.modalText}>
                 Description: {selectedAlert.Description.substring(0, 100)}
@@ -165,16 +171,21 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
                 <Text style={styles.modalEmail}>Copy Coordinates</Text>
               </Pressable>
               {showToast && (
-                <View className="-mt-16 h-16 rounded-lg">
+                <View className="-mt-16 h-24 rounded-lg">
                   <SuccessToast message="Coordinates Copied" />
                 </View>
               )}
               <View style={styles.contactOptions}>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => console.log("details:", selectedAlert.id)}
+                  onPress={() => {
+                    if (selectedAlert) {
+                      navigation.navigate("AlertDetails", { alertId: selectedAlert.id });
+                      setSelectedAlert(null);
+                    }
+                  }}
                 >
-                  <Text style={styles.textStyle}>More</Text>
+                  <Text style={styles.textStyle}>More Info</Text>
                 </Pressable>
                 <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setSelectedAlert(null)}>
                   <Text style={styles.textStyle}>Close</Text>
@@ -222,7 +233,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    width: "30%",
+    width: "40%",
     padding: 10,
     elevation: 2,
   },
@@ -236,6 +247,12 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  titleText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
   },
   modalText: {
     marginBottom: 10,

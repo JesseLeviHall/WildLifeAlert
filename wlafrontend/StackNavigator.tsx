@@ -13,7 +13,6 @@ import {
   Resources,
   About,
   SendForHelp,
-  AlertsNearby,
   ColdAlerts,
   AlertDetails,
   PublicMap,
@@ -24,7 +23,30 @@ import {
   NextSteps,
 } from "./screens/Screen_Index.js";
 
-const Stack = createNativeStackNavigator();
+type StackParams = {
+  Home: undefined;
+  SendForHelp: undefined;
+  Resources: undefined;
+  About: undefined;
+  AnotherScreen: undefined;
+  PublicMap: undefined;
+  AlertDescription: undefined;
+  SetLocation: undefined;
+  AddPhotos: undefined;
+  ConfirmPost: undefined;
+  NextSteps: undefined;
+  RescuerLogin: undefined;
+  RescuerRegister: undefined;
+  RescuerRegisterStepOne: undefined;
+  RescuerRegisterStepTwo: undefined;
+  ForgotPassword: undefined;
+  RescuerWelcome: undefined;
+  RescuerPrefs: undefined;
+  ColdAlerts: undefined;
+  AlertDetails: { alertId: string };
+};
+
+const Stack = createNativeStackNavigator<StackParams>();
 
 const StackNavigator = () => {
   return (
@@ -42,26 +64,11 @@ const StackNavigator = () => {
       <Stack.Screen name="NextSteps" component={NextSteps} />
       <Stack.Screen name="RescuerLogin" component={RescuerLogin} />
       <Stack.Screen name="RescuerRegister" component={RescuerRegister} />
-      <Stack.Screen
-        name="RescuerRegisterStepOne"
-        component={RescuerRegisterStepOne}
-      />
-      <Stack.Screen
-        name="RescuerRegisterStepTwo"
-        component={RescuerRegisterStepTwo}
-      />
+      <Stack.Screen name="RescuerRegisterStepOne" component={RescuerRegisterStepOne} />
+      <Stack.Screen name="RescuerRegisterStepTwo" component={RescuerRegisterStepTwo} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      <Stack.Screen
-        name="RescuerWelcome"
-        component={RescuerWelcome}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="RescuerPrefs"
-        component={RescuerPrefs}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="AlertsNearby" component={AlertsNearby} />
+      <Stack.Screen name="RescuerWelcome" component={RescuerWelcome} options={{ headerShown: false }} />
+      <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} options={{ headerShown: false }} />
       <Stack.Screen name="ColdAlerts" component={ColdAlerts} />
       <Stack.Screen name="AlertDetails" component={AlertDetails} />
     </Stack.Navigator>
