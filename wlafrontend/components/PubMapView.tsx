@@ -1,9 +1,12 @@
 import React, { useImperativeHandle, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View, Text, Modal, Pressable, Linking } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import SuccessToast from "./SuccessToast";
+
 import { useUser } from "@clerk/clerk-expo";
 
-interface Alert {
+interface AlertInterface {
   id: string;
   FullName: string;
   Latitude: number;
@@ -18,7 +21,7 @@ interface Alert {
 }
 
 interface PubMapViewProps {
-  alerts: Alert[];
+  alerts: AlertInterface[];
 }
 
 export interface PubMapViewHandle {
@@ -27,7 +30,8 @@ export interface PubMapViewHandle {
 
 const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts }, ref) => {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
+  const [selectedAlert, setSelectedAlert] = useState<AlertInterface | null>(null);
+  const [showToast, setShowToast] = React.useState(false);
   const [mapType, setMapType] = useState<"standard" | "satellite" | "hybrid" | "terrain">("hybrid");
 
   const onMapTypeChange = () => {
@@ -49,7 +53,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
     onMapTypeChange,
   }));
 
-  const handleShowAlertDetails = (alert: Alert) => {
+  const handleShowAlertDetails = (alert: AlertInterface) => {
     if (!isLoaded || !isSignedIn) {
       return null;
     }
@@ -77,6 +81,15 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
     );
   }
 
+  async function copyToClipboard() {
+    await Clipboard.setStringAsync(`${selectedAlert?.Latitude}, ${selectedAlert?.Longitude}`);
+    setShowToast(true);
+    const timerId = setTimeout(() => {
+      setShowToast(false);
+    }, 1200);
+    return () => clearTimeout(timerId);
+  }
+
   return (
     <View style={styles.container}>
       <MapView
@@ -89,7 +102,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
         style={styles.map}
         mapType={mapType}
       >
-        {alerts.map((alert: Alert) => (
+        {alerts.map((alert: AlertInterface) => (
           <Marker
             onPress={() => handleShowAlertDetails(alert)}
             pinColor="blue"
@@ -147,8 +160,15 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
                 Description: {selectedAlert.Description.substring(0, 100)}
                 {selectedAlert.Description.length > 100 ? "..." : ""}
               </Text>
-
               <Text style={styles.modalText}>Sent {selectedAlert.Timestamp}</Text>
+              <Pressable onPress={copyToClipboard}>
+                <Text style={styles.modalEmail}>Copy Coordinates</Text>
+              </Pressable>
+              {showToast && (
+                <View className="-mt-16 h-16 rounded-lg">
+                  <SuccessToast message="Coordinates Copied" />
+                </View>
+              )}
               <View style={styles.contactOptions}>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
@@ -196,9 +216,9 @@ const styles = StyleSheet.create({
       width: 2,
       height: 4,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.8,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 3,
   },
   button: {
     borderRadius: 10,
@@ -218,7 +238,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 10,
     textAlign: "center",
   },
   modalName: {
