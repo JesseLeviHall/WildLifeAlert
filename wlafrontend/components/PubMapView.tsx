@@ -1,8 +1,7 @@
 import React, { useImperativeHandle, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
-
-//modify this component to extract locations for the map, and display them as markers.  If the user is logged in, allow tap on marker to show details of the alert.
+import { useUser } from "@clerk/clerk-expo";
 
 interface Alert {
   id: string;
@@ -27,6 +26,8 @@ export interface PubMapViewHandle {
 }
 
 const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts }, ref) => {
+  const { isLoaded, isSignedIn, user } = useUser();
+  const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
   const [mapType, setMapType] = useState<"standard" | "satellite" | "hybrid" | "terrain">("hybrid");
 
   const onMapTypeChange = () => {
@@ -47,6 +48,13 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
   useImperativeHandle(ref, () => ({
     onMapTypeChange,
   }));
+
+  const handleShowAlertDetails = (alert: Alert) => {
+    if (!isLoaded || !isSignedIn) {
+      return null;
+    }
+    setSelectedAlert(alert);
+  };
 
   function Toast() {
     return (
@@ -70,6 +78,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
       >
         {alerts.map((alert: Alert) => (
           <Marker
+            onPress={() => handleShowAlertDetails(alert)}
             pinColor="blue"
             key={alert.id}
             coordinate={{
