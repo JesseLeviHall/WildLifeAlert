@@ -21,8 +21,25 @@ export const getHomeScreenContent = async () => {
   try {
     const homescreencontent = await API.get("/api/homescreen");
     return homescreencontent.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -53,8 +70,25 @@ export const getPubData = async () => {
     }));
 
     return transformedData;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -64,8 +98,25 @@ export const getPubMapDialogueContent = async () => {
   try {
     const pubmapdialoguecontent = await API.get("/api/publicmapscreen");
     return pubmapdialoguecontent.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -150,8 +201,25 @@ export const getResources = async () => {
   try {
     const resources = await API.get("/api/getresources");
     return resources.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -161,8 +229,25 @@ export const getAboutScreenContent = async () => {
   try {
     const aboutContent = await API.get("/api/getabout");
     return aboutContent.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -172,8 +257,25 @@ export const getPrivacyPolicyContent = async () => {
   try {
     const privacyPolicyContent = await API.get("/api/getpolicies");
     return privacyPolicyContent.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -196,8 +298,25 @@ export const registerRescuer = async ({
       data: userDetails,
     });
     return registerRescuer.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -213,7 +332,23 @@ export const getWelcomeScreenContent = async (sessionId: String, token: String) 
     return welcomeContent.data;
   } catch (error: any) {
     console.error(error?.response?.data.error);
-    return { error: error.response?.data?.error || "Unknown error" };
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -229,7 +364,23 @@ export const getRescuerProfile = async (sessionId: String, token: String) => {
     return rescuerProfile.data;
   } catch (error: any) {
     console.error(error?.response?.data.error);
-    return { error: error.response?.data?.error || "Unknown error" };
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -252,8 +403,25 @@ export const setGeoRadius = async ({
       data: { Radius },
     });
     return setRadius.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -276,8 +444,25 @@ export const SetNotificationPref = async ({
       data: { Notifications },
     });
     return setNotifications.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -308,8 +493,25 @@ export const SetLocationPref = async ({
       },
     });
     return changeLocation.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -323,8 +525,25 @@ export const deleteAccount = async ({ sessionId, token }: { sessionId: String; t
       headers: { Authorization: `Bearer ${sessionId} ${token}` },
     });
     return deleteAccount.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -340,7 +559,23 @@ export const getActiveInArea = async ({ sessionId, token }: { sessionId: String;
     return activeInArea.data;
   } catch (error: any) {
     console.error(error?.response?.data.error);
-    return { error: error.message || "Unknown error" };
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };
 
@@ -356,6 +591,62 @@ export const getTotalAlerts = async ({ sessionId, token }: { sessionId: String; 
     return totalAlerts.data;
   } catch (error: any) {
     console.error(error?.response?.data.error);
-    return { error: error.message || "Unknown error" };
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
+  }
+};
+
+//===================================================
+//get alert details
+export const getAlertDetails = async ({
+  sessionId,
+  token,
+  alertId,
+}: {
+  sessionId: String;
+  token: String;
+  alertId: String;
+}) => {
+  try {
+    const alertDetails = await API({
+      method: "get",
+      url: `data/alert-details/${alertId}`,
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+    });
+    return alertDetails.data;
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
   }
 };

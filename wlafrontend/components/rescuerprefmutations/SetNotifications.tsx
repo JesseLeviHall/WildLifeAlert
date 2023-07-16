@@ -1,6 +1,6 @@
 //Set notifications to true or false
 import * as React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Checkbox, Icon } from "native-base";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { SetNotificationPref } from "../../api/index";
@@ -16,9 +16,7 @@ type Props = {
 const SetNotifications = ({ notificationProp }: Props) => {
   const [error, setError] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
-  const [notifications, SetNotifications] = React.useState(
-    notificationProp === "true"
-  );
+  const [notifications, SetNotifications] = React.useState(notificationProp === "true");
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
   const isConnected = useConnectivity();
