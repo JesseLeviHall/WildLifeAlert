@@ -89,15 +89,12 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     );
   }
 
-  return <Text>AlertDetails: {alertId}</Text>;
+  return (
+    <View>
+      <Text>AlertDetails: {alertId}</Text>
+      <Text>DetailsResponse: {data?.FullName}</Text>
+    </View>
+  );
 };
 
 export default AlertDetails;
-
-/* const AlertDetailsQuery = useQuery({
-    queryKey: ['AlertDetails', id],
-    queryFn: () => getAlertDetails(id),
-  })
-  if(AlertDetailsQuery.status === 'loading') return <Text>Loading</Text>
-  if(AlertDetailsQuery.status === 'error') return <Text>{JSON.stringify(AlertDetailsQuery.error)}</Text>
-  */

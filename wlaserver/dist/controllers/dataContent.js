@@ -47,4 +47,24 @@ export const getTotalAlerts = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+//get alert details
+export const getAlertDetails = async (req, res) => {
+    try {
+        const UserId = req.auth.userId;
+        const id = await redisClient.get(UserId);
+        if (!id) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+        const alertId = req.params.alertId;
+        const alert = await redisClient.hGetAll(`${alertId}`);
+        const alertDetails = { ...alert };
+        console.log(alertDetails);
+        res.status(200).send(alertDetails);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
 //# sourceMappingURL=dataContent.js.map

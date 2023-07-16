@@ -8,10 +8,7 @@ import clerk from "@clerk/clerk-sdk-node";
 dotenv.config();
 
 //get active alerts in rescuer's radius
-export const getActiveAlertsInArea = async (
-  req: Request & WithAuthProp<Request>,
-  res: Response
-): Promise<void> => {
+export const getActiveAlertsInArea = async (req: Request & WithAuthProp<Request>, res: Response): Promise<void> => {
   try {
     const UserId = req.auth.userId;
     const id = await redisClient.get(UserId);
@@ -30,13 +27,7 @@ export const getActiveAlertsInArea = async (
       return;
     }
 
-    const alerts = await getActiveAlertsInRadius(
-      redisClient,
-      48,
-      longitude,
-      latitude,
-      radius
-    );
+    const alerts = await getActiveAlertsInRadius(redisClient, 48, longitude, latitude, radius);
     const alertCount = alerts.length;
     //LATER CHANGE TO RETURN ALERTS FOR DETAILS SCREEN
     res.status(200).json({ alertCount });
@@ -47,10 +38,7 @@ export const getActiveAlertsInArea = async (
 };
 
 //get total alerts
-export const getTotalAlerts = async (
-  req: Request & WithAuthProp<Request>,
-  res: Response
-): Promise<void> => {
+export const getTotalAlerts = async (req: Request & WithAuthProp<Request>, res: Response): Promise<void> => {
   try {
     const UserId = req.auth.userId;
     const id = await redisClient.get(UserId);
@@ -60,6 +48,27 @@ export const getTotalAlerts = async (
     }
     const alertCount = await redisClient.zCard("alerts:animals:timestamps");
     res.status(200).json({ alertCount });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+//get alert details
+export const getAlertDetails = async (req: Request & WithAuthProp<Request>, res: Response): Promise<void> => {
+  try {
+    const UserId = req.auth.userId;
+    const id = await redisClient.get(UserId);
+    if (!id) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+    const alertId = req.params.alertId;
+    const alert = await redisClient.hGetAll(`${alertId}`);
+
+    const alertDetails = { ...alert };
+    console.log(alertDetails);
+    res.status(200).send(alertDetails);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
