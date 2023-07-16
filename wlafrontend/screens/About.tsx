@@ -107,8 +107,6 @@ const About = (props: Props) => {
     }
   );
 
-  console.log(data);
-
   if (isLoading) {
     return (
       <View className="flex-1 align-middle justify-center">

@@ -89,8 +89,6 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     );
   }
 
-  console.log(data.Photo[0]);
-
   return (
     <View>
       <Text>AlertDetails: {alertId}</Text>

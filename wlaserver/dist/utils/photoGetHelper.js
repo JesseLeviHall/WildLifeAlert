@@ -4,10 +4,13 @@ import * as dotenv from "dotenv";
 dotenv.config();
 // get photos from s3
 export async function getPhotosFromS3(fileName) {
-    console.log(fileName);
+    let key = fileName;
+    if (fileName === "defaultphoto.png") {
+        key = `uploads/${fileName}`;
+    }
     const getParams = {
         Bucket: "user-alert-uploads",
-        Key: `uploads/${fileName}`,
+        Key: key,
     };
     const command = new GetObjectCommand(getParams);
     let s3;
