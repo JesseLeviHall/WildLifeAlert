@@ -76,7 +76,7 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
   if (data === null) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <ErrorMessage error="There was an error fetching the alert details. Please check your internet connection and try again." />
+        <ErrorMessage error="Error fetching the alert details" />
       </View>
     );
   }
@@ -84,7 +84,7 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
   if (!data) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>Unable to fetch. Either the server is down, or session expired.</Text>
+        <ErrorMessage error="Sorry, error fetching data" />
       </View>
     );
   }

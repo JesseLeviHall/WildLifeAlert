@@ -6,7 +6,8 @@ import { useQuery } from "@tanstack/react-query/build/lib";
 import { useConnectivity } from "../hooks/useConnectivity";
 import { useNavigation } from "@react-navigation/native";
 import OfflineToast from "../components/OfflineToast";
-import SkeletonComp from "../components/Skeleton";
+import SpinnerComp from "../components/Spinner";
+import ErrorMessage from "../components/ErrorMessage";
 import AnimatedGradient from "../components/background/GradientAnimated";
 
 const screenHeight = Dimensions.get("window").height;
@@ -26,23 +27,49 @@ const AnotherScreen = (props: Props) => {
     });
   });
 
-  const { isLoading, data, error } = useQuery(["privacyPolicy"], () => getPrivacyPolicyContent(), {
-    enabled: isConnected,
-  });
+  const { isLoading, data, error } = useQuery(
+    ["privacyPolicy"],
+    async () => {
+      try {
+        return await getPrivacyPolicyContent();
+      } catch (error) {
+        console.error("Error fetching privacy policy content:", error);
+        return null;
+      }
+    },
+    {
+      enabled: isConnected,
+    }
+  );
 
   if (isLoading) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <SkeletonComp />
+        <SpinnerComp />
       </View>
     );
   }
 
-  if (error) {
-    const err = error as any;
+  if (data?.error) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
+        <ErrorMessage error={data?.error.message} />
+      </View>
+    );
+  }
+
+  if (data === null) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry! Error fetching the data" />
+      </View>
+    );
+  }
+
+  if (!data) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry, error fetching data" />
       </View>
     );
   }

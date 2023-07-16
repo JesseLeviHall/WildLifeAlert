@@ -10,6 +10,7 @@ import { useConnectivity } from "../hooks/useConnectivity";
 import { useRefreshByUser } from "../hooks/useRefreshByUser";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import ResourceCard from "../components/ResourceCard";
+import ErrorMessage from "../components/ErrorMessage";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -39,7 +40,20 @@ const Resources = (props: Props) => {
   });
 
   const isConnected = useConnectivity();
-  const { isLoading, refetch, data, error } = useQuery(["Resources"], () => getResources(), { enabled: isConnected });
+  const { isLoading, refetch, data, error } = useQuery(
+    ["resources"],
+    async () => {
+      try {
+        return await getResources();
+      } catch (error) {
+        console.error("Error fetching resources:", error);
+        return null;
+      }
+    },
+    {
+      enabled: isConnected,
+    }
+  );
 
   const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
 
@@ -51,11 +65,26 @@ const Resources = (props: Props) => {
     );
   }
 
-  if (error) {
-    const err = error as any;
+  if (data?.error) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
+        <ErrorMessage error={data?.error.message} />
+      </View>
+    );
+  }
+
+  if (data === null) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry! Error fetching the data. Swipe right to return." />
+      </View>
+    );
+  }
+
+  if (!data) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry, error fetching data" />
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, StyleSheet, View, Dimensions, Share } from "react-native";
+import { StyleSheet, View, Dimensions, Share } from "react-native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { Appbar, FAB } from "react-native-paper";
 import { useRefreshByUser } from "../hooks/useRefreshByUser";
@@ -12,6 +12,7 @@ import OfflineToast from "../components/OfflineToast";
 import { getPubData } from "../api/index";
 import PubMapDialogue from "../components/PubMapInfoComp";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ErrorMessage from "../components/ErrorMessage";
 
 const BOTTOM_APPBAR_HEIGHT = 70;
 const MEDIUM_FAB_HEIGHT = 46;
@@ -87,10 +88,25 @@ const PublicMap = (props: Props) => {
   }
 
   if (error) {
-    const err = error as any;
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
+        <ErrorMessage error={error.message} />
+      </View>
+    );
+  }
+
+  if (alerts === null) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry! Error fetching data" />
+      </View>
+    );
+  }
+
+  if (!alerts) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry, error fetching data" />
       </View>
     );
   }

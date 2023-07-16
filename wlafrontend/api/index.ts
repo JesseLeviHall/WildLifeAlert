@@ -34,7 +34,7 @@ export const getHomeScreenContent = async () => {
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -83,7 +83,7 @@ export const getPubData = async () => {
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -111,7 +111,7 @@ export const getPubMapDialogueContent = async () => {
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -214,7 +214,7 @@ export const getResources = async () => {
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -242,7 +242,7 @@ export const getAboutScreenContent = async () => {
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -270,7 +270,7 @@ export const getPrivacyPolicyContent = async () => {
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -311,7 +311,7 @@ export const registerRescuer = async ({
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -343,7 +343,7 @@ export const getWelcomeScreenContent = async (sessionId: String, token: String) 
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -375,7 +375,7 @@ export const getRescuerProfile = async (sessionId: String, token: String) => {
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -416,7 +416,7 @@ export const setGeoRadius = async ({
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -457,7 +457,7 @@ export const SetNotificationPref = async ({
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -506,7 +506,7 @@ export const SetLocationPref = async ({
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -538,7 +538,7 @@ export const deleteAccount = async ({ sessionId, token }: { sessionId: String; t
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -570,7 +570,7 @@ export const getActiveInArea = async ({ sessionId, token }: { sessionId: String;
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -602,7 +602,7 @@ export const getTotalAlerts = async ({ sessionId, token }: { sessionId: String; 
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);
@@ -642,7 +642,7 @@ export const getAlertDetails = async ({
     } else if (error.request) {
       // The request was made but no response was received
       console.error(error.request);
-      errorMsg = "The request was made but no response was received";
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
       // Something happened in setting up the request that triggered an Error
       console.error("Error", error.message);

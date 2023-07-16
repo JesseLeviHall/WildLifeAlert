@@ -9,6 +9,7 @@ import SpinnerComp from "../components/Spinner";
 import OfflineToast from "../components/OfflineToast";
 import HomeNavBot from "../components/HomeNavBot";
 import HomeBackG from "../components/background/HomeBackG";
+import ErrorMessage from "../components/ErrorMessage";
 
 type RootStackParamList = {
   Home: undefined;
@@ -36,7 +37,20 @@ const Home = (props: Props) => {
     });
   });
 
-  const { isLoading, data, error } = useQuery(["HomeScreen"], () => getHomeScreenContent(), { enabled: isConnected });
+  const { isLoading, data, error } = useQuery(
+    ["homeScreen"],
+    async () => {
+      try {
+        return await getHomeScreenContent();
+      } catch (error) {
+        console.error("Error fetching home screen content:", error);
+        return null;
+      }
+    },
+    {
+      enabled: isConnected,
+    }
+  );
 
   if (isLoading) {
     return (
@@ -46,11 +60,26 @@ const Home = (props: Props) => {
     );
   }
 
-  if (error) {
-    const err = error as any;
+  if (data?.error) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
+        <ErrorMessage error={data?.error.message} />
+      </View>
+    );
+  }
+
+  if (data === null) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry! Error fetching data. Reopen the app in a bit" />
+      </View>
+    );
+  }
+
+  if (!data) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry, error fetching data" />
       </View>
     );
   }

@@ -27,6 +27,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
 import AccountDeleteDialogue from "../../components/rescuerprefmutations/AccountDeleteDialogue";
 import SetLocationDialogue from "../../components/rescuerprefmutations/SetLocationDialogue ";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -61,9 +62,20 @@ const RescuerPrefs = (props: Props) => {
 
   const { isLoading, data, error } = useQuery(
     ["rescuerprefs", sessionId, token],
-    () => (sessionId && token ? getRescuerProfile(sessionId, token) : null),
+    async () => {
+      try {
+        if (sessionId && token) {
+          return await getRescuerProfile(sessionId, token);
+        } else {
+          throw new Error("SessionId or token is missing");
+        }
+      } catch (error) {
+        console.error("Error fetching rescuer prefs:", error);
+        return null;
+      }
+    },
     {
-      enabled: !!sessionId && isConnected,
+      enabled: !!sessionId && !!token && isConnected,
     }
   );
 
@@ -78,7 +90,32 @@ const RescuerPrefs = (props: Props) => {
   if (data?.error) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{data?.error.message}</Text>
+        <ErrorMessage error={data?.error.message} />
+        <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
+          Back
+        </Button>
+      </View>
+    );
+  }
+
+  if (data === null) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry! An error occured fetching user data" />
+        <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
+          Back
+        </Button>
+      </View>
+    );
+  }
+
+  if (!data) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry, error fetching data" />
+        <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
+          Back
+        </Button>
       </View>
     );
   }
@@ -101,9 +138,7 @@ const RescuerPrefs = (props: Props) => {
         <NightGradAnimated />
       </View>
       <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
-        <Text className="font-bold text-lg text-blue-50 text-center">
-          Set Your Preferences
-        </Text>
+        <Text className="font-bold text-lg text-blue-50 text-center">Set Your Preferences</Text>
       </View>
       {changeLocation && (
         <View
@@ -131,11 +166,7 @@ const RescuerPrefs = (props: Props) => {
             zIndex: 10,
           }}
         >
-          <AccountDeleteDialogue
-            navigation={navigation}
-            visible={dialogVisible}
-            setVisible={toggleDialogVisible}
-          />
+          <AccountDeleteDialogue navigation={navigation} visible={dialogVisible} setVisible={toggleDialogVisible} />
         </View>
       )}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -157,9 +188,7 @@ const RescuerPrefs = (props: Props) => {
             }}
             className="justify-center items-center align-bottom h-10 border border-cyan-500 rounded-xl"
           >
-            <Text className="text-base text-center mx-3 text-white font-thin">
-              Feedback, or Report a Problem
-            </Text>
+            <Text className="text-base text-center mx-3 text-white font-thin">Feedback, or Report a Problem</Text>
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
@@ -168,10 +197,7 @@ const RescuerPrefs = (props: Props) => {
           <OfflineToast />
         </View>
       )}
-      <Button
-        onPress={navigation.goBack}
-        className="w-24 absolute bottom-32 border self-center border-cyan-500 "
-      >
+      <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
         Back
       </Button>
     </ImageBackground>

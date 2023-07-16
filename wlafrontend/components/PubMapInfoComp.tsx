@@ -1,11 +1,10 @@
 import * as React from "react";
-import { ScrollView, Dimensions } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Button, Dialog, Portal, Provider, Text } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getPubMapDialogueContent } from "../api/index";
 import { useNavigation, NavigationProp } from "@react-navigation/core";
-
-const ScreenHeight = Dimensions.get("window").height;
+import ErrorMessage from "../components/ErrorMessage";
 
 type RootStackParamList = {
   RescuerLogin: undefined;
@@ -19,6 +18,7 @@ type Props = {
 const PubMapDialogue = ({ setInfoVisible, infoVisible }: Props) => {
   const hideDialog = () => setInfoVisible(false);
   const navigation = useNavigation<MapScreenDialogueProp>();
+
   const { data, error, refetch } = useQuery({
     queryKey: ["PubMapDialogue"],
     queryFn: () => getPubMapDialogueContent(),
@@ -31,9 +31,26 @@ const PubMapDialogue = ({ setInfoVisible, infoVisible }: Props) => {
     }
   }, [infoVisible, refetch]);
 
+  if (data === null) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Error fetching data" />
+      </View>
+    );
+  }
+
   if (error) {
-    console.log(error);
-    return <Text>{JSON.stringify(error)}</Text>;
+    const err = error as unknown as Error;
+    console.log(err);
+    return <ErrorMessage error={err.message} />;
+  }
+
+  if (!data) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry, error fetching data" />
+      </View>
+    );
   }
 
   return (

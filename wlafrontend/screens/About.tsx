@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, Linking, StyleSheet, Dimensions, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, Linking, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, Share } from "react-native";
 import { Appbar, Chip, Button } from "react-native-paper";
 import AnimatedGradient from "../components/background/GradientAnimated";
 import { Motion } from "@legendapp/motion";
@@ -8,6 +8,7 @@ import OfflineToast from "../components/OfflineToast";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getAboutScreenContent } from "../api/index";
 import SpinnerComp from "../components/Spinner";
+import ErrorMessage from "../components/ErrorMessage";
 import { useConnectivity } from "../hooks/useConnectivity";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -73,6 +74,16 @@ const About = (props: Props) => {
     }
   };
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "Download WildLifeAlert from this link: <dynamic link>",
+      });
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
   const navigation = useNavigation<HomeScreenNavigationProp>();
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -81,7 +92,20 @@ const About = (props: Props) => {
   });
 
   const isConnected = useConnectivity();
-  const { isLoading, data, error } = useQuery(["AboutScreen"], () => getAboutScreenContent(), { enabled: isConnected });
+  const { isLoading, data, error } = useQuery(
+    ["aboutscreen", "aboutscreen"],
+    async () => {
+      try {
+        return await getAboutScreenContent();
+      } catch (error) {
+        console.error("Error fetching about screen content:", error);
+        return null;
+      }
+    },
+    {
+      enabled: isConnected,
+    }
+  );
 
   if (isLoading) {
     return (
@@ -91,11 +115,26 @@ const About = (props: Props) => {
     );
   }
 
-  if (error) {
-    const err = error as any;
+  if (data?.error) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <Text>{err.message ? err.message : JSON.stringify(error)}</Text>
+        <ErrorMessage error={data?.error.message} />
+      </View>
+    );
+  }
+
+  if (data === null) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry! Error fetching data. Swipe right to return." />
+      </View>
+    );
+  }
+
+  if (!data) {
+    return (
+      <View className="flex-1 align-middle justify-center">
+        <ErrorMessage error="Sorry, error fetching data" />
       </View>
     );
   }
@@ -205,14 +244,43 @@ const About = (props: Props) => {
             {action && (
               <View className="items-center">
                 <Text style={styles.text}>{data?.Action}</Text>
-                <Button
-                  className="my-6 w-40 border-2 border-cyan-500"
-                  mode="elevated"
-                  buttonColor="#00C5E021"
-                  onPress={() => Linking.openURL(`${data?.Link}`)}
-                >
-                  Contribute
-                </Button>
+                <View className="flex flex-row justify-center">
+                  <Button
+                    className="w-32 border-2 border-cyan-500"
+                    mode="contained"
+                    buttonColor="#00C5E038"
+                    onPress={() => Linking.openURL(`${data?.Link}`)}
+                  >
+                    Contribute
+                  </Button>
+
+                  <Button
+                    className=" w-32 border-2 border-cyan-500"
+                    mode="contained"
+                    buttonColor="#00C5E038"
+                    onPress={onShare}
+                  >
+                    Share
+                  </Button>
+                  <Button
+                    className=" w-32 border-2 border-cyan-500"
+                    mode="contained"
+                    buttonColor="#00C5E038"
+                    onPress={() => {
+                      Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
+                    }}
+                  >
+                    Contact
+                  </Button>
+                  <Button
+                    className=" w-32 border-2 border-cyan-500"
+                    mode="contained"
+                    buttonColor="#00C5E038"
+                    onPress={() => Linking.openURL(`${data?.Link}`)}
+                  >
+                    Get Merch!
+                  </Button>
+                </View>
               </View>
             )}
           </Motion.View>
