@@ -66,15 +66,9 @@ export const publicMapGeoPos = async (req, res) => {
 //POST New Alert
 export const newAlert = async (req, res) => {
     try {
-        const { FullName, Latitude, Longitude, PhoneNumber, Animal, Description, Email, ShareContact, } = req.body;
+        const { FullName, Latitude, Longitude, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
         // Check if required fields are undefined
-        if (!FullName ||
-            !Latitude ||
-            !Longitude ||
-            !PhoneNumber ||
-            !Animal ||
-            !Description ||
-            !Email) {
+        if (!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {
             res.status(400).send("Invalid request: Missing required fields");
             return;
         }
@@ -117,13 +111,7 @@ export const newAlert = async (req, res) => {
             `alerts:animals:${id.toString()}`,
         ]);
         // Add the alert to the geospatial index
-        await redisClient.sendCommand([
-            "GEOADD",
-            "alerts:geospatial",
-            Longitude,
-            Latitude,
-            `alerts:animals:${id}`,
-        ]);
+        await redisClient.sendCommand(["GEOADD", "alerts:geospatial", Longitude, Latitude, `alerts:animals:${id}`]);
         res.send("New Alert Created");
     }
     catch (error) {
@@ -136,13 +124,7 @@ export const updateResourcesContent = async (req, res) => {
     try {
         const { Icon, ResourceType, Title, Description, Image, Url, ButtonText } = req.body;
         //check if required fields are undefined
-        if (!Icon ||
-            !ResourceType ||
-            !Title ||
-            !Description ||
-            !Image ||
-            !Url ||
-            !ButtonText) {
+        if (!Icon || !ResourceType || !Title || !Description || !Image || !Url || !ButtonText) {
             res.status(400).send("Invalid request: Missing required fields");
             return;
         }
@@ -168,12 +150,7 @@ export const updateResourcesContent = async (req, res) => {
             ButtonText,
         ]);
         //send the ZADD command
-        await redisClient.sendCommand([
-            "ZADD",
-            "resources:ids",
-            id.toString(),
-            id.toString(),
-        ]);
+        await redisClient.sendCommand(["ZADD", "resources:ids", id.toString(), id.toString()]);
         res.send("Resource Content Updated");
     }
     catch (error) {
@@ -213,7 +190,7 @@ export const resourcesContent = async (req, res) => {
 //POST /About Screen content.
 export const updateAboutContent = async (req, res) => {
     try {
-        const { Title, Description, Mission, Message, Action, Link } = req.body;
+        const { Title, Description, Mission, Message, Action, Link, Merch } = req.body;
         //check if required fields are undefined
         if (!Title || !Description || !Message) {
             res.status(400).send("Invalid request: Missing required fields");
@@ -226,6 +203,7 @@ export const updateAboutContent = async (req, res) => {
             Message,
             Action,
             Link,
+            Merch,
         });
         await redisClient.set("aboutcontent", aboutcontent);
         res.send("About Content Updated");

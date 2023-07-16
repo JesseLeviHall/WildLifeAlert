@@ -11,10 +11,7 @@ interface MulterRequest extends Request {
 }
 
 //GET /Home Screen.
-export const homeScreenContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const homeScreenContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const homescreencontent = await redisClient.get("homescreencontent");
     res.send(homescreencontent);
@@ -24,10 +21,7 @@ export const homeScreenContent = async (
 };
 
 //POST /Home Screen.
-export const updateHomeScreenContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const updateHomeScreenContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const { Title, Description, Message } = req.body;
     const homescreencontent = JSON.stringify({ Title, Description, Message });
@@ -43,10 +37,7 @@ SET homescreencontent '{"Title":"","Description":"","Message":""}'
 */
 
 //GET /Public Map Screen.
-export const publicMapContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const publicMapContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const publicmapcontent = await redisClient.get("publicmapcontent");
     res.send(publicmapcontent);
@@ -56,10 +47,7 @@ export const publicMapContent = async (
 };
 
 //POST /Public Map Screen.
-export const updatePublicMapContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const updatePublicMapContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const { Title, Description, Message } = req.body;
     const publicmapcontent = JSON.stringify({ Title, Description, Message });
@@ -75,10 +63,7 @@ SET publicmapcontent '{"Title":"","Description":"","Message":""}'
 */
 
 //GET /Public Map GeoPos.
-export const publicMapGeoPos = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const publicMapGeoPos = async (req: Request, res: Response): Promise<void> => {
   try {
     const alerts = await getActiveAlerts(redisClient, 48);
     res.send(alerts);
@@ -89,41 +74,19 @@ export const publicMapGeoPos = async (
 };
 
 //POST New Alert
-export const newAlert = async (
-  req: MulterRequest,
-  res: Response
-): Promise<void> => {
+export const newAlert = async (req: MulterRequest, res: Response): Promise<void> => {
   try {
-    const {
-      FullName,
-      Latitude,
-      Longitude,
-      PhoneNumber,
-      Animal,
-      Description,
-      Email,
-      ShareContact,
-    } = req.body;
+    const { FullName, Latitude, Longitude, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
 
     // Check if required fields are undefined
-    if (
-      !FullName ||
-      !Latitude ||
-      !Longitude ||
-      !PhoneNumber ||
-      !Animal ||
-      !Description ||
-      !Email
-    ) {
+    if (!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {
       res.status(400).send("Invalid request: Missing required fields");
       return;
     }
     //map photos to array of urls
     const Photos = req.files ? req.files.map((file: File) => file.key) : [];
     // If Photo is undefined, use a default photo URL instead
-    const photoUrlsString = JSON.stringify(
-      Photos.length > 0 ? Photos : ["defaultphoto.png"]
-    );
+    const photoUrlsString = JSON.stringify(Photos.length > 0 ? Photos : ["defaultphoto.png"]);
     const timestamp = Math.floor(Date.now() / 1000);
     const id = await redisClient.incr("alerts:animals:nextid");
 
@@ -161,13 +124,7 @@ export const newAlert = async (
       `alerts:animals:${id.toString()}`,
     ]);
     // Add the alert to the geospatial index
-    await redisClient.sendCommand([
-      "GEOADD",
-      "alerts:geospatial",
-      Longitude,
-      Latitude,
-      `alerts:animals:${id}`,
-    ]);
+    await redisClient.sendCommand(["GEOADD", "alerts:geospatial", Longitude, Latitude, `alerts:animals:${id}`]);
     res.send("New Alert Created");
   } catch (error) {
     console.error(error);
@@ -176,23 +133,11 @@ export const newAlert = async (
 };
 
 //POST /Resouce for resources Screen.
-export const updateResourcesContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const updateResourcesContent = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { Icon, ResourceType, Title, Description, Image, Url, ButtonText } =
-      req.body;
+    const { Icon, ResourceType, Title, Description, Image, Url, ButtonText } = req.body;
     //check if required fields are undefined
-    if (
-      !Icon ||
-      !ResourceType ||
-      !Title ||
-      !Description ||
-      !Image ||
-      !Url ||
-      !ButtonText
-    ) {
+    if (!Icon || !ResourceType || !Title || !Description || !Image || !Url || !ButtonText) {
       res.status(400).send("Invalid request: Missing required fields");
       return;
     }
@@ -218,12 +163,7 @@ export const updateResourcesContent = async (
       ButtonText,
     ]);
     //send the ZADD command
-    await redisClient.sendCommand([
-      "ZADD",
-      "resources:ids",
-      id.toString(),
-      id.toString(),
-    ]);
+    await redisClient.sendCommand(["ZADD", "resources:ids", id.toString(), id.toString()]);
 
     res.send("Resource Content Updated");
   } catch (error) {
@@ -233,10 +173,7 @@ export const updateResourcesContent = async (
 };
 
 //GET /Resouces Screen.
-export const resourcesContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const resourcesContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const resourceIds = await redisClient.zRange("resources:ids", 0, -1);
 
@@ -267,12 +204,9 @@ export const resourcesContent = async (
 */
 
 //POST /About Screen content.
-export const updateAboutContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const updateAboutContent = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { Title, Description, Mission, Message, Action, Link } = req.body;
+    const { Title, Description, Mission, Message, Action, Link, Merch } = req.body;
     //check if required fields are undefined
     if (!Title || !Description || !Message) {
       res.status(400).send("Invalid request: Missing required fields");
@@ -285,6 +219,7 @@ export const updateAboutContent = async (
       Message,
       Action,
       Link,
+      Merch,
     });
     await redisClient.set("aboutcontent", aboutcontent);
     res.send("About Content Updated");
@@ -304,10 +239,7 @@ export const updateAboutContent = async (
 */
 
 //GET /About Screen content.
-export const aboutContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const aboutContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const aboutcontent = await redisClient.get("aboutcontent");
     res.send(aboutcontent);
@@ -318,10 +250,7 @@ export const aboutContent = async (
 };
 
 //Get /privacy policy content
-export const privacyPolicyContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const privacyPolicyContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const privacyPolicyContent = await redisClient.get("privacyPolicyContent");
     res.send(privacyPolicyContent);
@@ -332,10 +261,7 @@ export const privacyPolicyContent = async (
 };
 
 //POST /privacy policy content
-export const updatePrivacyPolicyContent = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const updatePrivacyPolicyContent = async (req: Request, res: Response): Promise<void> => {
   try {
     const { Title, Link, Title2, Link2 } = req.body;
     //check if required fields are undefined

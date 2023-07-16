@@ -107,6 +107,8 @@ const About = (props: Props) => {
     }
   );
 
+  console.log(data);
+
   if (isLoading) {
     return (
       <View className="flex-1 align-middle justify-center">
@@ -242,45 +244,48 @@ const About = (props: Props) => {
             {description && <Text style={styles.text}>{data?.Description}</Text>}
             {mission && <Text style={styles.text}>{data?.Mission}</Text>}
             {action && (
-              <View className="items-center">
-                <Text style={styles.text}>{data?.Action}</Text>
-                <View className="flex flex-row justify-center">
-                  <Button
-                    className="w-32 border-2 border-cyan-500"
-                    mode="contained"
-                    buttonColor="#00C5E038"
-                    onPress={() => Linking.openURL(`${data?.Link}`)}
-                  >
-                    Contribute
-                  </Button>
-
-                  <Button
-                    className=" w-32 border-2 border-cyan-500"
-                    mode="contained"
-                    buttonColor="#00C5E038"
-                    onPress={onShare}
-                  >
-                    Share
-                  </Button>
-                  <Button
-                    className=" w-32 border-2 border-cyan-500"
-                    mode="contained"
-                    buttonColor="#00C5E038"
-                    onPress={() => {
-                      Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
-                    }}
-                  >
-                    Contact
-                  </Button>
-                  <Button
-                    className=" w-32 border-2 border-cyan-500"
-                    mode="contained"
-                    buttonColor="#00C5E038"
-                    onPress={() => Linking.openURL(`${data?.Link}`)}
-                  >
-                    Get Merch!
-                  </Button>
+              <View className="items-center -mt-8">
+                <View className="flex flex-col justify-center items-center">
+                  <View className="flex flex-row justify-center">
+                    <Button
+                      className="w-32 border-2 border-cyan-500 m-2"
+                      mode="contained"
+                      buttonColor="#00C5E038"
+                      onPress={() => Linking.openURL(`${data?.Link}`)}
+                    >
+                      Contribute
+                    </Button>
+                    <Button
+                      className="w-32 border-2 border-cyan-500 m-2"
+                      mode="contained"
+                      buttonColor="#00C5E038"
+                      onPress={onShare}
+                    >
+                      Share
+                    </Button>
+                  </View>
+                  <View className="flex flex-row justify-center">
+                    <Button
+                      className="w-32 border-2 border-cyan-500 mx-2"
+                      mode="contained"
+                      buttonColor="#00C5E038"
+                      onPress={() => {
+                        Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
+                      }}
+                    >
+                      Contact
+                    </Button>
+                    <Button
+                      className="w-32 border-2 border-cyan-500 mx-2"
+                      mode="contained"
+                      buttonColor="#00C5E038"
+                      onPress={() => Linking.openURL(`${data?.Merch}`)}
+                    >
+                      Merch
+                    </Button>
+                  </View>
                 </View>
+                <Text style={styles.text}>{data?.Action}</Text>
               </View>
             )}
           </Motion.View>
