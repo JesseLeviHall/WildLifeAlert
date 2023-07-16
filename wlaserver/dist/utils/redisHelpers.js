@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 //change this function to set alerts to the entire alert object
 export async function getActiveAlerts(redis, hours) {
     //timestamp of current moment
@@ -19,8 +21,9 @@ export async function getActiveAlerts(redis, hours) {
     }
     return alerts;
 }
+//===================================================
+//get active alerts in rescuer's radius
 export async function getActiveAlertsInRadius(redis, hours, longitude, latitude, radius) {
-    // Get alerts within the rescuer's radius
     const alertsInArea = await redis.sendCommand([
         "GEORADIUS",
         "alerts:geospatial",
@@ -45,4 +48,5 @@ export async function getActiveAlertsInRadius(redis, hours, longitude, latitude,
     }
     return recentAlertsInArea;
 }
+//===================================================
 //# sourceMappingURL=redisHelpers.js.map

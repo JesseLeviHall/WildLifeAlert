@@ -27,7 +27,8 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@aws-sdk/client-s3": "^3.341.0",
+        "@aws-sdk/client-s3": "^3.370.0",
+        "@aws-sdk/s3-request-presigner": "^3.370.0",
         "@clerk/clerk-sdk-node": "^4.10.12",
         "dotenv": "^16.0.3",
         "express": "^4.16.2",

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { useAuth } from "@clerk/clerk-expo";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -89,12 +89,19 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     );
   }
 
+  console.log(data.Photo[0]);
+
   return (
     <View>
       <Text>AlertDetails: {alertId}</Text>
       <Text>DetailsResponse: {data?.FullName}</Text>
+      {data?.Photo && data?.Photo[0] && <Image source={{ uri: data.Photo[0] }} style={{ width: 200, height: 200 }} />}
     </View>
   );
 };
 
 export default AlertDetails;
+
+/* 
+ {data?.Photo && data?.Photo[0] && <Image source={{ uri: data.Photo[0] }} style={{ width: 200, height: 200 }} />}
+*/

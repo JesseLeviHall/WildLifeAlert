@@ -1,5 +1,6 @@
 import { redisClient } from "../services/db.setup.js";
 import { getActiveAlertsInRadius } from "../utils/redisHelpers.js";
+import { getPhotosFromS3 } from "../utils/photoGetHelper.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 //get active alerts in rescuer's radius
@@ -57,10 +58,15 @@ export const getAlertDetails = async (req, res) => {
             return;
         }
         const alertId = req.params.alertId;
-        const alert = await redisClient.hGetAll(`${alertId}`);
-        const alertDetails = { ...alert };
-        console.log(alertDetails);
-        res.status(200).send(alertDetails);
+        const alert = (await redisClient.hGetAll(`${alertId}`));
+        const photoFileNames = JSON.parse(alert.Photo);
+        const photoURLs = [];
+        for (const fileName of photoFileNames) {
+            const photoURL = await getPhotosFromS3(fileName);
+            photoURLs.push(photoURL);
+        }
+        alert.Photo = photoURLs;
+        res.status(200).send(alert);
     }
     catch (error) {
         console.error(error);
