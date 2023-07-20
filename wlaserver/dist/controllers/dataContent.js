@@ -60,12 +60,11 @@ export const getAlertDetails = async (req, res) => {
         const alertId = req.params.alertId;
         const alert = (await redisClient.hGetAll(`${alertId}`));
         const photoFileNames = JSON.parse(alert.Photo);
-        const photoURLs = [];
-        for (const fileName of photoFileNames) {
+        const photoData = await Promise.all(photoFileNames.map(async (fileName, index) => {
             const photoURL = await getPhotosFromS3(fileName);
-            photoURLs.push(photoURL);
-        }
-        alert.Photo = photoURLs;
+            return { id: index + 1, url: photoURL }; // Here's the transformation
+        }));
+        alert.Photo = photoData;
         res.status(200).send(alert);
     }
     catch (error) {

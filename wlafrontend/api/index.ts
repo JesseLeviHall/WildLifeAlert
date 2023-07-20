@@ -4,7 +4,7 @@ import axios from "axios";
 //remote server : https://d1h2airt5kbf3g.cloudfront.net
 //locoal server: http://10.0.10.10:3000
 const API = axios.create({
-  baseURL: "https://d1h2airt5kbf3g.cloudfront.net",
+  baseURL: "http://10.0.10.10:3000",
   timeout: 10000,
   withCredentials: false,
 });

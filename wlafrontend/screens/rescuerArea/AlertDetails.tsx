@@ -93,10 +93,6 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     <View>
       <Text>AlertDetails: {alertId}</Text>
       <Text>DetailsResponse: {data?.FullName}</Text>
-      {data?.Photo &&
-        data.Photo.map((photoUrl: string, index: number) => (
-          <Image key={index} source={{ uri: photoUrl }} style={{ width: 200, height: 200, marginBottom: 10 }} />
-        ))}
     </View>
   );
 };
@@ -104,5 +100,12 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
 export default AlertDetails;
 
 /* 
- {data?.Photo && data?.Photo[0] && <Image source={{ uri: data.Photo[0] }} style={{ width: 200, height: 200 }} />}
+  {data?.Photo &&
+        data.Photo.map((photoObj: { id: number; url: string }) => (
+          <Image
+            key={photoObj.id}
+            source={{ uri: photoObj.url }}
+            style={{ width: 150, height: 150, marginBottom: 10 }}
+          />
+        ))}
 */
