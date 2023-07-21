@@ -70,7 +70,11 @@ const StackNavigator = () => {
       <Stack.Screen name="RescuerWelcome" component={RescuerWelcome} options={{ headerShown: false }} />
       <Stack.Screen name="RescuerPrefs" component={RescuerPrefs} options={{ headerShown: false }} />
       <Stack.Screen name="ColdAlerts" component={ColdAlerts} />
-      <Stack.Screen name="AlertDetails" component={AlertDetails} />
+      <Stack.Screen
+        name="AlertDetails"
+        component={AlertDetails}
+        options={{ title: "Details", headerTintColor: "#000000", headerStyle: { backgroundColor: "#71D1C7" } }}
+      />
     </Stack.Navigator>
   );
 };

@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, StyleSheet, ImageBackground, Dimensions } from "react-native";
+import AnimatedGradient from "../../components/background/GradientAnimated";
+import { Button } from "native-base";
 import { useAuth } from "@clerk/clerk-expo";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -9,6 +11,9 @@ import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import SpinnerComp from "../../components/Spinner";
 import ErrorMessage from "../../components/ErrorMessage";
+
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 type StackParams = {
   AlertDetails: { alertId: string };
@@ -69,6 +74,12 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     return (
       <View className="flex-1 align-middle justify-center">
         <ErrorMessage error={data?.error.message} />
+        <Button
+          className="w-24 absolute bottom-24 border self-center border-cyan-500 "
+          onPress={() => navigation.goBack()}
+        >
+          <Text>Go back</Text>
+        </Button>
       </View>
     );
   }
@@ -77,6 +88,12 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     return (
       <View className="flex-1 align-middle justify-center">
         <ErrorMessage error="Error fetching the alert details" />
+        <Button
+          className="w-24 absolute bottom-24 border self-center border-cyan-500 "
+          onPress={() => navigation.goBack()}
+        >
+          <Text>Go back</Text>
+        </Button>
       </View>
     );
   }
@@ -85,12 +102,39 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     return (
       <View className="flex-1 align-middle justify-center">
         <ErrorMessage error="Sorry, error fetching data" />
+        <Button
+          className="w-24 absolute bottom-24 border self-center border-cyan-500 "
+          onPress={() => navigation.goBack()}
+        >
+          <Text>Go back</Text>
+        </Button>
       </View>
     );
   }
 
+  /*  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: "Details",
+      headerTintColor: "#000000",
+      headerStyle: { backgroundColor: "#71D1C7" },
+    });
+  }); */
+
   return (
-    <View>
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("../../assets/desertbg.png")}
+        style={{
+          height: screenHeight,
+          width: screenWidth,
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <View style={styles.background}>
+          <AnimatedGradient />
+        </View>
+      </ImageBackground>
       <Text>AlertDetails: {alertId}</Text>
       <Text>DetailsResponse: {data?.FullName}</Text>
     </View>
@@ -109,3 +153,17 @@ export default AlertDetails;
           />
         ))}
 */
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  background: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    top: 0,
+    right: 0,
+    zIndex: -10,
+  },
+});
