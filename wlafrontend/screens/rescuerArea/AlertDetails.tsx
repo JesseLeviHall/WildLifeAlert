@@ -10,6 +10,7 @@ import {
   Dimensions,
   ScrollView,
   Pressable,
+  Modal,
 } from "react-native";
 import AnimatedGradient from "../../components/background/GradientAnimated";
 import { Button, Divider } from "native-base";
@@ -47,6 +48,18 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
   const [token, setToken] = React.useState<string | null>(null);
   const { alertId } = route.params;
   const [showToast, setShowToast] = React.useState(false);
+  const [isImageModalVisible, setImageModalVisible] = React.useState(false);
+  const [selectedImageUri, setSelectedImageUri] = React.useState<string | null>(null);
+
+  const openImageModal = (uri: string) => {
+    setSelectedImageUri(uri);
+    setImageModalVisible(true);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImageUri(null);
+    setImageModalVisible(false);
+  };
 
   React.useEffect(() => {
     const fetchToken = async () => {
@@ -165,7 +178,9 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
           <ScrollView horizontal={true}>
             {data?.Photo &&
               data.Photo.map((photoObj: { id: number; url: string }) => (
-                <Image key={photoObj.id} source={{ uri: photoObj.url }} style={styles.images} />
+                <Pressable style={styles.imagePressable} key={photoObj.id} onPress={() => openImageModal(photoObj.url)}>
+                  <Image source={{ uri: photoObj.url }} style={styles.images} />
+                </Pressable>
               ))}
           </ScrollView>
         </View>
@@ -232,6 +247,19 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
           </View>
         )}
       </ImageBackground>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isImageModalVisible}
+        onRequestClose={closeImageModal} // This is for handling the hardware back button on Android.
+      >
+        <View style={styles.modalContainer}>
+          <Pressable style={styles.modalCloseButton} onPress={closeImageModal}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </Pressable>
+          {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />}
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -262,15 +290,20 @@ const styles = StyleSheet.create({
     maxHeight: screenHeight / 1.8,
   },
   imagescontainer: {
-    flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
     marginTop: 25,
+    padding: 10,
     backgroundColor: "rgba(235, 238, 255, 0.79)",
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
     maxHeight: screenHeight / 4,
+  },
+  imagePressable: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   images: {
     width: 150,
@@ -278,5 +311,27 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     marginHorizontal: 4,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalCloseButton: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    padding: 10,
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+  },
+  closeButtonText: {
+    color: "#000",
+  },
+  modalImage: {
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.7,
+    resizeMode: "contain",
   },
 });
