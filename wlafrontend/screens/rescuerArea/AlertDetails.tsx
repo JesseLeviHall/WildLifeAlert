@@ -1,7 +1,20 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, ImageBackground, Dimensions } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Linking,
+  ImageBackground,
+  Dimensions,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import AnimatedGradient from "../../components/background/GradientAnimated";
-import { Button } from "native-base";
+import { Button, Divider } from "native-base";
+import { Chip } from "react-native-paper";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useAuth } from "@clerk/clerk-expo";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -11,6 +24,7 @@ import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import SpinnerComp from "../../components/Spinner";
 import ErrorMessage from "../../components/ErrorMessage";
+import SuccessToast from "../../components/SuccessToast";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -32,6 +46,7 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
   const isConnected = useConnectivity();
   const [token, setToken] = React.useState<string | null>(null);
   const { alertId } = route.params;
+  const [showToast, setShowToast] = React.useState(false);
 
   React.useEffect(() => {
     const fetchToken = async () => {
@@ -112,18 +127,30 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
     );
   }
 
-  /*  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      title: "Details",
-      headerTintColor: "#000000",
-      headerStyle: { backgroundColor: "#71D1C7" },
-    });
-  }); */
+  async function copyToClipboard() {
+    await Clipboard.setStringAsync(`${data?.Latitude}, ${data?.Longitude}`);
+    setShowToast(true);
+    const timerId = setTimeout(() => {
+      setShowToast(false);
+    }, 1200);
+    return () => clearTimeout(timerId);
+  }
+
+  const sentAt = Number(data?.Timestamp);
+  const date = new Date(sentAt);
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const amPm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  const formattedTimestamp = `${date.getMonth() + 1}/${date.getDate()}, ${hours}:${
+    minutes < 10 ? "0" : ""
+  }${minutes} ${amPm}`;
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/desertbg.png")}
+        source={require("../../assets/desertbglt.png")}
         style={{
           height: screenHeight,
           width: screenWidth,
@@ -134,25 +161,82 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
         <View style={styles.background}>
           <AnimatedGradient />
         </View>
+        <View style={styles.imagescontainer}>
+          <ScrollView horizontal={true}>
+            {data?.Photo &&
+              data.Photo.map((photoObj: { id: number; url: string }) => (
+                <Image key={photoObj.id} source={{ uri: photoObj.url }} style={styles.images} />
+              ))}
+          </ScrollView>
+        </View>
+        <View style={styles.box}>
+          <ScrollView>
+            {data?.ShareContact === "true" ? (
+              <Text className=" text-center mt-2 font-semibold text-xl">Alert Sent by {data?.FullName}</Text>
+            ) : (
+              <Text className=" text-center mt-2 font-semibold text-xl">Sent Anonymously</Text>
+            )}
+            <Text className="mt-2 text-center font-light text-black text-lg">{formattedTimestamp}</Text>
+            {data?.ShareContact === "true" && (
+              <View className="flex flex-row justify-evenly">
+                <Chip
+                  className="mt-4 w-18 "
+                  elevated={true}
+                  mode="flat"
+                  icon={() => <MaterialCommunityIcons name="phone" size={18} color="#4AA8FF" />}
+                  onPress={() => {
+                    Linking.openURL(`tel:${data?.PhoneNumber}`);
+                  }}
+                >
+                  Call
+                </Chip>
+                <Chip
+                  className="mt-4 w-18 ml-2"
+                  elevated={true}
+                  mode="flat"
+                  icon={() => <MaterialCommunityIcons name="message" size={18} color="#4AA8FF" />}
+                  onPress={() => {
+                    Linking.openURL(`sms:${data?.PhoneNumber}`);
+                  }}
+                >
+                  Text
+                </Chip>
+                <Chip
+                  className="mt-4 w-18 ml-2"
+                  elevated={true}
+                  mode="flat"
+                  icon={() => <MaterialCommunityIcons name="email" size={18} color="#4AA8FF" />}
+                  onPress={() => {
+                    Linking.openURL(`mailto:${data?.Email}`);
+                  }}
+                >
+                  Email
+                </Chip>
+              </View>
+            )}
+            <Pressable onPress={copyToClipboard}>
+              <Text className="mt-4 text-center font-medium text-blue-400 text-lg">Copy Coordinates</Text>
+            </Pressable>
+            {showToast && (
+              <View className="-mt-16 h-24 rounded-lg">
+                <SuccessToast message="Coordinates Copied" />
+              </View>
+            )}
+            <Text className="mt-8 ml-4 font-black text-black text-3xl">{data?.Animal}</Text>
+            <Text className="mt-2 ml-4 font-semibold text-black  text-lg">Description: {data?.Description}</Text>
+          </ScrollView>
+        </View>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-end">
+            <OfflineToast />
+          </View>
+        )}
       </ImageBackground>
-      <Text>AlertDetails: {alertId}</Text>
-      <Text>DetailsResponse: {data?.FullName}</Text>
     </View>
   );
 };
 
 export default AlertDetails;
-
-/* 
-  {data?.Photo &&
-        data.Photo.map((photoObj: { id: number; url: string }) => (
-          <Image
-            key={photoObj.id}
-            source={{ uri: photoObj.url }}
-            style={{ width: 150, height: 150, marginBottom: 10 }}
-          />
-        ))}
-*/
 
 const styles = StyleSheet.create({
   container: {
@@ -165,5 +249,34 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     zIndex: -10,
+  },
+  box: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: 12,
+    backgroundColor: "rgba(235, 238, 255, 0.79)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight / 1.8,
+  },
+  imagescontainer: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: 25,
+    backgroundColor: "rgba(235, 238, 255, 0.79)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight / 4,
+  },
+  images: {
+    width: 150,
+    height: 190,
+    borderRadius: 15,
+    alignSelf: "center",
+    marginHorizontal: 4,
   },
 });

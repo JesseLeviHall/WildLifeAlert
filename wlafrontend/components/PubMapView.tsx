@@ -160,7 +160,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
                   </View>
                 </View>
               )}
-              {selectedAlert.ShareContact === false && <Text style={styles.titleText}>Anonymous Post:</Text>}
+              {selectedAlert.ShareContact === false && <Text style={styles.titleText}>Sent Anonymously</Text>}
               <Text style={styles.modalText}>Animal: {selectedAlert.Animal}</Text>
               <Text style={styles.modalText}>
                 Description: {selectedAlert.Description.substring(0, 100)}
