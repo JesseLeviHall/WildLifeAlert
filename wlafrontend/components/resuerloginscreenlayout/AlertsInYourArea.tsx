@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getActiveInArea } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
@@ -40,18 +40,30 @@ const AlertsInYourArea = (props: Props) => {
 
   if (data?.error) {
     return (
-      <View className="h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl">
+      <View
+        className={`h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl ${
+          data?.alertCount > 0 ? "border-2 border-red-500" : ""
+        }`}
+      >
         <Text className="text-[#A6D4FF] text-lg">{data?.error.message}</Text>
       </View>
     );
   }
 
+  console.log(data);
+
   return (
-    <View className=" h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl">
-      <Text className="text-[#A6D4FF]  text-5xl">{data?.alertCount}</Text>
-      <Text className="text-[#A6D4FF] text-lg">Recent Alerts</Text>
-      <Text className="text-[#A6D4FF]  font-light">Last 48 Hours in your radius</Text>
-    </View>
+    <Pressable onPress={() => console.log("pressed")} disabled={data?.alertCount !== 1}>
+      <View
+        className={`h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl ${
+          data?.alertCount > 0 ? "border-2 border-red-500" : ""
+        }`}
+      >
+        <Text className="text-[#A6D4FF]  text-5xl">{data?.alertCount}</Text>
+        <Text className="text-[#A6D4FF] text-lg">Recent Alerts</Text>
+        <Text className="text-[#A6D4FF]  font-light">Last 48 Hours in your radius</Text>
+      </View>
+    </Pressable>
   );
 };
 

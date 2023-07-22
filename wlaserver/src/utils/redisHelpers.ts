@@ -61,7 +61,6 @@ export async function getActiveAlertsInRadius(
       }
     }
   }
-
   return recentAlertsInArea;
 }
 

@@ -11,16 +11,10 @@ type UserLocation = {
 };
 type SetAlertLocationMapProps = {
   onLocationChange: (location: UserLocation | null) => void;
-  onLocationSave: (
-    locationIsSaved: boolean,
-    location: UserLocation | null
-  ) => void;
+  onLocationSave: (locationIsSaved: boolean, location: UserLocation | null) => void;
 };
 
-export default function SetAlertLocationMap({
-  onLocationChange,
-  onLocationSave,
-}: SetAlertLocationMapProps) {
+export default function SetAlertLocationMap({ onLocationChange, onLocationSave }: SetAlertLocationMapProps) {
   const [location, setLocation] = useState<UserLocation | null>(null);
   const [locationExists, setLocationExists] = useState(false);
   const [locationSaved, setLocationSaved] = useState(false);
@@ -94,9 +88,8 @@ export default function SetAlertLocationMap({
         </MapView>
       </View>
       <View className="flex flex-col justify-center items-center py-4">
-        <Text className="mb-3 font-bold text-2xl text-center">
-          Where Is The Animal?
-        </Text>
+        <Text className="mb-3 font-bold text-2xl text-center">Where Is The Animal?</Text>
+        <Text className="mb-3 font-bold text-center">*Setting Location to your home is not recommended</Text>
         <Text className="mb-3 font-bold text-center">tap the map or</Text>
         <FAB
           accessibilityLabel="Get Current Location"
