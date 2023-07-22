@@ -280,6 +280,7 @@ const styles = StyleSheet.create({
   },
   box: {
     flex: 1,
+    paddingHorizontal: 6,
     justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: 12,

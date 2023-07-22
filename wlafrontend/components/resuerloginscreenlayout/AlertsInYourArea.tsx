@@ -4,13 +4,22 @@ import { useQuery } from "@tanstack/react-query/build/lib";
 import { getActiveInArea } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { useAuth } from "@clerk/clerk-expo";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
-type Props = {};
+type RootStackParamList = {
+  AlertDetails: { alertId: string };
+};
+type AlertDetailsNavigationProp = NavigationProp<RootStackParamList, "AlertDetails">;
+
+type Props = {
+  navigation: AlertDetailsNavigationProp;
+};
 
 const AlertsInYourArea = (props: Props) => {
   const isConnected = useConnectivity();
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
+  const navigation = useNavigation<AlertDetailsNavigationProp>();
 
   React.useEffect(() => {
     const fetchToken = async () => {
@@ -50,10 +59,15 @@ const AlertsInYourArea = (props: Props) => {
     );
   }
 
-  console.log(data);
+  const handlePress = () => {
+    if (data?.alertCount >= 1) {
+      navigation.navigate("AlertDetails", { alertId: data?.alerts[0] });
+    }
+    return;
+  };
 
   return (
-    <Pressable onPress={() => console.log("pressed")} disabled={data?.alertCount !== 1}>
+    <Pressable onPress={handlePress} disabled={data?.alertCount == 0}>
       <View
         className={`h-28 w-64 mt-5 bg-[#00C5E021] items-center align-middle justify-center rounded-xl ${
           data?.alertCount > 0 ? "border-2 border-red-500" : ""
