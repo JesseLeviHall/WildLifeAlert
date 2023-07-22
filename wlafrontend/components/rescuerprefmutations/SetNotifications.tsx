@@ -2,6 +2,7 @@
 import * as React from "react";
 import { View } from "react-native";
 import { Checkbox, Icon } from "native-base";
+import * as Notifications from "expo-notifications";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { SetNotificationPref } from "../../api/index";
 import { useAuth } from "@clerk/clerk-expo";
@@ -18,18 +19,7 @@ const SetNotifications = ({ notificationProp }: Props) => {
   const [showToast, setShowToast] = React.useState(false);
   const [notifications, SetNotifications] = React.useState(notificationProp === "true");
   const { sessionId, getToken } = useAuth();
-  const [token, setToken] = React.useState<string | null>(null);
   const isConnected = useConnectivity();
-
-  React.useEffect(() => {
-    const fetchToken = async () => {
-      const fetchedToken = await getToken();
-      if (fetchedToken) {
-        setToken(fetchedToken);
-      }
-    };
-    fetchToken();
-  }, []);
 
   const mutation = useMutation(SetNotificationPref, {
     onSuccess: () => {
@@ -50,11 +40,18 @@ const SetNotifications = ({ notificationProp }: Props) => {
     try {
       setError("");
       const newNotificationValue = !notifications; // Flip the current notification state
+      let expoPushToken = "";
+      if (newNotificationValue) {
+        let tokenObject = await Notifications.getExpoPushTokenAsync();
+        expoPushToken = tokenObject.data;
+        console.log(expoPushToken);
+      }
       SetNotifications(newNotificationValue); // Set the state to the new value
       const token = await getToken();
       if (sessionId && token !== null) {
-        const Notifications = newNotificationValue.toString();
-        mutation.mutate({ sessionId, token, Notifications });
+        console.log(expoPushToken);
+        const NotificationsValue = newNotificationValue.toString();
+        mutation.mutate({ sessionId, token, Notifications: NotificationsValue, expoPushToken });
       } else {
         throw new Error("Session ID, token, or user details is undefined");
       }

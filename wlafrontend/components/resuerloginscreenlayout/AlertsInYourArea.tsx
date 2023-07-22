@@ -11,16 +11,15 @@ type RootStackParamList = {
   AlertDetails: { alertId: string };
 };
 type AlertDetailsNavigationProp = NavigationProp<RootStackParamList, "AlertDetails">;
-
 type Props = {
   navigation: AlertDetailsNavigationProp;
 };
 
-const AlertsInYourArea = (props: Props) => {
+const AlertsInYourArea = ({ navigation }: Props) => {
   const isConnected = useConnectivity();
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
-  const navigation = useNavigation<AlertDetailsNavigationProp>();
+  //const navigation = useNavigation<RescuerRegisterNavigationProp>();
 
   React.useEffect(() => {
     const fetchToken = async () => {

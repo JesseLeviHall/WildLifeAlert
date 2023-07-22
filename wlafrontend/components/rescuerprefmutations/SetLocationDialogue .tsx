@@ -24,7 +24,6 @@ type Props = {
 const SetLocationDialogue = ({ visible, setVisible, LatitudeProp, LongitudeProp }: Props) => {
   const isConnected = useConnectivity();
   const { sessionId, getToken, signOut } = useAuth();
-  const [token, setToken] = React.useState<string | null>(null);
   const [error, setError] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -33,16 +32,6 @@ const SetLocationDialogue = ({ visible, setVisible, LatitudeProp, LongitudeProp 
     latitude: LatitudeProp ? parseFloat(LatitudeProp) : 29.4241,
     longitude: LongitudeProp ? parseFloat(LongitudeProp) : -98.4936,
   });
-
-  React.useEffect(() => {
-    const fetchToken = async () => {
-      const fetchedToken = await getToken();
-      if (fetchedToken) {
-        setToken(fetchedToken);
-      }
-    };
-    fetchToken();
-  }, []);
 
   const handleGetCurrentLocation = async () => {
     setIsLoading(true);

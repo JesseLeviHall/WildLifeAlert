@@ -157,13 +157,22 @@ export const updateRescuerPrefNotifications = async (
 ): Promise<void> => {
   try {
     const UserId = req.auth.userId;
+    console.log(UserId);
     const id = await redisClient.get(UserId);
     if (!id) {
       res.status(404).json({ msg: "User not found" });
       return;
     }
     const Notifications = req.body.Notifications.toString();
-    await redisClient.sendCommand(["HSET", `rescuer:${id}`, "Notifications", Notifications]);
+    const expoPushToken = req.body.expoPushToken || "";
+    await redisClient.sendCommand([
+      "HSET",
+      `rescuer:${id}`,
+      "Notifications",
+      Notifications,
+      "expoPushToken",
+      expoPushToken,
+    ]);
     res.send("Notifications Updated");
   } catch (error) {
     console.error(error);

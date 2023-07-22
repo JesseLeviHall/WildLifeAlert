@@ -32,10 +32,7 @@ type RootStackParamList = {
   RescuerPrefs: undefined;
   ForgotPassword: undefined;
 };
-type RescuerRegisterNavigationProp = NavigationProp<
-  RootStackParamList,
-  "RescuerRegister"
->;
+type RescuerRegisterNavigationProp = NavigationProp<RootStackParamList, "RescuerRegister">;
 
 type Props = {
   navigation: RescuerRegisterNavigationProp;
@@ -71,17 +68,12 @@ const RescuerLogin = (Props: Props) => {
         <NightGradAnimated />
       </View>
       <View className="mt-16 mb-12 h-9 w-48 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
-        <Text className="font-bold text-lg text-blue-50 text-center">
-          Base Camp
-        </Text>
+        <Text className="font-bold text-lg text-blue-50 text-center">Base Camp</Text>
       </View>
       <SignedIn>
         <View style={styles.box}>
           <Text className="text-center text-blue-100 text-lg mt-2 font-thin">
-            Hello,{" "}
-            {user?.firstName
-              ? user.firstName
-              : user?.primaryEmailAddress?.emailAddress}
+            Hello, {user?.firstName ? user.firstName : user?.primaryEmailAddress?.emailAddress}
           </Text>
           <View>
             <AlertsInYourArea />
@@ -95,10 +87,7 @@ const RescuerLogin = (Props: Props) => {
           <View style={styles.box}>
             <SignInWithOAuth />
             <SignInComponent />
-            <TouchableOpacity
-              className="mb-6"
-              onPress={() => navigation.navigate("ForgotPassword")}
-            >
+            <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
               <Text className="text-blue-300 text-sm">Forgot password?</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -107,15 +96,10 @@ const RescuerLogin = (Props: Props) => {
                 navigation.navigate("RescuerRegister");
               }}
             >
-              <Text className="text-blue-200 text-base font-bold">
-                New? Sign Up Here!
-              </Text>
+              <Text className="text-blue-200 text-base font-bold">New? Sign Up Here!</Text>
             </TouchableOpacity>
           </View>
-          <Button
-            onPress={navigation.goBack}
-            className="w-24 absolute bottom-32 border self-center border-cyan-500 "
-          >
+          <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
             Back
           </Button>
         </SignedOut>

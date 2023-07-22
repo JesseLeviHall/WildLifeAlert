@@ -13,7 +13,7 @@ import {
   Modal,
 } from "react-native";
 import AnimatedGradient from "../../components/background/GradientAnimated";
-import { Button, Divider } from "native-base";
+import { Button } from "native-base";
 import { Chip } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useAuth } from "@clerk/clerk-expo";

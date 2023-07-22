@@ -23,18 +23,7 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
   const [showToast, setShowToast] = React.useState(false);
   const [Radius, setRadius] = React.useState(geoRadiusProp);
   const { sessionId, getToken } = useAuth();
-  const [token, setToken] = React.useState<string | null>(null);
   const isConnected = useConnectivity();
-
-  React.useEffect(() => {
-    const fetchToken = async () => {
-      const fetchedToken = await getToken();
-      if (fetchedToken) {
-        setToken(fetchedToken);
-      }
-    };
-    fetchToken();
-  }, []);
 
   const mutation = useMutation(setGeoRadius, {
     onSuccess: () => {
@@ -89,9 +78,7 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
 
   return (
     <View className="items-center w-full h-36 justify-center">
-      <Text className=" text-lg mb-1 font-semibold">
-        Alert Radius: {Radius} kilometers
-      </Text>
+      <Text className=" text-lg mb-1 font-semibold">Alert Radius: {Radius} kilometers</Text>
       <FormControl className="w-1/2">
         <Input
           className=" bg-[#d4e1ea] w-2/3"
@@ -103,15 +90,10 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
           onSubmitEditing={Keyboard.dismiss}
         />
         {"Radius" in errors ? (
-          <FormControl.HelperText className="items-center text-center ">
-            {errors.Radius}
-          </FormControl.HelperText>
+          <FormControl.HelperText className="items-center text-center ">{errors.Radius}</FormControl.HelperText>
         ) : null}
       </FormControl>
-      <TouchableOpacity
-        className="border rounded-full px-4 py-2 -mt-2 border-cyan-500 "
-        onPress={handleSubmitGeoPref}
-      >
+      <TouchableOpacity className="border rounded-full px-4 py-2 -mt-2 border-cyan-500 " onPress={handleSubmitGeoPref}>
         <Text className="text-white font-thin">Save</Text>
       </TouchableOpacity>
       {showToast && (

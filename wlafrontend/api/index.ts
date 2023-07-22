@@ -431,17 +431,19 @@ export const SetNotificationPref = async ({
   sessionId,
   token,
   Notifications,
+  expoPushToken,
 }: {
   sessionId: String;
   token: String;
   Notifications: String;
+  expoPushToken: String;
 }) => {
   try {
     const setNotifications = await API({
       method: "post",
       url: "secure-api/rescuerprefnotifications",
       headers: { Authorization: `Bearer ${sessionId} ${token}` },
-      data: { Notifications },
+      data: { Notifications, expoPushToken },
     });
     return setNotifications.data;
   } catch (error: any) {
