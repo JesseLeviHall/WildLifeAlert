@@ -14,10 +14,7 @@ type RootStackParamList = {
   RescuerRegisterStepOne: undefined;
 };
 
-type RescuerRegisterStepProp = NavigationProp<
-  RootStackParamList,
-  "RescuerRegisterStepOne"
->;
+type RescuerRegisterStepProp = NavigationProp<RootStackParamList, "RescuerRegisterStepOne">;
 
 type Props = {
   navigation: RescuerRegisterStepProp;
@@ -33,9 +30,7 @@ const RescuerRegister = (props: Props) => {
   const isConnected = useConnectivity();
   const [showToast, setShowToast] = React.useState(false);
   const [Location, setLocation] = React.useState<UserLocation | null>(null);
-  const [savedLocation, setSavedLocation] = React.useState<UserLocation | null>(
-    null
-  );
+  const [savedLocation, setSavedLocation] = React.useState<UserLocation | null>(null);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -55,10 +50,7 @@ const RescuerRegister = (props: Props) => {
     }
   }, [savedLocation]);
 
-  const handleLocationSave = (
-    locationIsSaved: boolean,
-    savedLocation: UserLocation | null
-  ) => {
+  const handleLocationSave = (locationIsSaved: boolean, savedLocation: UserLocation | null) => {
     setLocation(savedLocation);
     if (locationIsSaved) {
       setSavedLocation(savedLocation);
@@ -66,23 +58,12 @@ const RescuerRegister = (props: Props) => {
   };
 
   return (
-    <LinearGradient
-      style={{ height: screenHeight }}
-      colors={["#24008CFF", "#0E409C9E", "#EB8705AF"]}
-    >
+    <LinearGradient style={{ height: screenHeight }} colors={["#24008CFF", "#0E409C9E", "#EB8705AF"]}>
       <View className="flex flex-1 items-center h-full w-full ">
-        <SetRescuerLocationMap
-          onLocationChange={setLocation}
-          onLocationSave={handleLocationSave}
-        />
-        <View className=" h-16">
-          {showToast && <SuccessToast message="Location Saved" />}
-        </View>
-
+        <SetRescuerLocationMap onLocationChange={setLocation} onLocationSave={handleLocationSave} />
+        <View className=" h-16">{showToast && <SuccessToast message="Location Saved" />}</View>
         <Button
-          className={`${
-            Location ? "" : "bg-gray-300"
-          } border border-cyan-500 items-center w-24 mt-10`}
+          className={`${Location ? "" : "bg-gray-300"} border border-cyan-500 items-center w-24 -mt-6`}
           disabled={!Location}
           onPress={() => navigation.navigate("RescuerRegisterStepOne")}
         >

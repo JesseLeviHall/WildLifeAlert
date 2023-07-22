@@ -4,6 +4,7 @@ import { Dimensions, Keyboard, ScrollView, ViewStyle } from "react-native";
 import { View, Switch, Text, Button, FormControl, Input } from "native-base";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
+import PushPermissionReg from "../../components/PushPermissionReg";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -26,7 +27,7 @@ type Errors = {
 const RescuerRegisterStepOne = (props: Props) => {
   const navigation = useNavigation<RescuerRegisterStepOneProp>();
   const isConnected = useConnectivity();
-
+  const [visible, setVisible] = React.useState(true);
   const [fullName, setFullName] = React.useState<{ fullName: string }>({
     fullName: "",
   });
@@ -130,6 +131,13 @@ const RescuerRegisterStepOne = (props: Props) => {
 
   return (
     <LinearGradient style={{ height: screenHeight }} colors={["#52B7FFDB", "#0E409C9E", "#EB8705AF"]}>
+      <View>
+        {visible ? (
+          <View className="h-full">
+            <PushPermissionReg visible={visible} setVisible={setVisible} />
+          </View>
+        ) : null}
+      </View>
       <View className="flex-1 align-middle justify-center ">
         <Text className="text-center font-black uppercase mt-4 text-3xl">Basic Information</Text>
         <Text className="text-center font-light text-sm mb-2">(Never shared anywhere without your permission)</Text>

@@ -15,16 +15,10 @@ type UserLocation = {
 
 type SetRescuerLocationMapProps = {
   onLocationChange: (location: UserLocation | null) => void;
-  onLocationSave: (
-    locationIsSaved: boolean,
-    location: UserLocation | null
-  ) => void;
+  onLocationSave: (locationIsSaved: boolean, location: UserLocation | null) => void;
 };
 
-export default function SetRescuerLocationMap({
-  onLocationChange,
-  onLocationSave,
-}: SetRescuerLocationMapProps) {
+export default function SetRescuerLocationMap({ onLocationChange, onLocationSave }: SetRescuerLocationMapProps) {
   const [location, setLocation] = useState<UserLocation | null>(null);
   const [locationExists, setLocationExists] = useState(false);
   const [locationSaved, setLocationSaved] = useState(false);
@@ -97,9 +91,8 @@ export default function SetRescuerLocationMap({
         </MapView>
       </View>
       <View className="flex flex-col justify-center items-center py-4">
-        <Text className="mb-2 font-bold text-2xl text-center">
-          Please set your location
-        </Text>
+        <Text className="mb-2 font-bold text-2xl text-center">Please set your location for recieving alerts</Text>
+        <Text className="mb-2  text-center">*This is never shared anywhere</Text>
         <Text className="mb-2  text-center">Tap the map or</Text>
         <FAB
           accessibilityLabel="Get Current Location"

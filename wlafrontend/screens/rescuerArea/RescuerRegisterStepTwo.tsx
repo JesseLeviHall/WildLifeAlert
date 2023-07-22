@@ -1,11 +1,7 @@
 import * as React from "react";
 import { View, Dimensions, ImageBackground, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  useNavigation,
-  NavigationProp,
-  useFocusEffect,
-} from "@react-navigation/native";
+import { useNavigation, NavigationProp, useFocusEffect } from "@react-navigation/native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
@@ -37,6 +33,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
     Medical: "",
     Professional: "",
     Organization: "",
+    expoPushToken: "",
   });
 
   React.useLayoutEffect(() => {
@@ -59,6 +56,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
             "Medical",
             "Professional",
             "Organization",
+            "expoPushToken",
           ];
           const results = await AsyncStorage.multiGet(keys);
 
@@ -76,6 +74,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
             Medical: data.Medical || "",
             Professional: data.Professional || "",
             Organization: data.Organization || "",
+            expoPushToken: data.expoPushToken || "",
           };
           setUserDetails(dataWithDefaults);
         } catch (e) {

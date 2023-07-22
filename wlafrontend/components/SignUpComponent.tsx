@@ -38,6 +38,7 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
           "Medical",
           "Professional",
           "Organization",
+          "expoPushToken",
         ]);
         navigation.navigate("RescuerWelcome");
       },
