@@ -157,7 +157,6 @@ export const updateRescuerPrefNotifications = async (
 ): Promise<void> => {
   try {
     const UserId = req.auth.userId;
-    console.log(UserId);
     const id = await redisClient.get(UserId);
     if (!id) {
       res.status(404).json({ msg: "User not found" });

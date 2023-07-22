@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Chip } from "react-native-paper";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../navigationtypes";
 import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,22 +10,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-type RootStackParamList = {
-  RescuerRegister: undefined;
-  PublicMap: undefined;
-  Home: undefined;
-  RescuerPrefs: undefined;
-  ForgotPassword: undefined;
-};
-type RescuerRegisterNavigationProp = NavigationProp<RootStackParamList, "RescuerRegister">;
+type RescuerLoginNavigationProp = NavigationProp<RootStackParamList>;
 
 type Props = {
-  navigation: RescuerRegisterNavigationProp;
+  navigation: RescuerLoginNavigationProp;
 };
 
-const LoggedInChips = (props: Props) => {
-  const navigation = useNavigation<RescuerRegisterNavigationProp>();
-
+const LoggedInChips = ({ navigation }: Props) => {
   const { isLoaded, signOut } = useAuth();
   if (!isLoaded) {
     return <SpinnerComp />;

@@ -49,7 +49,6 @@ const SetNotifications = ({ notificationProp }: Props) => {
       SetNotifications(newNotificationValue); // Set the state to the new value
       const token = await getToken();
       if (sessionId && token !== null) {
-        console.log(expoPushToken);
         const NotificationsValue = newNotificationValue.toString();
         mutation.mutate({ sessionId, token, Notifications: NotificationsValue, expoPushToken });
       } else {

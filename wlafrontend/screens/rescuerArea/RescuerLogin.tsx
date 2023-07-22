@@ -14,6 +14,7 @@ import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../navigationtypes";
 import SignInWithOAuth from "../../components/SignInWithOAuth";
 import SignInComponent from "../../components/SignInComponent";
 import LoggedInChips from "../../components/resuerloginscreenlayout/LoggedInChips";
@@ -25,21 +26,14 @@ import SpinnerComp from "../../components/Spinner";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-type RootStackParamList = {
-  RescuerRegister: undefined;
-  PublicMap: undefined;
-  Home: undefined;
-  RescuerPrefs: undefined;
-  ForgotPassword: undefined;
-};
-type RescuerRegisterNavigationProp = NavigationProp<RootStackParamList, "RescuerRegister">;
+type RescuerLoginNavigationProp = NavigationProp<RootStackParamList>;
 
 type Props = {
-  navigation: RescuerRegisterNavigationProp;
+  navigation: RescuerLoginNavigationProp;
 };
 
-const RescuerLogin = (Props: Props) => {
-  const navigation = useNavigation<RescuerRegisterNavigationProp>();
+const RescuerLogin = (props: Props) => {
+  const navigation = useNavigation<RescuerLoginNavigationProp>();
   const isConnected = useConnectivity();
   const { isLoaded, user } = useUser();
 
@@ -76,10 +70,10 @@ const RescuerLogin = (Props: Props) => {
             Hello, {user?.firstName ? user.firstName : user?.primaryEmailAddress?.emailAddress}
           </Text>
           <View>
-            <AlertsInYourArea />
+            <AlertsInYourArea navigation={props.navigation} />
             <ActiveGlobal />
           </View>
-          <LoggedInChips navigation={navigation} />
+          <LoggedInChips navigation={props.navigation} />
         </View>
       </SignedIn>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

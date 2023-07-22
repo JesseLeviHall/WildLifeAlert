@@ -6,20 +6,16 @@ import { getActiveInArea } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { useAuth } from "@clerk/clerk-expo";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../navigationtypes";
 
-type RootStackParamList = {
-  AlertDetails: { alertId: string };
-};
-type AlertDetailsNavigationProp = NavigationProp<RootStackParamList, "AlertDetails">;
-type Props = {
-  navigation: AlertDetailsNavigationProp;
+type Props<T extends {} = RootStackParamList> = {
+  navigation: NavigationProp<T>;
 };
 
-const AlertsInYourArea = ({ navigation }: Props) => {
+const AlertsInYourArea = <T extends RootStackParamList>({ navigation }: Props<T>) => {
   const isConnected = useConnectivity();
   const { sessionId, getToken } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
-  //const navigation = useNavigation<RescuerRegisterNavigationProp>();
 
   React.useEffect(() => {
     const fetchToken = async () => {
