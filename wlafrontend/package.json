@@ -42,7 +42,9 @@
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "tailwindcss": "^3.3.1",
-    "expo-clipboard": "~4.1.2"
+    "expo-clipboard": "~4.1.2",
+    "expo-notifications": "~0.18.1",
+    "expo-device": "~5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
