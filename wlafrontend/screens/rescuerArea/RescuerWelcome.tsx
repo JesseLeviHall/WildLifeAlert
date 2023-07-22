@@ -26,35 +26,19 @@ type Props = {
 const RescuerWelcome = (props: Props) => {
   const navigation = useNavigation<RescuerLoginNavigationProp>();
   const isConnected = useConnectivity();
-  const { sessionId, getToken } = useAuth();
-  const [token, setToken] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    const fetchToken = async () => {
-      const fetchedToken = await getToken();
-      if (fetchedToken) {
-        setToken(fetchedToken);
-      }
-    };
-    fetchToken();
-  }, []);
 
   const { isLoading, data, error } = useQuery(
-    ["welcomescreen", sessionId, token],
+    ["welcomescreen"],
     async () => {
       try {
-        if (sessionId && token) {
-          return await getWelcomeScreenContent(sessionId, token);
-        } else {
-          throw new Error("SessionId or token is missing");
-        }
+        return await getWelcomeScreenContent();
       } catch (error) {
         console.error("Error fetching welcome screen content:", error);
         return null;
       }
     },
     {
-      enabled: !!sessionId && !!token && isConnected,
+      enabled: isConnected,
     }
   );
 

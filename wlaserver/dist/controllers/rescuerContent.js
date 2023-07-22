@@ -5,7 +5,7 @@ dotenv.config();
 //POST /Register new Rescuer
 export const registerRescuer = async (req, res) => {
     try {
-        const { FullName, Phone, Medical, Rehab, Organization, Professional, Latitude, Longitude, } = req.body;
+        const { FullName, Phone, Medical, Rehab, Organization, Professional, Latitude, Longitude, expoPushToken } = req.body;
         // Check if required fields are undefined
         if (!FullName || !Phone) {
             res.status(400).json({ msg: "Invalid request: Missing required fields" });
@@ -13,17 +13,14 @@ export const registerRescuer = async (req, res) => {
         }
         const UserId = req.auth.userId;
         //Check if the user already exists
-        const UserExists = await redisClient.sendCommand([
-            "SISMEMBER",
-            "rescuer:UserIds",
-            UserId,
-        ]);
+        const UserExists = await redisClient.sendCommand(["SISMEMBER", "rescuer:UserIds", UserId]);
         if (UserExists) {
             res.status(400).json({ msg: "User already exists" });
             return;
         }
         const createdAt = Math.floor(Date.now() / 1000);
         const id = await redisClient.incr("rescuer:nextid");
+        const NotificationsValue = expoPushToken === "" ? "false" : "true";
         await redisClient.sendCommand([
             "HMSET",
             `rescuer:${id}`,
@@ -41,6 +38,8 @@ export const registerRescuer = async (req, res) => {
             Professional,
             "Organization",
             Organization,
+            "expoPushToken",
+            expoPushToken,
             "Latitude",
             Latitude.toString(),
             "Longitude",
@@ -52,17 +51,12 @@ export const registerRescuer = async (req, res) => {
             "Responses",
             "0",
             "Notifications",
-            "true",
+            NotificationsValue,
             "CreationDate",
             createdAt.toString(),
         ]);
         //Add the UserId to the rescuer:UserIds set
-        await redisClient.sendCommand([
-            "SADD",
-            "rescuer:UserIds",
-            UserId,
-            id.toString(),
-        ]);
+        await redisClient.sendCommand(["SADD", "rescuer:UserIds", UserId, id.toString()]);
         //Store a mapping from UserId to id
         await redisClient.sendCommand(["SET", UserId, id.toString()]);
         res.send("New Rescuer Created");
@@ -131,12 +125,7 @@ export const updateRescuerPrefRadius = async (req, res) => {
             return;
         }
         const { Radius } = req.body;
-        await redisClient.sendCommand([
-            "HSET",
-            `rescuer:${id}`,
-            "Radius",
-            Radius.toString(),
-        ]);
+        await redisClient.sendCommand(["HSET", `rescuer:${id}`, "Radius", Radius.toString()]);
         res.send("Geo Radius Updated");
     }
     catch (error) {
@@ -154,12 +143,7 @@ export const updateRescuerPrefNotifications = async (req, res) => {
             return;
         }
         const Notifications = req.body.Notifications.toString();
-        await redisClient.sendCommand([
-            "HSET",
-            `rescuer:${id}`,
-            "Notifications",
-            Notifications,
-        ]);
+        await redisClient.sendCommand(["HSET", `rescuer:${id}`, "Notifications", Notifications]);
         res.send("Notifications Updated");
     }
     catch (error) {
@@ -183,10 +167,7 @@ export const updateRescuerPrefLocation = async (req, res) => {
             return;
         }
         // Check if Latitude and Longitude are within the correct ranges
-        if (Latitude < -90 ||
-            Latitude > 90 ||
-            Longitude < -180 ||
-            Longitude > 180) {
+        if (Latitude < -90 || Latitude > 90 || Longitude < -180 || Longitude > 180) {
             res.status(400).json({ msg: "Latitude or Longitude out of range" });
             return;
         }
@@ -221,12 +202,7 @@ export const deleteRescuer = async (req, res) => {
         }
         await redisClient.sendCommand(["DEL", `rescuer:${id}`]);
         await redisClient.sendCommand(["DEL", UserId]);
-        await redisClient.sendCommand([
-            "SREM",
-            "rescuer:UserIds",
-            UserId,
-            id.toString(),
-        ]);
+        await redisClient.sendCommand(["SREM", "rescuer:UserIds", UserId, id.toString()]);
         res.send("Rescuer Deleted");
     }
     catch (error) {

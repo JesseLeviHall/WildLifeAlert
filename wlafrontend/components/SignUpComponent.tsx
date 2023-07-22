@@ -157,3 +157,23 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
     </TouchableWithoutFeedback>
   );
 }
+
+/* 
+ try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+      await setActive({ session: completeSignUp.createdSessionId });
+      const sessionId = completeSignUp.createdSessionId;
+      const token = await getToken();
+      if (sessionId && token && userDetails) {
+        mutation.mutate({ sessionId, token, userDetails });
+      } else {
+        throw new Error("Session ID, token, or user details is undefined");
+      }
+    } catch (err: any) {
+      setError(err.errors[0].message);
+      console.error(JSON.stringify(err, null, 2));
+    }
+
+*/

@@ -120,6 +120,8 @@ const RescuerPrefs = (props: Props) => {
     );
   }
 
+  //console.log(data);
+
   const toggleDialogVisible = () => setDialogVisible(!dialogVisible);
   const toggleChangeLocation = () => setChangeLocation(!changeLocation);
 

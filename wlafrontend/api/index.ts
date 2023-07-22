@@ -322,12 +322,12 @@ export const registerRescuer = async ({
 
 //===================================================
 //get the welcomecreen content:
-export const getWelcomeScreenContent = async (sessionId: String, token: String) => {
+export const getWelcomeScreenContent = async () => {
   try {
     const welcomeContent = await API({
       method: "get",
       url: "/secure-api/welcomescreen",
-      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      //headers: { Authorization: `Bearer ${sessionId} ${token}` },
     });
     return welcomeContent.data;
   } catch (error: any) {

@@ -4,38 +4,15 @@ import { clerkAuth, clerkRouteHandler } from "../middlewares/clerkAuth.js";
 
 export const rescuerRouter = Router();
 
-rescuerRouter.post(
-  "/newrescuer",
-  clerkAuth,
-  clerkRouteHandler,
-  resuerContent.registerRescuer
-);
+rescuerRouter.post("/newrescuer", clerkAuth, clerkRouteHandler, resuerContent.registerRescuer);
 
-rescuerRouter.get(
-  "/welcomescreen",
-  clerkAuth,
-  clerkRouteHandler,
-  resuerContent.welcomeRescuerContent
-);
+rescuerRouter.get("/welcomescreen", resuerContent.welcomeRescuerContent);
 
-rescuerRouter.put(
-  "/updatewelcomecontent",
-  resuerContent.updateWelcomeRescuerContent
-);
+rescuerRouter.put("/updatewelcomecontent", resuerContent.updateWelcomeRescuerContent);
 
-rescuerRouter.get(
-  "/rescuerprofile",
-  clerkAuth,
-  clerkRouteHandler,
-  resuerContent.rescuerProfile
-);
+rescuerRouter.get("/rescuerprofile", clerkAuth, clerkRouteHandler, resuerContent.rescuerProfile);
 
-rescuerRouter.post(
-  "/rescuerprefradius",
-  clerkAuth,
-  clerkRouteHandler,
-  resuerContent.updateRescuerPrefRadius
-);
+rescuerRouter.post("/rescuerprefradius", clerkAuth, clerkRouteHandler, resuerContent.updateRescuerPrefRadius);
 
 rescuerRouter.post(
   "/rescuerprefnotifications",
@@ -44,16 +21,6 @@ rescuerRouter.post(
   resuerContent.updateRescuerPrefNotifications
 );
 
-rescuerRouter.post(
-  "/rescuerpreflocation",
-  clerkAuth,
-  clerkRouteHandler,
-  resuerContent.updateRescuerPrefLocation
-);
+rescuerRouter.post("/rescuerpreflocation", clerkAuth, clerkRouteHandler, resuerContent.updateRescuerPrefLocation);
 
-rescuerRouter.delete(
-  "/deleterescuer",
-  clerkAuth,
-  clerkRouteHandler,
-  resuerContent.deleteRescuer
-);
+rescuerRouter.delete("/deleterescuer", clerkAuth, clerkRouteHandler, resuerContent.deleteRescuer);

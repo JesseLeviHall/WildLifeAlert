@@ -1,13 +1,6 @@
 import React from "react";
 import { View, Alert } from "react-native";
-import {
-  Button,
-  Dialog,
-  Portal,
-  Provider,
-  FAB,
-  Text,
-} from "react-native-paper";
+import { Button, Dialog, Portal, Provider, FAB, Text } from "react-native-paper";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { SetLocationPref } from "../../api/index";
 import SuccessToast from "../../components/SuccessToast";
@@ -28,12 +21,7 @@ type Props = {
   LongitudeProp: string;
 };
 
-const SetLocationDialogue = ({
-  visible,
-  setVisible,
-  LatitudeProp,
-  LongitudeProp,
-}: Props) => {
+const SetLocationDialogue = ({ visible, setVisible, LatitudeProp, LongitudeProp }: Props) => {
   const isConnected = useConnectivity();
   const { sessionId, getToken, signOut } = useAuth();
   const [token, setToken] = React.useState<string | null>(null);
@@ -97,11 +85,7 @@ const SetLocationDialogue = ({
   const handleSave = async () => {
     if (!isConnected) return;
     if (mutation.isLoading || mutation.error) return;
-    if (
-      location?.latitude === parseFloat(LatitudeProp) &&
-      location?.longitude === parseFloat(LongitudeProp)
-    )
-      return;
+    if (location?.latitude === parseFloat(LatitudeProp) && location?.longitude === parseFloat(LongitudeProp)) return;
     if (!location) return;
     try {
       setError("");
@@ -179,7 +163,7 @@ const SetLocationDialogue = ({
               />
             </Dialog.Actions>
             <Dialog.Actions>
-              <Button onPress={() => setVisible(false)}>Cancel</Button>
+              <Button onPress={() => setVisible(false)}>Close</Button>
             </Dialog.Actions>
           </View>
         </Dialog>
