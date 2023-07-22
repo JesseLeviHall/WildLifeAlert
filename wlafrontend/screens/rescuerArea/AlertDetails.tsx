@@ -195,28 +195,6 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
             {data?.ShareContact === "true" && (
               <View className="flex flex-row justify-evenly">
                 <Chip
-                  className="mt-4 w-18 "
-                  elevated={true}
-                  mode="flat"
-                  icon={() => <MaterialCommunityIcons name="phone" size={18} color="#4AA8FF" />}
-                  onPress={() => {
-                    Linking.openURL(`tel:${data?.PhoneNumber}`);
-                  }}
-                >
-                  Call
-                </Chip>
-                <Chip
-                  className="mt-4 w-18 ml-2"
-                  elevated={true}
-                  mode="flat"
-                  icon={() => <MaterialCommunityIcons name="message" size={18} color="#4AA8FF" />}
-                  onPress={() => {
-                    Linking.openURL(`sms:${data?.PhoneNumber}`);
-                  }}
-                >
-                  Text
-                </Chip>
-                <Chip
                   className="mt-4 w-18 ml-2"
                   elevated={true}
                   mode="flat"
@@ -336,3 +314,29 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 });
+
+/* 
+  <Chip
+                  className="mt-4 w-18 "
+                  elevated={true}
+                  mode="flat"
+                  icon={() => <MaterialCommunityIcons name="phone" size={18} color="#4AA8FF" />}
+                  onPress={() => {
+                    Linking.openURL(`tel:${data?.PhoneNumber}`);
+                  }}
+                >
+                  Call
+                </Chip>
+                <Chip
+                  className="mt-4 w-18 ml-2"
+                  elevated={true}
+                  mode="flat"
+                  icon={() => <MaterialCommunityIcons name="message" size={18} color="#4AA8FF" />}
+                  onPress={() => {
+                    Linking.openURL(`sms:${data?.PhoneNumber}`);
+                  }}
+                >
+                  Text
+                </Chip>
+
+*/

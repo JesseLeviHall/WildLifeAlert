@@ -138,20 +138,6 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
                   <View style={styles.contactOptions}>
                     <Pressable
                       onPress={() => {
-                        Linking.openURL(`tel:${selectedAlert.PhoneNumber}`);
-                      }}
-                    >
-                      <Text style={styles.modalEmail}>Call</Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        Linking.openURL(`sms:${selectedAlert.PhoneNumber}`);
-                      }}
-                    >
-                      <Text style={styles.modalEmail}>Text</Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
                         Linking.openURL(`mailto:${selectedAlert.Email}?`);
                       }}
                     >
@@ -275,3 +261,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
 });
+
+/* 
+
+ <Pressable
+                      onPress={() => {
+                        Linking.openURL(`sms:${selectedAlert.PhoneNumber}`);
+                      }}
+                    >
+                      <Text style={styles.modalEmail}>Text</Text>
+                    </Pressable>
+
+  <Pressable
+                      onPress={() => {
+                        Linking.openURL(`tel:${selectedAlert.PhoneNumber}`);
+                      }}
+                    >
+                      <Text style={styles.modalEmail}>Call</Text>
+                    </Pressable>
+
+*/

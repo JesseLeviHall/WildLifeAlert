@@ -91,8 +91,9 @@ const Resources = (props: Props) => {
 
   return (
     <LinearGradient style={{ height: screenHeight }} colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}>
-      <Appbar.Header className="">
-        <Appbar.BackAction
+      <Appbar.Header>
+        <Appbar.Action
+          icon="home"
           onPress={() => {
             navigation.navigate("Home");
           }}

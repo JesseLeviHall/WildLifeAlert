@@ -76,10 +76,10 @@ export const publicMapGeoPos = async (req: Request, res: Response): Promise<void
 //POST New Alert
 export const newAlert = async (req: MulterRequest, res: Response): Promise<void> => {
   try {
-    const { FullName, Latitude, Longitude, PhoneNumber, Animal, Description, Email, ShareContact } = req.body;
+    const { FullName, Latitude, Longitude, Animal, Description, Email, ShareContact } = req.body;
 
     // Check if required fields are undefined
-    if (!FullName || !Latitude || !Longitude || !PhoneNumber || !Animal || !Description || !Email) {
+    if (!FullName || !Latitude || !Longitude || !Animal || !Description || !Email) {
       res.status(400).send("Invalid request: Missing required fields");
       return;
     }
@@ -102,8 +102,6 @@ export const newAlert = async (req: MulterRequest, res: Response): Promise<void>
       Longitude.toString(),
       "Photo",
       photoUrlsString,
-      "PhoneNumber",
-      PhoneNumber,
       "Animal",
       Animal,
       "Description",

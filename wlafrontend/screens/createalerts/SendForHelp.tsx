@@ -16,7 +16,7 @@ type Props = {
 type Errors = {
   fullName: string;
   Email: string;
-  PhoneNumber: string;
+  //PhoneNumber: string;
 };
 const screenHeight = Dimensions.get("window").height;
 
@@ -29,16 +29,16 @@ const SendForHelp = (props: Props) => {
   const [errors, setErrors] = React.useState<Errors>({
     fullName: "",
     Email: "",
-    PhoneNumber: "",
+    // PhoneNumber: "",
   });
   const [Email, setEmail] = React.useState<{ Email: string }>({
     Email: "",
   });
-  const [PhoneNumber, setPhoneNumber] = React.useState<{
+  /* const [PhoneNumber, setPhoneNumber] = React.useState<{
     PhoneNumber: string;
   }>({
     PhoneNumber: "",
-  });
+  }); */
 
   const navigation = useNavigation<AlertDescriptionProp>();
   React.useLayoutEffect(() => {
@@ -51,12 +51,12 @@ const SendForHelp = (props: Props) => {
 
   const validate = async () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phonePattern = /^[2-9]{1}[0-9]{2}-[0-9]{3}-[0-9]{4}$/;
+    //const phonePattern = /^[2-9]{1}[0-9]{2}-[0-9]{3}-[0-9]{4}$/;
 
     let updatedErrors = {
       fullName: "",
       Email: "",
-      PhoneNumber: "",
+      // PhoneNumber: "",
     };
 
     if (fullName.fullName === "") {
@@ -71,19 +71,19 @@ const SendForHelp = (props: Props) => {
       updatedErrors.Email = "Please enter a valid Email";
     }
 
-    if (PhoneNumber.PhoneNumber === "") {
+    /* if (PhoneNumber.PhoneNumber === "") {
       updatedErrors.PhoneNumber = "Phone Number is required";
     } else if (!phonePattern.test(PhoneNumber.PhoneNumber)) {
-      updatedErrors.PhoneNumber = "use format: xxx-xxx-xxxx";
-    }
+      updatedErrors.PhoneNumber = "use format: xxx-xxx-xxxx"; 
+    } */
 
     setErrors(updatedErrors);
 
-    if (updatedErrors.fullName === "" && updatedErrors.Email === "" && updatedErrors.PhoneNumber === "") {
+    if (updatedErrors.fullName === "" && updatedErrors.Email === "") {
       try {
         await AsyncStorage.setItem("FullName", fullName.fullName);
         await AsyncStorage.setItem("Email", Email.Email);
-        await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber.replace(/-/g, ""));
+        // await AsyncStorage.setItem("PhoneNumber", PhoneNumber.PhoneNumber.replace(/-/g, ""));
         await AsyncStorage.setItem("ShareContact", isSwitchOn.toString());
       } catch (error) {
         console.log("Error saving data", error);
@@ -126,7 +126,7 @@ const SendForHelp = (props: Props) => {
                   color: "black",
                 }}
               >
-                Full Name
+                What is your name?
               </FormControl.Label>
               <Input
                 maxLength={100}
@@ -176,38 +176,9 @@ const SendForHelp = (props: Props) => {
                 </FormControl.HelperText>
               ) : null}
             </FormControl>
-            <FormControl isRequired className="m-4">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
-              >
-                Phone
-              </FormControl.Label>
-              <Input
-                maxLength={20}
-                className=" bg-[#d4e1ea]"
-                placeholder="xxx-xxx-xxxx"
-                variant="filled"
-                autoComplete="tel"
-                keyboardType="numbers-and-punctuation"
-                onChangeText={(value) => setPhoneNumber({ ...PhoneNumber, PhoneNumber: value })}
-                onSubmitEditing={Keyboard.dismiss}
-              />
-              {"PhoneNumber" in errors ? (
-                <FormControl.HelperText
-                  _text={{
-                    fontSize: "xs",
-                  }}
-                >
-                  {errors.PhoneNumber}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
-            <Text className="text-center font-black text-lg">Allow registered rescuers to see this information?</Text>
+            <Text className="text-center font-black text-lg">Allow registered rescuers to contact your Email?</Text>
             <Text className="text-center font-light mb-2 text-sm">
-              They may need to contact you for more information
+              They may need to get in touch with you to help you. We will never share your email with anyone else.
             </Text>
             <View className="flex-row row-span-1">
               <Text className={`text-center font-light my-1 mx-2 text-sm ${isSwitchOn ? "opacity-20" : "font-bold"}`}>
@@ -236,3 +207,37 @@ const SendForHelp = (props: Props) => {
 };
 
 export default SendForHelp;
+
+/* 
+  <FormControl isRequired className="m-4">
+              <FormControl.Label
+                _text={{
+                  bold: true,
+                  color: "black",
+                }}
+              >
+                Phone
+              </FormControl.Label>
+              <Input
+                maxLength={20}
+                className=" bg-[#d4e1ea]"
+                placeholder="xxx-xxx-xxxx"
+                variant="filled"
+                autoComplete="tel"
+                keyboardType="numbers-and-punctuation"
+                onChangeText={(value) => setPhoneNumber({ ...PhoneNumber, PhoneNumber: value })}
+                onSubmitEditing={Keyboard.dismiss}
+              />
+              {"PhoneNumber" in errors ? (
+                <FormControl.HelperText
+                  _text={{
+                    fontSize: "xs",
+                  }}
+                >
+                  {errors.PhoneNumber}
+                </FormControl.HelperText>
+              ) : null}
+            </FormControl>
+
+
+*/

@@ -1,11 +1,7 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions, ScrollView, ViewStyle } from "react-native";
-import {
-  useNavigation,
-  NavigationProp,
-  useFocusEffect,
-} from "@react-navigation/native";
+import { useNavigation, NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { View, Text, Button, Icon } from "native-base";
 import { Chip } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
@@ -28,7 +24,7 @@ const ConfirmPost = (props: Props) => {
   const [disabled, setDisabled] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState({
     FullName: "",
-    PhoneNumber: "",
+    //PhoneNumber: "",
     Email: "",
     ShareContact: "",
     Animal: "",
@@ -44,7 +40,7 @@ const ConfirmPost = (props: Props) => {
         try {
           const keys = [
             "FullName",
-            "PhoneNumber",
+            // "PhoneNumber",
             "Email",
             "ShareContact",
             "Animal",
@@ -58,7 +54,7 @@ const ConfirmPost = (props: Props) => {
           const locationData = data.location ? JSON.parse(data.location) : {};
           const dataWithDefaults = {
             FullName: data.FullName || "",
-            PhoneNumber: data.PhoneNumber || "",
+            // PhoneNumber: data.PhoneNumber || "",
             Email: data.Email || "",
             ShareContact: data.ShareContact || "",
             Animal: data.Animal || "",
@@ -134,22 +130,13 @@ const ConfirmPost = (props: Props) => {
       }}
       colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
     >
-      <Text className="text-center mt-14 font-black uppercase text-3xl">
-        Review Post
-      </Text>
+      <Text className="text-center mt-14 font-black uppercase text-3xl">Review Post</Text>
       <View className="flex-col mt-4 h-3/5">
         <ScrollView contentContainerStyle={contentContainerStyle}>
-          <Text className="text-center mt-3 font-bold">
-            {userDetails.Animal}
-          </Text>
-          <Text className="text-center font-light">
-            {userDetails.Description}
-          </Text>
+          <Text className="text-center mt-3 font-bold">{userDetails.Animal}</Text>
+          <Text className="text-center font-light">{userDetails.Description}</Text>
           <View className=" h-8 items-center mt-3 ">
             <Chip icon="information">{userDetails.FullName}</Chip>
-          </View>
-          <View className=" h-8 items-center mt-3 ">
-            <Chip icon="phone">{userDetails.PhoneNumber}</Chip>
           </View>
           <View className=" h-8 items-center mt-3 ">
             <Chip icon="email">{userDetails.Email}</Chip>
@@ -161,15 +148,7 @@ const ConfirmPost = (props: Props) => {
             </Chip>
           </View>
           <View className=" h-8 items-center mt-3 ">
-            <Chip
-              icon={
-                userDetails.Latitude && userDetails.Longitude
-                  ? "check"
-                  : "close"
-              }
-            >
-              Location Saved
-            </Chip>
+            <Chip icon={userDetails.Latitude && userDetails.Longitude ? "check" : "close"}>Location Saved</Chip>
           </View>
           <View className=" h-8 items-center mt-3 mb-4 ">
             <Chip icon={userDetails.photoBlob.length >= 1 ? "check" : "close"}>
@@ -187,9 +166,7 @@ const ConfirmPost = (props: Props) => {
 
       <View className="items-center">
         <Button
-          leftIcon={
-            <Icon as={Ionicons} name="cloud-upload-outline" size="sm" />
-          }
+          leftIcon={<Icon as={Ionicons} name="cloud-upload-outline" size="sm" />}
           isLoading={mutation.isLoading}
           isLoadingText="Submitting"
           isDisabled={disabled}
@@ -204,3 +181,9 @@ const ConfirmPost = (props: Props) => {
 };
 
 export default ConfirmPost;
+
+/* 
+<View className=" h-8 items-center mt-3 ">
+<Chip icon="phone">{userDetails.PhoneNumber}</Chip>
+</View>
+*/
