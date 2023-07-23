@@ -31,8 +31,7 @@ const PushPermissionReg = ({ visible, setVisible }: Props) => {
     }
 
     // Get the token that identifies this device
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    token = (await Notifications.getExpoPushTokenAsync({ projectId: "wildlifealert-d6acb" })).data;
 
     // Save the token to AsyncStorage
     await AsyncStorage.setItem("expoPushToken", token);
@@ -70,6 +69,6 @@ export default PushPermissionReg;
 
 /* 
 in sdk 49+ change to this:
-token = (await Notifications.getExpoPushTokenAsync({ projectId: 'YOUR_PROJECT_ID_HERE' })).data;
+token = (await Notifications.getExpoPushTokenAsync({ projectId: 'wildlifealert-d6acb' })).data;
 
 */
