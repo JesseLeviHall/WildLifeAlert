@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { redisClient } from "../services/db.setup.js";
 import { getActiveAlerts } from "../utils/redisHelpers.js";
+import { sendPushNotificationsForAlert } from "../utils/pushNotificationHelper.js";
 
 interface File extends Express.Multer.File {
   key?: string;
@@ -124,6 +125,8 @@ export const newAlert = async (req: MulterRequest, res: Response): Promise<void>
     // Add the alert to the geospatial index
     await redisClient.sendCommand(["GEOADD", "alerts:geospatial", Longitude, Latitude, `alerts:animals:${id}`]);
     res.send("New Alert Created");
+    const alertId = `alerts:animals:${id}`;
+    sendPushNotificationsForAlert(alertId, Latitude, Longitude);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

@@ -24,9 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+        "bundleIdentifier": "com.wildlifealertusa.wildlifealert",
+        "buildNumber": 1.0
     },
     "android": {
+      "versionCode": 1.0,
       "package": "com.wildlifealertusa.wildlifealert",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
@@ -34,7 +37,7 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
-        "android.permission.RECORD_AUDIO"
+        "CAMERA_ROLL"
       ]
     },
     "web": {

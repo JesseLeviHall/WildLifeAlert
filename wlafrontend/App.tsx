@@ -13,6 +13,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import Constants from "expo-constants";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import * as SecureStore from "expo-secure-store";
+import NotificationListener from "./notificationListener";
 
 const tokenCache = {
   async getToken(key: string) {
@@ -59,29 +60,22 @@ function onAppStateChange(status: AppStateStatus) {
 }
 
 export default function App() {
-  const CLERK_PUBLISHABLE_KEY =
-    Constants.expoConfig?.extra?.clerkPublishableKey;
+  const CLERK_PUBLISHABLE_KEY = Constants.expoConfig?.extra?.clerkPublishableKey;
 
   useAppState(onAppStateChange);
   useOnlineManager();
 
   return (
     <NavigationContainer>
-      <ClerkProvider
-        tokenCache={tokenCache}
-        publishableKey={CLERK_PUBLISHABLE_KEY}
-      >
+      <NotificationListener />
+      <ClerkProvider tokenCache={tokenCache} publishableKey={CLERK_PUBLISHABLE_KEY}>
         <PersistQueryClientProvider
           client={queryClient}
           persistOptions={{
             maxAge: Infinity,
             persister: asyncPersist,
           }}
-          onSuccess={() =>
-            queryClient
-              .resumePausedMutations()
-              .then(() => queryClient.invalidateQueries())
-          }
+          onSuccess={() => queryClient.resumePausedMutations().then(() => queryClient.invalidateQueries())}
         >
           <NativeBaseProvider>
             <PaperProvider>

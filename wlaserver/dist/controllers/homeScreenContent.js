@@ -1,5 +1,6 @@
 import { redisClient } from "../services/db.setup.js";
 import { getActiveAlerts } from "../utils/redisHelpers.js";
+import { sendPushNotificationsForAlert } from "../utils/pushNotificationHelper.js";
 //GET /Home Screen.
 export const homeScreenContent = async (req, res) => {
     try {
@@ -111,6 +112,8 @@ export const newAlert = async (req, res) => {
         // Add the alert to the geospatial index
         await redisClient.sendCommand(["GEOADD", "alerts:geospatial", Longitude, Latitude, `alerts:animals:${id}`]);
         res.send("New Alert Created");
+        const alertId = `alerts:animals:${id}`;
+        sendPushNotificationsForAlert(alertId, Latitude, Longitude);
     }
     catch (error) {
         console.error(error);

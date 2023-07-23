@@ -1,3 +1,5 @@
+// utils/redisHelpers.ts
+import { redisClient } from "../services/db.setup.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 //change this function to set alerts to the entire alert object
@@ -49,4 +51,36 @@ export async function getActiveAlertsInRadius(redis, hours, longitude, latitude,
     return recentAlertsInArea;
 }
 //===================================================
+export async function getAllRescuers() {
+    try {
+        // Fetch all the rescuer IDs from the set
+        const rescuerIds = await redisClient.sMembers("rescuer:UserIds");
+        const rescuerData = [];
+        for (const id of rescuerIds) {
+            const data = await redisClient.hGetAll(`rescuer:${id}`);
+            rescuerData.push({
+                UserId: data.UserId,
+                FullName: data.FullName,
+                Phone: data.Phone,
+                Medical: data.Medical === "true",
+                Rehab: data.Rehab === "true",
+                Professional: data.Professional === "true",
+                Organization: data.Organization,
+                Status: data.Status,
+                Responses: parseInt(data.Responses, 10),
+                Latitude: parseFloat(data.Latitude),
+                Longitude: parseFloat(data.Longitude),
+                Notifications: data.Notifications === "true",
+                Radius: parseFloat(data.Radius),
+                expoPushToken: data.expoPushToken,
+                CreationDate: parseInt(data.CreationDate, 10),
+            });
+        }
+        return rescuerData;
+    }
+    catch (error) {
+        console.error("Error fetching all rescuers:", error);
+        return [];
+    }
+}
 //# sourceMappingURL=redisHelpers.js.map
