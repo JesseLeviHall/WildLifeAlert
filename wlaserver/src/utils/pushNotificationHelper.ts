@@ -42,7 +42,7 @@ export async function sendPushNotificationsForAlert(alertId: string, Latitude: n
   try {
     // Fetch all the rescuers
     const rescuers: Rescuer[] = await getAllRescuers();
-    console.log(rescuers);
+
     // Filter the rescuers based on distance and preferences
     const rescuerTokens = rescuers
       .filter((rescuer) => {

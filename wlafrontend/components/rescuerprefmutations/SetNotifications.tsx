@@ -45,7 +45,6 @@ const SetNotifications = ({ notificationProp }: Props) => {
       if (newNotificationValue) {
         let tokenObject = await Notifications.getExpoPushTokenAsync({ experienceId });
         expoPushToken = tokenObject.data;
-        console.log(expoPushToken);
       }
       SetNotifications(newNotificationValue); // Set the state to the new value
       const token = await getToken();

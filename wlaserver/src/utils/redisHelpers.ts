@@ -69,30 +69,33 @@ export async function getAllRescuers() {
   try {
     // Fetch all the rescuer IDs from the set
     const rescuerIds = await redisClient.sMembers("rescuer:UserIds");
+    console.log("rescuerIds:", rescuerIds);
 
     const rescuerData = [];
 
     for (const id of rescuerIds) {
       const data = await redisClient.hGetAll(`rescuer:${id}`);
-      rescuerData.push({
-        UserId: data.UserId,
-        FullName: data.FullName,
-        Phone: data.Phone,
-        Medical: data.Medical === "true",
-        Rehab: data.Rehab === "true",
-        Professional: data.Professional === "true",
-        Organization: data.Organization,
-        Status: data.Status,
-        Responses: parseInt(data.Responses, 10),
-        Latitude: parseFloat(data.Latitude),
-        Longitude: parseFloat(data.Longitude),
-        Notifications: data.Notifications === "true",
-        Radius: parseFloat(data.Radius),
-        expoPushToken: data.expoPushToken,
-        CreationDate: parseInt(data.CreationDate, 10),
-      });
+      if (data && data.UserId) {
+        rescuerData.push({
+          UserId: data.UserId,
+          FullName: data.FullName,
+          Phone: data.Phone,
+          Medical: data.Medical === "true",
+          Rehab: data.Rehab === "true",
+          Professional: data.Professional === "true",
+          Organization: data.Organization,
+          Status: data.Status,
+          Responses: parseInt(data.Responses, 10),
+          Latitude: parseFloat(data.Latitude),
+          Longitude: parseFloat(data.Longitude),
+          Notifications: data.Notifications === "true",
+          Radius: parseFloat(data.Radius),
+          expoPushToken: data.expoPushToken,
+          CreationDate: parseInt(data.CreationDate, 10),
+        });
+      }
     }
-
+    console.log("redis helper:", rescuerData);
     return rescuerData;
   } catch (error) {
     console.error("Error fetching all rescuers:", error);
