@@ -20,6 +20,7 @@ export async function sendPushNotificationsForAlert(alertId, Latitude, Longitude
     try {
         // Fetch all the rescuers
         const rescuers = await getAllRescuers();
+        console.log(rescuers);
         // Filter the rescuers based on distance and preferences
         const rescuerTokens = rescuers
             .filter((rescuer) => {
@@ -27,25 +28,27 @@ export async function sendPushNotificationsForAlert(alertId, Latitude, Longitude
             return distance <= rescuer.Radius && rescuer.Notifications;
         })
             .map((rescuer) => rescuer.expoPushToken);
-        // Prepare notifications
-        let messages = [];
+        console.log(rescuerTokens);
+        /*   // Prepare notifications
+        let messages: any[] = [];
         for (let token of rescuerTokens) {
-            if (!Expo.isExpoPushToken(token)) {
-                console.error(`Push token ${token} is not a valid Expo push token`);
-                continue;
-            }
-            messages.push({
-                to: token,
-                sound: "default",
-                body: "New wildlife alert nearby!",
-                data: { alertId: alertId },
-            });
+          if (!Expo.isExpoPushToken(token)) {
+            console.error(`Push token ${token} is not a valid Expo push token`);
+            continue;
+          }
+          messages.push({
+            to: token,
+            sound: "default",
+            body: "New wildlife alert nearby!",
+            data: { alertId: alertId },
+          });
         }
+    
         // Send notifications in chunks
         let chunks = expo.chunkPushNotifications(messages);
         for (let chunk of chunks) {
-            await expo.sendPushNotificationsAsync(chunk);
-        }
+          await expo.sendPushNotificationsAsync(chunk);
+        } */
     }
     catch (error) {
         console.error("Error sending push notifications:", error);

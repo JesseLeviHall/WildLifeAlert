@@ -10,6 +10,7 @@ type Props = {
 };
 
 const PushPermissionReg = ({ visible, setVisible }: Props) => {
+  const experienceId = "@jesseye30/wildlifealert";
   const hideDialog = () => setVisible(false);
 
   const registerForPushNotificationsAsync = async () => {
@@ -31,7 +32,8 @@ const PushPermissionReg = ({ visible, setVisible }: Props) => {
     }
 
     // Get the token that identifies this device
-    token = (await Notifications.getExpoPushTokenAsync({ projectId: "wildlifealert-d6acb" })).data;
+    token = (await Notifications.getExpoPushTokenAsync({ experienceId })).data;
+    console.log(token);
 
     // Save the token to AsyncStorage
     await AsyncStorage.setItem("expoPushToken", token);

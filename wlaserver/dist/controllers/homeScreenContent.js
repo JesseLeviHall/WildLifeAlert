@@ -113,6 +113,7 @@ export const newAlert = async (req, res) => {
         await redisClient.sendCommand(["GEOADD", "alerts:geospatial", Longitude, Latitude, `alerts:animals:${id}`]);
         res.send("New Alert Created");
         const alertId = `alerts:animals:${id}`;
+        console.log("about to send push notifications");
         sendPushNotificationsForAlert(alertId, Latitude, Longitude);
     }
     catch (error) {

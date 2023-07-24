@@ -143,7 +143,7 @@ const ConfirmPost = (props: Props) => {
           </View>
           <View className=" h-8 items-center mt-3 ">
             <Chip icon={userDetails.ShareContact == "true" ? "check" : "close"}>
-              Share Contact Info:
+              Allow Email Contact:
               {userDetails.ShareContact == "true" ? " Yes" : " No"}
             </Chip>
           </View>

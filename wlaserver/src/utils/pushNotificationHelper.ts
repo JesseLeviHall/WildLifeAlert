@@ -42,7 +42,7 @@ export async function sendPushNotificationsForAlert(alertId: string, Latitude: n
   try {
     // Fetch all the rescuers
     const rescuers: Rescuer[] = await getAllRescuers();
-
+    console.log(rescuers);
     // Filter the rescuers based on distance and preferences
     const rescuerTokens = rescuers
       .filter((rescuer) => {
@@ -51,7 +51,9 @@ export async function sendPushNotificationsForAlert(alertId: string, Latitude: n
       })
       .map((rescuer) => rescuer.expoPushToken);
 
-    // Prepare notifications
+    console.log(rescuerTokens);
+
+    /*   // Prepare notifications
     let messages: any[] = [];
     for (let token of rescuerTokens) {
       if (!Expo.isExpoPushToken(token)) {
@@ -70,7 +72,7 @@ export async function sendPushNotificationsForAlert(alertId: string, Latitude: n
     let chunks = expo.chunkPushNotifications(messages);
     for (let chunk of chunks) {
       await expo.sendPushNotificationsAsync(chunk);
-    }
+    } */
   } catch (error) {
     console.error("Error sending push notifications:", error);
   }

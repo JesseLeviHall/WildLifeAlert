@@ -8,7 +8,6 @@ export default function NotificationListener() {
     const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
       const alertId = response.notification.request.content.data.alertId;
       if (alertId) {
-        // Use your navigation logic to navigate to the desired screen, e.g.,
         navigation.navigate("AlertDetails", { alertId: alertId });
       }
     });
