@@ -7,12 +7,12 @@ dotenv.config();
 export const getActiveAlertsInArea = async (req, res) => {
     try {
         const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ message: "User not found" });
             return;
         }
-        const rescuer = await redisClient.hGetAll(`rescuer:${id}`);
+        const rescuer = await redisClient.hGetAll(`rescuer:${UserId}`);
         const radius = Number(rescuer.Radius);
         const longitude = Number(rescuer.Longitude);
         const latitude = Number(rescuer.Latitude);
@@ -35,8 +35,8 @@ export const getActiveAlertsInArea = async (req, res) => {
 export const getTotalAlerts = async (req, res) => {
     try {
         const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ message: "User not found" });
             return;
         }
@@ -52,8 +52,8 @@ export const getTotalAlerts = async (req, res) => {
 export const getAlertDetails = async (req, res) => {
     try {
         const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ message: "User not found" });
             return;
         }

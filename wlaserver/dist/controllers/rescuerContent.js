@@ -19,11 +19,10 @@ export const registerRescuer = async (req, res) => {
             return;
         }
         const createdAt = Math.floor(Date.now() / 1000);
-        const id = await redisClient.incr("rescuer:nextid");
         const NotificationsValue = expoPushToken === "" ? "false" : "true";
         await redisClient.sendCommand([
             "HMSET",
-            `rescuer:${id}`,
+            `rescuer:${UserId}`,
             "UserId",
             UserId,
             "FullName",
@@ -56,9 +55,7 @@ export const registerRescuer = async (req, res) => {
             createdAt.toString(),
         ]);
         //Add the UserId to the rescuer:UserIds set
-        await redisClient.sendCommand(["SADD", "rescuer:UserIds", UserId, id.toString()]);
-        //Store a mapping from UserId to id
-        await redisClient.sendCommand(["SET", UserId, id.toString()]);
+        await redisClient.sendCommand(["SADD", "rescuer:UserIds", UserId]);
         res.send("New Rescuer Created");
     }
     catch (error) {
@@ -102,12 +99,12 @@ export const updateWelcomeRescuerContent = async (req, res) => {
 export const rescuerProfile = async (req, res) => {
     try {
         const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ msg: "User not found" });
             return;
         }
-        const rescuerprofile = await redisClient.hGetAll(`rescuer:${id}`);
+        const rescuerprofile = await redisClient.hGetAll(`rescuer:${UserId}`);
         res.send(rescuerprofile);
     }
     catch (error) {
@@ -119,13 +116,13 @@ export const rescuerProfile = async (req, res) => {
 export const updateRescuerPrefRadius = async (req, res) => {
     try {
         const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ msg: "User not found" });
             return;
         }
         const { Radius } = req.body;
-        await redisClient.sendCommand(["HSET", `rescuer:${id}`, "Radius", Radius.toString()]);
+        await redisClient.sendCommand(["HSET", `rescuer:${UserId}`, "Radius", Radius.toString()]);
         res.send("Geo Radius Updated");
     }
     catch (error) {
@@ -137,8 +134,8 @@ export const updateRescuerPrefRadius = async (req, res) => {
 export const updateRescuerPrefNotifications = async (req, res) => {
     try {
         const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ msg: "User not found" });
             return;
         }
@@ -146,7 +143,7 @@ export const updateRescuerPrefNotifications = async (req, res) => {
         const expoPushToken = req.body.expoPushToken || "";
         await redisClient.sendCommand([
             "HSET",
-            `rescuer:${id}`,
+            `rescuer:${UserId}`,
             "Notifications",
             Notifications,
             "expoPushToken",
@@ -163,8 +160,8 @@ export const updateRescuerPrefNotifications = async (req, res) => {
 export const updateRescuerPrefLocation = async (req, res) => {
     try {
         const UserId = req.auth.userId;
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ msg: "User not found" });
             return;
         }
@@ -181,7 +178,7 @@ export const updateRescuerPrefLocation = async (req, res) => {
         }
         await redisClient.sendCommand([
             "HSET",
-            `rescuer:${id}`,
+            `rescuer:${UserId}`,
             "Latitude",
             Latitude.toString(),
             "Longitude",
@@ -203,14 +200,14 @@ export const deleteRescuer = async (req, res) => {
             res.status(500).json({ msg: "Failed to delete user in Clerk" });
             return;
         }
-        const id = await redisClient.get(UserId);
-        if (!id) {
+        const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+        if (!userExists) {
             res.status(404).json({ msg: "User not found" });
             return;
         }
-        await redisClient.sendCommand(["DEL", `rescuer:${id}`]);
+        await redisClient.sendCommand(["DEL", `rescuer:${UserId}`]);
         await redisClient.sendCommand(["DEL", UserId]);
-        await redisClient.sendCommand(["SREM", "rescuer:UserIds", UserId, id.toString()]);
+        await redisClient.sendCommand(["SREM", "rescuer:UserIds", UserId]);
         res.send("Rescuer Deleted");
     }
     catch (error) {

@@ -2,7 +2,6 @@
 import { redisClient } from "../services/db.setup.js";
 import * as dotenv from "dotenv";
 dotenv.config();
-//change this function to set alerts to the entire alert object
 export async function getActiveAlerts(redis, hours) {
     //timestamp of current moment
     const now = Math.floor(Date.now() / 1000);
@@ -55,10 +54,10 @@ export async function getAllRescuers() {
     try {
         // Fetch all the rescuer IDs from the set
         const rescuerIds = await redisClient.sMembers("rescuer:UserIds");
-        console.log("rescuerIds:", rescuerIds);
+        console.log("getting rescuers:", rescuerIds);
         const rescuerData = [];
-        for (const id of rescuerIds) {
-            const data = await redisClient.hGetAll(`rescuer:${id}`);
+        for (const UserId of rescuerIds) {
+            const data = await redisClient.hGetAll(`rescuer:${UserId}`);
             if (data && data.UserId) {
                 rescuerData.push({
                     UserId: data.UserId,
@@ -79,7 +78,6 @@ export async function getAllRescuers() {
                 });
             }
         }
-        console.log("redis helper:", rescuerData);
         return rescuerData;
     }
     catch (error) {
