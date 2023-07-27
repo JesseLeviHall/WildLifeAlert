@@ -53,7 +53,7 @@ export async function sendPushNotificationsForAlert(alertId: string, Latitude: n
 
     console.log("will be sending notifications to:", rescuerTokens);
 
-    /*   // Prepare notifications
+    // Prepare notifications
     let messages: any[] = [];
     for (let token of rescuerTokens) {
       if (!Expo.isExpoPushToken(token)) {
@@ -72,7 +72,7 @@ export async function sendPushNotificationsForAlert(alertId: string, Latitude: n
     let chunks = expo.chunkPushNotifications(messages);
     for (let chunk of chunks) {
       await expo.sendPushNotificationsAsync(chunk);
-    } */
+    }
   } catch (error) {
     console.error("Error sending push notifications:", error);
   }

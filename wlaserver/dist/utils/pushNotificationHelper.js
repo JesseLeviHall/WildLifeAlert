@@ -28,26 +28,25 @@ export async function sendPushNotificationsForAlert(alertId, Latitude, Longitude
         })
             .map((rescuer) => rescuer.expoPushToken);
         console.log("will be sending notifications to:", rescuerTokens);
-        /*   // Prepare notifications
-        let messages: any[] = [];
+        // Prepare notifications
+        let messages = [];
         for (let token of rescuerTokens) {
-          if (!Expo.isExpoPushToken(token)) {
-            console.error(`Push token ${token} is not a valid Expo push token`);
-            continue;
-          }
-          messages.push({
-            to: token,
-            sound: "default",
-            body: "New wildlife alert nearby!",
-            data: { alertId: alertId },
-          });
+            if (!Expo.isExpoPushToken(token)) {
+                console.error(`Push token ${token} is not a valid Expo push token`);
+                continue;
+            }
+            messages.push({
+                to: token,
+                sound: "default",
+                body: "New wildlife alert nearby!",
+                data: { alertId: alertId },
+            });
         }
-    
         // Send notifications in chunks
         let chunks = expo.chunkPushNotifications(messages);
         for (let chunk of chunks) {
-          await expo.sendPushNotificationsAsync(chunk);
-        } */
+            await expo.sendPushNotificationsAsync(chunk);
+        }
     }
     catch (error) {
         console.error("Error sending push notifications:", error);
