@@ -27,7 +27,7 @@ export async function sendPushNotificationsForAlert(alertId, Latitude, Longitude
             return distance <= rescuer.Radius && rescuer.Notifications;
         })
             .map((rescuer) => rescuer.expoPushToken);
-        console.log("will be sending notifications to:", rescuerTokens);
+        console.log("sending notifications to:", rescuerTokens);
         // Prepare notifications
         let messages = [];
         for (let token of rescuerTokens) {

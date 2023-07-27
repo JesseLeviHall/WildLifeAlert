@@ -469,6 +469,47 @@ export const SetNotificationPref = async ({
 };
 
 //===================================================
+// update user push token
+export const updatePushToken = async ({
+  sessionId,
+  token,
+  expoPushToken,
+}: {
+  sessionId: string;
+  token: string;
+  expoPushToken: string;
+}) => {
+  try {
+    const updatePushToken = await API({
+      method: "post",
+      url: "secure-api/updatepushtoken",
+      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      data: { expoPushToken },
+    });
+    return updatePushToken.data;
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
+  }
+};
+
+//===================================================
 //update preference: location
 type LocationType = {
   latitude: number;

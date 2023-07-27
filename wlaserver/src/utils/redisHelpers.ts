@@ -68,7 +68,6 @@ export async function getAllRescuers() {
   try {
     // Fetch all the rescuer IDs from the set
     const rescuerIds = await redisClient.sMembers("rescuer:UserIds");
-    console.log("getting rescuers:", rescuerIds);
 
     const rescuerData = [];
 

@@ -51,7 +51,7 @@ export async function sendPushNotificationsForAlert(alertId: string, Latitude: n
       })
       .map((rescuer) => rescuer.expoPushToken);
 
-    console.log("will be sending notifications to:", rescuerTokens);
+    console.log("sending notifications to:", rescuerTokens);
 
     // Prepare notifications
     let messages: any[] = [];

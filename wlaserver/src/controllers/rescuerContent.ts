@@ -176,6 +176,39 @@ export const updateRescuerPrefNotifications = async (
   }
 };
 
+//POST /Update Rescuer Push Token
+export const updateRescuerPushToken = async (req: Request & WithAuthProp<Request>, res: Response): Promise<void> => {
+  try {
+    const UserId = req.auth.userId;
+    const userExists = await redisClient.sIsMember("rescuer:UserIds", UserId);
+    if (!userExists) {
+      res.status(404).json({ msg: "User not found" });
+      return;
+    }
+    const newExpoPushToken = req.body.expoPushToken || "";
+    // Fetch all fields of the user at once
+    const userData = await redisClient.hGetAll(`rescuer:${UserId}`);
+
+    // Check if the Notifications field is set to true
+    if (userData.Notifications !== "true") {
+      res.status(200).json({ msg: "User does not have notifications enabled." });
+      return;
+    }
+    // Check if the current token is the same as the new token
+    if (userData.expoPushToken !== newExpoPushToken) {
+      // Update the token only if it's different
+      await redisClient.sendCommand(["HSET", `rescuer:${UserId}`, "expoPushToken", newExpoPushToken]);
+      res.send("Push Token Updated");
+    } else {
+      // If they are the same, just send a response without making any update
+      res.send("Push Token remains unchanged");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
+};
+
 //POST /Update Rescuer Pref: Location
 export const updateRescuerPrefLocation = async (req: Request & WithAuthProp<Request>, res: Response): Promise<void> => {
   try {
