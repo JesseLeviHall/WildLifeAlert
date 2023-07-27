@@ -41,9 +41,11 @@ const SetNotifications = ({ notificationProp }: Props) => {
       setError("");
       const newNotificationValue = !notifications; // Flip the current notification state
       let expoPushToken = "";
-      const experienceId = "@jesseye30/wildlifealert";
+
       if (newNotificationValue) {
-        let tokenObject = await Notifications.getExpoPushTokenAsync({ experienceId });
+        let tokenObject = await Notifications.getExpoPushTokenAsync({
+          projectId: "17a356f2-ec4c-4d59-920f-b77650d9ba44",
+        });
         expoPushToken = tokenObject.data;
       }
       SetNotifications(newNotificationValue); // Set the state to the new value
