@@ -21,8 +21,8 @@ const SignInWithOAuth = (props: Props) => {
   const mutation = useMutation(
     (data: { sessionId: string; token: string; expoPushToken: string }) => updatePushToken(data),
     {
-      onSuccess: async () => {
-        console.log("Push token update successfully sent");
+      onSuccess: () => {
+        return;
       },
       onError: (error) => {
         console.log("Error: ", error);
