@@ -27,6 +27,7 @@ import { useConnectivity } from "../../hooks/useConnectivity";
 import SpinnerComp from "../../components/Spinner";
 import ErrorMessage from "../../components/ErrorMessage";
 import SuccessToast from "../../components/SuccessToast";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -162,7 +163,7 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
   }${minutes} ${amPm}`;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <View style={styles.container}>
         <ImageBackground
           source={require("../../assets/desertbglt.png")}
@@ -245,7 +246,7 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
           </View>
         </Modal>
       </View>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

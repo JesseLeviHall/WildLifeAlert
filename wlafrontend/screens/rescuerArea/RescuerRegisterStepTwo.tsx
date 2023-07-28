@@ -7,6 +7,7 @@ import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import SignUpWithOAuth from "../../components/SignUpWithOAuth";
 import SignUpComponent from "../../components/SignUpComponent";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -86,7 +87,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <ImageBackground
         source={require("../../assets/resbasecamp.png")}
         style={{
@@ -110,7 +111,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
           )}
         </View>
       </ImageBackground>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

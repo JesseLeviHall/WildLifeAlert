@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, Image } from "react-native";
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, Image, Platform } from "react-native";
 import { Motion } from "@legendapp/motion";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getHomeScreenContent } from "../api/index";
@@ -10,6 +10,7 @@ import OfflineToast from "../components/OfflineToast";
 import HomeNavBot from "../components/HomeNavBot";
 import HomeBackG from "../components/background/HomeBackG";
 import ErrorMessage from "../components/ErrorMessage";
+import ConditionalSafeAreaView from "../components/ConditionalSafeArea";
 
 type RootStackParamList = {
   Home: undefined;
@@ -30,6 +31,7 @@ const screenWidth = Dimensions.get("window").width;
 const Home = (props: Props) => {
   const isConnected = useConnectivity();
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const isAndroid = Platform.OS === "android";
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -85,7 +87,7 @@ const Home = (props: Props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <View style={styles.outer}>
         <Image
           style={{
@@ -149,7 +151,7 @@ const Home = (props: Props) => {
           <HomeNavBot navigation={navigation} />
         </View>
       </View>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

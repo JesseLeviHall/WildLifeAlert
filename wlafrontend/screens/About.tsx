@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query/build/lib";
 import { getAboutScreenContent } from "../api/index";
 import SpinnerComp from "../components/Spinner";
 import ErrorMessage from "../components/ErrorMessage";
+import ConditionalSafeAreaView from "../components/ConditionalSafeArea";
 import { useConnectivity } from "../hooks/useConnectivity";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -152,7 +153,7 @@ const About = (props: Props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <View style={styles.container}>
         <Appbar.Header>
           <Appbar.BackAction
@@ -311,7 +312,7 @@ const About = (props: Props) => {
           </View>
         </ImageBackground>
       </View>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

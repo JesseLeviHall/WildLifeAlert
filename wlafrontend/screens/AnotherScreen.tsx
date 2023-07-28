@@ -9,6 +9,7 @@ import OfflineToast from "../components/OfflineToast";
 import SpinnerComp from "../components/Spinner";
 import ErrorMessage from "../components/ErrorMessage";
 import AnimatedGradient from "../components/background/GradientAnimated";
+import ConditionalSafeAreaView from "../components/ConditionalSafeArea";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -75,7 +76,7 @@ const AnotherScreen = (props: Props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <View style={styles.container}>
         <ImageBackground
           source={require("../assets/desertbg.png")}
@@ -114,7 +115,7 @@ const AnotherScreen = (props: Props) => {
           )}
         </ImageBackground>
       </View>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

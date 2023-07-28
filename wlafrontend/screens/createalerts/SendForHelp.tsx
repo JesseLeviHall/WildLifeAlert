@@ -5,6 +5,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, FormControl, Switch, Input } from "native-base";
 import AlertStartDialogue from "../../components/AlertStartDialogue";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 type RootStackParamList = {
   AlertDescription: undefined;
@@ -107,7 +108,7 @@ const SendForHelp = (props: Props) => {
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ height: screenHeight }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
         <View>
           {visible ? (
@@ -204,7 +205,7 @@ const SendForHelp = (props: Props) => {
           </View>
         </TouchableWithoutFeedback>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

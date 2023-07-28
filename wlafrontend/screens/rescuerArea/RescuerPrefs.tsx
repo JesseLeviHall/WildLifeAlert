@@ -28,6 +28,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
 import AccountDeleteDialogue from "../../components/rescuerprefmutations/AccountDeleteDialogue";
 import SetLocationDialogue from "../../components/rescuerprefmutations/SetLocationDialogue ";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import ErrorMessage from "../../components/ErrorMessage";
 
 const screenHeight = Dimensions.get("window").height;
@@ -127,7 +128,7 @@ const RescuerPrefs = (props: Props) => {
   const toggleChangeLocation = () => setChangeLocation(!changeLocation);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <ImageBackground
         source={require("../../assets/resbasecamp.png")}
         style={{
@@ -207,7 +208,7 @@ const RescuerPrefs = (props: Props) => {
           Back
         </Button>
       </ImageBackground>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

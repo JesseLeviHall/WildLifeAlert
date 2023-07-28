@@ -21,6 +21,7 @@ import SignInComponent from "../../components/SignInComponent";
 import LoggedInChips from "../../components/resuerloginscreenlayout/LoggedInChips";
 import AlertsInYourArea from "../../components/resuerloginscreenlayout/AlertsInYourArea";
 import ActiveGlobal from "../../components/resuerloginscreenlayout/ActiveGlobal";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import { Button } from "native-base";
 import SpinnerComp from "../../components/Spinner";
 
@@ -49,7 +50,7 @@ const RescuerLogin = (props: Props) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <ImageBackground
         source={require("../../assets/resbasecamp.png")}
         style={{
@@ -106,7 +107,7 @@ const RescuerLogin = (props: Props) => {
           </View>
         )}
       </ImageBackground>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

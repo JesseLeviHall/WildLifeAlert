@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, View, RefreshControl, SafeAreaView, Dimensions } from "react-native";
+import { ScrollView, View, RefreshControl, SafeAreaView, Dimensions, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Appbar } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";
@@ -11,6 +11,7 @@ import { useRefreshByUser } from "../hooks/useRefreshByUser";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import ResourceCard from "../components/ResourceCard";
 import ErrorMessage from "../components/ErrorMessage";
+import ConditionalSafeAreaView from "../components/ConditionalSafeArea";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -38,8 +39,9 @@ const Resources = (props: Props) => {
       headerShown: false,
     });
   });
-
+  const isAndroid = Platform.OS === "android";
   const isConnected = useConnectivity();
+
   const { isLoading, refetch, data, error } = useQuery(
     ["resources"],
     async () => {
@@ -90,7 +92,7 @@ const Resources = (props: Props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ height: screenHeight }} colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}>
         <Appbar.Header>
           <Appbar.Action
@@ -114,7 +116,7 @@ const Resources = (props: Props) => {
           </View>
         </ScrollView>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

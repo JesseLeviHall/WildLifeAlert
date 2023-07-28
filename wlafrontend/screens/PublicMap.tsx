@@ -13,6 +13,7 @@ import { getPubData } from "../api/index";
 import PubMapDialogue from "../components/PubMapInfoComp";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ErrorMessage from "../components/ErrorMessage";
+import ConditionalSafeAreaView from "../components/ConditionalSafeArea";
 
 const BOTTOM_APPBAR_HEIGHT = 70;
 const MEDIUM_FAB_HEIGHT = 46;
@@ -112,7 +113,7 @@ const PublicMap = (props: Props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ height: screenHeight }} colors={["#0DE69A", "#71D1C7", "#99BBE3"]}>
         <Appbar.Header className="">
           <Appbar.BackAction
@@ -157,7 +158,7 @@ const PublicMap = (props: Props) => {
           />
         </Appbar>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

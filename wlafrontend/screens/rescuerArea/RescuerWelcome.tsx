@@ -1,15 +1,16 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Dimensions, SafeAreaView, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, Dimensions, SafeAreaView, ImageBackground, ScrollView } from "react-native";
 import { Button } from "native-base";
 import AnimatedGradient from "../../components/background/GradientAnimated";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getWelcomeScreenContent } from "../../api/index";
-import { useAuth } from "@clerk/clerk-expo";
+//import { useAuth } from "@clerk/clerk-expo";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import SpinnerComp from "../../components/Spinner";
 import ErrorMessage from "../../components/ErrorMessage";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import { Motion } from "@legendapp/motion";
 
 const screenHeight = Dimensions.get("window").height;
@@ -99,7 +100,7 @@ const RescuerWelcome = (props: Props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <View style={styles.container}>
         <ImageBackground
           source={require("../../assets/desertbg.png")}
@@ -134,13 +135,15 @@ const RescuerWelcome = (props: Props) => {
             }}
             className="mt-24 h-4/6 mx-4 rounded-lg px-4 items-center bg-[#00D1FFD1]"
           >
-            <Text className="text-center text-2xl font-extrabold px-4 mt-8">{data?.Title}</Text>
-            <Text className="text-center text-sm font-base px-4 mt-3">{data?.ThankYouMessage}</Text>
-            <Text className="text-center text-sm font-base px-4 mt-3">{data?.DefaultSettingsInfo}</Text>
-            <Text className="text-center text-sm font-base px-4 mt-3">{data?.MapInstructions}</Text>
-            <Text className="text-center text-sm font-base px-4 mt-3">{data?.KindnessMessage}</Text>
-            <Text className="text-center text-sm font-base px-4 mt-3">{data?.ResponsibilityMessage}</Text>
-            <Text className="text-center text-sm font-base px-4 mt-3 mb-6">{data?.ClosingMessage}</Text>
+            <ScrollView>
+              <Text className="text-center text-2xl font-extrabold px-4 mt-8">{data?.Title}</Text>
+              <Text className="text-center text-sm font-base px-4 mt-3">{data?.ThankYouMessage}</Text>
+              <Text className="text-center text-sm font-base px-4 mt-3">{data?.DefaultSettingsInfo}</Text>
+              <Text className="text-center text-sm font-base px-4 mt-3">{data?.MapInstructions}</Text>
+              <Text className="text-center text-sm font-base px-4 mt-3">{data?.KindnessMessage}</Text>
+              <Text className="text-center text-sm font-base px-4 mt-3">{data?.ResponsibilityMessage}</Text>
+              <Text className="text-center text-sm font-base px-4 mt-3 mb-6">{data?.ClosingMessage}</Text>
+            </ScrollView>
           </Motion.View>
           <Button
             className="w-24 absolute bottom-24 border self-center border-cyan-500 "
@@ -157,7 +160,7 @@ const RescuerWelcome = (props: Props) => {
           )}
         </ImageBackground>
       </View>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

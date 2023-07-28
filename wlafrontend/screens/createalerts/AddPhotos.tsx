@@ -7,6 +7,7 @@ import { FAB } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 type RootStackParamList = {
   ConfirmPost: undefined;
@@ -93,7 +94,7 @@ const AddPhotos = (props: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ height: screenHeight }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
         <View className="flex-1 mt-12 items-center align-middle">
           <View className="mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
@@ -137,7 +138,7 @@ const AddPhotos = (props: Props) => {
           </Button>
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

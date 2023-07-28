@@ -4,6 +4,7 @@ import { Dimensions, ImageBackground, SafeAreaView } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Text, Button } from "native-base";
 import { Motion } from "@legendapp/motion";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 type RootStackParamList = {
   Resources: undefined;
@@ -24,7 +25,7 @@ const NextSteps = (props: Props) => {
     });
   });
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient
         style={{ height: screenHeight, alignItems: "center" }}
         colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
@@ -63,7 +64,7 @@ const NextSteps = (props: Props) => {
           </Motion.View>
         </ImageBackground>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

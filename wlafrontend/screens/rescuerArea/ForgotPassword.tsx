@@ -16,6 +16,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import SkeletonComp from "../../components/Skeleton";
 import OfflineToast from "../../components/OfflineToast";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import { useConnectivity } from "../../hooks/useConnectivity";
 
 const screenHeight = Dimensions.get("window").height;
@@ -96,7 +97,7 @@ const ForgotPassword = (props: Props) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <ImageBackground
         source={require("../../assets/resbasecamp.png")}
         style={{
@@ -194,7 +195,7 @@ const ForgotPassword = (props: Props) => {
           </View>
         )}
       </ImageBackground>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

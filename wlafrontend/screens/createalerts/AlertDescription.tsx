@@ -4,6 +4,7 @@ import { Keyboard, TouchableWithoutFeedback, ScrollView, SafeAreaView } from "re
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, FormControl, Input, TextArea } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 type RootStackParamList = {
   SetLocation: undefined;
@@ -76,7 +77,7 @@ const AlertDescription = (props: Props) => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ flex: 1 }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
         <Text className="text-center mt-6 font-black uppercase text-4xl">What is happening?</Text>
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flexGrow: 1 }}>
@@ -148,7 +149,7 @@ const AlertDescription = (props: Props) => {
           </TouchableWithoutFeedback>
         </ScrollView>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

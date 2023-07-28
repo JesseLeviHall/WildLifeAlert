@@ -6,6 +6,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
 import SuccessToast from "../../components/SuccessToast";
 import SetRescuerLocationMap from "../../components/SetRescuerLocationMap";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import { useConnectivity } from "../../hooks/useConnectivity";
 
 const screenHeight = Dimensions.get("window").height;
@@ -58,7 +59,7 @@ const RescuerRegister = (props: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ height: screenHeight }} colors={["#24008CFF", "#0E409C9E", "#EB8705AF"]}>
         <View className="flex flex-1 items-center h-full w-full ">
           <SetRescuerLocationMap onLocationChange={setLocation} onLocationSave={handleLocationSave} />
@@ -77,7 +78,7 @@ const RescuerRegister = (props: Props) => {
           )}
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

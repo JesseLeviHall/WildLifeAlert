@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { postNewAlert } from "../../api/index";
 import SuccessToast from "../../components/SuccessToast";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 type RootStackParamList = {
   NextSteps: undefined;
@@ -124,7 +125,7 @@ const ConfirmPost = (props: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient
         style={{
           height: screenHeight,
@@ -178,7 +179,7 @@ const ConfirmPost = (props: Props) => {
           </Button>
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

@@ -5,6 +5,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Button } from "native-base";
 import SetAlertLocationMap from "../../components/SetAlertLocationMap";
 import SuccessToast from "../../components/SuccessToast";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 
 type RootStackParamList = {
   AddPhotos: undefined;
@@ -50,7 +51,7 @@ const SetLocation = (props: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ flex: 1 }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
         <View style={{ flex: 1 }}>
           <SetAlertLocationMap onLocationChange={setLocation} onLocationSave={handleLocationSave} />
@@ -73,7 +74,7 @@ const SetLocation = (props: Props) => {
           </Button>
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 

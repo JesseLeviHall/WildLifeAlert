@@ -5,6 +5,7 @@ import { View, Switch, Text, Button, FormControl, Input } from "native-base";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
 import PushPermissionReg from "../../components/PushPermissionReg";
+import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -130,7 +131,7 @@ const RescuerRegisterStepOne = (props: Props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ConditionalSafeAreaView>
       <LinearGradient style={{ height: screenHeight }} colors={["#52B7FFDB", "#0E409C9E", "#EB8705AF"]}>
         <View>
           {visible ? (
@@ -311,7 +312,7 @@ const RescuerRegisterStepOne = (props: Props) => {
           )}
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </ConditionalSafeAreaView>
   );
 };
 
