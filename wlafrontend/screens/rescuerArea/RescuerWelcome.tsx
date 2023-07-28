@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Dimensions, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, Dimensions, SafeAreaView, ImageBackground } from "react-native";
 import { Button } from "native-base";
 import AnimatedGradient from "../../components/background/GradientAnimated";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -99,63 +99,65 @@ const RescuerWelcome = (props: Props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../../assets/desertbg.png")}
-        style={{
-          height: screenHeight,
-          width: screenWidth,
-          margin: 0,
-          padding: 0,
-        }}
-      >
-        <View style={styles.background}>
-          <AnimatedGradient />
-        </View>
-        <Motion.View
-          initial={{ x: -100, scale: 1, opacity: 0.1 }}
-          animate={{ x: 0, scale: 1, opacity: 1 }}
-          transition={{
-            default: {
-              type: "spring",
-              damping: 30,
-              stiffness: 300,
-            },
-            x: {
-              type: "spring",
-              damping: 30,
-              stiffness: 300,
-            },
-            opacity: {
-              type: "tween",
-              duration: 1000,
-            },
-          }}
-          className="mt-24 h-4/6 mx-4 rounded-lg px-4 items-center bg-[#00D1FFD1]"
-        >
-          <Text className="text-center text-2xl font-extrabold px-4 mt-8">{data?.Title}</Text>
-          <Text className="text-center text-sm font-base px-4 mt-3">{data?.ThankYouMessage}</Text>
-          <Text className="text-center text-sm font-base px-4 mt-3">{data?.DefaultSettingsInfo}</Text>
-          <Text className="text-center text-sm font-base px-4 mt-3">{data?.MapInstructions}</Text>
-          <Text className="text-center text-sm font-base px-4 mt-3">{data?.KindnessMessage}</Text>
-          <Text className="text-center text-sm font-base px-4 mt-3">{data?.ResponsibilityMessage}</Text>
-          <Text className="text-center text-sm font-base px-4 mt-3 mb-6">{data?.ClosingMessage}</Text>
-        </Motion.View>
-        <Button
-          className="w-24 absolute bottom-24 border self-center border-cyan-500 "
-          onPress={() => {
-            navigation.navigate("RescuerLogin");
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../../assets/desertbg.png")}
+          style={{
+            height: screenHeight,
+            width: screenWidth,
+            margin: 0,
+            padding: 0,
           }}
         >
-          Done
-        </Button>
-        {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end ">
-            <OfflineToast />
+          <View style={styles.background}>
+            <AnimatedGradient />
           </View>
-        )}
-      </ImageBackground>
-    </View>
+          <Motion.View
+            initial={{ x: -100, scale: 1, opacity: 0.1 }}
+            animate={{ x: 0, scale: 1, opacity: 1 }}
+            transition={{
+              default: {
+                type: "spring",
+                damping: 30,
+                stiffness: 300,
+              },
+              x: {
+                type: "spring",
+                damping: 30,
+                stiffness: 300,
+              },
+              opacity: {
+                type: "tween",
+                duration: 1000,
+              },
+            }}
+            className="mt-24 h-4/6 mx-4 rounded-lg px-4 items-center bg-[#00D1FFD1]"
+          >
+            <Text className="text-center text-2xl font-extrabold px-4 mt-8">{data?.Title}</Text>
+            <Text className="text-center text-sm font-base px-4 mt-3">{data?.ThankYouMessage}</Text>
+            <Text className="text-center text-sm font-base px-4 mt-3">{data?.DefaultSettingsInfo}</Text>
+            <Text className="text-center text-sm font-base px-4 mt-3">{data?.MapInstructions}</Text>
+            <Text className="text-center text-sm font-base px-4 mt-3">{data?.KindnessMessage}</Text>
+            <Text className="text-center text-sm font-base px-4 mt-3">{data?.ResponsibilityMessage}</Text>
+            <Text className="text-center text-sm font-base px-4 mt-3 mb-6">{data?.ClosingMessage}</Text>
+          </Motion.View>
+          <Button
+            className="w-24 absolute bottom-24 border self-center border-cyan-500 "
+            onPress={() => {
+              navigation.navigate("RescuerLogin");
+            }}
+          >
+            Done
+          </Button>
+          {isConnected ? null : (
+            <View className="flex-1 align-middle justify-end ">
+              <OfflineToast />
+            </View>
+          )}
+        </ImageBackground>
+      </View>
+    </SafeAreaView>
   );
 };
 

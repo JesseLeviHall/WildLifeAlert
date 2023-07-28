@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Dimensions, ImageBackground, StyleSheet } from "react-native";
+import { View, Dimensions, ImageBackground, SafeAreaView, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, NavigationProp, useFocusEffect } from "@react-navigation/native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
@@ -86,29 +86,31 @@ const RescuerRegisterStepTwo = (props: Props) => {
   );
 
   return (
-    <ImageBackground
-      source={require("../../assets/resbasecamp.png")}
-      style={{
-        height: screenHeight,
-        width: screenWidth,
-        margin: 0,
-        padding: 0,
-        alignItems: "center",
-      }}
-    >
-      <View style={styles.background}>
-        <NightGradAnimated />
-      </View>
-      <View style={styles.box}>
-        <SignUpWithOAuth navigation={navigation} userDetails={userDetails} />
-        <SignUpComponent navigation={navigation} userDetails={userDetails} />
-        {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
-            <OfflineToast />
-          </View>
-        )}
-      </View>
-    </ImageBackground>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ImageBackground
+        source={require("../../assets/resbasecamp.png")}
+        style={{
+          height: screenHeight,
+          width: screenWidth,
+          margin: 0,
+          padding: 0,
+          alignItems: "center",
+        }}
+      >
+        <View style={styles.background}>
+          <NightGradAnimated />
+        </View>
+        <View style={styles.box}>
+          <SignUpWithOAuth navigation={navigation} userDetails={userDetails} />
+          <SignUpComponent navigation={navigation} userDetails={userDetails} />
+          {isConnected ? null : (
+            <View className="flex-1 align-middle justify-end">
+              <OfflineToast />
+            </View>
+          )}
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

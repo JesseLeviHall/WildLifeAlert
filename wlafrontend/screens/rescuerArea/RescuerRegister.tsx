@@ -1,6 +1,6 @@
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions } from "react-native";
+import { Dimensions, SafeAreaView } from "react-native";
 import { View, Button } from "native-base";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
@@ -58,24 +58,26 @@ const RescuerRegister = (props: Props) => {
   };
 
   return (
-    <LinearGradient style={{ height: screenHeight }} colors={["#24008CFF", "#0E409C9E", "#EB8705AF"]}>
-      <View className="flex flex-1 items-center h-full w-full ">
-        <SetRescuerLocationMap onLocationChange={setLocation} onLocationSave={handleLocationSave} />
-        <View className=" h-16">{showToast && <SuccessToast message="Location Saved" />}</View>
-        <Button
-          className={`${Location ? "" : "bg-gray-300"} border border-cyan-500 items-center w-24 -mt-6`}
-          disabled={!Location}
-          onPress={() => navigation.navigate("RescuerRegisterStepOne")}
-        >
-          Next
-        </Button>
-        {isConnected ? null : (
-          <View className="flex-1 align-middle  justify-end">
-            <OfflineToast />
-          </View>
-        )}
-      </View>
-    </LinearGradient>
+    <SafeAreaView style={{ flex: 1 }}>
+      <LinearGradient style={{ height: screenHeight }} colors={["#24008CFF", "#0E409C9E", "#EB8705AF"]}>
+        <View className="flex flex-1 items-center h-full w-full ">
+          <SetRescuerLocationMap onLocationChange={setLocation} onLocationSave={handleLocationSave} />
+          <View className=" h-16">{showToast && <SuccessToast message="Location Saved" />}</View>
+          <Button
+            className={`${Location ? "" : "bg-gray-300"} border border-cyan-500 items-center w-24 -mt-6`}
+            disabled={!Location}
+            onPress={() => navigation.navigate("RescuerRegisterStepOne")}
+          >
+            Next
+          </Button>
+          {isConnected ? null : (
+            <View className="flex-1 align-middle  justify-end">
+              <OfflineToast />
+            </View>
+          )}
+        </View>
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 

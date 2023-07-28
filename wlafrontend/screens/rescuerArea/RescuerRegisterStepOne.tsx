@@ -1,6 +1,6 @@
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, Keyboard, ScrollView, ViewStyle } from "react-native";
+import { Dimensions, Keyboard, ScrollView, ViewStyle, SafeAreaView } from "react-native";
 import { View, Switch, Text, Button, FormControl, Input } from "native-base";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import OfflineToast from "../../components/OfflineToast";
@@ -130,182 +130,188 @@ const RescuerRegisterStepOne = (props: Props) => {
   };
 
   return (
-    <LinearGradient style={{ height: screenHeight }} colors={["#52B7FFDB", "#0E409C9E", "#EB8705AF"]}>
-      <View>
-        {visible ? (
-          <View className="h-full">
-            <PushPermissionReg visible={visible} setVisible={setVisible} />
-          </View>
-        ) : null}
-      </View>
-      <View className="flex-1 align-middle justify-center ">
-        <Text className="text-center font-black uppercase mt-4 text-3xl">Basic Information</Text>
-        <Text className="text-center font-light text-sm mb-2">(Never shared anywhere without your permission)</Text>
-        <ScrollView contentContainerStyle={contentContainerStyle}>
-          <View className="flex-1 align-middle justify-center pb-80 items-center w-full">
-            <FormControl isRequired className="mb-2">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
-              >
-                Full Name
-              </FormControl.Label>
-              <Input
-                maxLength={100}
-                className=" bg-[#d4e1ea] w-2/3"
-                placeholder="First & Last"
-                variant="filled"
-                autoComplete="name"
-                onChangeText={(value) => setFullName({ ...fullName, fullName: value })}
-                onSubmitEditing={Keyboard.dismiss}
-              />
-              {"fullName" in errors ? (
-                <FormControl.HelperText
+    <SafeAreaView style={{ flex: 1 }}>
+      <LinearGradient style={{ height: screenHeight }} colors={["#52B7FFDB", "#0E409C9E", "#EB8705AF"]}>
+        <View>
+          {visible ? (
+            <View className="h-full">
+              <PushPermissionReg visible={visible} setVisible={setVisible} />
+            </View>
+          ) : null}
+        </View>
+        <View className="flex-1 align-middle justify-center ">
+          <Text className="text-center font-black uppercase mt-4 text-3xl">Basic Information</Text>
+          <Text className="text-center font-light text-sm mb-2">(Never shared anywhere without your permission)</Text>
+          <ScrollView contentContainerStyle={contentContainerStyle}>
+            <View className="flex-1 align-middle justify-center pb-80 items-center w-full">
+              <FormControl isRequired className="mb-2">
+                <FormControl.Label
                   _text={{
-                    fontSize: "xs",
+                    bold: true,
+                    color: "black",
                   }}
                 >
-                  {errors.fullName}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
-            <FormControl isRequired className="mb-4">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
-              >
-                Phone
-              </FormControl.Label>
-              <Input
-                maxLength={20}
-                className=" bg-[#d4e1ea]"
-                placeholder="Phone Number"
-                variant="filled"
-                autoComplete="tel"
-                keyboardType="numbers-and-punctuation"
-                onChangeText={(value) => setPhone({ ...Phone, PhoneNumber: value })}
-                onSubmitEditing={Keyboard.dismiss}
-              />
-              {"PhoneNumber" in errors ? (
-                <FormControl.HelperText
+                  Full Name
+                </FormControl.Label>
+                <Input
+                  maxLength={100}
+                  className=" bg-[#d4e1ea] w-2/3"
+                  placeholder="First & Last"
+                  variant="filled"
+                  autoComplete="name"
+                  onChangeText={(value) => setFullName({ ...fullName, fullName: value })}
+                  onSubmitEditing={Keyboard.dismiss}
+                />
+                {"fullName" in errors ? (
+                  <FormControl.HelperText
+                    _text={{
+                      fontSize: "xs",
+                    }}
+                  >
+                    {errors.fullName}
+                  </FormControl.HelperText>
+                ) : null}
+              </FormControl>
+              <FormControl isRequired className="mb-4">
+                <FormControl.Label
                   _text={{
-                    fontSize: "xs",
+                    bold: true,
+                    color: "black",
                   }}
                 >
-                  {errors.PhoneNumber}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
-            <Text className="text-center font-black text-lg">
-              Are you affiliated with a Wildlife Emergency or Protection Organization?
-            </Text>
-            <View className="flex-row row-span-1">
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${Professional ? "opacity-20" : "font-bold"}`}>
-                No
+                  Phone
+                </FormControl.Label>
+                <Input
+                  maxLength={20}
+                  className=" bg-[#d4e1ea]"
+                  placeholder="Phone Number"
+                  variant="filled"
+                  autoComplete="tel"
+                  keyboardType="numbers-and-punctuation"
+                  onChangeText={(value) => setPhone({ ...Phone, PhoneNumber: value })}
+                  onSubmitEditing={Keyboard.dismiss}
+                />
+                {"PhoneNumber" in errors ? (
+                  <FormControl.HelperText
+                    _text={{
+                      fontSize: "xs",
+                    }}
+                  >
+                    {errors.PhoneNumber}
+                  </FormControl.HelperText>
+                ) : null}
+              </FormControl>
+              <Text className="text-center font-black text-lg">
+                Are you affiliated with a Wildlife Emergency or Protection Organization?
               </Text>
-              <Switch
-                offTrackColor="indigo.100"
-                onTrackColor="indigo.300"
-                onThumbColor="indigo.500"
-                offThumbColor="indigo.50"
-                isChecked={Professional}
-                onToggle={handleProfessional}
-              />
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${Professional ? "font-bold" : "opacity-20"}`}>
-                Yes
-              </Text>
-            </View>
-            <FormControl className="mb-6">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
-              >
-                Organization
-              </FormControl.Label>
-              <Input
-                maxLength={100}
-                className=" bg-[#d4e1ea]"
-                placeholder="Optional"
-                variant="filled"
-                isDisabled={!Professional}
-                onChangeText={(value) => setOrganization({ ...Organization, Organization: value })}
-                onSubmitEditing={Keyboard.dismiss}
-              />
-              {"Organization" in errors ? (
-                <FormControl.HelperText
+              <View className="flex-row row-span-1">
+                <Text
+                  className={`text-center font-light my-1 mx-2 text-sm ${Professional ? "opacity-20" : "font-bold"}`}
+                >
+                  No
+                </Text>
+                <Switch
+                  offTrackColor="indigo.100"
+                  onTrackColor="indigo.300"
+                  onThumbColor="indigo.500"
+                  offThumbColor="indigo.50"
+                  isChecked={Professional}
+                  onToggle={handleProfessional}
+                />
+                <Text
+                  className={`text-center font-light my-1 mx-2 text-sm ${Professional ? "font-bold" : "opacity-20"}`}
+                >
+                  Yes
+                </Text>
+              </View>
+              <FormControl className="mb-6">
+                <FormControl.Label
                   _text={{
-                    fontSize: "xs",
+                    bold: true,
+                    color: "black",
                   }}
                 >
-                  {errors.Organization}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
-            <Text className="text-center mb-1 font-black text-lg">
-              Do you have training and experience in animal medical care?
-            </Text>
-            <View className="flex-row row-span-1">
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${Medical ? "opacity-20" : "font-bold"}`}>
-                No
+                  Organization
+                </FormControl.Label>
+                <Input
+                  maxLength={100}
+                  className=" bg-[#d4e1ea]"
+                  placeholder="Optional"
+                  variant="filled"
+                  isDisabled={!Professional}
+                  onChangeText={(value) => setOrganization({ ...Organization, Organization: value })}
+                  onSubmitEditing={Keyboard.dismiss}
+                />
+                {"Organization" in errors ? (
+                  <FormControl.HelperText
+                    _text={{
+                      fontSize: "xs",
+                    }}
+                  >
+                    {errors.Organization}
+                  </FormControl.HelperText>
+                ) : null}
+              </FormControl>
+              <Text className="text-center mb-1 font-black text-lg">
+                Do you have training and experience in animal medical care?
               </Text>
-              <Switch
-                offTrackColor="indigo.100"
-                onTrackColor="indigo.300"
-                onThumbColor="indigo.500"
-                offThumbColor="indigo.50"
-                isChecked={Medical}
-                onToggle={handleMedical}
-              />
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${Medical ? "font-bold" : "opacity-20"}`}>
-                Yes
+              <View className="flex-row row-span-1">
+                <Text className={`text-center font-light my-1 mx-2 text-sm ${Medical ? "opacity-20" : "font-bold"}`}>
+                  No
+                </Text>
+                <Switch
+                  offTrackColor="indigo.100"
+                  onTrackColor="indigo.300"
+                  onThumbColor="indigo.500"
+                  offThumbColor="indigo.50"
+                  isChecked={Medical}
+                  onToggle={handleMedical}
+                />
+                <Text className={`text-center font-light my-1 mx-2 text-sm ${Medical ? "font-bold" : "opacity-20"}`}>
+                  Yes
+                </Text>
+              </View>
+              <Text className="text-center mt-6 mb-1 font-black text-lg">
+                Do you have training and experience in Wildlife Rehabilitation?
               </Text>
+              <View className="flex-row row-span-1">
+                <Text className={`text-center font-light my-1 mx-2 text-sm ${Rehab ? "opacity-20" : "font-bold"}`}>
+                  No
+                </Text>
+                <Switch
+                  offTrackColor="indigo.100"
+                  onTrackColor="indigo.300"
+                  onThumbColor="indigo.500"
+                  offThumbColor="indigo.50"
+                  isChecked={Rehab}
+                  onToggle={handleRehab}
+                />
+                <Text className={`text-center font-light my-1 mx-2 text-sm ${Rehab ? "font-bold" : "opacity-20"}`}>
+                  Yes
+                </Text>
+              </View>
+              <Button
+                className="m-4 mt-16 border border-cyan-500  items-center w-24"
+                onPress={onSubmit}
+                colorScheme="cyan"
+                _text={{ color: "white" }}
+                _pressed={{
+                  backgroundColor: "cyan.400",
+                  _text: { color: "white" },
+                }}
+              >
+                Next
+              </Button>
             </View>
-            <Text className="text-center mt-6 mb-1 font-black text-lg">
-              Do you have training and experience in Wildlife Rehabilitation?
-            </Text>
-            <View className="flex-row row-span-1">
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${Rehab ? "opacity-20" : "font-bold"}`}>
-                No
-              </Text>
-              <Switch
-                offTrackColor="indigo.100"
-                onTrackColor="indigo.300"
-                onThumbColor="indigo.500"
-                offThumbColor="indigo.50"
-                isChecked={Rehab}
-                onToggle={handleRehab}
-              />
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${Rehab ? "font-bold" : "opacity-20"}`}>
-                Yes
-              </Text>
+          </ScrollView>
+          {isConnected ? null : (
+            <View className="flex-1 align-middle justify-end">
+              <OfflineToast />
             </View>
-            <Button
-              className="m-4 mt-16 border border-cyan-500  items-center w-24"
-              onPress={onSubmit}
-              colorScheme="cyan"
-              _text={{ color: "white" }}
-              _pressed={{
-                backgroundColor: "cyan.400",
-                _text: { color: "white" },
-              }}
-            >
-              Next
-            </Button>
-          </View>
-        </ScrollView>
-        {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
-            <OfflineToast />
-          </View>
-        )}
-      </View>
-    </LinearGradient>
+          )}
+        </View>
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 

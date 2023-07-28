@@ -11,6 +11,7 @@ import {
   ScrollView,
   Pressable,
   Modal,
+  SafeAreaView,
 } from "react-native";
 import AnimatedGradient from "../../components/background/GradientAnimated";
 import { Button } from "native-base";
@@ -161,84 +162,90 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
   }${minutes} ${amPm}`;
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../../assets/desertbglt.png")}
-        style={{
-          height: screenHeight,
-          width: screenWidth,
-          margin: 0,
-          padding: 0,
-        }}
-      >
-        <View style={styles.background}>
-          <AnimatedGradient />
-        </View>
-        <View style={styles.imagescontainer}>
-          <ScrollView horizontal={true}>
-            {data?.Photo &&
-              data.Photo.map((photoObj: { id: number; url: string }) => (
-                <Pressable style={styles.imagePressable} key={photoObj.id} onPress={() => openImageModal(photoObj.url)}>
-                  <Image source={{ uri: photoObj.url }} style={styles.images} />
-                </Pressable>
-              ))}
-          </ScrollView>
-        </View>
-        <View style={styles.box}>
-          <ScrollView>
-            {data?.ShareContact === "true" ? (
-              <Text className=" text-center mt-2 font-semibold text-xl">Alert Sent by {data?.FullName}</Text>
-            ) : (
-              <Text className=" text-center mt-2 font-semibold text-xl">Sent Anonymously</Text>
-            )}
-            <Text className="mt-2 text-center font-light text-black text-lg">{formattedTimestamp}</Text>
-            {data?.ShareContact === "true" && (
-              <View className="flex flex-row justify-evenly">
-                <Chip
-                  className="mt-4 w-18 ml-2"
-                  elevated={true}
-                  mode="flat"
-                  icon={() => <MaterialCommunityIcons name="email" size={18} color="#4AA8FF" />}
-                  onPress={() => {
-                    Linking.openURL(`mailto:${data?.Email}`);
-                  }}
-                >
-                  Email
-                </Chip>
-              </View>
-            )}
-            <Pressable onPress={copyToClipboard}>
-              <Text className="mt-4 text-center font-medium text-blue-400 text-lg">Copy Coordinates</Text>
-            </Pressable>
-            {showToast && (
-              <View className="-mt-16 h-24 rounded-lg">
-                <SuccessToast message="Coordinates Copied" />
-              </View>
-            )}
-            <Text className="mt-8 ml-4 font-black text-black text-3xl">{data?.Animal}</Text>
-            <Text className="mt-2 ml-4 font-semibold text-black  text-lg">Description: {data?.Description}</Text>
-          </ScrollView>
-        </View>
-        {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
-            <OfflineToast />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../../assets/desertbglt.png")}
+          style={{
+            height: screenHeight,
+            width: screenWidth,
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          <View style={styles.background}>
+            <AnimatedGradient />
           </View>
-        )}
-      </ImageBackground>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isImageModalVisible}
-        onRequestClose={closeImageModal} // This is for handling the hardware back button on Android.
-      >
-        <View style={styles.modalContainer}>
-          <Pressable style={styles.modalCloseButton} onPress={closeImageModal}>
-            <Text style={styles.closeButtonText}>Close</Text>
-          </Pressable>
-          {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />}
-        </View>
-      </Modal>
-    </View>
+          <View style={styles.imagescontainer}>
+            <ScrollView horizontal={true}>
+              {data?.Photo &&
+                data.Photo.map((photoObj: { id: number; url: string }) => (
+                  <Pressable
+                    style={styles.imagePressable}
+                    key={photoObj.id}
+                    onPress={() => openImageModal(photoObj.url)}
+                  >
+                    <Image source={{ uri: photoObj.url }} style={styles.images} />
+                  </Pressable>
+                ))}
+            </ScrollView>
+          </View>
+          <View style={styles.box}>
+            <ScrollView>
+              {data?.ShareContact === "true" ? (
+                <Text className=" text-center mt-2 font-semibold text-xl">Alert Sent by {data?.FullName}</Text>
+              ) : (
+                <Text className=" text-center mt-2 font-semibold text-xl">Sent Anonymously</Text>
+              )}
+              <Text className="mt-2 text-center font-light text-black text-lg">{formattedTimestamp}</Text>
+              {data?.ShareContact === "true" && (
+                <View className="flex flex-row justify-evenly">
+                  <Chip
+                    className="mt-4 w-18 ml-2"
+                    elevated={true}
+                    mode="flat"
+                    icon={() => <MaterialCommunityIcons name="email" size={18} color="#4AA8FF" />}
+                    onPress={() => {
+                      Linking.openURL(`mailto:${data?.Email}`);
+                    }}
+                  >
+                    Email
+                  </Chip>
+                </View>
+              )}
+              <Pressable onPress={copyToClipboard}>
+                <Text className="mt-4 text-center font-medium text-blue-400 text-lg">Copy Coordinates</Text>
+              </Pressable>
+              {showToast && (
+                <View className="-mt-16 h-24 rounded-lg">
+                  <SuccessToast message="Coordinates Copied" />
+                </View>
+              )}
+              <Text className="mt-8 ml-4 font-black text-black text-3xl">{data?.Animal}</Text>
+              <Text className="mt-2 ml-4 font-semibold text-black  text-lg">Description: {data?.Description}</Text>
+            </ScrollView>
+          </View>
+          {isConnected ? null : (
+            <View className="flex-1 align-middle justify-end">
+              <OfflineToast />
+            </View>
+          )}
+        </ImageBackground>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isImageModalVisible}
+          onRequestClose={closeImageModal} // This is for handling the hardware back button on Android.
+        >
+          <View style={styles.modalContainer}>
+            <Pressable style={styles.modalCloseButton} onPress={closeImageModal}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </Pressable>
+            {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />}
+          </View>
+        </Modal>
+      </View>
+    </SafeAreaView>
   );
 };
 

@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Linking,
+  SafeAreaView,
 } from "react-native";
 import { Button, Divider } from "native-base";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
@@ -126,83 +127,87 @@ const RescuerPrefs = (props: Props) => {
   const toggleChangeLocation = () => setChangeLocation(!changeLocation);
 
   return (
-    <ImageBackground
-      source={require("../../assets/resbasecamp.png")}
-      style={{
-        height: screenHeight,
-        width: screenWidth,
-        margin: 0,
-        padding: 0,
-        alignItems: "center",
-      }}
-    >
-      <View style={styles.background}>
-        <NightGradAnimated />
-      </View>
-      <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
-        <Text className="font-bold text-lg text-blue-50 text-center">Set Your Preferences</Text>
-      </View>
-      {changeLocation && (
-        <View
-          style={{
-            position: "absolute",
-            width: screenWidth,
-            height: screenHeight,
-            zIndex: 10,
-          }}
-        >
-          <SetLocationDialogue
-            visible={changeLocation}
-            setVisible={toggleChangeLocation}
-            LatitudeProp={data?.Latitude}
-            LongitudeProp={data?.Longitude}
-          />
+    <SafeAreaView style={{ flex: 1 }}>
+      <ImageBackground
+        source={require("../../assets/resbasecamp.png")}
+        style={{
+          height: screenHeight,
+          width: screenWidth,
+          margin: 0,
+          padding: 0,
+          alignItems: "center",
+        }}
+      >
+        <View style={styles.background}>
+          <NightGradAnimated />
         </View>
-      )}
-      {dialogVisible && (
-        <View
-          style={{
-            position: "absolute",
-            width: screenWidth,
-            height: screenHeight,
-            zIndex: 10,
-          }}
-        >
-          <AccountDeleteDialogue navigation={navigation} visible={dialogVisible} setVisible={toggleDialogVisible} />
+        <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
+          <Text className="font-bold text-lg text-blue-50 text-center">Set Your Preferences</Text>
         </View>
-      )}
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.box}>
-          <SetRescuerLocation
-            isOpen={toggleChangeLocation}
-            LatitudeProp={data?.Latitude}
-            LongitudeProp={data?.Longitude}
-          />
-          <Divider my="2" opacity={30} />
-          <SetNotifications notificationProp={data?.Notifications} />
-          <Divider my="2" opacity={30} />
-          <SetGeoRadius geoRadiusProp={data?.Radius} />
-          <Divider my="2" opacity={30} />
-          <DeleteAccount toggleDialog={toggleDialogVisible} />
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
+        {changeLocation && (
+          <View
+            style={{
+              position: "absolute",
+              width: screenWidth,
+              height: screenHeight,
+              zIndex: 10,
             }}
-            className="justify-center items-center align-bottom border border-cyan-500 rounded-full"
           >
-            <Text className="text-base text-center py-2 px-8 text-white font-thin">Feedback, or Report a Problem</Text>
-          </TouchableOpacity>
-        </View>
-      </TouchableWithoutFeedback>
-      {isConnected ? null : (
-        <View className="flex-1 align-middle justify-center">
-          <OfflineToast />
-        </View>
-      )}
-      <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
-        Back
-      </Button>
-    </ImageBackground>
+            <SetLocationDialogue
+              visible={changeLocation}
+              setVisible={toggleChangeLocation}
+              LatitudeProp={data?.Latitude}
+              LongitudeProp={data?.Longitude}
+            />
+          </View>
+        )}
+        {dialogVisible && (
+          <View
+            style={{
+              position: "absolute",
+              width: screenWidth,
+              height: screenHeight,
+              zIndex: 10,
+            }}
+          >
+            <AccountDeleteDialogue navigation={navigation} visible={dialogVisible} setVisible={toggleDialogVisible} />
+          </View>
+        )}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.box}>
+            <SetRescuerLocation
+              isOpen={toggleChangeLocation}
+              LatitudeProp={data?.Latitude}
+              LongitudeProp={data?.Longitude}
+            />
+            <Divider my="2" opacity={30} />
+            <SetNotifications notificationProp={data?.Notifications} />
+            <Divider my="2" opacity={30} />
+            <SetGeoRadius geoRadiusProp={data?.Radius} />
+            <Divider my="2" opacity={30} />
+            <DeleteAccount toggleDialog={toggleDialogVisible} />
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
+              }}
+              className="justify-center items-center align-bottom border border-cyan-500 rounded-full"
+            >
+              <Text className="text-base text-center py-2 px-8 text-white font-thin">
+                Feedback, or Report a Problem
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-center">
+            <OfflineToast />
+          </View>
+        )}
+        <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
+          Back
+        </Button>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

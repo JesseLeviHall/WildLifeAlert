@@ -9,6 +9,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -23,10 +24,7 @@ const screenWidth = Dimensions.get("window").width;
 type RootStackParamList = {
   RescuerLogin: undefined;
 };
-type RescuerLoginNavigationProp = NavigationProp<
-  RootStackParamList,
-  "RescuerLogin"
->;
+type RescuerLoginNavigationProp = NavigationProp<RootStackParamList, "RescuerLogin">;
 
 type Props = {
   navigation: RescuerLoginNavigationProp;
@@ -98,113 +96,105 @@ const ForgotPassword = (props: Props) => {
   });
 
   return (
-    <ImageBackground
-      source={require("../../assets/resbasecamp.png")}
-      style={{
-        height: screenHeight,
-        width: screenWidth,
-        margin: 0,
-        padding: 0,
-        alignItems: "center",
-      }}
-    >
-      <View style={styles.background}>
-        <NightGradAnimated />
-      </View>
-      <View className=" align-middle items-center">
-        <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
-          <Text className="font-bold text-lg text-blue-50 text-center">
-            Password Reset
-          </Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ImageBackground
+        source={require("../../assets/resbasecamp.png")}
+        style={{
+          height: screenHeight,
+          width: screenWidth,
+          margin: 0,
+          padding: 0,
+          alignItems: "center",
+        }}
+      >
+        <View style={styles.background}>
+          <NightGradAnimated />
         </View>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={styles.box}>
-            {!successfulCreation && !complete && (
-              <>
-                <Text className=" text-blue-300 bg-transparent text-2xl font-bold text-center mb-4">
-                  Please enter your email
-                </Text>
-                <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10 w-3/4">
-                  <TextInput
-                    className="w-full text-center"
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    autoComplete="email"
-                    placeholder="e.g john@doe.com"
-                    value={email}
-                    onChangeText={setEmail}
-                  />
-                </View>
-                {error && (
-                  <Text style={{ color: "red", marginTop: 2 }}>{error}</Text>
-                )}
-                <TouchableOpacity
-                  className="border h-10 border-[#00E0FFFF] rounded-md mt-3 mb-6 justify-center align-middle w-3/4 "
-                  onPress={create}
-                >
-                  <Text className=" text-blue-300 bg-transparent text-xl text-center">
-                    Submit
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className="border h-10 border-[#00E0FFFF] rounded-md justify-center align-middle w-3/4 mt-12"
-                  onPress={() => navigation.goBack()}
-                >
-                  <Text className=" text-blue-300 bg-transparent text-xl text-center">
-                    Back
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
-            {successfulCreation && !complete && (
-              <>
-                <Text>New password</Text>
-                <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
-                  <TextInput
-                    className="w-full text-center"
-                    autoCapitalize="none"
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={setPassword}
-                  />
-                </View>
-                <Text>Reset password code</Text>
-                <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
-                  <TextInput
-                    className="w-full text-center"
-                    autoCapitalize="none"
-                    value={code}
-                    onChangeText={setCode}
-                  />
-                </View>
-                <TouchableOpacity onPress={reset}>
-                  <Text>Reset</Text>
-                </TouchableOpacity>
-              </>
-            )}
-            {complete && (
-              <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-transparent rounded-xl">
-                <Text>You successfully changed your password</Text>
-                <TouchableOpacity
-                  className="border h-10 border-[#00E0FFFF] rounded-md justify-center align-middle w-3/4 mt-12"
-                  onPress={() => navigation.goBack()}
-                >
-                  <Text className=" text-blue-300 bg-transparent text-xl text-center">
-                    Back
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
-            {secondFactor && <Text>this UI does not handle 2FA</Text>}
+        <View className=" align-middle items-center">
+          <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
+            <Text className="font-bold text-lg text-blue-50 text-center">Password Reset</Text>
           </View>
-        </TouchableWithoutFeedback>
-      </View>
-      {isConnected ? null : (
-        <View className="flex-1 align-middle justify-end">
-          <OfflineToast />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={styles.box}>
+              {!successfulCreation && !complete && (
+                <>
+                  <Text className=" text-blue-300 bg-transparent text-2xl font-bold text-center mb-4">
+                    Please enter your email
+                  </Text>
+                  <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10 w-3/4">
+                    <TextInput
+                      className="w-full text-center"
+                      autoCapitalize="none"
+                      keyboardType="email-address"
+                      autoComplete="email"
+                      placeholder="e.g john@doe.com"
+                      value={email}
+                      onChangeText={setEmail}
+                    />
+                  </View>
+                  {error && <Text style={{ color: "red", marginTop: 2 }}>{error}</Text>}
+                  <TouchableOpacity
+                    className="border h-10 border-[#00E0FFFF] rounded-md mt-3 mb-6 justify-center align-middle w-3/4 "
+                    onPress={create}
+                  >
+                    <Text className=" text-blue-300 bg-transparent text-xl text-center">Submit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="border h-10 border-[#00E0FFFF] rounded-md justify-center align-middle w-3/4 mt-12"
+                    onPress={() => navigation.goBack()}
+                  >
+                    <Text className=" text-blue-300 bg-transparent text-xl text-center">Back</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+              {successfulCreation && !complete && (
+                <>
+                  <Text>New password</Text>
+                  <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
+                    <TextInput
+                      className="w-full text-center"
+                      autoCapitalize="none"
+                      secureTextEntry={true}
+                      value={password}
+                      onChangeText={setPassword}
+                    />
+                  </View>
+                  <Text>Reset password code</Text>
+                  <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
+                    <TextInput
+                      className="w-full text-center"
+                      autoCapitalize="none"
+                      value={code}
+                      onChangeText={setCode}
+                    />
+                  </View>
+                  <TouchableOpacity onPress={reset}>
+                    <Text>Reset</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+              {complete && (
+                <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-transparent rounded-xl">
+                  <Text>You successfully changed your password</Text>
+                  <TouchableOpacity
+                    className="border h-10 border-[#00E0FFFF] rounded-md justify-center align-middle w-3/4 mt-12"
+                    onPress={() => navigation.goBack()}
+                  >
+                    <Text className=" text-blue-300 bg-transparent text-xl text-center">Back</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              {secondFactor && <Text>this UI does not handle 2FA</Text>}
+            </View>
+          </TouchableWithoutFeedback>
         </View>
-      )}
-    </ImageBackground>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-end">
+            <OfflineToast />
+          </View>
+        )}
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

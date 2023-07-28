@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, ScrollView, ViewStyle } from "react-native";
+import { Dimensions, ScrollView, ViewStyle, SafeAreaView } from "react-native";
 import { useNavigation, NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { View, Text, Button, Icon } from "native-base";
 import { Chip } from "react-native-paper";
@@ -124,59 +124,61 @@ const ConfirmPost = (props: Props) => {
   };
 
   return (
-    <LinearGradient
-      style={{
-        height: screenHeight,
-      }}
-      colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
-    >
-      <Text className="text-center mt-14 font-black uppercase text-3xl">Review Post</Text>
-      <View className="flex-col mt-4 h-3/5">
-        <ScrollView contentContainerStyle={contentContainerStyle}>
-          <Text className="text-center mt-3 font-bold">{userDetails.Animal}</Text>
-          <Text className="text-center font-light">{userDetails.Description}</Text>
-          <View className=" h-8 items-center mt-3 ">
-            <Chip icon="information">{userDetails.FullName}</Chip>
-          </View>
-          <View className=" h-8 items-center mt-3 ">
-            <Chip icon="email">{userDetails.Email}</Chip>
-          </View>
-          <View className=" h-8 items-center mt-3 ">
-            <Chip icon={userDetails.ShareContact == "true" ? "check" : "close"}>
-              Allow Email Contact:
-              {userDetails.ShareContact == "true" ? " Yes" : " No"}
-            </Chip>
-          </View>
-          <View className=" h-8 items-center mt-3 ">
-            <Chip icon={userDetails.Latitude && userDetails.Longitude ? "check" : "close"}>Location Saved</Chip>
-          </View>
-          <View className=" h-8 items-center mt-3 mb-4 ">
-            <Chip icon={userDetails.photoBlob.length >= 1 ? "check" : "close"}>
-              Photos? {userDetails.photoBlob.length >= 1 ? "Yes" : "No"}
-            </Chip>
-          </View>
-        </ScrollView>
-      </View>
-
-      {showToast && (
-        <View className="-mt-16 h-16 rounded-lg">
-          <SuccessToast message="Alert Posted!" />
+    <SafeAreaView style={{ flex: 1 }}>
+      <LinearGradient
+        style={{
+          height: screenHeight,
+        }}
+        colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}
+      >
+        <Text className="text-center mt-14 font-black uppercase text-3xl">Review Post</Text>
+        <View className="flex-col mt-4 h-3/5">
+          <ScrollView contentContainerStyle={contentContainerStyle}>
+            <Text className="text-center mt-3 font-bold">{userDetails.Animal}</Text>
+            <Text className="text-center font-light">{userDetails.Description}</Text>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip icon="information">{userDetails.FullName}</Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip icon="email">{userDetails.Email}</Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip icon={userDetails.ShareContact == "true" ? "check" : "close"}>
+                Allow Email Contact:
+                {userDetails.ShareContact == "true" ? " Yes" : " No"}
+              </Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 ">
+              <Chip icon={userDetails.Latitude && userDetails.Longitude ? "check" : "close"}>Location Saved</Chip>
+            </View>
+            <View className=" h-8 items-center mt-3 mb-4 ">
+              <Chip icon={userDetails.photoBlob.length >= 1 ? "check" : "close"}>
+                Photos? {userDetails.photoBlob.length >= 1 ? "Yes" : "No"}
+              </Chip>
+            </View>
+          </ScrollView>
         </View>
-      )}
 
-      <View className="items-center">
-        <Button
-          leftIcon={<Icon as={Ionicons} name="cloud-upload-outline" size="sm" />}
-          isLoading={mutation.isLoading}
-          isLoadingText="Submitting"
-          isDisabled={disabled}
-          className="mt-2 w-32"
-          onPress={handleSendAlert}
-        >
-          Send Alert
-        </Button>
-      </View>
-    </LinearGradient>
+        {showToast && (
+          <View className="-mt-16 h-16 rounded-lg">
+            <SuccessToast message="Alert Posted!" />
+          </View>
+        )}
+
+        <View className="items-center">
+          <Button
+            leftIcon={<Icon as={Ionicons} name="cloud-upload-outline" size="sm" />}
+            isLoading={mutation.isLoading}
+            isLoadingText="Submitting"
+            isDisabled={disabled}
+            className="mt-2 w-32"
+            onPress={handleSendAlert}
+          >
+            Send Alert
+          </Button>
+        </View>
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 

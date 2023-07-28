@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Dimensions, Keyboard, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { View, Text, Button, FormControl, Switch, Input } from "native-base";
 import AlertStartDialogue from "../../components/AlertStartDialogue";
@@ -107,102 +107,104 @@ const SendForHelp = (props: Props) => {
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   return (
-    <LinearGradient style={{ height: screenHeight }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
-      <View>
-        {visible ? (
-          <View className="h-full">
-            <AlertStartDialogue visible={visible} setVisible={setVisible} />
-          </View>
-        ) : null}
-      </View>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View className="flex flex-1 items-center p-4 h-full w-full ">
-          <Text className="text-center font-black uppercase text-4xl">who is posting?</Text>
-          <View className="mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
-            <FormControl isRequired className="mb-2">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
-              >
-                What is your name?
-              </FormControl.Label>
-              <Input
-                maxLength={100}
-                className=" bg-[#d4e1ea] w-2/3"
-                placeholder="First & Last"
-                variant="filled"
-                autoComplete="name"
-                onChangeText={(value) => setFullName({ ...fullName, fullName: value })}
-                onSubmitEditing={Keyboard.dismiss}
-              />
-              {"fullName" in errors ? (
-                <FormControl.HelperText
-                  _text={{
-                    fontSize: "xs",
-                  }}
-                >
-                  {errors.fullName}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
-            <FormControl isRequired className="m-2">
-              <FormControl.Label
-                _text={{
-                  bold: true,
-                  color: "black",
-                }}
-              >
-                Email
-              </FormControl.Label>
-              <Input
-                maxLength={100}
-                className=" bg-[#d4e1ea]"
-                placeholder="Email Address"
-                keyboardType="email-address"
-                autoComplete="email"
-                autoCapitalize="none"
-                variant="filled"
-                onChangeText={(value) => setEmail({ ...Email, Email: value })}
-              />
-              {"Email" in errors ? (
-                <FormControl.HelperText
-                  _text={{
-                    fontSize: "xs",
-                  }}
-                >
-                  {errors.Email}
-                </FormControl.HelperText>
-              ) : null}
-            </FormControl>
-            <Text className="text-center font-black text-lg">Allow registered rescuers to contact your Email?</Text>
-            <Text className="text-center font-light mb-2 text-sm">
-              They may need to get in touch with you to help you. We will never share your email with anyone else.
-            </Text>
-            <View className="flex-row row-span-1">
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${isSwitchOn ? "opacity-20" : "font-bold"}`}>
-                Anonymous
-              </Text>
-              <Switch
-                offTrackColor="indigo.100"
-                onTrackColor="indigo.300"
-                onThumbColor="indigo.500"
-                offThumbColor="indigo.50"
-                isChecked={isSwitchOn}
-                onToggle={onToggleSwitch}
-              />
-              <Text className={`text-center font-light my-1 mx-2 text-sm ${isSwitchOn ? "font-bold" : "opacity-20"}`}>
-                Allow Contact
-              </Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <LinearGradient style={{ height: screenHeight }} colors={["#0E409C9E", "#71D1C74C", "#EB8705AF"]}>
+        <View>
+          {visible ? (
+            <View className="h-full">
+              <AlertStartDialogue visible={visible} setVisible={setVisible} />
             </View>
-            <Button className=" mt-6 w-24" onPress={onSubmit}>
-              Next
-            </Button>
-          </View>
+          ) : null}
         </View>
-      </TouchableWithoutFeedback>
-    </LinearGradient>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View className="flex flex-1 items-center p-4 h-full w-full ">
+            <Text className="text-center font-black uppercase text-4xl">who is posting?</Text>
+            <View className="mt-8 w-10/12 items-center p-6 bg-[#99bbe36e] rounded-lg border border-spacing-10 border-[#293b27fe]">
+              <FormControl isRequired className="mb-2">
+                <FormControl.Label
+                  _text={{
+                    bold: true,
+                    color: "black",
+                  }}
+                >
+                  What is your name?
+                </FormControl.Label>
+                <Input
+                  maxLength={100}
+                  className=" bg-[#d4e1ea] w-2/3"
+                  placeholder="First & Last"
+                  variant="filled"
+                  autoComplete="name"
+                  onChangeText={(value) => setFullName({ ...fullName, fullName: value })}
+                  onSubmitEditing={Keyboard.dismiss}
+                />
+                {"fullName" in errors ? (
+                  <FormControl.HelperText
+                    _text={{
+                      fontSize: "xs",
+                    }}
+                  >
+                    {errors.fullName}
+                  </FormControl.HelperText>
+                ) : null}
+              </FormControl>
+              <FormControl isRequired className="m-2">
+                <FormControl.Label
+                  _text={{
+                    bold: true,
+                    color: "black",
+                  }}
+                >
+                  Email
+                </FormControl.Label>
+                <Input
+                  maxLength={100}
+                  className=" bg-[#d4e1ea]"
+                  placeholder="Email Address"
+                  keyboardType="email-address"
+                  autoComplete="email"
+                  autoCapitalize="none"
+                  variant="filled"
+                  onChangeText={(value) => setEmail({ ...Email, Email: value })}
+                />
+                {"Email" in errors ? (
+                  <FormControl.HelperText
+                    _text={{
+                      fontSize: "xs",
+                    }}
+                  >
+                    {errors.Email}
+                  </FormControl.HelperText>
+                ) : null}
+              </FormControl>
+              <Text className="text-center font-black text-lg">Allow registered rescuers to contact your Email?</Text>
+              <Text className="text-center font-light mb-2 text-sm">
+                They may need to get in touch with you to help you. We will never share your email with anyone else.
+              </Text>
+              <View className="flex-row row-span-1">
+                <Text className={`text-center font-light my-1 mx-2 text-sm ${isSwitchOn ? "opacity-20" : "font-bold"}`}>
+                  Anonymous
+                </Text>
+                <Switch
+                  offTrackColor="indigo.100"
+                  onTrackColor="indigo.300"
+                  onThumbColor="indigo.500"
+                  offThumbColor="indigo.50"
+                  isChecked={isSwitchOn}
+                  onToggle={onToggleSwitch}
+                />
+                <Text className={`text-center font-light my-1 mx-2 text-sm ${isSwitchOn ? "font-bold" : "opacity-20"}`}>
+                  Allow Contact
+                </Text>
+              </View>
+              <Button className=" mt-6 w-24" onPress={onSubmit}>
+                Next
+              </Button>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   Dimensions,
   ImageBackground,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
@@ -48,62 +49,64 @@ const RescuerLogin = (props: Props) => {
   });
 
   return (
-    <ImageBackground
-      source={require("../../assets/resbasecamp.png")}
-      style={{
-        height: screenHeight,
-        width: screenWidth,
-        margin: 0,
-        padding: 0,
-        alignItems: "center",
-      }}
-    >
-      <View style={styles.background}>
-        <NightGradAnimated />
-      </View>
-      <View className="mt-16 mb-12 h-9 w-48 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
-        <Text className="font-bold text-lg text-blue-50 text-center">Base Camp</Text>
-      </View>
-      <SignedIn>
-        <View style={styles.box}>
-          <Text className="text-center text-blue-100 text-lg mt-2 font-thin">
-            Hello, {user?.firstName ? user.firstName : user?.primaryEmailAddress?.emailAddress}
-          </Text>
-          <View>
-            <AlertsInYourArea navigation={props.navigation} />
-            <ActiveGlobal />
-          </View>
-          <LoggedInChips navigation={props.navigation} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <ImageBackground
+        source={require("../../assets/resbasecamp.png")}
+        style={{
+          height: screenHeight,
+          width: screenWidth,
+          margin: 0,
+          padding: 0,
+          alignItems: "center",
+        }}
+      >
+        <View style={styles.background}>
+          <NightGradAnimated />
         </View>
-      </SignedIn>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <SignedOut>
+        <View className="mt-16 mb-12 h-9 w-48 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
+          <Text className="font-bold text-lg text-blue-50 text-center">Base Camp</Text>
+        </View>
+        <SignedIn>
           <View style={styles.box}>
-            <SignInWithOAuth />
-            <SignInComponent />
-            <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
-              <Text className="text-blue-300 text-sm">Forgot password?</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="mb-2"
-              onPress={() => {
-                navigation.navigate("RescuerRegister");
-              }}
-            >
-              <Text className="text-blue-200 text-base font-bold">New? Sign Up Here!</Text>
-            </TouchableOpacity>
+            <Text className="text-center text-blue-100 text-lg mt-2 font-thin">
+              Hello, {user?.firstName ? user.firstName : user?.primaryEmailAddress?.emailAddress}
+            </Text>
+            <View>
+              <AlertsInYourArea navigation={props.navigation} />
+              <ActiveGlobal />
+            </View>
+            <LoggedInChips navigation={props.navigation} />
           </View>
-          <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
-            Back
-          </Button>
-        </SignedOut>
-      </TouchableWithoutFeedback>
-      {isConnected ? null : (
-        <View className="flex-1 align-middle justify-end">
-          <OfflineToast />
-        </View>
-      )}
-    </ImageBackground>
+        </SignedIn>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <SignedOut>
+            <View style={styles.box}>
+              <SignInWithOAuth />
+              <SignInComponent />
+              <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
+                <Text className="text-blue-300 text-sm">Forgot password?</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                className="mb-2"
+                onPress={() => {
+                  navigation.navigate("RescuerRegister");
+                }}
+              >
+                <Text className="text-blue-200 text-base font-bold">New? Sign Up Here!</Text>
+              </TouchableOpacity>
+            </View>
+            <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
+              Back
+            </Button>
+          </SignedOut>
+        </TouchableWithoutFeedback>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-end">
+            <OfflineToast />
+          </View>
+        )}
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
