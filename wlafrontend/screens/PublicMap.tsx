@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View, Dimensions, Share } from "react-native";
+import { StyleSheet, View, Dimensions, SafeAreaView, Share } from "react-native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { Appbar, FAB } from "react-native-paper";
 import { useRefreshByUser } from "../hooks/useRefreshByUser";
@@ -112,50 +112,52 @@ const PublicMap = (props: Props) => {
   }
 
   return (
-    <LinearGradient style={{ height: screenHeight }} colors={["#0DE69A", "#71D1C7", "#99BBE3"]}>
-      <Appbar.Header className="">
-        <Appbar.BackAction
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-        <Appbar.Content title="Live Map" />
-        <Appbar.Action icon="map" onPress={handleMapTypeChange} />
-      </Appbar.Header>
-      {infoVisible ? (
-        <View style={{ height: screenHeight }}>
-          <PubMapDialogue setInfoVisible={setInfoVisible} infoVisible={infoVisible} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <LinearGradient style={{ height: screenHeight }} colors={["#0DE69A", "#71D1C7", "#99BBE3"]}>
+        <Appbar.Header className="">
+          <Appbar.BackAction
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+          <Appbar.Content title="Live Map" />
+          <Appbar.Action icon="map" onPress={handleMapTypeChange} />
+        </Appbar.Header>
+        {infoVisible ? (
+          <View style={{ height: screenHeight }}>
+            <PubMapDialogue setInfoVisible={setInfoVisible} infoVisible={infoVisible} />
+          </View>
+        ) : null}
+        <View className="flex-1 align-middle justify-center">
+          <PubMapView ref={pubMapViewRef} alerts={alerts} />
         </View>
-      ) : null}
-      <View className="flex-1 align-middle justify-center">
-        <PubMapView ref={pubMapViewRef} alerts={alerts} />
-      </View>
-      {isConnected ? null : (
-        <View className="flex-1 align-middle justify-end">
-          <OfflineToast />
-        </View>
-      )}
-      <Appbar
-        style={[
-          styles.bottom,
-          {
-            height: BOTTOM_APPBAR_HEIGHT + bottom,
-            backgroundColor: "#bad1e8",
-          },
-        ]}
-        safeAreaInsets={{ bottom }}
-      >
-        <Appbar.Action icon="refresh" onPress={() => refetchByUser()} />
-        <Appbar.Action icon="share" onPress={onShare} />
-        <FAB
-          mode="flat"
-          size="medium"
-          icon="information"
-          onPress={showInfoDialog}
-          style={[styles.fab, { top: (BOTTOM_APPBAR_HEIGHT - MEDIUM_FAB_HEIGHT) / 2 }]}
-        />
-      </Appbar>
-    </LinearGradient>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-end">
+            <OfflineToast />
+          </View>
+        )}
+        <Appbar
+          style={[
+            styles.bottom,
+            {
+              height: BOTTOM_APPBAR_HEIGHT + bottom,
+              backgroundColor: "#bad1e8",
+            },
+          ]}
+          safeAreaInsets={{ bottom }}
+        >
+          <Appbar.Action icon="refresh" onPress={() => refetchByUser()} />
+          <Appbar.Action icon="share" onPress={onShare} />
+          <FAB
+            mode="flat"
+            size="medium"
+            icon="information"
+            onPress={showInfoDialog}
+            style={[styles.fab, { top: (BOTTOM_APPBAR_HEIGHT - MEDIUM_FAB_HEIGHT) / 2 }]}
+          />
+        </Appbar>
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 

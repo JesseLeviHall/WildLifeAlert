@@ -23,7 +23,7 @@ type Props = {
 
 const SetLocationDialogue = ({ visible, setVisible, LatitudeProp, LongitudeProp }: Props) => {
   const isConnected = useConnectivity();
-  const { sessionId, getToken, signOut } = useAuth();
+  const { sessionId, getToken } = useAuth();
   const [error, setError] = React.useState("");
   const [showToast, setShowToast] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);

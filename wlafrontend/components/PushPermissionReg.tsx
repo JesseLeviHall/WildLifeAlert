@@ -13,29 +13,40 @@ const PushPermissionReg = ({ visible, setVisible }: Props) => {
   const hideDialog = () => setVisible(false);
 
   const registerForPushNotificationsAsync = async () => {
-    let token;
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
+    try {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX, // you can choose another level of importance
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
 
-    // Only ask if permissions have not been determined because
-    // on iOS, asking the user a second time will fail, and they need to manually enable it in settings
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
+      let token;
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+
+      // Only ask if permissions have not been determined because
+      // on iOS, asking the user a second time will fail, and they need to manually enable it in settings
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+
+      // Stop here if the user did not grant permissions
+      if (finalStatus !== "granted") {
+        console.warn("Notifications not granted");
+        return;
+      }
+
+      // Get the token that identifies this device
+      token = (await Notifications.getExpoPushTokenAsync({ projectId: "17a356f2-ec4c-4d59-920f-b77650d9ba44" })).data;
+
+      // Save the token to AsyncStorage
+      await AsyncStorage.setItem("expoPushToken", token);
+      hideDialog();
+    } catch (error) {
+      console.warn("Error while setting up notifications:", error);
     }
-
-    // Stop here if the user did not grant permissions
-    if (finalStatus !== "granted") {
-      console.warn("Failed to get push token for push notification!");
-      return;
-    }
-
-    // Get the token that identifies this device
-    token = (await Notifications.getExpoPushTokenAsync({ projectId: "17a356f2-ec4c-4d59-920f-b77650d9ba44" })).data;
-
-    // Save the token to AsyncStorage
-    await AsyncStorage.setItem("expoPushToken", token);
-    hideDialog();
   };
 
   return (
@@ -66,9 +77,3 @@ const PushPermissionReg = ({ visible, setVisible }: Props) => {
 };
 
 export default PushPermissionReg;
-
-/* 
-in sdk 49+ change to this:
-token = (await Notifications.getExpoPushTokenAsync({ projectId: 'wildlifealert-d6acb' })).data;
-
-*/

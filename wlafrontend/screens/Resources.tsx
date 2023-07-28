@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, View, RefreshControl, Text, Dimensions } from "react-native";
+import { ScrollView, View, RefreshControl, SafeAreaView, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Appbar } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";
@@ -90,29 +90,31 @@ const Resources = (props: Props) => {
   }
 
   return (
-    <LinearGradient style={{ height: screenHeight }} colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}>
-      <Appbar.Header>
-        <Appbar.Action
-          icon="home"
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        />
-        <Appbar.Content title="Resources" />
-      </Appbar.Header>
-      <ScrollView refreshControl={<RefreshControl refreshing={isRefetchingByUser} onRefresh={refetchByUser} />}>
-        <View className="mx-1 my-3 px-2">
-          {isConnected ? null : (
-            <View className="flex-1 align-middle justify-end">
-              <OfflineToast />
-            </View>
-          )}
-          {data?.map((resource: Resource, index: number) => (
-            <ResourceCard key={index} resource={resource} />
-          ))}
-        </View>
-      </ScrollView>
-    </LinearGradient>
+    <SafeAreaView style={{ flex: 1 }}>
+      <LinearGradient style={{ height: screenHeight }} colors={["#6495ED70", "#71D1C74C", "#C6ED028C"]}>
+        <Appbar.Header>
+          <Appbar.Action
+            icon="home"
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+          />
+          <Appbar.Content title="Resources" />
+        </Appbar.Header>
+        <ScrollView refreshControl={<RefreshControl refreshing={isRefetchingByUser} onRefresh={refetchByUser} />}>
+          <View className="mx-1 my-3 px-2">
+            {isConnected ? null : (
+              <View className="flex-1 align-middle justify-end">
+                <OfflineToast />
+              </View>
+            )}
+            {data?.map((resource: Resource, index: number) => (
+              <ResourceCard key={index} resource={resource} />
+            ))}
+          </View>
+        </ScrollView>
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 

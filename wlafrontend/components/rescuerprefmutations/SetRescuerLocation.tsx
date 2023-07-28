@@ -13,14 +13,12 @@ const SetResLocation = ({ isOpen, LatitudeProp, LongitudeProp }: Props) => {
   const [visible, setVisible] = React.useState(false);
 
   return (
-    <View className="justify-center mb-3 items-center align-bottom h-10 ">
+    <View className="align-middle justify-center items-center mb-3 ">
       <TouchableOpacity
-        className=" border border-cyan-500 rounded-full justify-center items-center px-4 py-2 "
+        className=" border border-cyan-500 rounded-full align-middle justify-center items-center px-4 py-2 "
         onPress={isOpen}
       >
-        <Text className="text-base text-center mx-3 text-white font-extralight">
-          Change Location?
-        </Text>
+        <Text className="text-base text-center mx-6 text-white font-extralight">Change Location?</Text>
       </TouchableOpacity>
       {visible && (
         <SetLocationDialogue

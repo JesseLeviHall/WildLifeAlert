@@ -36,8 +36,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "minSdkVersion": 33,
       "permissions": [
-        "CAMERA_ROLL"
+        "READ_EXTERNAL_STORAGE"
       ]
     },
     "web": {

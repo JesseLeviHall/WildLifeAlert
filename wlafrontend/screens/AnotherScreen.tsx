@@ -1,6 +1,6 @@
 import React from "react";
 import { getPrivacyPolicyContent } from "../api/index";
-import { Text, View, Linking, StyleSheet, Dimensions, ImageBackground } from "react-native";
+import { Text, View, Linking, StyleSheet, Dimensions, SafeAreaView, ImageBackground } from "react-native";
 import { Button } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { useConnectivity } from "../hooks/useConnectivity";
@@ -75,44 +75,46 @@ const AnotherScreen = (props: Props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/desertbg.png")}
-        style={{
-          height: screenHeight,
-          width: screenWidth,
-          margin: 0,
-          padding: 0,
-        }}
-      >
-        <View style={styles.background}>
-          <AnimatedGradient />
-        </View>
-        <View style={styles.content}>
-          <Button
-            onPress={() => Linking.openURL(`${data?.Link}`)}
-            mode="elevated"
-            buttonColor="#00E0FFFF"
-            className=" my-4 w-40"
-          >
-            {data.Title}
-          </Button>
-          <Button
-            onPress={() => Linking.openURL(`${data?.Link2}`)}
-            mode="elevated"
-            buttonColor="#00E0FFFF"
-            className="my-2 w-40 "
-          >
-            {data.Title2}
-          </Button>
-        </View>
-        {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
-            <OfflineToast />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../assets/desertbg.png")}
+          style={{
+            height: screenHeight,
+            width: screenWidth,
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          <View style={styles.background}>
+            <AnimatedGradient />
           </View>
-        )}
-      </ImageBackground>
-    </View>
+          <View style={styles.content}>
+            <Button
+              onPress={() => Linking.openURL(`${data?.Link}`)}
+              mode="elevated"
+              buttonColor="#00E0FFFF"
+              className=" my-4 w-40"
+            >
+              {data.Title}
+            </Button>
+            <Button
+              onPress={() => Linking.openURL(`${data?.Link2}`)}
+              mode="elevated"
+              buttonColor="#00E0FFFF"
+              className="my-2 w-40 "
+            >
+              {data.Title2}
+            </Button>
+          </View>
+          {isConnected ? null : (
+            <View className="flex-1 align-middle justify-end">
+              <OfflineToast />
+            </View>
+          )}
+        </ImageBackground>
+      </View>
+    </SafeAreaView>
   );
 };
 

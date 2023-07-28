@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Image } from "react-native";
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, Image } from "react-native";
 import { Motion } from "@legendapp/motion";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getHomeScreenContent } from "../api/index";
@@ -85,69 +85,71 @@ const Home = (props: Props) => {
   }
 
   return (
-    <View style={styles.outer}>
-      <Image
-        style={{
-          height: screenHeight,
-          width: screenWidth,
-          backgroundColor: "transparent",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: -1,
-        }}
-        source={require("../assets/sunbg.png")}
-      />
-      <View style={styles.background}>
-        <HomeBackG />
-      </View>
-      <Motion.View
-        initial={{ x: -300, scale: 0, opacity: 0 }}
-        animate={{ x: 0, scale: 1, opacity: 1 }}
-        transition={{
-          x: {
-            type: "spring",
-            damping: 20,
-            stiffness: 800,
-            mass: 2,
-          },
-          opacity: {
-            type: "tween",
-            duration: 1000,
-          },
-        }}
-      >
-        <View className="mt-12 h-96 flex flex-col items-center">
-          <View className=" mt-9 max-h-9  flex-1 py-1 px-4 align-middle justify-center  bg-[#77CFCA] rounded-xl">
-            <Text className="font-bold text-lg text-[#24374b]">{data?.Message}</Text>
-          </View>
-          <Text className="font-black mt-5 mix-blend-color  uppercase text-[#24374b] text-3xl">{data?.Title}</Text>
-          <Text className=" text-2xl text-center px-4 text-[#24374b] font-light">{data?.Description}</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.outer}>
+        <Image
+          style={{
+            height: screenHeight,
+            width: screenWidth,
+            backgroundColor: "transparent",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: -1,
+          }}
+          source={require("../assets/sunbg.png")}
+        />
+        <View style={styles.background}>
+          <HomeBackG />
         </View>
-      </Motion.View>
-      {isConnected ? null : (
-        <View className="flex-1 align-middle justify-end">
-          <OfflineToast />
-        </View>
-      )}
-      <View style={styles.holdingButton}>
-        <View style={styles.yellowcircle}>
-          <TouchableOpacity
-            style={{ zIndex: 1 }}
-            onPress={() => {
-              navigation.navigate("SendForHelp");
-            }}
-          >
-            <View style={styles.container}>
-              <Text style={styles.button}>Start Alert</Text>
+        <Motion.View
+          initial={{ x: -300, scale: 0, opacity: 0 }}
+          animate={{ x: 0, scale: 1, opacity: 1 }}
+          transition={{
+            x: {
+              type: "spring",
+              damping: 20,
+              stiffness: 800,
+              mass: 2,
+            },
+            opacity: {
+              type: "tween",
+              duration: 1000,
+            },
+          }}
+        >
+          <View className="mt-12 h-96 flex flex-col items-center">
+            <View className=" mt-9 align-middle max-h-10 justify-center items-center flex-1 py-1 px-4  bg-[#D9C7FFA0] rounded-lg">
+              <Text className="font-bold justify-center align-middle text-lg text-[#24374b]">{data?.Message}</Text>
             </View>
-          </TouchableOpacity>
+            <Text className="font-black mt-5 mix-blend-color  uppercase text-[#24374b] text-3xl">{data?.Title}</Text>
+            <Text className=" text-2xl text-center px-4 text-[#24374b] font-light">{data?.Description}</Text>
+          </View>
+        </Motion.View>
+        {isConnected ? null : (
+          <View className="flex-1 align-middle justify-end">
+            <OfflineToast />
+          </View>
+        )}
+        <View style={styles.holdingButton}>
+          <View style={styles.yellowcircle}>
+            <TouchableOpacity
+              style={{ zIndex: 1 }}
+              onPress={() => {
+                navigation.navigate("SendForHelp");
+              }}
+            >
+              <View style={styles.container}>
+                <Text style={styles.button}>Start Alert</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.nav}>
+          <HomeNavBot navigation={navigation} />
         </View>
       </View>
-      <View style={styles.nav}>
-        <HomeNavBot navigation={navigation} />
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

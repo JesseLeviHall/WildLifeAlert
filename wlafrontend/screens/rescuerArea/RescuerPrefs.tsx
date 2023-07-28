@@ -188,9 +188,9 @@ const RescuerPrefs = (props: Props) => {
             onPress={() => {
               Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
             }}
-            className="justify-center items-center align-bottom h-10 border border-cyan-500 rounded-xl"
+            className="justify-center items-center align-bottom border border-cyan-500 rounded-full"
           >
-            <Text className="text-base text-center mx-3 text-white font-thin">Feedback, or Report a Problem</Text>
+            <Text className="text-base text-center py-2 px-8 text-white font-thin">Feedback, or Report a Problem</Text>
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>

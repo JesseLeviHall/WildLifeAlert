@@ -43,6 +43,16 @@ const SetNotifications = ({ notificationProp }: Props) => {
       let expoPushToken = "";
 
       if (newNotificationValue) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+
+        if (existingStatus !== "granted") {
+          const { status } = await Notifications.requestPermissionsAsync();
+          if (status !== "granted") {
+            setError("Notifications permission is required. Please enable from device settings.");
+            return;
+          }
+        }
+
         let tokenObject = await Notifications.getExpoPushTokenAsync({
           projectId: "17a356f2-ec4c-4d59-920f-b77650d9ba44",
         });

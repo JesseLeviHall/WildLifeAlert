@@ -12,22 +12,19 @@ const AnimatedGradient = (props: Props) => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setValue((prev) => !prev);
-    }, 30000);
+    }, 20000);
     return () => clearInterval(interval);
   }, []);
   return (
     <MotionLinearGradient
       animateProps={{
-        colors: [
-          value ? "#C6ED0282" : "#0E409C9E",
-          value ? "#EB8705AF" : "#6495ed",
-        ],
+        colors: [value ? "#C6ED0282" : "#0E409C9E", value ? "#EB8705AF" : "#6495ed"],
         start: { x: 0, y: 0 },
         end: { x: value ? 1 : 0, y: 1 },
       }}
       transition={{
         type: "timing",
-        duration: 30000,
+        duration: 20000,
         easing: "linear",
       }}
       style={{

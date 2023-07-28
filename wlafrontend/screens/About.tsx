@@ -1,5 +1,16 @@
 import * as React from "react";
-import { View, Text, Linking, StyleSheet, Dimensions, ImageBackground, TouchableOpacity, Share } from "react-native";
+import {
+  View,
+  Text,
+  Linking,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  SafeAreaView,
+  TouchableOpacity,
+  Share,
+  Platform,
+} from "react-native";
 import { Appbar, Chip, Button } from "react-native-paper";
 import AnimatedGradient from "../components/background/GradientAnimated";
 import { Motion } from "@legendapp/motion";
@@ -32,6 +43,7 @@ const About = (props: Props) => {
   const [mission, setMission] = React.useState(false);
   const [action, setAction] = React.useState(false);
   const [animationKey, setAnimationKey] = React.useState(0);
+  const isIOS = Platform.OS === "ios";
 
   //function to handle press on chip and set state to true for the corresponding text, set all others to false
   const handlePress = (chip: string) => {
@@ -140,164 +152,166 @@ const About = (props: Props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Appbar.Header>
-        <Appbar.BackAction
-          onPress={() => {
-            navigation.navigate("Home");
-          }}
-        />
-        <Appbar.Content title="About" />
-      </Appbar.Header>
-      <ImageBackground
-        source={require("../assets/desertbg.png")}
-        style={{
-          height: screenHeight,
-          width: screenWidth,
-          margin: 0,
-          padding: 0,
-        }}
-      >
-        <View style={styles.background}>
-          <AnimatedGradient />
-        </View>
-        <View style={styles.content}>
-          <View style={styles.chips}>
-            <Chip
-              elevated={true}
-              mode="flat"
-              selected={message}
-              selectedColor="#000626FF"
-              textStyle={{ color: "white" }}
-              showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => <MaterialCommunityIcons name="message-text" size={18} color="#A6D4FF" />}
-              onPress={() => handlePress("message")}
-            >
-              Ethos
-            </Chip>
-            <Chip
-              elevated={true}
-              mode="flat"
-              selected={description}
-              selectedColor="#000626FF"
-              textStyle={{ color: "white" }}
-              showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => <MaterialCommunityIcons name="script-text" size={18} color="#A6D4FF" />}
-              onPress={() => handlePress("description")}
-            >
-              Description
-            </Chip>
-            <Chip
-              elevated={true}
-              mode="flat"
-              selected={mission}
-              selectedColor="#000626FF"
-              textStyle={{ color: "white" }}
-              showSelectedOverlay={true}
-              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => <MaterialCommunityIcons name="creation" size={18} color="#A6D4FF" />}
-              onPress={() => handlePress("mission")}
-            >
-              Mission
-            </Chip>
-            <Chip
-              elevated={true}
-              mode="flat"
-              selected={action}
-              showSelectedOverlay={true}
-              selectedColor="#000626FF"
-              textStyle={{ color: "white" }}
-              className="h-10 w-32 mt-5 bg-[#61C8FFAA] border-2 border-cyan-500"
-              icon={() => <MaterialCommunityIcons name="arm-flex" size={18} color="#A6D4FF" />}
-              onPress={() => handlePress("action")}
-            >
-              Help Out
-            </Chip>
-          </View>
-          <Motion.View
-            key={animationKey}
-            initial={{ x: -100, scale: 1, opacity: 0.1 }}
-            animate={{ x: 0, scale: 1, opacity: 1 }}
-            transition={{
-              default: {
-                type: "spring",
-                damping: 30,
-                stiffness: 600,
-              },
-              x: {
-                type: "spring",
-                damping: 30,
-                stiffness: 600,
-              },
-              opacity: {
-                type: "tween",
-                duration: 900,
-              },
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Appbar.Header>
+          <Appbar.BackAction
+            onPress={() => {
+              navigation.navigate("Home");
             }}
-            style={styles.textContainer}
-          >
-            {message && <Text style={styles.text}>{data?.Message}</Text>}
-            {description && <Text style={styles.text}>{data?.Description}</Text>}
-            {mission && <Text style={styles.text}>{data?.Mission}</Text>}
-            {action && (
-              <View className="items-center -mt-8">
-                <View className="flex flex-col justify-center items-center">
-                  <View className="flex flex-row justify-center">
-                    <Button
-                      className="w-32 border-2 border-cyan-500 m-2"
-                      mode="contained"
-                      buttonColor="#00C5E038"
-                      onPress={() => Linking.openURL(`${data?.Link}`)}
-                    >
-                      Contribute
-                    </Button>
-                    <Button
-                      className="w-32 border-2 border-cyan-500 m-2"
-                      mode="contained"
-                      buttonColor="#00C5E038"
-                      onPress={onShare}
-                    >
-                      Share
-                    </Button>
+          />
+          <Appbar.Content title="About" />
+        </Appbar.Header>
+        <ImageBackground
+          source={require("../assets/desertbg.png")}
+          style={{
+            height: screenHeight,
+            width: screenWidth,
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          <View style={styles.background}>
+            <AnimatedGradient />
+          </View>
+          <View style={styles.content}>
+            <View style={styles.chips}>
+              <Chip
+                elevated={true}
+                mode="flat"
+                selected={message}
+                selectedColor="#B3B6FFD6"
+                textStyle={{ color: "white" }}
+                showSelectedOverlay={true}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                icon={() => <MaterialCommunityIcons name="message-text" size={18} color="#A6D4FF" />}
+                onPress={() => handlePress("message")}
+              >
+                Ethos
+              </Chip>
+              <Chip
+                elevated={true}
+                mode="flat"
+                selected={description}
+                selectedColor="#B3B6FFD6"
+                textStyle={{ color: "white" }}
+                showSelectedOverlay={true}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                icon={() => <MaterialCommunityIcons name="script-text" size={18} color="#A6D4FF" />}
+                onPress={() => handlePress("description")}
+              >
+                Description
+              </Chip>
+              <Chip
+                elevated={true}
+                mode="flat"
+                selected={mission}
+                selectedColor="#B3B6FFD6"
+                textStyle={{ color: "white" }}
+                showSelectedOverlay={true}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                icon={() => <MaterialCommunityIcons name="creation" size={18} color="#A6D4FF" />}
+                onPress={() => handlePress("mission")}
+              >
+                Mission
+              </Chip>
+              <Chip
+                elevated={true}
+                mode="flat"
+                selected={action}
+                showSelectedOverlay={true}
+                selectedColor="#B3B6FFD6"
+                textStyle={{ color: "white" }}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                icon={() => <MaterialCommunityIcons name="arm-flex" size={18} color="#A6D4FF" />}
+                onPress={() => handlePress("action")}
+              >
+                Help Out
+              </Chip>
+            </View>
+            <Motion.View
+              key={animationKey}
+              initial={{ x: -100, scale: 1, opacity: 0.1 }}
+              animate={{ x: 0, scale: 1, opacity: 1 }}
+              transition={{
+                default: {
+                  type: "spring",
+                  damping: 30,
+                  stiffness: 600,
+                },
+                x: {
+                  type: "spring",
+                  damping: 30,
+                  stiffness: 600,
+                },
+                opacity: {
+                  type: "tween",
+                  duration: 900,
+                },
+              }}
+              style={styles.textContainer}
+            >
+              {message && <Text style={styles.text}>{data?.Message}</Text>}
+              {description && <Text style={styles.text}>{data?.Description}</Text>}
+              {mission && <Text style={styles.text}>{data?.Mission}</Text>}
+              {action && (
+                <View className="items-center -mt-8">
+                  <View className="flex flex-col justify-center items-center">
+                    <View className="flex flex-row justify-center">
+                      <Button
+                        className="w-32 border-2 border-cyan-500 m-2"
+                        mode="contained"
+                        buttonColor="#00C5E038"
+                        onPress={() => Linking.openURL(`${data?.Link}`)}
+                      >
+                        Contribute
+                      </Button>
+                      <Button
+                        className="w-32 border-2 border-cyan-500 m-2"
+                        mode="contained"
+                        buttonColor="#00C5E038"
+                        onPress={onShare}
+                      >
+                        Share
+                      </Button>
+                    </View>
+                    <View className="flex flex-row justify-center">
+                      <Button
+                        className="w-32 border-2 border-cyan-500 mx-2"
+                        mode="contained"
+                        buttonColor="#00C5E038"
+                        onPress={() => {
+                          Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
+                        }}
+                      >
+                        Contact
+                      </Button>
+                      <Button
+                        className="w-32 border-2 border-cyan-500 mx-2"
+                        mode="contained"
+                        buttonColor="#00C5E038"
+                        onPress={() => Linking.openURL(`${data?.Merch}`)}
+                      >
+                        Merch
+                      </Button>
+                    </View>
                   </View>
-                  <View className="flex flex-row justify-center">
-                    <Button
-                      className="w-32 border-2 border-cyan-500 mx-2"
-                      mode="contained"
-                      buttonColor="#00C5E038"
-                      onPress={() => {
-                        Linking.openURL(`mailto:wildlifealertusa@gmail.com?`);
-                      }}
-                    >
-                      Contact
-                    </Button>
-                    <Button
-                      className="w-32 border-2 border-cyan-500 mx-2"
-                      mode="contained"
-                      buttonColor="#00C5E038"
-                      onPress={() => Linking.openURL(`${data?.Merch}`)}
-                    >
-                      Merch
-                    </Button>
-                  </View>
+                  <Text style={styles.text}>{data?.Action}</Text>
                 </View>
-                <Text style={styles.text}>{data?.Action}</Text>
+              )}
+            </Motion.View>
+            <TouchableOpacity onPress={() => navigation.navigate("AnotherScreen")}>
+              <Text className="text-blue-900 mt-20 font-semibold text-center">Privacy Policy & Terms</Text>
+            </TouchableOpacity>
+            {isConnected ? null : (
+              <View className="flex-1 align-middle justify-end">
+                <OfflineToast />
               </View>
             )}
-          </Motion.View>
-          <TouchableOpacity onPress={() => navigation.navigate("AnotherScreen")}>
-            <Text className="text-blue-900 mt-20 font-semibold text-center">Privacy Policy & Terms</Text>
-          </TouchableOpacity>
-          {isConnected ? null : (
-            <View className="flex-1 align-middle justify-end">
-              <OfflineToast />
-            </View>
-          )}
-        </View>
-      </ImageBackground>
-    </View>
+          </View>
+        </ImageBackground>
+      </View>
+    </SafeAreaView>
   );
 };
 
