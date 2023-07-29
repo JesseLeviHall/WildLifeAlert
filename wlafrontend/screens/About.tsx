@@ -155,13 +155,13 @@ const About = (props: Props) => {
   return (
     <ConditionalSafeAreaView>
       <View style={styles.container}>
-        <Appbar.Header>
+        <Appbar.Header style={{ backgroundColor: "#6495ed" }}>
           <Appbar.BackAction
             onPress={() => {
               navigation.navigate("Home");
             }}
           />
-          <Appbar.Content title="About" />
+          <Appbar.Content title="WildLifeAlert" />
         </Appbar.Header>
         <ImageBackground
           source={require("../assets/desertbg.png")}
@@ -184,7 +184,7 @@ const About = (props: Props) => {
                 selectedColor="#B3B6FFD6"
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
-                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
                 icon={() => <MaterialCommunityIcons name="message-text" size={18} color="#A6D4FF" />}
                 onPress={() => handlePress("message")}
               >
@@ -197,7 +197,7 @@ const About = (props: Props) => {
                 selectedColor="#B3B6FFD6"
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
-                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
                 icon={() => <MaterialCommunityIcons name="script-text" size={18} color="#A6D4FF" />}
                 onPress={() => handlePress("description")}
               >
@@ -210,7 +210,7 @@ const About = (props: Props) => {
                 selectedColor="#B3B6FFD6"
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
-                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
                 icon={() => <MaterialCommunityIcons name="creation" size={18} color="#A6D4FF" />}
                 onPress={() => handlePress("mission")}
               >
@@ -223,7 +223,7 @@ const About = (props: Props) => {
                 showSelectedOverlay={true}
                 selectedColor="#B3B6FFD6"
                 textStyle={{ color: "white" }}
-                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[#61C8FFAA]" : ""} border-2 border-cyan-500`}
+                className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
                 icon={() => <MaterialCommunityIcons name="arm-flex" size={18} color="#A6D4FF" />}
                 onPress={() => handlePress("action")}
               >
