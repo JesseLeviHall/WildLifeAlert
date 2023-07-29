@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "36806345188",
+    "project_id": "wildlifealert-d6acb",
+    "storage_bucket": "wildlifealert-d6acb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36806345188:android:6338a49d3a1190827207f1",
+        "android_client_info": {
+          "package_name": "com.wildlifealertusa.wildlifealert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36806345188-leu77m2ukt4diokfti0o6o7rjrbg043a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wildlifealertusa.wildlifealert",
+            "certificate_hash": "4c3fcf6b503fc1bac34d7e6307b4bf0b6d832920"
+          }
+        },
+        {
+          "client_id": "36806345188-7pitt9ag7pafc3o4765j6u6mr91585qb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB9ZMNcrnCAEgrGlhBeMuRdQjeqT1rWDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36806345188-7pitt9ag7pafc3o4765j6u6mr91585qb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
