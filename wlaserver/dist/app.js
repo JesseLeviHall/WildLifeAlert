@@ -17,7 +17,7 @@ app.use(helmet({
     referrerPolicy: { policy: "no-referrer" },
 }));
 app.use(logger(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms'));
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
     res.status(200).send("This is the WildLifeAlert server");
 });
 app.use("/healthcheck", (req, res) => {
