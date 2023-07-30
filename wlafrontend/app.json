@@ -50,7 +50,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "clerkPublishableKey": "pk_live_Y2xlcmsud2lsZGxpZmVhbGVydHVzYS5jb20k",
+      "clerkPublishableKey": "pk_test_ZGlzdGluY3QtbXVkZmlzaC05Ny5jbGVyay5hY2NvdW50cy5kZXYk",
       "eas": {
         "projectId": "17a356f2-ec4c-4d59-920f-b77650d9ba44"
       }

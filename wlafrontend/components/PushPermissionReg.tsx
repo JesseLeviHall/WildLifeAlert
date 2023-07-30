@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import { Button, Dialog, Portal, Provider, Text } from "react-native-paper";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -14,12 +14,14 @@ const PushPermissionReg = ({ visible, setVisible }: Props) => {
 
   const registerForPushNotificationsAsync = async () => {
     try {
-      await Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX, // you can choose another level of importance
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
+      if (Platform.OS === "android") {
+        await Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX, // you can choose another level of importance
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
+      }
 
       let token;
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
