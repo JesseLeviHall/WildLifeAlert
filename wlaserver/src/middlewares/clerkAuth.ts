@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 export const clerkAuth = ClerkExpressWithAuth({
-  secretKey: process.env.CLERK_SECRET_DEV_KEY,
+  secretKey: process.env.CLERK_SECRET_KEY,
   sessionOptions: {
     onError(error: Error, req: Request, res: Response) {
       console.error(error);

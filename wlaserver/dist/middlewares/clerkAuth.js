@@ -8,7 +8,7 @@ else {
     const secretClerk = process.env.CLERK_SECRET_DEV_KEY;
 }
 export const clerkAuth = ClerkExpressWithAuth({
-    secretKey: process.env.CLERK_SECRET_DEV_KEY,
+    secretKey: process.env.CLERK_SECRET_KEY,
     sessionOptions: {
         onError(error, req, res) {
             console.error(error);

@@ -92,9 +92,9 @@ const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
     <View className="w-full">
       <TouchableOpacity
         className="mt-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center align-middle"
-        onPress={onPress}
+        onPress={() => console.log("social sign-up comming soon...")}
       >
-        <Text className=" text-blue-200 text-xl text-center">Continue with Google</Text>
+        <Text className=" text-blue-200 text-xl text-center">social sign-up comming soon...</Text>
         {isLoading && <Spinner color="cyan.500" size="lg" />}
       </TouchableOpacity>
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
