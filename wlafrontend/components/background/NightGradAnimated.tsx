@@ -12,22 +12,19 @@ const NightGradAnimated = (props: Props) => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setValue((prev) => !prev);
-    }, 30000);
+    }, 20000);
     return () => clearInterval(interval);
   }, []);
   return (
     <MotionLinearGradient
       animateProps={{
-        colors: [
-          value ? "#24008CFF" : "#0E409C9E",
-          value ? "#EB8705AF" : "#FF00F5FF",
-        ],
+        colors: [value ? "#24008CFF" : "#0E409C9E", value ? "#EB8705AF" : "#FF00F5FF"],
         start: { x: 0, y: 0 },
         end: { x: value ? 1 : 0, y: 1 },
       }}
       transition={{
         type: "timing",
-        duration: 30000,
+        duration: 20000,
         easing: "linear",
       }}
       style={{

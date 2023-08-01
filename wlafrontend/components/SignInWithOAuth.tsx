@@ -68,9 +68,9 @@ const SignInWithOAuth = (props: Props) => {
     <View className="w-full">
       <TouchableOpacity
         className="mt-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center align-middle"
-        onPress={() => console.log("Sign in with Google coming soon...")}
+        onPress={onPress}
       >
-        <Text className=" text-blue-200 text-xl text-center">Social sign-in comming soon...</Text>
+        <Text className=" text-blue-200 text-xl text-center">Sign in with Google</Text>
       </TouchableOpacity>
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
     </View>
