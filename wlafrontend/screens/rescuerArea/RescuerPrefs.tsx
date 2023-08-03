@@ -9,7 +9,6 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Linking,
-  SafeAreaView,
 } from "react-native";
 import { Button, Divider } from "native-base";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
@@ -30,6 +29,7 @@ import AccountDeleteDialogue from "../../components/rescuerprefmutations/Account
 import SetLocationDialogue from "../../components/rescuerprefmutations/SetLocationDialogue ";
 import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import ErrorMessage from "../../components/ErrorMessage";
+import * as Device from "expo-device";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -122,7 +122,9 @@ const RescuerPrefs = (props: Props) => {
     );
   }
 
-  //console.log(data);
+  //iPhone SE
+  const isIPhoneSE = Device.modelName === "Simulator iOS";
+  console.log("Device is", Device.modelName);
 
   const toggleDialogVisible = () => setDialogVisible(!dialogVisible);
   const toggleChangeLocation = () => setChangeLocation(!changeLocation);
@@ -175,7 +177,7 @@ const RescuerPrefs = (props: Props) => {
           </View>
         )}
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.box}>
+          <View style={isIPhoneSE ? styles.smallBox : styles.box}>
             <SetRescuerLocation
               isOpen={toggleChangeLocation}
               LatitudeProp={data?.Latitude}
@@ -204,7 +206,7 @@ const RescuerPrefs = (props: Props) => {
             <OfflineToast />
           </View>
         )}
-        <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
+        <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
           Back
         </Button>
       </ImageBackground>
@@ -230,11 +232,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 15,
     backgroundColor: "rgba(0, 224, 255, 0.3)",
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
-    maxHeight: screenHeight / 1.8,
+    maxHeight: screenHeight - 200,
+  },
+  smallBox: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -30,
+    backgroundColor: "rgba(0, 224, 255, 0.3)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight - 200,
   },
 });

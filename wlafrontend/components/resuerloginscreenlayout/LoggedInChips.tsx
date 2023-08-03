@@ -1,13 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Chip } from "react-native-paper";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigationtypes";
 import { useAuth } from "@clerk/clerk-expo";
 import SpinnerComp from "../../components/Spinner";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 type RescuerLoginNavigationProp = NavigationProp<RootStackParamList>;
