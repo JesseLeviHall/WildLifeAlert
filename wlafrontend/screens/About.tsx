@@ -90,7 +90,7 @@ const About = (props: Props) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: "Download WildLifeAlert from this link: <dynamic link>",
+        message: "Download WildLifeAlert from this link: https://wildlifealert.page.link/76UZ",
       });
     } catch (error: any) {
       alert(error.message);
