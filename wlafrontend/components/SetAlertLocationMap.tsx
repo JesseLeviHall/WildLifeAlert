@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MapView, { Marker, MapPressEvent } from "react-native-maps";
 import * as Location from "expo-location";
-import { View, Alert } from "react-native";
+import { View, Alert, Dimensions } from "react-native";
 import { Text, FAB } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const screenHeight = Dimensions.get("window").height;
 
 type UserLocation = {
   latitude: number;
@@ -67,12 +69,11 @@ export default function SetAlertLocationMap({ onLocationChange, onLocationSave }
 
   const handleMapPress = (event: MapPressEvent) => {
     setLocation(event.nativeEvent.coordinate);
-    //onLocationChange(event.nativeEvent.coordinate);
   };
 
   return (
     <View className="flex-1">
-      <View className="h-96">
+      <View style={{ height: screenHeight / 2.3 }}>
         <MapView
           className="flex-1"
           initialRegion={{
@@ -89,7 +90,7 @@ export default function SetAlertLocationMap({ onLocationChange, onLocationSave }
       </View>
       <View className="flex flex-col justify-center items-center py-4">
         <Text className="mb-3 font-bold text-2xl text-center">Where Is The Animal?</Text>
-        <Text className="mb-3 font-bold text-center">*Setting Location to your home is not recommended</Text>
+        <Text className="mb-3 font-bold text-center">(*Avoid setting precise location to your house)</Text>
         <Text className="mb-3 font-bold text-center">tap the map or</Text>
         <FAB
           accessibilityLabel="Get Current Location"

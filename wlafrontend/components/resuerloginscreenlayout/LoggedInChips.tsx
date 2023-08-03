@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    width: screenWidth / 1.5,
+    width: screenWidth / 1.4,
     alignSelf: "center",
     marginTop: 1,
     zIndex: 10,

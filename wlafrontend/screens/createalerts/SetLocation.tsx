@@ -62,7 +62,7 @@ const SetLocation = (props: Props) => {
             padding: 10,
             justifyContent: "center",
             alignItems: "center",
-            marginBottom: 40,
+            marginBottom: 20,
           }}
         >
           <Button
