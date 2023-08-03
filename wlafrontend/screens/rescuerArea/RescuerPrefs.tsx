@@ -122,9 +122,7 @@ const RescuerPrefs = (props: Props) => {
     );
   }
 
-  //iPhone SE
-  const isIPhoneSE = Device.modelName === "Simulator iOS";
-  console.log("Device is", Device.modelName);
+  const isIPhoneSE = Device.modelName == "Simulator" ? true : Device.modelName?.includes("SE");
 
   const toggleDialogVisible = () => setDialogVisible(!dialogVisible);
   const toggleChangeLocation = () => setChangeLocation(!changeLocation);
@@ -237,7 +235,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
-    maxHeight: screenHeight - 200,
+    maxHeight: screenHeight - 350,
   },
   smallBox: {
     flex: 1,

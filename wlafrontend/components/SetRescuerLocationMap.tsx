@@ -75,7 +75,7 @@ export default function SetRescuerLocationMap({ onLocationChange, onLocationSave
 
   return (
     <View style={{ width: screenWidth }}>
-      <View className=" h-80">
+      <View style={{ height: screenHeight / 2.3 }}>
         <MapView
           className="flex-1"
           initialRegion={{
@@ -97,6 +97,7 @@ export default function SetRescuerLocationMap({ onLocationChange, onLocationSave
         <FAB
           accessibilityLabel="Get Current Location"
           icon="crosshairs-gps"
+          customSize={40}
           className="mb-3 w-7/12"
           label={"Use Current Location"}
           onPress={handleGetCurrentLocation}
@@ -106,6 +107,7 @@ export default function SetRescuerLocationMap({ onLocationChange, onLocationSave
         <FAB
           accessibilityLabel="Save Location"
           icon="check"
+          customSize={40}
           label={"Save "}
           className="w-7/12"
           onPress={handleSaveLocation}

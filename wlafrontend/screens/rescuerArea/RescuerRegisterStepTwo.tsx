@@ -8,6 +8,7 @@ import { useConnectivity } from "../../hooks/useConnectivity";
 import SignUpWithOAuth from "../../components/SignUpWithOAuth";
 import SignUpComponent from "../../components/SignUpComponent";
 import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
+import * as Device from "expo-device";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -86,6 +87,8 @@ const RescuerRegisterStepTwo = (props: Props) => {
     }, [])
   );
 
+  const isIPhoneSE = Device.modelName == "Simulator iOS" ? true : Device.modelName?.includes("SE");
+
   return (
     <ConditionalSafeAreaView>
       <ImageBackground
@@ -101,7 +104,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
         <View style={styles.background}>
           <NightGradAnimated />
         </View>
-        <View style={styles.box}>
+        <View style={isIPhoneSE ? styles.smallBox : styles.box}>
           <SignUpWithOAuth navigation={navigation} userDetails={userDetails} />
           <SignUpComponent navigation={navigation} userDetails={userDetails} />
           {isConnected ? null : (
@@ -142,5 +145,17 @@ const styles = StyleSheet.create({
     maxHeight: screenHeight / 2.7,
     borderWidth: 1,
     borderColor: "#00E0FFFF",
+  },
+  smallBox: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: 80,
+    paddingHorizontal: 12,
+    backgroundColor: "rgba(0, 224, 255, 0.3)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight - 350,
   },
 });

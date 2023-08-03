@@ -24,6 +24,7 @@ import ActiveGlobal from "../../components/resuerloginscreenlayout/ActiveGlobal"
 import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import { Button } from "native-base";
 import SpinnerComp from "../../components/Spinner";
+import * as Device from "expo-device";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -49,6 +50,8 @@ const RescuerLogin = (props: Props) => {
     });
   });
 
+  const isIPhoneSE = Device.modelName == "Simulator iOS" ? true : Device.modelName?.includes("SE");
+
   return (
     <ConditionalSafeAreaView>
       <ImageBackground
@@ -68,7 +71,7 @@ const RescuerLogin = (props: Props) => {
           <Text className="font-bold text-lg text-blue-50 text-center">Base Camp</Text>
         </View>
         <SignedIn>
-          <View style={styles.box}>
+          <View style={isIPhoneSE ? styles.smallBox : styles.box}>
             <Text className="text-center text-blue-100 text-lg mt-2 font-thin">
               Hello, {user?.firstName ? user.firstName : user?.primaryEmailAddress?.emailAddress}
             </Text>
@@ -81,7 +84,7 @@ const RescuerLogin = (props: Props) => {
         </SignedIn>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <SignedOut>
-            <View style={styles.box}>
+            <View style={isIPhoneSE ? styles.smallBox : styles.box}>
               <SignInWithOAuth />
               <SignInComponent />
               <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
@@ -96,7 +99,7 @@ const RescuerLogin = (props: Props) => {
                 <Text className="text-blue-200 text-base font-bold">New? Sign Up Here!</Text>
               </TouchableOpacity>
             </View>
-            <Button onPress={navigation.goBack} className="w-24 absolute bottom-32 border self-center border-cyan-500 ">
+            <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
               Back
             </Button>
           </SignedOut>
@@ -130,6 +133,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: 15,
+    paddingHorizontal: 12,
+    backgroundColor: "rgba(0, 224, 255, 0.3)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight - 350,
+  },
+  smallBox: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: -30,
     paddingHorizontal: 12,
     backgroundColor: "rgba(0, 224, 255, 0.3)",
     borderRadius: 15,
