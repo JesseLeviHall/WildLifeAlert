@@ -1,12 +1,15 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Dimensions } from "react-native";
 import WarnAnimatedGrad from "../background/WarnAnimatedGrad";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getActiveInArea } from "../../api/index";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import { useAuth } from "@clerk/clerk-expo";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigationtypes";
+
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 type Props<T extends {} = RootStackParamList> = {
   navigation: NavigationProp<T>;
