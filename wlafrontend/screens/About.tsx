@@ -168,8 +168,6 @@ const About = (props: Props) => {
           style={{
             height: screenHeight,
             width: screenWidth,
-            margin: 0,
-            padding: 0,
           }}
         >
           <View style={styles.background}>
@@ -185,7 +183,7 @@ const About = (props: Props) => {
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
                 className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
-                icon={() => <MaterialCommunityIcons name="message-text" size={18} color="#A6D4FF" />}
+                icon={() => <MaterialCommunityIcons name="message-text" size={18} color="#54ACFFFF" />}
                 onPress={() => handlePress("message")}
               >
                 Ethos
@@ -198,7 +196,7 @@ const About = (props: Props) => {
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
                 className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
-                icon={() => <MaterialCommunityIcons name="script-text" size={18} color="#A6D4FF" />}
+                icon={() => <MaterialCommunityIcons name="script-text" size={18} color="#54ACFFFF" />}
                 onPress={() => handlePress("description")}
               >
                 Description
@@ -211,7 +209,7 @@ const About = (props: Props) => {
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
                 className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
-                icon={() => <MaterialCommunityIcons name="creation" size={18} color="#A6D4FF" />}
+                icon={() => <MaterialCommunityIcons name="creation" size={18} color="#54ACFFFF" />}
                 onPress={() => handlePress("mission")}
               >
                 Mission
@@ -224,7 +222,7 @@ const About = (props: Props) => {
                 selectedColor="#B3B6FFD6"
                 textStyle={{ color: "white" }}
                 className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
-                icon={() => <MaterialCommunityIcons name="arm-flex" size={18} color="#A6D4FF" />}
+                icon={() => <MaterialCommunityIcons name="arm-flex" size={18} color="#54ACFFFF" />}
                 onPress={() => handlePress("action")}
               >
                 Help Out
@@ -344,7 +342,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    width: screenWidth / 1.5,
+    width: screenWidth / 1.4,
     alignSelf: "center",
     marginTop: 50,
     zIndex: 10,
