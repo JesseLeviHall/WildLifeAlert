@@ -5,13 +5,13 @@ dotenv.config();
 //POST /Register new Rescuer
 export const registerRescuer = async (req, res) => {
     try {
-        const { FullName, Phone, Medical, Rehab, Organization, Professional, Latitude, Longitude, expoPushToken } = req.body;
+        const { userId, FullName, Phone, Medical, Rehab, Organization, Professional, Latitude, Longitude, expoPushToken } = req.body;
         // Check if required fields are undefined
         if (!FullName || !Phone) {
             res.status(400).json({ msg: "Invalid request: Missing required fields" });
             return;
         }
-        const UserId = req.auth.userId;
+        const UserId = userId;
         //Check if the user already exists
         const UserExists = await redisClient.sendCommand(["SISMEMBER", "rescuer:UserIds", UserId]);
         if (UserExists) {

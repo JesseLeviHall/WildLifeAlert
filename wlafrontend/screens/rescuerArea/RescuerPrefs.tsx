@@ -123,7 +123,6 @@ const RescuerPrefs = (props: Props) => {
   }
 
   const isIPhoneSE = Device.modelName == "Simulator iOS" ? true : screenHeight < 844;
-  console.log(isIPhoneSE);
 
   const toggleDialogVisible = () => setDialogVisible(!dialogVisible);
   const toggleChangeLocation = () => setChangeLocation(!changeLocation);

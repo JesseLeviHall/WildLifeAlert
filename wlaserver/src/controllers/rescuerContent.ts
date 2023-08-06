@@ -9,7 +9,7 @@ dotenv.config();
 //POST /Register new Rescuer
 export const registerRescuer = async (req: Request & WithAuthProp<Request>, res: Response): Promise<void> => {
   try {
-    const { FullName, Phone, Medical, Rehab, Organization, Professional, Latitude, Longitude, expoPushToken } =
+    const { userId, FullName, Phone, Medical, Rehab, Organization, Professional, Latitude, Longitude, expoPushToken } =
       req.body;
     // Check if required fields are undefined
     if (!FullName || !Phone) {
@@ -17,7 +17,7 @@ export const registerRescuer = async (req: Request & WithAuthProp<Request>, res:
       return;
     }
 
-    const UserId = req.auth.userId;
+    const UserId = userId;
     //Check if the user already exists
     const UserExists = await redisClient.sendCommand(["SISMEMBER", "rescuer:UserIds", UserId]);
     if (UserExists) {

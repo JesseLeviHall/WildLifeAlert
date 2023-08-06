@@ -4,7 +4,7 @@ import { clerkAuth, clerkRouteHandler } from "../middlewares/clerkAuth.js";
 
 export const rescuerRouter = Router();
 
-rescuerRouter.post("/newrescuer", clerkAuth, clerkRouteHandler, resuerContent.registerRescuer);
+rescuerRouter.post("/newrescuer", resuerContent.registerRescuer);
 
 rescuerRouter.get("/welcomescreen", resuerContent.welcomeRescuerContent);
 

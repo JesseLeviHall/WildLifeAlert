@@ -23,30 +23,25 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
   const [error, setError] = React.useState("");
-  const { getToken } = useAuth();
 
-  const mutation = useMutation(
-    (data: { sessionId: string | null; token: string | null; userDetails: Record<string, string> }) =>
-      registerRescuer(data),
-    {
-      onSuccess: async () => {
-        await AsyncStorage.multiRemove([
-          "FullName",
-          "Phone",
-          "location",
-          "Rehab",
-          "Medical",
-          "Professional",
-          "Organization",
-          "expoPushToken",
-        ]);
-        navigation.navigate("RescuerWelcome");
-      },
-      onError: (error) => {
-        console.log("Error: ", error);
-      },
-    }
-  );
+  const mutation = useMutation((data: { userDetails: Record<string, string> }) => registerRescuer(data), {
+    onSuccess: async () => {
+      await AsyncStorage.multiRemove([
+        "FullName",
+        "Phone",
+        "location",
+        "Rehab",
+        "Medical",
+        "Professional",
+        "Organization",
+        "expoPushToken",
+      ]);
+      navigation.navigate("RescuerWelcome");
+    },
+    onError: (error) => {
+      console.log("Error: ", error);
+    },
+  });
 
   const onSignUpPress = async () => {
     if (!isLoaded) {
@@ -80,16 +75,25 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
         code,
       });
       await setActive({ session: completeSignUp.createdSessionId });
-      const sessionId = completeSignUp.createdSessionId;
-      const token = await getToken();
-      if (sessionId && token && userDetails) {
-        mutation.mutate({ sessionId, token, userDetails });
-      } else {
-        throw new Error("Session ID, token, or user details is undefined");
-      }
+      finishSignUp(completeSignUp.createdUserId);
     } catch (err: any) {
       setError(err.errors[0].message);
       console.error(JSON.stringify(err, null, 2));
+    }
+  };
+
+  const finishSignUp = async (userId: string | null) => {
+    if (setActive) {
+      try {
+        if (userId && userDetails) {
+          userDetails.userId = userId;
+          mutation.mutate({ userDetails });
+        } else {
+          throw new Error("User ID or user details is undefined");
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     }
   };
 

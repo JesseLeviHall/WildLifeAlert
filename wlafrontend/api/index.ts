@@ -4,7 +4,7 @@ import axios from "axios";
 //remote server : https://wildlifealertusa.com
 //locoal server: http://10.0.10.10:3000
 const API = axios.create({
-  baseURL: "https://wildlifealertusa.com",
+  baseURL: "http://192.168.0.13:3000",
   timeout: 10000,
   withCredentials: false,
 });
@@ -281,20 +281,12 @@ export const getPrivacyPolicyContent = async () => {
 
 //===================================================
 //Post Register New Rescuer
-export const registerRescuer = async ({
-  sessionId,
-  token,
-  userDetails,
-}: {
-  sessionId: string | null;
-  token: string | null;
-  userDetails: Record<string, string>;
-}) => {
+export const registerRescuer = async ({ userDetails }: { userDetails: Record<string, string> }) => {
   try {
     const registerRescuer = await API({
       method: "post",
       url: "/secure-api/newrescuer",
-      headers: { Authorization: `Bearer ${sessionId} ${token}` },
+      // headers: { Authorization: `Bearer ${sessionId} ${token}` },
       data: userDetails,
     });
     return registerRescuer.data;
