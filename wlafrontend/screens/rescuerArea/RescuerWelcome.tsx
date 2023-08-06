@@ -146,7 +146,7 @@ const RescuerWelcome = (props: Props) => {
             </ScrollView>
           </Motion.View>
           <Button
-            className="w-24 absolute bottom-24 border self-center border-cyan-500 "
+            className="w-24 mt-4 border self-center border-cyan-500 "
             onPress={() => {
               navigation.navigate("RescuerLogin");
             }}
