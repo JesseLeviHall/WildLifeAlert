@@ -1,7 +1,7 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useOAuth, useAuth } from "@clerk/clerk-expo";
+import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { registerRescuer } from "../api/index";
@@ -24,52 +24,45 @@ WebBrowser.maybeCompleteAuthSession();
 const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
   const [error, setError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-  const { getToken } = useAuth();
 
-  const mutation = useMutation(
-    (data: { sessionId: string | null; token: string | null; userDetails: Record<string, string> }) =>
-      registerRescuer(data),
-    {
-      onSuccess: async () => {
-        await AsyncStorage.multiRemove([
-          "FullName",
-          "Phone",
-          "location",
-          "Rehab",
-          "Medical",
-          "Professional",
-          "Organization",
-          "expoPushToken",
-        ]);
-        navigation.navigate("RescuerWelcome");
-      },
-      onError: (error) => {
-        console.log("Error: ", error);
-        setError("An error occurred during sign up, please try again.");
-      },
-    }
-  );
+  const mutation = useMutation((data: { userDetails: Record<string, string> }) => registerRescuer(data), {
+    onSuccess: async () => {
+      await AsyncStorage.multiRemove([
+        "FullName",
+        "Phone",
+        "location",
+        "Rehab",
+        "Medical",
+        "Professional",
+        "Organization",
+        "expoPushToken",
+      ]);
+      navigation.navigate("RescuerWelcome");
+    },
+    onError: (error) => {
+      console.log("Error: ", error);
+      setError("An error occurred during sign up, please try again.");
+    },
+  });
 
   useWarmUpBrowser();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
   const onPress = React.useCallback(async () => {
-    setError("");
     setIsLoading(true);
     try {
       const { signUp, setActive } = await startOAuthFlow();
 
       if (signUp && signUp.createdSessionId) {
         setActive && setActive({ session: signUp.createdSessionId });
-        const sessionId = signUp.createdSessionId;
-        const token = await getToken();
+        const userId = signUp.createdUserId;
 
-        if (!sessionId || !token || !userDetails) {
-          throw new Error("Session ID, token, or user details is undefined");
+        if (!userId || !userDetails) {
+          throw new Error("userId or user details is undefined");
         }
-
-        mutation.mutate({ sessionId, token, userDetails });
+        userDetails.userId = userId;
+        mutation.mutate({ userDetails });
       } else {
         // OAuth flow was cancelled, just return
         return;
@@ -85,8 +78,9 @@ const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
       }
     } finally {
       setIsLoading(false);
+      setError("");
     }
-  }, [userDetails, mutation, getToken, setIsLoading]);
+  }, [userDetails, mutation, setIsLoading]);
 
   return (
     <View className="w-full">
