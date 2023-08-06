@@ -1,6 +1,6 @@
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View, Dimensions, SafeAreaView, Share } from "react-native";
+import { StyleSheet, View, Dimensions, Share } from "react-native";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { Appbar, FAB } from "react-native-paper";
 import { useRefreshByUser } from "../hooks/useRefreshByUser";
@@ -14,6 +14,7 @@ import PubMapDialogue from "../components/PubMapInfoComp";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ErrorMessage from "../components/ErrorMessage";
 import ConditionalSafeAreaView from "../components/ConditionalSafeArea";
+import { useIsFocused } from "@react-navigation/native";
 
 const BOTTOM_APPBAR_HEIGHT = 70;
 const MEDIUM_FAB_HEIGHT = 46;
@@ -48,6 +49,8 @@ const PublicMap = (props: Props) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const isConnected = useConnectivity();
 
+  const isFocused = useIsFocused();
+
   const pubMapViewRef = React.useRef<PubMapViewHandle>(null);
   const handleMapTypeChange = () => {
     pubMapViewRef.current?.onMapTypeChange();
@@ -79,6 +82,12 @@ const PublicMap = (props: Props) => {
   });
 
   const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch);
+
+  React.useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused, refetch]);
 
   if (isLoading || isRefetchingByUser) {
     return (
