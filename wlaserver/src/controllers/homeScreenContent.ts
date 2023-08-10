@@ -84,6 +84,17 @@ export const newAlert = async (req: MulterRequest, res: Response): Promise<void>
       res.status(400).send("Invalid request: Missing required fields");
       return;
     }
+
+    // Convert email to lowercase
+    const lowercaseEmail = Email.toLowerCase();
+
+    // Check if the email is in the BlockEmails set
+    const isBlocked = await redisClient.sIsMember("BlockEmails", lowercaseEmail);
+    if (isBlocked) {
+      res.status(403).send("Email blocked"); // 403 Forbidden is typically used for this type of response
+      return;
+    }
+
     //map photos to array of urls
     const Photos = req.files ? req.files.map((file: File) => file.key) : [];
     // If Photo is undefined, use a default photo URL instead
@@ -108,7 +119,7 @@ export const newAlert = async (req: MulterRequest, res: Response): Promise<void>
       "Description",
       Description,
       "Email",
-      Email,
+      lowercaseEmail,
       "ShareContact",
       ShareContact.toString(),
       "Timestamp",
