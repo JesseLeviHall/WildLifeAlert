@@ -26,8 +26,9 @@ app.use("/support", express.static(path.join(__dirname, "../public")));
 app.get("/support", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/support.html"));
 });
+app.use("/", express.static(path.join(__dirname, "../public")));
 app.get("/", (req, res) => {
-    res.status(200).send("This is the WildLifeAlert server");
+    res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 app.use("/healthcheck", (req, res) => {
     res.status(200).send("Im alive!");
