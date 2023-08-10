@@ -279,3 +279,26 @@ export const updatePrivacyPolicyContent = async (req: Request, res: Response): P
     res.status(500).send("Internal Server Error");
   }
 };
+
+//post add email to block list
+export const addBlockEmail = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { Email } = req.body;
+
+    // Check if required fields are undefined
+    if (!Email) {
+      res.status(400).send("Invalid request: Missing required fields");
+      return;
+    }
+
+    // Convert email to lowercase
+    const lowercaseEmail = Email.toLowerCase();
+
+    await redisClient.sAdd("BlockEmails", lowercaseEmail);
+
+    res.status(201).send("Email added to block list");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};

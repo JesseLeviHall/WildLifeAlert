@@ -14,4 +14,5 @@ homeRouter.post("/updateabout", homeScreenContent.updateAboutContent);
 homeRouter.get("/getabout", homeScreenContent.aboutContent);
 homeRouter.get("/getpolicies", homeScreenContent.privacyPolicyContent);
 homeRouter.put("/updatepolicies", homeScreenContent.updatePrivacyPolicyContent);
+homeRouter.post("/addblockemail", homeScreenContent.addBlockEmail);
 //# sourceMappingURL=homeRoute.js.map
