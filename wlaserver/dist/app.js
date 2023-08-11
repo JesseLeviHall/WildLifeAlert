@@ -22,14 +22,14 @@ app.use(helmet({
     referrerPolicy: { policy: "no-referrer" },
 }));
 app.use(logger(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms'));
-app.use("/support", express.static(path.join(__dirname, "../public")));
 app.get("/support", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/support.html"));
 });
-app.use("/", express.static(path.join(__dirname, "../public")));
+app.use("/support", express.static(path.join(__dirname, "../public")));
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"));
 });
+app.use("/", express.static(path.join(__dirname, "../public")));
 app.use("/healthcheck", (req, res) => {
     res.status(200).send("Im alive!");
 });

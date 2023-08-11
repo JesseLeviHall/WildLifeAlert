@@ -2,9 +2,9 @@ import axios from "axios";
 
 // set axios configurations
 //remote server : https://wildlifealertusa.com
-//locoal server: http://10.0.10.10:3000
+//locoal server: http://192.168.1.117:3000
 const API = axios.create({
-  baseURL: "https://wildlifealertusa.com",
+  baseURL: "http://192.168.1.117:3000",
   timeout: 10000,
   withCredentials: false,
 });
