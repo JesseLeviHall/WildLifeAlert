@@ -1,6 +1,6 @@
 import React from "react";
 import { getPrivacyPolicyContent } from "../api/index";
-import { Text, View, Linking, StyleSheet, Dimensions, SafeAreaView, ImageBackground } from "react-native";
+import { Text, View, Linking, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import { Button } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { useConnectivity } from "../hooks/useConnectivity";
