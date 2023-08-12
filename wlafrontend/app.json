@@ -26,7 +26,11 @@
     "ios": {
       "supportsTablet": false,
         "bundleIdentifier": "com.wildlifealertusa.wildlifealert",
-        "buildNumber": "4"
+        "buildNumber": "4",
+        "infoPlist": {
+          "NSLocationWhenInUseUsageDescription": "WildLifeAlerts uses your location to place the alert on the in-app map, or, if registered as a rescuer, to determine if you are near an alert and should be notified of the situation",
+          "NSLocationAlwaysUsageDescription": "WildLifeAlerts uses your location to place the alert on the in-app map, or, if registered as a rescuer, to determine if you are near an alert and should be notified of the situation"
+        }
     },
     "android": {
       "versionCode": 2,

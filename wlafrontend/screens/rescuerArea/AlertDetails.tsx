@@ -11,7 +11,6 @@ import {
   ScrollView,
   Pressable,
   Modal,
-  SafeAreaView,
 } from "react-native";
 import AnimatedGradient from "../../components/background/GradientAnimated";
 import { Button } from "native-base";
@@ -222,6 +221,19 @@ const AlertDetails: React.FC<Props> = ({ route, navigation }) => {
                   <SuccessToast message="Coordinates Copied" />
                 </View>
               )}
+              <Pressable
+                onPress={() => {
+                  const subject = `Report Objectionable Content for Alert ID: ${alertId}`;
+                  const body = `I want to report objectionable content for the Alert with ID: ${alertId}. Please look into it.`;
+                  const mailtoLink = `mailto:wildlifealertusa+content@gmail.com?subject=${encodeURIComponent(
+                    subject
+                  )}&body=${encodeURIComponent(body)}`;
+                  Linking.openURL(mailtoLink);
+                }}
+              >
+                <Text className="mt-4 text-center font-medium text-blue-400">Report Objectionable Content</Text>
+              </Pressable>
+
               <Text className="mt-8 ml-4 font-black text-black text-3xl">{data?.Animal}</Text>
               <Text className="mt-2 ml-4 font-semibold text-black  text-lg">Description: {data?.Description}</Text>
             </ScrollView>
