@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useState } from "react";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { StyleSheet, View, Text, Modal, Pressable, Linking } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import SuccessToast from "./SuccessToast";
@@ -98,6 +98,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
   return (
     <View style={styles.container}>
       <MapView
+        provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: 39.5,
           longitude: -98.35,
