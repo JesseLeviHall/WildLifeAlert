@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Marker, MapPressEvent } from "react-native-maps";
+import MapView, { Marker, MapPressEvent, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import { View, Alert, Dimensions } from "react-native";
 import { Text, FAB } from "react-native-paper";
@@ -75,6 +75,7 @@ export default function SetAlertLocationMap({ onLocationChange, onLocationSave }
     <View className="flex-1">
       <View style={{ height: screenHeight / 2.3 }}>
         <MapView
+          provider={PROVIDER_GOOGLE}
           className="flex-1"
           initialRegion={{
             latitude: 39.5,

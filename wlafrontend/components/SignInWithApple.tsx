@@ -12,7 +12,7 @@ type Props = {};
 
 WebBrowser.maybeCompleteAuthSession();
 
-const SignInWithOAuth = (props: Props) => {
+const SignInWithApple = (props: Props) => {
   const [error, setError] = React.useState("");
   useWarmUpBrowser();
   const isConnected = useConnectivity();
@@ -31,7 +31,7 @@ const SignInWithOAuth = (props: Props) => {
     }
   );
 
-  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_apple" });
 
   const onPress = React.useCallback(async () => {
     setError("");
@@ -70,10 +70,10 @@ const SignInWithOAuth = (props: Props) => {
         className="mt-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center align-middle"
         onPress={onPress}
       >
-        <Text className=" text-blue-200 text-xl text-center">Sign in with Google</Text>
+        <Text className=" text-blue-200 text-xl text-center">Sign in with Apple</Text>
       </TouchableOpacity>
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
     </View>
   );
 };
-export default SignInWithOAuth;
+export default SignInWithApple;

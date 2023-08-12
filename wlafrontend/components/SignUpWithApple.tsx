@@ -21,7 +21,7 @@ type Props = {
 
 WebBrowser.maybeCompleteAuthSession();
 
-const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
+const SignUpWithApple = ({ userDetails, navigation }: Props) => {
   const [error, setError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -47,7 +47,7 @@ const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
 
   useWarmUpBrowser();
 
-  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_apple" });
 
   const onPress = React.useCallback(async () => {
     setIsLoading(true);
@@ -88,11 +88,11 @@ const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
         className="mt-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center align-middle"
         onPress={onPress}
       >
-        <Text className=" text-blue-200 text-xl text-center">Continue with Google</Text>
+        <Text className=" text-blue-200 text-xl text-center">Continue with Apple</Text>
         {isLoading && <Spinner color="cyan.500" size="lg" />}
       </TouchableOpacity>
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
     </View>
   );
 };
-export default SignUpWithOAuth;
+export default SignUpWithApple;

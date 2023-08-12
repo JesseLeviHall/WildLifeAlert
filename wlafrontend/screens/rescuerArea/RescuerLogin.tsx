@@ -8,7 +8,7 @@ import {
   Dimensions,
   ImageBackground,
   StyleSheet,
-  SafeAreaView,
+  Platform,
 } from "react-native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
@@ -17,6 +17,7 @@ import { useConnectivity } from "../../hooks/useConnectivity";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigationtypes";
 import SignInWithOAuth from "../../components/SignInWithOAuth";
+import SignInWithApple from "../../components/SignInWithApple";
 import SignInComponent from "../../components/SignInComponent";
 import LoggedInChips from "../../components/resuerloginscreenlayout/LoggedInChips";
 import AlertsInYourArea from "../../components/resuerloginscreenlayout/AlertsInYourArea";
@@ -85,6 +86,7 @@ const RescuerLogin = (props: Props) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <SignedOut>
             <View style={isIPhoneSE ? styles.smallBox : styles.box}>
+              {Platform.OS === "ios" && <SignInWithApple />}
               <SignInWithOAuth />
               <SignInComponent />
               <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>

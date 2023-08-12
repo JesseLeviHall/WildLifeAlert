@@ -1,11 +1,12 @@
 import * as React from "react";
-import { View, Dimensions, ImageBackground, SafeAreaView, StyleSheet } from "react-native";
+import { View, Dimensions, ImageBackground, Platform, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, NavigationProp, useFocusEffect } from "@react-navigation/native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
 import SignUpWithOAuth from "../../components/SignUpWithOAuth";
+import SignUpWithApple from "../../components/SignUpWithApple";
 import SignUpComponent from "../../components/SignUpComponent";
 import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import * as Device from "expo-device";
@@ -105,6 +106,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
           <NightGradAnimated />
         </View>
         <View style={isIPhoneSE ? styles.smallBox : styles.box}>
+          {Platform.OS === "ios" && <SignUpWithApple navigation={navigation} userDetails={userDetails} />}
           <SignUpWithOAuth navigation={navigation} userDetails={userDetails} />
           <SignUpComponent navigation={navigation} userDetails={userDetails} />
           {isConnected ? null : (
