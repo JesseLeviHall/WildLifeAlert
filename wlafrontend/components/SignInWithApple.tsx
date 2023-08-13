@@ -17,7 +17,7 @@ const SignInWithApple = (props: Props) => {
   const [error, setError] = React.useState("");
   useWarmUpBrowser();
   const isConnected = useConnectivity();
-  const { getToken } = useAuth();
+  const { getToken, signOut } = useAuth();
 
   const mutation = useMutation(
     (data: { sessionId: string; token: string; expoPushToken: string }) => updatePushToken(data),
@@ -46,8 +46,8 @@ const SignInWithApple = (props: Props) => {
       const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
 
       if (userNeedsToBeCreated) {
-        console.error("User needs to be created");
         setError("Please sign up before signing in with Apple");
+        signOut();
         return;
       }
       if (signIn) {

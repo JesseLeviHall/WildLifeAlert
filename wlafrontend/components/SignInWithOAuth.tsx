@@ -17,7 +17,7 @@ const SignInWithOAuth = (props: Props) => {
   const [error, setError] = React.useState("");
   useWarmUpBrowser();
   const isConnected = useConnectivity();
-  const { getToken } = useAuth();
+  const { getToken, signOut } = useAuth();
 
   const mutation = useMutation(
     (data: { sessionId: string; token: string; expoPushToken: string }) => updatePushToken(data),
@@ -46,8 +46,8 @@ const SignInWithOAuth = (props: Props) => {
       const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
 
       if (userNeedsToBeCreated) {
-        console.error("User needs to be created");
         setError("Please sign up before signing in with Google");
+        signOut();
         return;
       }
       if (signIn) {
@@ -76,8 +76,6 @@ const SignInWithOAuth = (props: Props) => {
         setError(err.errors[0].message);
         console.error(JSON.stringify(err, null, 2));
       }
-    } finally {
-      setError("");
     }
   }, []);
 
