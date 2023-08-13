@@ -1,6 +1,7 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, Image, View, StyleSheet } from "react-native";
+const Glogo = require("../assets/btn_google.png");
 import { useOAuth, useAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 import * as Notifications from "expo-notifications";
@@ -65,15 +66,25 @@ const SignInWithOAuth = (props: Props) => {
   }, []);
 
   return (
-    <View className="w-full">
+    <View className="w-full mt-4">
       <TouchableOpacity
-        className="mt-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center align-middle"
+        className=" flex-row border w-full border-[#00E0FFFF] bg-[#4285F4] rounded-lg h-16 justify-center items-center"
         onPress={onPress}
       >
-        <Text className=" text-blue-200 text-xl text-center">Sign in with Google</Text>
+        <Image style={styles.image} source={Glogo} />
+        <Text className=" flex-1 text-blue-200 text-xl text-center">Sign in with Google</Text>
       </TouchableOpacity>
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
     </View>
   );
 };
 export default SignInWithOAuth;
+
+const styles = StyleSheet.create({
+  image: {
+    width: 64,
+    height: 64,
+    marginLeft: 0,
+    marginRight: -16,
+  },
+});

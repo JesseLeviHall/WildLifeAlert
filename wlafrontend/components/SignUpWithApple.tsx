@@ -1,6 +1,7 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
 import { Text, TouchableOpacity, View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 import { useMutation } from "@tanstack/react-query/build/lib";
@@ -83,14 +84,16 @@ const SignUpWithApple = ({ userDetails, navigation }: Props) => {
   }, [userDetails, mutation, setIsLoading]);
 
   return (
-    <View className="w-full">
+    <View className="w-full mt-4">
       <TouchableOpacity
-        className="mt-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center align-middle"
+        className=" flex-row border w-full border-[#00E0FFFF] bg-[#000000] rounded-lg h-16 justify-center items-center"
         onPress={onPress}
       >
-        <Text className=" text-blue-200 text-xl text-center">Continue with Apple</Text>
+        <MaterialCommunityIcons style={{ marginTop: -4 }} name="apple" size={28} color="#FFFFFF" />
+        <Text className=" text-blue-200 text-xl ml-4 text-center">Sign up with Apple</Text>
         {isLoading && <Spinner color="cyan.500" size="lg" />}
       </TouchableOpacity>
+
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
     </View>
   );

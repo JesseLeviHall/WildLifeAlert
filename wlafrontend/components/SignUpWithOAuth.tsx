@@ -1,6 +1,7 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, Image, View, StyleSheet } from "react-native";
+const Glogo = require("../assets/btn_google.png");
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 import { useMutation } from "@tanstack/react-query/build/lib";
@@ -83,16 +84,25 @@ const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
   }, [userDetails, mutation, setIsLoading]);
 
   return (
-    <View className="w-full">
+    <View className="w-full mt-4">
       <TouchableOpacity
-        className="mt-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center align-middle"
+        className=" flex-row border w-full border-[#00E0FFFF] bg-[#4285F4] rounded-lg h-16 justify-center items-center"
         onPress={onPress}
       >
-        <Text className=" text-blue-200 text-xl text-center">Continue with Google</Text>
-        {isLoading && <Spinner color="cyan.500" size="lg" />}
+        <Image style={styles.image} source={Glogo} />
+        <Text className=" flex-1 text-blue-200 text-xl text-center">Sign in with Google</Text>
       </TouchableOpacity>
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
     </View>
   );
 };
 export default SignUpWithOAuth;
+
+const styles = StyleSheet.create({
+  image: {
+    width: 64,
+    height: 64,
+    marginLeft: 0,
+    marginRight: -16,
+  },
+});

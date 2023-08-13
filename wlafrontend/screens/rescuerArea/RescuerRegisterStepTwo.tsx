@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
-    maxHeight: screenHeight / 2.7,
+    maxHeight: screenHeight / 2.2,
     borderWidth: 1,
     borderColor: "#00E0FFFF",
   },
