@@ -55,13 +55,21 @@ const SignInWithApple = (props: Props) => {
         if (sessionId && token) {
           mutation.mutate({ sessionId, token, expoPushToken });
         } else {
-          console.error("SessionId or Token is missing!");
-          setError("An error occurred during sign in, please try again.");
+          // OAuth flow was cancelled, just return
+          return;
         }
       }
     } catch (err: any) {
       console.error("OAuth error", err);
-      setError("An error occurred during sign in, please try again.");
+      console.error("Error message: ", err.message);
+      if (err.message === "OAuth flow was cancelled") {
+        setError("");
+      } else {
+        setError(err.errors[0].message);
+        console.error(JSON.stringify(err, null, 2));
+      }
+    } finally {
+      setError("");
     }
   }, []);
 

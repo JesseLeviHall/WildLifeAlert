@@ -93,12 +93,12 @@ const RescuerLogin = (props: Props) => {
                 <Text className="text-blue-300 text-sm">Forgot password?</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="mb-2"
+                className="mb-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center items-center"
                 onPress={() => {
                   navigation.navigate("RescuerRegister");
                 }}
               >
-                <Text className="text-blue-200 text-base font-bold">New? Sign Up Here!</Text>
+                <Text className="text-blue-200 text-lg font-bold ">New? Sign Up Here!</Text>
               </TouchableOpacity>
             </View>
             <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">

@@ -90,7 +90,7 @@ const SignUpWithOAuth = ({ userDetails, navigation }: Props) => {
         onPress={onPress}
       >
         <Image style={styles.image} source={Glogo} />
-        <Text className=" flex-1 text-blue-200 text-xl text-center">Sign in with Google</Text>
+        <Text className=" flex-1 text-blue-200 text-xl text-center">Sign up with Google</Text>
       </TouchableOpacity>
       {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
     </View>

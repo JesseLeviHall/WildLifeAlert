@@ -158,6 +158,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
-    maxHeight: screenHeight - 300,
+    maxHeight: screenHeight - 250,
   },
 });

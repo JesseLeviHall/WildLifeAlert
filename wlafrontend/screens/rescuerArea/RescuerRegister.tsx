@@ -65,7 +65,7 @@ const RescuerRegister = (props: Props) => {
           <SetRescuerLocationMap onLocationChange={setLocation} onLocationSave={handleLocationSave} />
           <View className=" h-16 z-30">{showToast && <SuccessToast message="Location Saved" />}</View>
           <Button
-            className={`${Location ? "" : "bg-gray-300"} border border-cyan-500 items-center w-24 -mt-10`}
+            className={`${Location ? "" : "bg-gray-300"} border border-cyan-500 items-center w-24 -mt-12`}
             disabled={!Location}
             onPress={() => navigation.navigate("RescuerRegisterStepOne")}
           >
