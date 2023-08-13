@@ -42,6 +42,14 @@ const SignInWithApple = (props: Props) => {
     }
     try {
       const { signIn, setActive } = await startOAuthFlow();
+      // If the user is trying to sign in but doesn't exist yet
+      const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
+
+      if (userNeedsToBeCreated) {
+        console.error("User needs to be created");
+        setError("Please sign up before signing in with Apple");
+        return;
+      }
       if (signIn) {
         setActive && setActive({ session: signIn.createdSessionId });
         const sessionId = signIn.createdSessionId;
@@ -68,8 +76,6 @@ const SignInWithApple = (props: Props) => {
         setError(err.errors[0].message);
         console.error(JSON.stringify(err, null, 2));
       }
-    } finally {
-      setError("");
     }
   }, []);
 
