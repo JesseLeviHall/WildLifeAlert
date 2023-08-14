@@ -46,7 +46,7 @@ const SignInWithOAuth = (props: Props) => {
       const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
 
       if (userNeedsToBeCreated) {
-        setError("Please sign up before signing in with Google");
+        setError("To sign in with Google, you must first sign up with Google.");
         signOut();
         return;
       }

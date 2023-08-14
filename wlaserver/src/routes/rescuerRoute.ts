@@ -26,3 +26,5 @@ rescuerRouter.post("/updatepushtoken", clerkAuth, clerkRouteHandler, resuerConte
 rescuerRouter.post("/rescuerpreflocation", clerkAuth, clerkRouteHandler, resuerContent.updateRescuerPrefLocation);
 
 rescuerRouter.delete("/deleterescuer", clerkAuth, clerkRouteHandler, resuerContent.deleteRescuer);
+
+rescuerRouter.post("/deleteclerkuser", resuerContent.deleteClerkUser);

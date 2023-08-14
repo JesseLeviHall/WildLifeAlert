@@ -46,7 +46,8 @@ const SignInWithApple = (props: Props) => {
       const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
 
       if (userNeedsToBeCreated) {
-        setError("Please sign up before signing in with Apple");
+        //send request to delete user from clerk
+        setError("To sign in with Apple, you must first sign up with Apple.");
         signOut();
         return;
       }

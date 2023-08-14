@@ -270,3 +270,19 @@ export const deleteRescuer = async (req: Request & WithAuthProp<Request>, res: R
     res.status(500).json({ msg: "Internal Server Error" });
   }
 };
+
+//DELETE /Delete clerk user on accidental user creation
+export const deleteClerkUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { userId } = req.body;
+    const deletedUser = await clerk.users.deleteUser(userId);
+    if (!deletedUser) {
+      res.status(500).json({ msg: "Failed to delete user in Clerk" });
+      return;
+    }
+    res.status(200).json({ msg: "User deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
+  }
+};
