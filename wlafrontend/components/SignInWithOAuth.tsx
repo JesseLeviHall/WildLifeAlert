@@ -42,18 +42,19 @@ const SignInWithOAuth = (props: Props) => {
     }
     try {
       const { signIn, setActive } = await startOAuthFlow();
-      // If the user is trying to sign in but doesn't exist yet
-      const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
 
-      if (userNeedsToBeCreated) {
-        setError("To sign in with Google, you must first sign up with Google.");
-        signOut();
-        return;
-      }
       if (signIn) {
         setActive && setActive({ session: signIn.createdSessionId });
         const sessionId = signIn.createdSessionId;
         const token = await getToken();
+
+        // If the user is trying to sign in but doesn't exist yet
+        const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
+        if (userNeedsToBeCreated) {
+          setError("You must create an account to sign in. Please tap sign up below.");
+          signOut();
+          return;
+        }
 
         let expoPushToken = "";
         let tokenObject = await Notifications.getExpoPushTokenAsync({

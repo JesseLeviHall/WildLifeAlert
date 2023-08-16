@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, Keyboard, TouchableWithoutFeedback, TextInput, TouchableOpacity, View } from "react-native";
-import { useSignUp, useAuth } from "@clerk/clerk-expo";
+import { useSignUp } from "@clerk/clerk-expo";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { registerRescuer } from "../api/index";
 import { NavigationProp } from "@react-navigation/native";
