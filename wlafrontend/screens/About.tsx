@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  SafeAreaView,
   TouchableOpacity,
   Share,
   Platform,

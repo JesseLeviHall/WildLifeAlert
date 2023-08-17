@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
   Platform,
 } from "react-native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
+import { Motion } from "@legendapp/motion";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import OfflineToast from "../../components/OfflineToast";
 import { useConnectivity } from "../../hooks/useConnectivity";
@@ -37,6 +38,8 @@ type Props = {
 };
 
 const RescuerLogin = (props: Props) => {
+  const [signInTap, setSignInTap] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
   const navigation = useNavigation<RescuerLoginNavigationProp>();
   const isConnected = useConnectivity();
   const { isLoaded, user } = useUser();
@@ -85,22 +88,65 @@ const RescuerLogin = (props: Props) => {
         </SignedIn>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <SignedOut>
-            <View style={isIPhoneSE ? styles.smallBox : styles.box}>
-              {Platform.OS === "ios" && <SignInWithApple />}
-              <SignInWithOAuth />
-              <SignInComponent />
-              <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
-                <Text className="text-blue-300 text-sm">Forgot password?</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="mb-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center items-center"
-                onPress={() => {
-                  navigation.navigate("RescuerRegister");
+            {!signInTap && (
+              <View style={isIPhoneSE ? styles.smallBox : styles.box}>
+                <TouchableOpacity
+                  className="mb-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center items-center"
+                  onPress={() => {
+                    setSignInTap(!signInTap);
+                  }}
+                >
+                  <Text className="text-blue-200 text-lg font-bold ">Have an account? Sign In</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="mb-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center items-center"
+                  onPress={() => {
+                    navigation.navigate("RescuerRegister");
+                  }}
+                >
+                  <Text className="text-blue-200 text-lg font-bold ">New? Sign Up Here!</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {signInTap && (
+              <Motion.View
+                key={animationKey}
+                initial={{ x: -100, scale: 1, opacity: 0.1 }}
+                animate={{ x: 0, scale: 1, opacity: 1 }}
+                transition={{
+                  default: {
+                    type: "spring",
+                    damping: 30,
+                    stiffness: 600,
+                  },
+                  x: {
+                    type: "spring",
+                    damping: 30,
+                    stiffness: 600,
+                  },
+                  opacity: {
+                    type: "tween",
+                    duration: 900,
+                  },
                 }}
+                style={isIPhoneSE ? styles.smallBox : styles.box}
               >
-                <Text className="text-blue-200 text-lg font-bold ">New? Sign Up Here!</Text>
-              </TouchableOpacity>
-            </View>
+                {Platform.OS === "ios" && <SignInWithApple />}
+                <SignInWithOAuth />
+                <SignInComponent />
+                <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
+                  <Text className="text-blue-300 text-sm">Forgot password?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="mb-2 w-full  h-12 justify-center items-center"
+                  onPress={() => {
+                    navigation.navigate("RescuerRegister");
+                  }}
+                >
+                  <Text className="text-blue-200 text-md font-bold ">New? Sign Up Here!</Text>
+                </TouchableOpacity>
+              </Motion.View>
+            )}
             <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
               Back
             </Button>
