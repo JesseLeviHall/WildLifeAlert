@@ -73,6 +73,18 @@ const SignInWithApple = (props: Props) => {
         signOut();
         return;
       }
+
+      // If the user has an account but does not yet have an oauth account connected, use the transfer method.
+      const userExistsButNeedsToSignIn =
+        signUp?.verifications.externalAccount.status === "transferable" &&
+        signUp.verifications.externalAccount.error?.code === "external_account_exists";
+      if (userExistsButNeedsToSignIn) {
+        const res = await signIn?.create({ transfer: true });
+        if (res?.status === "complete") {
+          setActive && setActive({ session: res.createdSessionId });
+        }
+      }
+
       // If the user is signing in with an account
       if (signIn) {
         setActive && setActive({ session: signIn.createdSessionId });
@@ -100,7 +112,7 @@ const SignInWithApple = (props: Props) => {
         console.error(JSON.stringify(err, null, 2));
       }
     }
-  }, [isConnected, getToken, signOut, startOAuthFlow]);
+  }, [isConnected, getToken, signOut, startOAuthFlow, error]);
 
   return (
     <View className="w-full mt-4">

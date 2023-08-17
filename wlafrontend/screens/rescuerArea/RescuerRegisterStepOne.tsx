@@ -254,7 +254,7 @@ const RescuerRegisterStepOne = (props: Props) => {
                 ) : null}
               </FormControl>
               <Text className="text-center mb-1 font-black text-lg">
-                Do you have training and experience in animal medical care?
+                Do you have training or experience in providing animal medical care?
               </Text>
               <View className="flex-row row-span-1">
                 <Text className={`text-center font-light my-1 mx-2 text-sm ${Medical ? "opacity-20" : "font-bold"}`}>
@@ -273,7 +273,7 @@ const RescuerRegisterStepOne = (props: Props) => {
                 </Text>
               </View>
               <Text className="text-center mt-6 mb-1 font-black text-lg">
-                Do you have training and experience in Wildlife Rehabilitation?
+                Do you have training or experience in Wildlife Rehabilitation?
               </Text>
               <View className="flex-row row-span-1">
                 <Text className={`text-center font-light my-1 mx-2 text-sm ${Rehab ? "opacity-20" : "font-bold"}`}>

@@ -11,6 +11,7 @@ import {
   Platform,
 } from "react-native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Motion } from "@legendapp/motion";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import OfflineToast from "../../components/OfflineToast";
@@ -54,7 +55,7 @@ const RescuerLogin = (props: Props) => {
     });
   });
 
-  const isIPhoneSE = Device.modelName == "Simulator iOS" ? true : screenHeight < 844;
+  const isIPhoneSE = screenHeight < 844 ? true : false;
 
   return (
     <ConditionalSafeAreaView>
@@ -89,21 +90,23 @@ const RescuerLogin = (props: Props) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <SignedOut>
             {!signInTap && (
-              <View style={isIPhoneSE ? styles.smallBox : styles.box}>
+              <View style={isIPhoneSE ? styles.smallFirstBox : styles.firstBox}>
                 <TouchableOpacity
-                  className="mb-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center items-center"
+                  className=" border w-full border-[#00E0FFFF] bg-[#26FF000A] rounded-lg h-48 justify-center items-center"
                   onPress={() => {
                     setSignInTap(!signInTap);
                   }}
                 >
+                  <MaterialCommunityIcons style={{ marginTop: -4 }} name="account-check" size={32} color="#00E0FFFF" />
                   <Text className="text-blue-200 text-lg font-bold ">Have an account? Sign In</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  className="mb-4 border w-full border-[#00E0FFFF] rounded-lg h-16 justify-center items-center"
+                  className=" border w-full border-[#00E0FFFF] bg-[#1400FF11] rounded-lg h-48 justify-center items-center"
                   onPress={() => {
                     navigation.navigate("RescuerRegister");
                   }}
                 >
+                  <MaterialCommunityIcons style={{ marginTop: -4 }} name="account-plus" size={32} color="#00E0FFFF" />
                   <Text className="text-blue-200 text-lg font-bold ">New? Sign Up Here!</Text>
                 </TouchableOpacity>
               </View>
@@ -195,6 +198,30 @@ const styles = StyleSheet.create({
     marginTop: -30,
     paddingHorizontal: 12,
     backgroundColor: "rgba(0, 224, 255, 0.3)",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight - 200,
+  },
+  firstBox: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: 15,
+    paddingHorizontal: 12,
+    backgroundColor: "transparent",
+    borderRadius: 15,
+    width: screenWidth - 40,
+    alignSelf: "center",
+    maxHeight: screenHeight - 350,
+  },
+  smallFirstBox: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: -30,
+    paddingHorizontal: 12,
+    backgroundColor: "transparent",
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",

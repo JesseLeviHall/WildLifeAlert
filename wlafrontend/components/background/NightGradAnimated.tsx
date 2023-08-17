@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions, ImageBackground } from "react-native";
+import { Dimensions } from "react-native";
 import { MotionLinearGradient } from "@legendapp/motion/linear-gradient-expo";
 
 const screenHeight = Dimensions.get("window").height;
@@ -8,7 +8,7 @@ const screenWidth = Dimensions.get("window").width;
 type Props = {};
 
 const NightGradAnimated = (props: Props) => {
-  const [value, setValue] = React.useState(false);
+  const [value, setValue] = React.useState(true);
   React.useEffect(() => {
     const interval = setInterval(() => {
       setValue((prev) => !prev);

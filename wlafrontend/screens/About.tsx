@@ -154,7 +154,7 @@ const About = (props: Props) => {
   return (
     <ConditionalSafeAreaView>
       <View style={styles.container}>
-        <Appbar.Header style={{ backgroundColor: "#6495ed" }}>
+        <Appbar.Header style={{ backgroundColor: "#D7FF7A96" }}>
           <Appbar.BackAction
             onPress={() => {
               navigation.navigate("Home");

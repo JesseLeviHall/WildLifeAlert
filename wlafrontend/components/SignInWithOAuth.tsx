@@ -75,6 +75,17 @@ const SignInWithOAuth = (props: Props) => {
         return;
       }
 
+      // If the user has an account but does not yet have an oauth account connected, use the transfer method.
+      const userExistsButNeedsToSignIn =
+        signUp?.verifications.externalAccount.status === "transferable" &&
+        signUp.verifications.externalAccount.error?.code === "external_account_exists";
+      if (userExistsButNeedsToSignIn) {
+        const res = await signIn?.create({ transfer: true });
+        if (res?.status === "complete") {
+          setActive && setActive({ session: res.createdSessionId });
+        }
+      }
+
       if (signIn) {
         setActive && setActive({ session: signIn.createdSessionId });
         const sessionId = signIn.createdSessionId;
@@ -101,7 +112,7 @@ const SignInWithOAuth = (props: Props) => {
         console.error(JSON.stringify(err, null, 2));
       }
     }
-  }, []);
+  }, [isConnected, getToken, signOut, startOAuthFlow, error]);
 
   return (
     <View className="w-full mt-4">

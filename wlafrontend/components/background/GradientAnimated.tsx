@@ -8,7 +8,7 @@ const screenWidth = Dimensions.get("window").width;
 type Props = {};
 
 const AnimatedGradient = (props: Props) => {
-  const [value, setValue] = React.useState(false);
+  const [value, setValue] = React.useState(true);
   React.useEffect(() => {
     const interval = setInterval(() => {
       setValue((prev) => !prev);

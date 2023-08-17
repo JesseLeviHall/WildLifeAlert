@@ -88,7 +88,7 @@ const RescuerRegisterStepTwo = (props: Props) => {
     }, [])
   );
 
-  const isIPhoneSE = Device.modelName == "Simulator iOS" ? true : screenHeight < 844;
+  const isIPhoneSE = screenHeight < 844 ? true : false;
 
   return (
     <ConditionalSafeAreaView>

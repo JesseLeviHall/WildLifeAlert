@@ -62,7 +62,7 @@ const LoggedInChips = ({ navigation }: Props) => {
         textStyle={{ color: "#A6D4FF" }}
         className="h-12 w-32 mt-5 bg-[#00C5E021]"
       >
-        To Home
+        Home
       </Chip>
       <Chip
         icon={() => <MaterialCommunityIcons name="logout" size={18} color="#A6D4FF" />}
