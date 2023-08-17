@@ -27,4 +27,4 @@ rescuerRouter.post("/rescuerpreflocation", clerkAuth, clerkRouteHandler, resuerC
 
 rescuerRouter.delete("/deleterescuer", clerkAuth, clerkRouteHandler, resuerContent.deleteRescuer);
 
-rescuerRouter.post("/deleteclerkuser", resuerContent.deleteClerkUser);
+rescuerRouter.post("/deleteclerkuser", clerkAuth, clerkRouteHandler, resuerContent.deleteClerkUser);

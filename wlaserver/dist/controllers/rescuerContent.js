@@ -251,8 +251,8 @@ export const deleteRescuer = async (req, res) => {
 //DELETE /Delete clerk user on accidental user creation
 export const deleteClerkUser = async (req, res) => {
     try {
-        const { userId } = req.body;
-        const deletedUser = await clerk.users.deleteUser(userId);
+        const UserId = req.auth.userId;
+        const deletedUser = await clerk.users.deleteUser(UserId);
         if (!deletedUser) {
             res.status(500).json({ msg: "Failed to delete user in Clerk" });
             return;

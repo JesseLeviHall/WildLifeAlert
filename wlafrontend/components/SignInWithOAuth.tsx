@@ -7,7 +7,7 @@ import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 import * as Notifications from "expo-notifications";
 import { useMutation } from "@tanstack/react-query/build/lib";
 import { useConnectivity } from "../hooks/useConnectivity";
-import { updatePushToken } from "../api/index";
+import { updatePushToken, deleteSignInMistake } from "../api/index";
 
 type Props = {};
 
@@ -32,6 +32,16 @@ const SignInWithOAuth = (props: Props) => {
     }
   );
 
+  const delMutation = useMutation((data: { sessionId: string; tokenToDel: string }) => deleteSignInMistake(data), {
+    onSuccess: () => {
+      return;
+    },
+    onError: (error) => {
+      console.log("Error: ", error);
+      setError("unsuccesful deletion");
+    },
+  });
+
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
   const onPress = React.useCallback(async () => {
@@ -41,21 +51,34 @@ const SignInWithOAuth = (props: Props) => {
       return;
     }
     try {
-      const { signIn, setActive } = await startOAuthFlow();
+      const { signIn, signUp, setActive } = await startOAuthFlow();
+
+      // If the user is trying to sign in without an account
+      const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
+      if (userNeedsToBeCreated) {
+        const res = await signUp?.create({
+          transfer: true,
+        });
+        if (res?.status === "complete") {
+          setActive && setActive({ session: res.createdSessionId });
+          const sessionId = res.createdSessionId;
+          const tokenToDel = await getToken();
+          if (sessionId && tokenToDel) {
+            console.log("this account can be deleted");
+            delMutation.mutate({ sessionId, tokenToDel });
+          } else {
+            return;
+          }
+        }
+        setError("You must create an account to sign in. Please tap sign up below.");
+        signOut();
+        return;
+      }
 
       if (signIn) {
         setActive && setActive({ session: signIn.createdSessionId });
         const sessionId = signIn.createdSessionId;
         const token = await getToken();
-
-        // If the user is trying to sign in but doesn't exist yet
-        const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
-        if (userNeedsToBeCreated) {
-          setError("You must create an account to sign in. Please tap sign up below.");
-          signOut();
-          return;
-        }
-
         let expoPushToken = "";
         let tokenObject = await Notifications.getExpoPushTokenAsync({
           projectId: "17a356f2-ec4c-4d59-920f-b77650d9ba44",

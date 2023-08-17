@@ -2,9 +2,9 @@ import axios from "axios";
 
 // set axios configurations
 //remote server : https://wildlifealertusa.com
-//locoal server: http://192.168.1.117:3000
+//locoal server: http://192.168.1.227:3000
 const API = axios.create({
-  baseURL: "https://wildlifealertusa.com",
+  baseURL: "http://192.168.1.227:3000",
   timeout: 10000,
   withCredentials: false,
 });
@@ -560,6 +560,38 @@ export const deleteAccount = async ({ sessionId, token }: { sessionId: String; t
       headers: { Authorization: `Bearer ${sessionId} ${token}` },
     });
     return deleteAccount.data;
+  } catch (error: any) {
+    console.error(error?.response?.data.error);
+    let errorMsg = error.message || "Unknown error";
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error(error.response.data);
+      console.error(error.response.status);
+      console.error(error.response.headers);
+      errorMsg = error.response.data.message || errorMsg;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error(error.request);
+      errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error", error.message);
+    }
+    throw new Error(errorMsg);
+  }
+};
+
+//===================================================
+// delete accidental sign up for rescuer at sign in
+export const deleteSignInMistake = async ({ sessionId, tokenToDel }: { sessionId: String; tokenToDel: String }) => {
+  try {
+    const deleteSignInMistake = await API({
+      method: "post",
+      url: "secure-api/deleteclerkuser",
+      headers: { Authorization: `Bearer ${sessionId} ${tokenToDel}` },
+    });
+    return deleteSignInMistake.data;
   } catch (error: any) {
     console.error(error?.response?.data.error);
     let errorMsg = error.message || "Unknown error";
