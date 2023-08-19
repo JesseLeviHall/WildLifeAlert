@@ -3,7 +3,7 @@
     "name": "WildLifeAlert",
     "slug": "wildlifealert",
     "scheme": "wlawildlifealert",
-    "version": "2.3.0",
+    "version": "2.4.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -26,7 +26,7 @@
     "ios": {
       "supportsTablet": false,
         "bundleIdentifier": "com.wildlifealertusa.wildlifealert",
-        "buildNumber": "5",
+        "buildNumber": "6",
         "infoPlist": {
           "NSLocationWhenInUseUsageDescription": "WildLifeAlerts uses your location to place the alert on the in-app map, or, if registered as a rescuer, to determine if you are near an alert and should be notified of the situation",
           "NSLocationAlwaysUsageDescription": "WildLifeAlerts uses your location to place the alert on the in-app map, or, if registered as a rescuer, to determine if you are near an alert and should be notified of the situation"
@@ -36,7 +36,7 @@
         }
     },
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "package": "com.wildlifealertusa.wildlifealert",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
