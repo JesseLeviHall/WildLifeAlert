@@ -1,6 +1,6 @@
 /* Default styles */
 body {
-    background-color: #f2f2f2; /* This is a slightly dark shade, adjust as needed */
+    background-color: #f2f2f2; 
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,15 +9,22 @@ body {
 }
 
 header, section, footer {
-    width: 80%; /* Take 80% of the viewport's width, this can be adjusted */
+    width: 80%; 
     margin-top: 20px;
     text-align: center;
 }
 
-img {
-    max-width: 30%;
+.app-badge {
+    width: 30%;
+    display: inline-block; 
+    vertical-align: top; 
+}
+
+.app-badge img {
+    max-width: 100%; 
     height: auto;
 }
+
 
 ul {
     list-style-type: none;
@@ -29,16 +36,16 @@ li {
 }
 
 footer {
-    margin-top: auto; /* Push footer to bottom if there's remaining space */
+    margin-top: auto; 
 }
 
 /* For small screens */
 @media only screen and (max-width: 768px) {
     header, section, footer {
-        width: 95%; /* Take more space on smaller screens */
+        width: 95%; 
     }
 
     h1, h2 {
-        font-size: 1.2em; /* Reduce the font size a bit on smaller screens */
+        font-size: 1.2em; 
     }
 }
