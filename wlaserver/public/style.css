@@ -14,6 +14,11 @@ header, section, footer {
     text-align: center;
 }
 
+img {
+    max-width: 30%;
+    height: auto;
+}
+
 .app-badge {
     width: 30%;
     display: inline-block; 
