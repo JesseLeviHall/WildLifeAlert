@@ -45,7 +45,7 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
     };
 
     if (!radiusPattern.test(Radius)) {
-      updatedErrors.Radius = "whole numbers 1-1000";
+      updatedErrors.Radius = "use whole numbers 1-1000";
     }
     setErrors(updatedErrors);
     if (updatedErrors.Radius === "") {
@@ -90,7 +90,7 @@ const SetGeoRadius = ({ geoRadiusProp }: Props) => {
           onSubmitEditing={Keyboard.dismiss}
         />
         {"Radius" in errors ? (
-          <FormControl.HelperText className="items-center text-center ">{errors.Radius}</FormControl.HelperText>
+          <FormControl.HelperText className="items-center text-center mb-2 ">{errors.Radius}</FormControl.HelperText>
         ) : null}
       </FormControl>
       <TouchableOpacity className="border rounded-full px-4 py-2 -mt-2 border-cyan-500 " onPress={handleSubmitGeoPref}>
