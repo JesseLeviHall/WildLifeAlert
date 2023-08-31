@@ -154,7 +154,7 @@ const About = (props: Props) => {
   return (
     <ConditionalSafeAreaView>
       <View style={styles.container}>
-        <Appbar.Header style={{ backgroundColor: "#D7FF7A96" }}>
+        <Appbar.Header style={{ backgroundColor: "#87BEFFFF" }}>
           <Appbar.BackAction
             onPress={() => {
               navigation.navigate("Home");
@@ -182,10 +182,10 @@ const About = (props: Props) => {
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
                 className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
-                icon={() => <MaterialCommunityIcons name="message-text" size={18} color="#54ACFFFF" />}
+                icon={() => <MaterialCommunityIcons name="chat-alert" size={18} color="#54ACFFFF" />}
                 onPress={() => handlePress("message")}
               >
-                Ethos
+                Problem
               </Chip>
               <Chip
                 elevated={true}
@@ -195,10 +195,10 @@ const About = (props: Props) => {
                 textStyle={{ color: "white" }}
                 showSelectedOverlay={true}
                 className={`h-10 w-32 mt-5 ${isIOS ? "bg-[rgba(255,255,255,0)]" : ""} border-2 border-cyan-500`}
-                icon={() => <MaterialCommunityIcons name="script-text" size={18} color="#54ACFFFF" />}
+                icon={() => <MaterialCommunityIcons name="charity" size={18} color="#54ACFFFF" />}
                 onPress={() => handlePress("description")}
               >
-                Description
+                Solution
               </Chip>
               <Chip
                 elevated={true}

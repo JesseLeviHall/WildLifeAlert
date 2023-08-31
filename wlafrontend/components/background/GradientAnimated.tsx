@@ -18,7 +18,7 @@ const AnimatedGradient = (props: Props) => {
   return (
     <MotionLinearGradient
       animateProps={{
-        colors: [value ? "#C6ED0282" : "#0E409C9E", value ? "#EB8705AF" : "#6495ed"],
+        colors: [value ? "#87BEFFFF" : "#0E409C9E", value ? "#EB8705AF" : "#6495ed"],
         start: { x: 0, y: 0 },
         end: { x: value ? 1 : 0, y: 1 },
       }}
