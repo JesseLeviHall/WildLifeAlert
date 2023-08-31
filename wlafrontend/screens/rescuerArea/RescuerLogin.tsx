@@ -27,7 +27,6 @@ import ActiveGlobal from "../../components/resuerloginscreenlayout/ActiveGlobal"
 import ConditionalSafeAreaView from "../../components/ConditionalSafeArea";
 import { Button } from "native-base";
 import SpinnerComp from "../../components/Spinner";
-import * as Device from "expo-device";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -59,108 +58,117 @@ const RescuerLogin = (props: Props) => {
 
   return (
     <ConditionalSafeAreaView>
-      <ImageBackground
-        source={require("../../assets/resbasecamp.png")}
-        style={{
-          height: screenHeight,
-          width: screenWidth,
-          margin: 0,
-          padding: 0,
-          alignItems: "center",
-        }}
-      >
-        <View style={styles.background}>
-          <NightGradAnimated />
-        </View>
-        <View className="mt-16 mb-12 h-9 w-48 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
-          <Text className="font-bold text-lg text-blue-50 text-center">Base Camp</Text>
-        </View>
-        <SignedIn>
-          <View style={isIPhoneSE ? styles.smallBox : styles.box}>
-            <Text className="text-center text-blue-100 text-lg mt-2 font-thin">
-              Hello, {user?.firstName ? user.firstName : user?.primaryEmailAddress?.emailAddress}
-            </Text>
-            <View>
-              <AlertsInYourArea navigation={props.navigation} />
-              <ActiveGlobal />
-            </View>
-            <LoggedInChips navigation={props.navigation} />
+      {isConnected ? (
+        <ImageBackground
+          source={require("../../assets/resbasecamp.png")}
+          style={{
+            height: screenHeight,
+            width: screenWidth,
+            margin: 0,
+            padding: 0,
+            alignItems: "center",
+          }}
+        >
+          <View style={styles.background}>
+            <NightGradAnimated />
           </View>
-        </SignedIn>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <SignedOut>
-            {!signInTap && (
-              <View style={isIPhoneSE ? styles.smallFirstBox : styles.firstBox}>
-                <TouchableOpacity
-                  className=" border w-full border-[#00E0FFFF] bg-[#26FF000A] rounded-lg h-48 justify-center items-center"
-                  onPress={() => {
-                    setSignInTap(!signInTap);
-                  }}
-                >
-                  <MaterialCommunityIcons style={{ marginTop: -4 }} name="account-check" size={32} color="#00E0FFFF" />
-                  <Text className="text-blue-200 text-lg font-bold ">Have an account? Sign In</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className=" border w-full border-[#00E0FFFF] bg-[#1400FF11] rounded-lg h-48 justify-center items-center"
-                  onPress={() => {
-                    navigation.navigate("RescuerRegister");
-                  }}
-                >
-                  <MaterialCommunityIcons style={{ marginTop: -4 }} name="account-plus" size={32} color="#00E0FFFF" />
-                  <Text className="text-blue-200 text-lg font-bold ">New? Sign Up Here!</Text>
-                </TouchableOpacity>
+          <View className="mt-16 mb-12 h-9 w-48 border border-blue-50 align-middle justify-center items-center  bg-[#24008CFF] rounded-xl">
+            <Text className="font-bold text-lg text-blue-50 text-center">Base Camp</Text>
+          </View>
+          <SignedIn>
+            <View style={isIPhoneSE ? styles.smallBox : styles.box}>
+              <Text className="text-center text-blue-100 text-lg mt-2 font-thin">
+                Hello, {user?.firstName ? user.firstName : user?.primaryEmailAddress?.emailAddress}
+              </Text>
+              <View>
+                <AlertsInYourArea navigation={props.navigation} />
+                <ActiveGlobal />
               </View>
-            )}
-            {signInTap && (
-              <Motion.View
-                key={animationKey}
-                initial={{ x: -100, scale: 1, opacity: 0.1 }}
-                animate={{ x: 0, scale: 1, opacity: 1 }}
-                transition={{
-                  default: {
-                    type: "spring",
-                    damping: 30,
-                    stiffness: 600,
-                  },
-                  x: {
-                    type: "spring",
-                    damping: 30,
-                    stiffness: 600,
-                  },
-                  opacity: {
-                    type: "tween",
-                    duration: 900,
-                  },
-                }}
-                style={isIPhoneSE ? styles.smallBox : styles.box}
-              >
-                {Platform.OS === "ios" && <SignInWithApple />}
-                <SignInWithOAuth />
-                <SignInComponent />
-                <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
-                  <Text className="text-blue-300 text-sm">Forgot password?</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className="mb-2 w-full  h-12 justify-center items-center"
-                  onPress={() => {
-                    navigation.navigate("RescuerRegister");
+              <LoggedInChips navigation={props.navigation} />
+            </View>
+          </SignedIn>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <SignedOut>
+              {!signInTap && (
+                <View style={isIPhoneSE ? styles.smallFirstBox : styles.firstBox}>
+                  <TouchableOpacity
+                    className=" border w-full border-[#00E0FFFF] bg-[#26FF000A] rounded-lg h-48 justify-center items-center"
+                    onPress={() => {
+                      setSignInTap(!signInTap);
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      style={{ marginTop: -4 }}
+                      name="account-check"
+                      size={32}
+                      color="#00E0FFFF"
+                    />
+                    <Text className="text-blue-200 text-lg font-bold ">Have an account? Sign In</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className=" border w-full border-[#00E0FFFF] bg-[#1400FF11] rounded-lg h-48 justify-center items-center"
+                    onPress={() => {
+                      navigation.navigate("RescuerRegister");
+                    }}
+                  >
+                    <MaterialCommunityIcons style={{ marginTop: -4 }} name="account-plus" size={32} color="#00E0FFFF" />
+                    <Text className="text-blue-200 text-lg font-bold ">New? Sign Up Here!</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              {signInTap && (
+                <Motion.View
+                  key={animationKey}
+                  initial={{ x: -100, scale: 1, opacity: 0.1 }}
+                  animate={{ x: 0, scale: 1, opacity: 1 }}
+                  transition={{
+                    default: {
+                      type: "spring",
+                      damping: 30,
+                      stiffness: 600,
+                    },
+                    x: {
+                      type: "spring",
+                      damping: 30,
+                      stiffness: 600,
+                    },
+                    opacity: {
+                      type: "tween",
+                      duration: 900,
+                    },
                   }}
+                  style={isIPhoneSE ? styles.smallBox : styles.box}
                 >
-                  <Text className="text-blue-200 text-md font-bold ">New? Sign Up Here!</Text>
-                </TouchableOpacity>
-              </Motion.View>
-            )}
-            <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
-              Back
-            </Button>
-          </SignedOut>
-        </TouchableWithoutFeedback>
-        {isConnected ? null : (
-          <View className="flex-1 align-middle justify-end">
-            <OfflineToast />
-          </View>
-        )}
-      </ImageBackground>
+                  {Platform.OS === "ios" && <SignInWithApple />}
+                  <SignInWithOAuth />
+                  <SignInComponent />
+                  <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
+                    <Text className="text-blue-300 text-sm">Forgot password?</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="mb-2 w-full  h-12 justify-center items-center"
+                    onPress={() => {
+                      navigation.navigate("RescuerRegister");
+                    }}
+                  >
+                    <Text className="text-blue-200 text-md font-bold ">New? Sign Up Here!</Text>
+                  </TouchableOpacity>
+                </Motion.View>
+              )}
+              <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
+                Back
+              </Button>
+            </SignedOut>
+          </TouchableWithoutFeedback>
+        </ImageBackground>
+      ) : (
+        <View className="flex-1 align-middle justify-end">
+          <OfflineToast />
+          <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
+            Back
+          </Button>
+        </View>
+      )}
     </ConditionalSafeAreaView>
   );
 };
