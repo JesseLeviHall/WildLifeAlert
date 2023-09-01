@@ -1,5 +1,5 @@
-import React, { useLayoutEffect } from "react";
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, Image, Platform } from "react-native";
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Image, Platform } from "react-native";
 import { Motion } from "@legendapp/motion";
 import { useQuery } from "@tanstack/react-query/build/lib";
 import { getHomeScreenContent } from "../api/index";
@@ -29,9 +29,18 @@ const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 const Home = (props: Props) => {
+  const [showToast, setShowToast] = useState(false);
   const isConnected = useConnectivity();
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const isAndroid = Platform.OS === "android";
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowToast(true);
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -128,7 +137,7 @@ const Home = (props: Props) => {
             <Text className=" text-2xl text-center px-4 text-[#24374b] font-light">{data?.Description}</Text>
           </View>
         </Motion.View>
-        {isConnected ? null : (
+        {!isConnected && showToast && (
           <View className="flex-1 align-middle justify-end">
             <OfflineToast />
           </View>
