@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Modal, Pressable, Linking } from "react-native"
 import * as Clipboard from "expo-clipboard";
 import SuccessToast from "./SuccessToast";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { useUser } from "@clerk/clerk-expo";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 
 type RootStackParamList = {
   AlertDetails: { alertId: string };
@@ -16,7 +16,6 @@ interface AlertInterface {
   Latitude: number;
   Longitude: number;
   Photo: string;
-  PhoneNumber: string;
   Animal: string;
   Description: string;
   Email: string;
@@ -33,7 +32,7 @@ export interface PubMapViewHandle {
 }
 
 const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts }, ref) => {
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { isLoaded, user } = useUser();
   const [selectedAlert, setSelectedAlert] = useState<AlertInterface | null>(null);
   const [showToast, setShowToast] = React.useState(false);
   const [mapType, setMapType] = useState<"standard" | "satellite" | "hybrid" | "terrain">("hybrid");
@@ -59,7 +58,7 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
   }));
 
   const handleShowAlertDetails = (alert: AlertInterface) => {
-    if (!isLoaded || !isSignedIn) {
+    if (!isLoaded) {
       return null;
     }
     const timeStamp = Number(alert.Timestamp);
@@ -132,48 +131,55 @@ const PubMapView = React.forwardRef<PubMapViewHandle, PubMapViewProps>(({ alerts
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              {selectedAlert.ShareContact && (
-                <View>
-                  <Text style={styles.titleText}>Posted By</Text>
-                  <Text style={styles.modalName}>{selectedAlert.FullName}</Text>
-                  <View style={styles.contactOptions}>
-                    <Pressable
-                      onPress={() => {
-                        Linking.openURL(`mailto:${selectedAlert.Email}?`);
-                      }}
-                    >
-                      <Text style={styles.modalEmail}>Email</Text>
-                    </Pressable>
+              <SignedIn>
+                {selectedAlert.ShareContact && (
+                  <View>
+                    <Text style={styles.titleText}>Posted By</Text>
+                    <Text style={styles.modalName}>{selectedAlert.FullName}</Text>
+                    <View style={styles.contactOptions}>
+                      <Pressable
+                        onPress={() => {
+                          Linking.openURL(`mailto:${selectedAlert.Email}?`);
+                        }}
+                      >
+                        <Text style={styles.modalEmail}>Email</Text>
+                      </Pressable>
+                    </View>
                   </View>
-                </View>
-              )}
-              {selectedAlert.ShareContact === false && <Text style={styles.titleText}>Sent Anonymously</Text>}
+                )}
+                {selectedAlert.ShareContact === false && <Text style={styles.titleText}>Sent Anonymously</Text>}
+              </SignedIn>
               <Text style={styles.modalText}>Animal: {selectedAlert.Animal}</Text>
               <Text style={styles.modalText}>
                 Description: {selectedAlert.Description.substring(0, 100)}
                 {selectedAlert.Description.length > 100 ? "..." : ""}
               </Text>
-              <Text style={styles.modalText}>Sent {selectedAlert.Timestamp}</Text>
-              <Pressable onPress={copyToClipboard}>
-                <Text style={styles.modalEmail}>Copy Coordinates</Text>
-              </Pressable>
-              {showToast && (
-                <View className="-mt-16 h-24 rounded-lg">
-                  <SuccessToast message="Coordinates Copied" />
-                </View>
-              )}
-              <View style={styles.contactOptions}>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    if (selectedAlert) {
-                      navigation.navigate("AlertDetails", { alertId: selectedAlert.id });
-                      setSelectedAlert(null);
-                    }
-                  }}
-                >
-                  <Text style={styles.textStyle}>More Info</Text>
+              <SignedIn>
+                <Text style={styles.modalText}>Sent {selectedAlert.Timestamp}</Text>
+                <Pressable onPress={copyToClipboard}>
+                  <Text style={styles.modalEmail}>Copy Coordinates</Text>
                 </Pressable>
+                {showToast && (
+                  <View className="-mt-16 h-24 rounded-lg">
+                    <SuccessToast message="Coordinates Copied" />
+                  </View>
+                )}
+              </SignedIn>
+
+              <View style={styles.contactOptions}>
+                <SignedIn>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => {
+                      if (selectedAlert) {
+                        navigation.navigate("AlertDetails", { alertId: selectedAlert.id });
+                        setSelectedAlert(null);
+                      }
+                    }}
+                  >
+                    <Text style={styles.textStyle}>More Info</Text>
+                  </Pressable>
+                </SignedIn>
                 <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setSelectedAlert(null)}>
                   <Text style={styles.textStyle}>Close</Text>
                 </Pressable>
