@@ -2,7 +2,6 @@ import * as React from "react";
 import { ScrollView, View } from "react-native";
 import { Button, Dialog, Portal, Provider, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { Center } from "native-base";
 
 type Props = {
   visible: boolean;
@@ -256,7 +255,7 @@ const AlertStartDialogue = ({ visible, setVisible }: Props) => {
                 <Button className=" text-blue-800 px-5 " onPress={navigation.goBack}>
                   Go Back
                 </Button>
-                <Button disabled={!isAcceptEnabled} className=" text-blue-800 px-5 " onPress={hideDialog}>
+                <Button className=" text-blue-800 px-5 " onPress={hideDialog}>
                   Accept
                 </Button>
               </View>
@@ -269,3 +268,5 @@ const AlertStartDialogue = ({ visible, setVisible }: Props) => {
 };
 
 export default AlertStartDialogue;
+
+/* disabled={!isAcceptEnabled} */
