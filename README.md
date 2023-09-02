@@ -26,6 +26,9 @@ This passion project aims to ensure that any injured wildlife you encounter does
 <img src="./capture3.jpeg">
 </kbd>
 </div>
+<br/>
+<br/>
+<br/>
 </div>
 
 ## General Technology Info
@@ -45,7 +48,7 @@ The project is deployed to the Apple AppStore and Google PlayStore. The primary 
 
 ## Project Home Page
 
-(https://wildlifealertusa.com/)
+(https://wildlifealertusa.com)
 
 ## Contact
 
