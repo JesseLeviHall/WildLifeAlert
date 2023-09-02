@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView, View, RefreshControl, SafeAreaView, Dimensions, Platform } from "react-native";
+import { ScrollView, View, RefreshControl, Dimensions, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Appbar } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query/build/lib";

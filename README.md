@@ -1,7 +1,53 @@
 # WildLifeAlert
 
-This app is in the developement stage. This passion project aims to ensure that any injured wildlife you encounter doesn't go unnoticed. With a simple alert, you can notify nearby rescue personnel who have the knowledge and experience to provide appropriate help. Every creature deserves a chance at survival, and every individual can make a difference. Using WildLifeAlert means you are never helpless when you encounter an animal in need.
+This passion project aims to ensure that any injured wildlife you encounter doesn't go unnoticed. With a simple alert, you can notify nearby rescue personnel who have the knowledge and experience to provide appropriate help.
 
-Includes: A robust mechanism for persisting data and managing online/offline state with React Query, storing mutation results and resuming them when back online.
+### Screenshots
 
-Stack: React-Native, Node.js, Docker, EC2, durable Redis Database on AWS, Cloudfront, S3
+<div align="center">Home Screen </div>
+<br/>
+<div align="center">
+<kbd>
+<img src="./capture.jpeg">
+</kbd>
+</div>
+<br />
+<div align="center">Rescuer Dashboard</div>
+<br/>
+<div align="center">
+<kbd>
+<img src="./capture2.jpeg">
+</kbd>
+<br />
+<div align="center">Map View of an Alert</div>
+<br/>
+<div align="center">
+<kbd>
+<img src="./capture3.jpeg">
+</kbd>
+</div>
+</div>
+
+## General Technology Info
+
+Includes:
+A robust mechanism for persisting data and managing online/offline state with React Query and custom hooks. The app locally stores mutation results and resumes them when back online, allowing users to "post" with no service.
+
+Geoloacation based push notifications with Expo's Notifications API.
+
+Custom made animations and transitions with original artwork.
+
+Stack: React-Native Expo, Node.js, Docker, EC2, durable Redis Database on AWS, Cloudfront, S3, Application Load Balancer, Auto-scaling spot-instances
+
+## Status
+
+The project is deployed to the Apple AppStore and Google PlayStore. The primary focus for development is to inform users of the app's existence and to increase the number of active users.
+
+## Project Home Page
+
+(https://wildlifealertusa.com/)
+
+## Contact
+
+Created by [Jesse Hall](https://www.linkedin.com/in/jessehall/)
+Feel free to contact me for any questions!
