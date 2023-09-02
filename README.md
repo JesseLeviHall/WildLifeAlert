@@ -21,7 +21,7 @@ The project is deployed to the Apple AppStore and Google PlayStore. The primary 
 
 (https://wildlifealertusa.com)
 
-### Screenshots
+## Screenshots
 
 <div align="center">Home Screen </div>
 <br/>
