@@ -7,6 +7,17 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css" />
     <title>WildlifeAlert App</title>
+    <script type="text/javascript">
+        window.onload = function() {
+            (function(d, s, id) {
+        var js, tjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://app.termly.io/embed-policy.min.js";
+        tjs.parentNode.insertBefore(js, tjs);
+      }(document, 'script', 'termly-jssdk'));
+        };
+    </script>
 </head>
 <body>
 
@@ -35,7 +46,7 @@
     <section>
         <h2>About The App</h2>
         <p>
-            WildlifeAlerts is a mobile app that provide the general public with the option to post an alert regarding an animal in need. This triggers a notification sent to wildlife rescuers in that region who register through the app.
+            WildlifeAlerts is a mobile app that provides the general public with the option to post an alert regarding an animal in need. This triggers a notification sent to wildlife rescuers in that region who register through the app.
             Key Points:
             <ul>
                 <li>Anyone can download and use the app to post an alert about an animal in need.</li>
@@ -59,13 +70,12 @@
             We value your privacy and take the necessary steps to protect your information. Learn how we handle your data in our 
             <a  rel="noopener noreferrer" target="_blank" href="https://app.termly.io/document/privacy-policy/aeebc675-c876-42b3-b8f8-c8e922b40eee">Privacy Policy</a>.
         </p>
+        <div name="termly-embed" data-id="aeebc675-c876-42b3-b8f8-c8e922b40eee"></div>
     </section>
-  
+
     <footer>
         <p>&copy; 2023 WildlifeAlert. All rights reserved.</p>
     </footer>
-
-    <!-- <script src="path/to/your/scripts.js"></script> -->
 
 </body>
 </html>
