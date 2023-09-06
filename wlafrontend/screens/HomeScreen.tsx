@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Image, Platform } from "react-native";
 import { Motion } from "@legendapp/motion";
 import { useQuery } from "@tanstack/react-query/build/lib";
@@ -29,13 +29,7 @@ const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 const Home = (props: Props) => {
-  const [isConnected, setIsConnected] = useState(true);
-  const network = useConnectivity();
-  useEffect(() => {
-    setTimeout(() => {
-      setIsConnected(network);
-    }, 2000);
-  }, [network]);
+  const isConnected = useConnectivity();
 
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const isAndroid = Platform.OS === "android";
