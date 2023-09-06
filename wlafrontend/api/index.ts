@@ -4,7 +4,7 @@ import axios from "axios";
 //remote server : https://wildlifealertusa.com
 //locoal server: http://192.168.1.227:3000
 const API = axios.create({
-  baseURL: "https://wildlifealertusa.com",
+  baseURL: "http://192.168.1.227:3000",
   timeout: 10000,
   withCredentials: false,
 });
@@ -584,12 +584,13 @@ export const deleteAccount = async ({ sessionId, token }: { sessionId: String; t
 
 //===================================================
 // delete accidental sign up for rescuer at sign in
-export const deleteSignInMistake = async ({ sessionId, tokenToDel }: { sessionId: String; tokenToDel: String }) => {
+export const deleteSignInMistake = async ({ userId }: { userId: String }) => {
   try {
     const deleteSignInMistake = await API({
       method: "post",
       url: "secure-api/deleteclerkuser",
-      headers: { Authorization: `Bearer ${sessionId} ${tokenToDel}` },
+      // headers: { Authorization: `Bearer ${sessionId} ${tokenToDel}` },
+      data: { userId: userId },
     });
     return deleteSignInMistake.data;
   } catch (error: any) {

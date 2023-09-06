@@ -32,7 +32,7 @@ const SignInWithApple = (props: Props) => {
     }
   );
 
-  const delMutation = useMutation((data: { sessionId: string; tokenToDel: string }) => deleteSignInMistake(data), {
+  const delMutation = useMutation((data: { userId: string }) => deleteSignInMistake(data), {
     onSuccess: () => {
       return;
     },
@@ -53,23 +53,24 @@ const SignInWithApple = (props: Props) => {
     try {
       const { signIn, signUp, setActive } = await startOAuthFlow();
 
-      // If the user is trying to sign in without an account
       const userNeedsToBeCreated = signIn?.firstFactorVerification.status === "transferable";
       if (userNeedsToBeCreated) {
-        const res = await signUp?.create({
-          transfer: true,
-        });
-        if (res?.status === "complete") {
-          setActive && setActive({ session: res.createdSessionId });
-          const sessionId = res.createdSessionId;
-          const tokenToDel = await getToken();
-          if (sessionId && tokenToDel) {
-            delMutation.mutate({ sessionId, tokenToDel });
+        setError("You must create an account to sign in. Please tap sign up below.");
+        await signOut();
+        // Create a new user using Clerk's signUp flow
+        const res = await signUp;
+        // Check if the user was created successfully
+        if (res?.createdUserId) {
+          const userId = res.createdUserId;
+          if (userId) {
+            delMutation.mutate({ userId });
           } else {
+            signOut();
             return;
           }
+        } else {
+          console.error("User creation failed.");
         }
-        setError("You must create an account to sign in. Please tap sign up below.");
         signOut();
         return;
       }
