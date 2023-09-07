@@ -3,7 +3,7 @@
     "name": "WildLifeAlert",
     "slug": "wildlifealert",
     "scheme": "wlawildlifealert",
-    "version": "2.5.0",
+    "version": "2.6.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,7 +17,7 @@
     ],
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -26,17 +26,17 @@
     "ios": {
       "supportsTablet": false,
         "bundleIdentifier": "com.wildlifealertusa.wildlifealert",
-        "buildNumber": "7",
+        "buildNumber": "8",
         "infoPlist": {
           "NSLocationWhenInUseUsageDescription": "WildLifeAlerts uses your location to place the alert on the in-app map, or, if registered as a rescuer, to determine if you are near an alert and should be notified of the situation",
           "NSLocationAlwaysUsageDescription": "WildLifeAlerts uses your location to place the alert on the in-app map, or, if registered as a rescuer, to determine if you are near an alert and should be notified of the situation"
         },
         "config": {
-          "googleMapsApiKey": "@iosApiKey"
+          "googleMapsApiKey": "@iosapikey"
         }
     },
     "android": {
-      "versionCode": 5,
+      "versionCode": 6,
       "package": "com.wildlifealertusa.wildlifealert",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
@@ -49,7 +49,7 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "@androidApiKey"
+          "apiKey": "@androidapikey"
         }
       }
     },

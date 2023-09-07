@@ -4,6 +4,7 @@ import { TouchableRipple, Surface } from "react-native-paper";
 import { useNavigation, NavigationProp } from "@react-navigation/core";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Box, HStack } from "native-base";
+import { useConnectivity } from "../hooks/useConnectivity";
 
 type RootStackParamList = {
   Home: undefined;
@@ -22,16 +23,12 @@ const screenWidth = Dimensions.get("window").width;
 
 const HomeNavBot = (props: Props) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const isConnected = useConnectivity();
   return (
     <Surface elevation={4} style={styles.container}>
-      <HStack
-        space={3}
-        height={20}
-        borderColor="coolGray.300"
-        justifyContent="center"
-        bg="#33fff2"
-      >
+      <HStack space={3} height={20} borderColor="coolGray.300" justifyContent="center" bg="#33fff2">
         <TouchableRipple
+          disabled={!isConnected}
           borderless={true}
           underlayColor="#99BBE3"
           onPress={() => navigation.navigate("RescuerLogin")}
@@ -49,11 +46,7 @@ const HomeNavBot = (props: Props) => {
             {"Rescuers"}
           </Box>
         </TouchableRipple>
-        <TouchableRipple
-          borderless={true}
-          rippleColor="#99BBE3"
-          onPress={() => navigation.navigate("PublicMap")}
-        >
+        <TouchableRipple borderless={true} rippleColor="#99BBE3" onPress={() => navigation.navigate("PublicMap")}>
           <Box
             p="2"
             alignItems="center"
@@ -67,11 +60,7 @@ const HomeNavBot = (props: Props) => {
             {"Live Map"}
           </Box>
         </TouchableRipple>
-        <TouchableRipple
-          borderless={true}
-          rippleColor="#99BBE3"
-          onPress={() => navigation.navigate("Resources")}
-        >
+        <TouchableRipple borderless={true} rippleColor="#99BBE3" onPress={() => navigation.navigate("Resources")}>
           <Box
             p="2"
             alignItems="center"
@@ -86,11 +75,7 @@ const HomeNavBot = (props: Props) => {
           </Box>
         </TouchableRipple>
 
-        <TouchableRipple
-          borderless={true}
-          rippleColor="#99BBE3"
-          onPress={() => navigation.navigate("About")}
-        >
+        <TouchableRipple borderless={true} rippleColor="#99BBE3" onPress={() => navigation.navigate("About")}>
           <Box
             p="2"
             alignItems="center"
