@@ -1,6 +1,7 @@
 /* Default styles */
 body {
     background-color: #f2f2f2; 
+    width: 90%;
     margin: 0;
     padding: 0;
     display: flex;
@@ -47,7 +48,7 @@ footer {
 /* For small screens */
 @media only screen and (max-width: 768px) {
     header, section, footer {
-        width: 95%; 
+        width: 90%; 
     }
 
     h1, h2 {
