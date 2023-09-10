@@ -48,7 +48,7 @@ footer {
 /* For small screens */
 @media only screen and (max-width: 768px) {
     header, section, footer {
-        width: 95%; 
+        width: 98%; 
     }
 
     h1, h2 {
