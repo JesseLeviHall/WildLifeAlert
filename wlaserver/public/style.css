@@ -1,12 +1,24 @@
 /* Default styles */
 body {
-    background-color: #f2f2f2; 
-    width: 90%;
+    background-color: #0066FF28; 
+    width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 20;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+h1 {
+    font-family: Arial;
+    font-size: 3em;
+    color: #87BEFF;
+    margin-bottom: 0;
+}
+
+p {
+    font-family: Arial;
+    font-size: 18px 
 }
 
 header, section, footer {
@@ -20,8 +32,18 @@ img {
     height: auto;
 }
 
+.logo {
+    max-width: 25%;
+    height: auto;
+    margin-top: 180px;
+    margin-bottom: 55px;
+    border-radius: 10%;
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF;
+      
+}
+
 .app-badge {
-    width: 30%;
+    width: 25%;
     display: inline-block; 
     vertical-align: top; 
 }
@@ -35,6 +57,8 @@ img {
 ul {
     list-style-type: none;
     padding-left: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px 
 }
 
 li {
@@ -48,10 +72,22 @@ footer {
 /* For small screens */
 @media only screen and (max-width: 768px) {
     header, section, footer {
-        width: 98%; 
+        width: 80%; 
     }
 
-    h1, h2 {
-        font-size: 1.2em; 
+    h1 {
+        font-size: 2.4em; 
     }
+    h2 {
+        font-size: 1.8em; 
+    }
+    .logo {
+        max-width: 50%;
+        margin-top: 100px;
+        margin-bottom: 35px;
+    }
+    .app-badge {
+        width: 30%;
+    }
+    
 }
