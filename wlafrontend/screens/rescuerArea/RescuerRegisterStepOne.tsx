@@ -52,7 +52,7 @@ const RescuerRegisterStepOne = (props: Props) => {
   });
 
   const validate = async () => {
-    const phonePattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+    const phonePattern = /^[0-9()#+ -]+$/;
 
     let updatedErrors = {
       fullName: "",
@@ -68,7 +68,7 @@ const RescuerRegisterStepOne = (props: Props) => {
     if (Phone.PhoneNumber === "") {
       updatedErrors.PhoneNumber = "Phone Number is required";
     } else if (!phonePattern.test(Phone.PhoneNumber)) {
-      updatedErrors.PhoneNumber = "use format: xxx-xxx-xxxx";
+      updatedErrors.PhoneNumber = "Please Enter a valid Phone Number";
     }
 
     setErrors(updatedErrors);
