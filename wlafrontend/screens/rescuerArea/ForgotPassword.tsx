@@ -120,7 +120,7 @@ const ForgotPassword = (props: Props) => {
               {!successfulCreation && !complete && (
                 <>
                   <Text className=" text-blue-300 bg-transparent text-2xl font-bold text-center mb-4">
-                    Please enter your email
+                    Please Enter Your Email
                   </Text>
                   <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10 w-3/4">
                     <TextInput
@@ -151,7 +151,7 @@ const ForgotPassword = (props: Props) => {
               {successfulCreation && !complete && (
                 <>
                   <Text>New password</Text>
-                  <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
+                  <View className="w-3/4 items-center justify-center align-middle bg-blue-200 rounded-md h-10">
                     <TextInput
                       className="w-full text-center"
                       autoCapitalize="none"
@@ -160,8 +160,8 @@ const ForgotPassword = (props: Props) => {
                       onChangeText={setPassword}
                     />
                   </View>
-                  <Text>Reset password code</Text>
-                  <View className="items-center justify-center align-middle bg-blue-200 rounded-md h-10">
+                  <Text>Reset Password Code</Text>
+                  <View className="w-3/4 items-center justify-center align-middle bg-blue-200 rounded-md h-10">
                     <TextInput
                       className="w-full text-center"
                       autoCapitalize="none"
