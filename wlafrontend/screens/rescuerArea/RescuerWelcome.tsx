@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Dimensions, SafeAreaView, ImageBackground, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Dimensions, ImageBackground, ScrollView } from "react-native";
 import { Button } from "native-base";
 import AnimatedGradient from "../../components/background/GradientAnimated";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
