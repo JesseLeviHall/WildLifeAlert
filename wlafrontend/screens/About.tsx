@@ -332,7 +332,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     zIndex: 10,
     overflow: "hidden",
-    maxHeight: screenHeight / 1.4,
   },
   text: {
     fontSize: 20,
@@ -359,7 +358,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: screenWidth - 40,
     alignSelf: "center",
-    //maxHeight: screenHeight / 2.5,
+    maxHeight: screenHeight / 2.5,
     height: "auto",
     borderWidth: 1,
     borderColor: "#00E0FFFF",
