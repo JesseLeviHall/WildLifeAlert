@@ -92,7 +92,7 @@ export default function SetRescuerLocationMap({ onLocationChange, onLocationSave
         </MapView>
       </View>
       <View className="flex flex-col justify-center items-center py-4">
-        <Text className="mb-2 font-bold text-2xl text-center">Set your location preference</Text>
+        <Text className="mb-2 font-bold text-xl text-center">Set your location to get alerts near you</Text>
         <Text className="mb-2  text-center">*This is never shared anywhere</Text>
         <Text className="mb-2  text-center">Tap the map or</Text>
         <FAB
