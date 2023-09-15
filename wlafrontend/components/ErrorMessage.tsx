@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground, Dimensions } from "react-native";
+import { Button } from "native-base";
 import AnimatedGradient from "./background/GradientAnimated";
+import { useNavigation } from "@react-navigation/native";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -10,6 +12,7 @@ type Props = {
 };
 
 const ErrorMessage = (props: Props) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -28,6 +31,7 @@ const ErrorMessage = (props: Props) => {
           <View className=" -mt-32 h-2/6 mx-4 rounded-lg px-4 items-center  justify-center align-middle bg-[#00D1FF6D]">
             <Text className="text-center text-lg px-4">{props.error}</Text>
           </View>
+          
         </View>
       </ImageBackground>
     </View>
@@ -49,3 +53,4 @@ const styles = StyleSheet.create({
     zIndex: -10,
   },
 });
+

@@ -162,9 +162,9 @@ const RescuerLogin = (props: Props) => {
           </TouchableWithoutFeedback>
         </ImageBackground>
       ) : (
-        <View className="flex-1 align-middle justify-end">
+        <View className="flex-1 align-middle justify-center">
           <OfflineToast />
-          <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
+          <Button onPress={navigation.goBack} className="w-24 border self-center border-cyan-500 ">
             Back
           </Button>
         </View>
