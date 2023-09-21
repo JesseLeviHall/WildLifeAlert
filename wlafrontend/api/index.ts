@@ -113,7 +113,7 @@ export const getPubMapDialogueContent = async () => {
       console.error(error.request);
       errorMsg = "The request was made but no response was received. Sorry, there maybe a server problem";
     } else {
-      // Something happened in setting up the request
+      // Something happened in setting up the request that triggered an error
       console.error("Error", error.message);
     }
     throw new Error(errorMsg);
