@@ -369,5 +369,5 @@ export default About;
 
 // Path: wlafrontend/screens/AnotherScreen.tsx
 /* 
-  All the systems work really well I am looking forward to the results being available to users globally.  
+  Comments for AnotherScreen.tsx 
 */
