@@ -150,8 +150,8 @@ const ForgotPassword = (props: Props) => {
               )}
               {successfulCreation && !complete && (
                 <>
-                  <Text>New password</Text>
-                  <View className="w-3/4 items-center justify-center align-middle bg-blue-200 rounded-md h-10">
+                  <Text className="text-blue-300 text-base mb-1">Set A New password:</Text>
+                  <View className="w-3/4 items-center justify-center align-middle bg-blue-200 rounded-md h-10 mb-6">
                     <TextInput
                       className="w-full text-center"
                       autoCapitalize="none"
@@ -160,7 +160,7 @@ const ForgotPassword = (props: Props) => {
                       onChangeText={setPassword}
                     />
                   </View>
-                  <Text>Reset Password Code</Text>
+                  <Text className="text-blue-300 text-base mb-1"> Enter Code Sent to Email:</Text>
                   <View className="w-3/4 items-center justify-center align-middle bg-blue-200 rounded-md h-10">
                     <TextInput
                       className="w-full text-center"
@@ -169,19 +169,22 @@ const ForgotPassword = (props: Props) => {
                       onChangeText={setCode}
                     />
                   </View>
-                  <TouchableOpacity onPress={reset}>
-                    <Text>Reset</Text>
+                  <TouchableOpacity
+                    onPress={reset}
+                    className="border h-10 mt-10 w-32 border-[#00E0FFFF] rounded-md justify-center align-middle "
+                  >
+                    <Text className="text-blue-300 text-center text-base">Reset</Text>
                   </TouchableOpacity>
                 </>
               )}
               {complete && (
-                <View className="mt-16 mb-12 h-9 w-60 border border-blue-50 align-middle justify-center items-center  bg-transparent rounded-xl">
-                  <Text>You successfully changed your password</Text>
+                <View className="mt-16 mb-12 h-9 w-60  align-middle justify-center items-center bg-transparent rounded-xl">
+                  <Text className="text-blue-300 text-center text-base">Success!</Text>
                   <TouchableOpacity
                     className="border h-10 border-[#00E0FFFF] rounded-md justify-center align-middle w-3/4 mt-12"
                     onPress={() => navigation.goBack()}
                   >
-                    <Text className=" text-blue-300 bg-transparent text-xl text-center">Back</Text>
+                    <Text className=" text-blue-300 bg-transparent text-xl text-center">Return</Text>
                   </TouchableOpacity>
                 </View>
               )}

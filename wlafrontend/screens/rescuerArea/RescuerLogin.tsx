@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   ImageBackground,
   StyleSheet,
   Platform,
+  ScrollView,
 } from "react-native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -40,6 +41,7 @@ type Props = {
 const RescuerLogin = (props: Props) => {
   const [signInTap, setSignInTap] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
   const navigation = useNavigation<RescuerLoginNavigationProp>();
   const isConnected = useConnectivity();
   const { isLoaded, user } = useUser();
@@ -53,6 +55,17 @@ const RescuerLogin = (props: Props) => {
       headerShown: false,
     });
   });
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => setKeyboardOpen(true));
+
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => setKeyboardOpen(false));
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   const isIPhoneSE = screenHeight < 844 ? true : false;
 
@@ -117,45 +130,47 @@ const RescuerLogin = (props: Props) => {
                 </View>
               )}
               {signInTap && (
-                <Motion.View
-                  key={animationKey}
-                  initial={{ x: -100, scale: 1, opacity: 0.1 }}
-                  animate={{ x: 0, scale: 1, opacity: 1 }}
-                  transition={{
-                    default: {
-                      type: "spring",
-                      damping: 30,
-                      stiffness: 600,
-                    },
-                    x: {
-                      type: "spring",
-                      damping: 30,
-                      stiffness: 600,
-                    },
-                    opacity: {
-                      type: "tween",
-                      duration: 900,
-                    },
-                  }}
-                  style={isIPhoneSE ? styles.smallBox : styles.box}
-                >
-                  {Platform.OS === "ios" && <SignInWithApple />}
-                  <SignInWithOAuth />
-                  <SignInComponent />
-                  <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
-                    <Text className="text-blue-300 text-sm">Forgot password?</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    className="mb-2 w-full  h-12 justify-center items-center"
-                    onPress={() => {
-                      navigation.navigate("RescuerRegister");
+                <View style={keyboardOpen ? styles.containerWithKeyboard : styles.container}>
+                  <Motion.View
+                    key={animationKey}
+                    initial={{ x: -100, scale: 1, opacity: 0.1 }}
+                    animate={{ x: 0, scale: 1, opacity: 1 }}
+                    transition={{
+                      default: {
+                        type: "spring",
+                        damping: 30,
+                        stiffness: 600,
+                      },
+                      x: {
+                        type: "spring",
+                        damping: 30,
+                        stiffness: 600,
+                      },
+                      opacity: {
+                        type: "tween",
+                        duration: 900,
+                      },
                     }}
+                    style={isIPhoneSE ? styles.smallBox : styles.box}
                   >
-                    <Text className="text-blue-200 text-md font-bold ">New? Sign Up Here!</Text>
-                  </TouchableOpacity>
-                </Motion.View>
+                    {Platform.OS === "ios" && <SignInWithApple />}
+                    <SignInWithOAuth />
+                    <SignInComponent />
+                    <TouchableOpacity className="mb-6" onPress={() => navigation.navigate("ForgotPassword")}>
+                      <Text className="text-blue-300 text-sm">Forgot password?</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      className="mb-2 w-full  h-12 justify-center items-center"
+                      onPress={() => {
+                        navigation.navigate("RescuerRegister");
+                      }}
+                    >
+                      <Text className="text-blue-200 text-md font-bold ">New? Sign Up Here!</Text>
+                    </TouchableOpacity>
+                  </Motion.View>
+                </View>
               )}
-              <Button onPress={navigation.goBack} className="w-24 mt-6 border self-center border-cyan-500 ">
+              <Button onPress={navigation.goBack} className="w-28 border self-center border-cyan-500 ">
                 Back
               </Button>
             </SignedOut>
@@ -164,7 +179,7 @@ const RescuerLogin = (props: Props) => {
       ) : (
         <View className="flex-1 align-middle justify-center">
           <OfflineToast />
-          <Button onPress={navigation.goBack} className="w-24 border self-center border-cyan-500 ">
+          <Button onPress={navigation.goBack} className="w-24 mt-2 border self-center border-cyan-500 ">
             Back
           </Button>
         </View>
@@ -178,6 +193,11 @@ export default RescuerLogin;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    maxHeight: screenHeight - 300,
+  },
+  containerWithKeyboard: {
+    flex: 1,
+    marginTop: -50,
   },
   background: {
     position: "absolute",

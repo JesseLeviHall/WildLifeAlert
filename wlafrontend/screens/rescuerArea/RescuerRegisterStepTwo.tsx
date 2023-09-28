@@ -1,14 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  Dimensions,
-  ImageBackground,
-  Platform,
-  StyleSheet,
-  Keyboard,
-  ScrollView,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, Dimensions, ImageBackground, Platform, StyleSheet, Keyboard, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, NavigationProp, useFocusEffect } from "@react-navigation/native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
