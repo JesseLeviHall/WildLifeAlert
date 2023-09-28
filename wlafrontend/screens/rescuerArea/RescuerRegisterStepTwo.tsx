@@ -1,5 +1,14 @@
 import * as React from "react";
-import { View, Dimensions, ImageBackground, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Dimensions,
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  Keyboard,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, NavigationProp, useFocusEffect } from "@react-navigation/native";
 import NightGradAnimated from "../../components/background/NightGradAnimated";
@@ -27,6 +36,7 @@ type Props = {
 const RescuerRegisterStepTwo = (props: Props) => {
   const navigation = useNavigation<RescuerWelcomeProp>();
   const isConnected = useConnectivity();
+  const [keyboardOpen, setKeyboardOpen] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState({
     FullName: "",
     Phone: "",
@@ -46,6 +56,17 @@ const RescuerRegisterStepTwo = (props: Props) => {
       headerStyle: { backgroundColor: "#71D1C7" },
     });
   });
+
+  React.useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => setKeyboardOpen(true));
+
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => setKeyboardOpen(false));
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -105,15 +126,19 @@ const RescuerRegisterStepTwo = (props: Props) => {
         <View style={styles.background}>
           <NightGradAnimated />
         </View>
-        <View style={isIPhoneSE ? styles.smallBox : styles.box}>
-          {Platform.OS === "ios" && <SignUpWithApple navigation={navigation} userDetails={userDetails} />}
-          <SignUpWithOAuth navigation={navigation} userDetails={userDetails} />
-          <SignUpComponent navigation={navigation} userDetails={userDetails} />
-          {isConnected ? null : (
-            <View className="flex-1 align-middle justify-end">
-              <OfflineToast />
-            </View>
-          )}
+        <View style={keyboardOpen ? styles.containerWithKeyboard : styles.container}>
+          <View style={isIPhoneSE ? styles.smallBox : styles.box}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+              {Platform.OS === "ios" && <SignUpWithApple navigation={navigation} userDetails={userDetails} />}
+              <SignUpWithOAuth navigation={navigation} userDetails={userDetails} />
+              <SignUpComponent navigation={navigation} userDetails={userDetails} />
+              {isConnected ? null : (
+                <View className="flex-1 align-middle justify-end">
+                  <OfflineToast />
+                </View>
+              )}
+            </ScrollView>
+          </View>
         </View>
       </ImageBackground>
     </ConditionalSafeAreaView>
@@ -125,6 +150,7 @@ export default RescuerRegisterStepTwo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: screenWidth,
   },
   background: {
     position: "absolute",
@@ -133,6 +159,11 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     zIndex: -10,
+  },
+  containerWithKeyboard: {
+    flex: 1,
+    marginTop: -150,
+    width: screenWidth,
   },
   box: {
     flex: 1,

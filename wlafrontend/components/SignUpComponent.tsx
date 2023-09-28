@@ -133,7 +133,7 @@ export default function SignUpScreen({ userDetails, navigation }: Props) {
             >
               <Text className=" text-blue-200 bg-transparent text-xl text-center">Continue with Email</Text>
             </TouchableOpacity>
-            {error && <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>}
+            {error && <Text style={{ color: "red", textAlign: "center", marginBottom: 30 }}>{error}</Text>}
           </View>
         )}
         {pendingVerification && (

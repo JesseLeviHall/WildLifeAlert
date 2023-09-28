@@ -84,7 +84,7 @@ const SignUpWithApple = ({ userDetails, navigation }: Props) => {
   }, [userDetails, mutation, setIsLoading]);
 
   return (
-    <View className="w-full mt-4">
+    <View className="w-72 mt-4">
       <TouchableOpacity
         className=" flex-row border w-full border-[#00E0FFFF] bg-[#000000] rounded-lg h-16 justify-center items-center"
         onPress={onPress}
