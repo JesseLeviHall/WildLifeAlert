@@ -133,7 +133,7 @@ const ForgotPassword = (props: Props) => {
                       onChangeText={setEmail}
                     />
                   </View>
-                  {error && <Text style={{ color: "red", marginTop: 2 }}>{error}</Text>}
+                  {error && <Text style={{ color: "red", textAlign: "center", marginBottom: 30 }}>{error}</Text>}
                   <TouchableOpacity
                     className="border h-10 border-[#00E0FFFF] rounded-md mt-3 mb-6 justify-center align-middle w-3/4 "
                     onPress={create}
@@ -175,6 +175,7 @@ const ForgotPassword = (props: Props) => {
                   >
                     <Text className="text-blue-300 text-center text-base">Reset</Text>
                   </TouchableOpacity>
+                  {error && <Text style={{ color: "red", textAlign: "center", marginBottom: 30 }}>{error}</Text>}
                 </>
               )}
               {complete && (
