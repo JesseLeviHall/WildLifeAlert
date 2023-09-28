@@ -146,7 +146,7 @@ const About = (props: Props) => {
   if (!data) {
     return (
       <View className="flex-1 align-middle justify-center">
-        <ErrorMessage error="Sorry, error fetching data" />
+        <ErrorMessage error="Sorry, error fetching data. Swipe right to return." />
       </View>
     );
   }
@@ -260,17 +260,17 @@ const About = (props: Props) => {
                         className="w-32 border-2 border-cyan-500 m-2"
                         mode="contained"
                         buttonColor="#00C5E038"
-                        onPress={() => Linking.openURL(`${data?.Link}`)}
+                        onPress={onShare}
                       >
-                        Contribute
+                        Share
                       </Button>
                       <Button
                         className="w-32 border-2 border-cyan-500 m-2"
                         mode="contained"
                         buttonColor="#00C5E038"
-                        onPress={onShare}
+                        onPress={() => Linking.openURL(`${data?.Link}`)}
                       >
-                        Share
+                        Contribute
                       </Button>
                     </View>
                     <View className="flex flex-row justify-center">
