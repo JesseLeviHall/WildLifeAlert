@@ -211,7 +211,7 @@ const About = (props: Props) => {
                 icon={() => <MaterialCommunityIcons name="creation" size={18} color="#54ACFFFF" />}
                 onPress={() => handlePress("mission")}
               >
-                Mission
+                Objective
               </Chip>
               <Chip
                 elevated={true}
